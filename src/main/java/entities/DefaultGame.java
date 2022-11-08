@@ -59,6 +59,10 @@ public class DefaultGame implements Game{
         return (ArrayList) teams.keySet();
     }
 
+    public int getTeamPoints(Team team) {
+        return teams.get(team);
+    }
+
     public void setObserver(User observer) {
         this.observer = observer;
     }

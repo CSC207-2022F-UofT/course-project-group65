@@ -22,6 +22,8 @@ public interface Game{
 
     ArrayList getTeams();
 
+    int getTeamPoints(Team team);
+
     void setObserver(User observer);
 
     User getObserver();
