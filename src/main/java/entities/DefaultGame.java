@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class DefaultGame implements Game{
     private int gameID;
@@ -53,8 +54,9 @@ public class DefaultGame implements Game{
         teams.put(team, points);
     }
 
-    public Team getTeam() {
-        return teams.keySet().iterator().next();
+//    May need to change getTeams()
+    public List<Team> getTeams() {
+        return (List<Team>) teams.keySet();
     }
 
     public void setObserver(User observer) {
