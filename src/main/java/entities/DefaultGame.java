@@ -1,11 +1,12 @@
 package entities;
 
+import java.util.HashMap;
+
 public class DefaultGame implements Game{
     private int gameID;
     private int gameRound;
     private int numTeams;
-    private Team team1;
-    private Team team2;
+    private HashMap<Team, Integer> teams;
     private User observer;
     private Team winner;
     private boolean gameStatus;
@@ -16,8 +17,7 @@ public class DefaultGame implements Game{
         gameID = 0;
         gameRound = 0;
         numTeams = 0;
-        team1 = null;
-        team2 = null;
+        teams = new HashMap<Team, Integer>();
         observer = null;
         winner = null;
         gameStatus = false;
@@ -49,20 +49,12 @@ public class DefaultGame implements Game{
         return numTeams;
     }
 
-    public void setTeam1(Team team1) {
-        this.team1 = team1;
+    public void setTeam(Team team, int points) {
+        teams.put(team, points);
     }
 
-    public Team getTeam1() {
-        return team1;
-    }
-
-    public void setTeam2(Team team2) {
-        this.team2 = team2;
-    }
-
-    public Team getTeam2() {
-        return team2;
+    public Team getTeam() {
+        return teams.keySet().iterator().next();
     }
 
     public void setObserver(User observer) {
