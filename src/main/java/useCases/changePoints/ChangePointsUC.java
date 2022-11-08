@@ -5,7 +5,7 @@ import useCases.generalInterfaces.CheckUserPermissionIF;
 
 public class ChangePointsUC implements CheckUserPermissionIF{
     public Bracket bracket;
-    public int points;
+    public int newPoints;
     public Team team;
     public User user;
     public Game game;
@@ -19,7 +19,7 @@ public class ChangePointsUC implements CheckUserPermissionIF{
      */
     public void changePoints(Bracket bracket, Team team, User user, Game game, int points) {
         this.bracket = bracket;
-        this.points = points;
+        this.newPoints = points;
         this.team = team;
         this.user = user;
         this.game = game;
@@ -55,8 +55,9 @@ public class ChangePointsUC implements CheckUserPermissionIF{
     public boolean changePoints() {
         List<Team> teams = this.game.getTeams();
         if (checkUserPermission(this.user) && checkTeam(this.team) && checkAllGamesFull(this.team) &&
-                validPoints(this.points)) {
-            this.game.setPoints(this.points);
+                validPoints(this.newPoints)) {
+            // I need to get the initial amount of points, and set points to initial +/- this.points
+            this.game.setPoints(this.team, this.newPoints);
             return true;
         }
         return false;
