@@ -41,15 +41,21 @@ public class ChangePointsUC implements CheckUserPermissionIF{
         int teamRound = this.game.roundNum;
         ArrayList<Game> games = traverseTreeGames(this.bracket.getFinalGame(), teamRound);
         for (Game game: games){
-            if (game.getTeam1() == null || game.getTeam2() == null){
+            if (game.getNumTeams() < 2){
                 return false;
             }
         }
         return true;
     }
 
+    public boolean validPoints(int points){
+        return points >= 0;
+    }
+
     public boolean changePoints() {
-        if (checkUserPermission(this.user) && checkTeam(this.team) && checkAllGamesFull(this.team)) {
+        teams = this.game.getTeams();
+        if (checkUserPermission(this.user) && checkTeam(this.team) && checkAllGamesFull(this.team) &&
+                validPoints(this.points)) {
             this.team.setPoints(this.points);
             return true;
         }
