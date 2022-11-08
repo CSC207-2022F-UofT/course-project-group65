@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultBracket implements Bracket {
@@ -16,9 +17,9 @@ public class DefaultBracket implements Bracket {
         tournamentName = "";
         tournamentID = 0;
         finalGame = null;
-        teams = null;
+        teams = new ArrayList<Team>();
         teamSize = 0;
-        referees = null;
+        referees = new ArrayList<User>();
         winCondition = 0;
         tournamentCondition = false;
     }
