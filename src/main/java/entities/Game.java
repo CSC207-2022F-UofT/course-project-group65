@@ -16,7 +16,7 @@ public interface Game{
 
     int getNumTeams();
 
-    void setTeam(Team team);
+    void setTeam(Team team, int points);
 
     Team getTeam();
 
