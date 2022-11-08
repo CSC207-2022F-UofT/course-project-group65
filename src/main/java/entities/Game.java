@@ -16,13 +16,9 @@ public interface Game{
 
     int getNumTeams();
 
-    void setTeam1(Team team1);
+    void setTeam(Team team);
 
-    Team getTeam1();
-
-    void setTeam2(Team team2);
-
-    Team getTeam2();
+    Team getTeam();
 
     void setObserver(User observer);
 
