@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 public class DefaultTeam implements Team{
     private String teamName;
@@ -9,7 +10,7 @@ public class DefaultTeam implements Team{
     public DefaultTeam(){
         teamName = "";
         teamSize = 0;
-        teamMembers = null;
+        teamMembers = new ArrayList<User>();
     }
     public String getTeamName() {return teamName;}
 
