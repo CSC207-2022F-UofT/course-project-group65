@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.ArrayList;
+
 public interface Game{
     /*
      * This interface represents a game in a Bracket. It follows a similar structure to a Tree.
@@ -18,7 +20,7 @@ public interface Game{
 
     void setTeam(Team team, int points);
 
-    Team getTeams();
+    ArrayList getTeams();
 
     void setObserver(User observer);
 

@@ -1,7 +1,7 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class DefaultGame implements Game{
     private int gameID;
@@ -55,8 +55,8 @@ public class DefaultGame implements Game{
     }
 
 //    May need to change getTeams()
-    public List<Team> getTeams() {
-        return (List<Team>) teams.keySet();
+    public ArrayList getTeams() {
+        return (ArrayList) teams.keySet();
     }
 
     public void setObserver(User observer) {
