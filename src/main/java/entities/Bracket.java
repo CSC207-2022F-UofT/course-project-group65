@@ -1,11 +1,41 @@
 package entities;
 
-public class Bracket {
-/*
-This is an entity class that represents a bracket in a tournament. This class and others will implement
-a requisite interface.
+import java.util.List;
 
-NEW COMMENT
-AMY
+public interface Bracket {
+/*
+    * This interface represents a bracket in a tournament.
  */
+    void setTournamentName(String tournamentName);
+
+    String getTournamentName();
+
+    void setTournamentID(int bracketID);
+
+    int getTournamentID();
+
+    void setFinalGame(Game finalGame);
+
+    Game getFinalGame();
+
+    void addTeam(Team team);
+
+    List<Team> getTeams();
+
+    void setTeamSize(int teamSize);
+
+    int getTeamSize();
+
+    void addReferee(User referee);
+
+    List<User> getReferees();
+
+    void setWinCondition(int winCondition);
+
+    int getWinCondition();
+
+    void setTournamentCondition(boolean tournamentCondition);
+
+    boolean getTournamentCondition();
+
 }
