@@ -15,12 +15,16 @@ public interface User {
 
     void setPassword(String password);
 
-    String getCurrentTournaments();
-
-    void setCurrentTournaments(String currentTournaments);
-
     String getBracketRole(int tournamentID);
 
     void setBracketRole(int tournamentID, String role);
+
+    void setCurrentTournament(int tournamentID);
+
+    int getCurrentTournament();
+
+    void addTournament(int tournamentID);
+
+    List<Integer> getAllTournaments();
 
 }

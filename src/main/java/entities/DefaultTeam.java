@@ -11,14 +11,14 @@ public class DefaultTeam implements Team{
         teamSize = 0;
         teamMembers = null;
     }
-    public String getTeamName() {return teamName;};
+    public String getTeamName() {return teamName;}
 
-    public void setTeamName(String teamName) {this.teamName = teamName;};
+    public void setTeamName(String teamName) {this.teamName = teamName;}
 
-    public int getTeamSize() {return teamSize;};
+    public int getTeamSize() {return teamSize;}
 
-    public void setTeamSize(int teamSize) {this.teamSize = teamSize;};
-    public List<User> getTeamMembers() {return teamMembers;};
+    public void setTeamSize(int teamSize) {this.teamSize = teamSize;}
+    public List<User> getTeamMembers() {return teamMembers;}
 
-    public void addTeamMember(User teamMember) {teamMembers.add(teamMember);};
+    public void addTeamMember(User teamMember) {teamMembers.add(teamMember);}
 }
