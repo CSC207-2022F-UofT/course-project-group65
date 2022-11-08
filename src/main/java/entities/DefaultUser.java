@@ -27,8 +27,8 @@ public class DefaultUser implements User{
         bracketRole.put(tournamentID, role);
     }
 
-    public List<Integer> getBracketRole() {
-        return (List<Integer>) bracketRole.keySet();
+    public String getBracketRole(int tournamentID) {
+           return bracketRole.get(tournamentID);
     }
 
     public void setCurrentTournaments(String currentTournament) { this.currentTournaments = currentTournaments; }

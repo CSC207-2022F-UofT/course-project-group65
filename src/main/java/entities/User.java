@@ -19,7 +19,7 @@ public interface User {
 
     void setCurrentTournaments(String currentTournaments);
 
-    String getBracketRole();
+    String getBracketRole(int tournamentID);
 
     void setBracketRole(int tournamentID, String role);
 
