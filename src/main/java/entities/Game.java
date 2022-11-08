@@ -18,7 +18,7 @@ public interface Game{
 
     void setTeam(Team team, int points);
 
-    Team getTeam();
+    Team getTeams();
 
     void setObserver(User observer);
 
