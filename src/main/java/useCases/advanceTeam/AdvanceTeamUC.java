@@ -86,7 +86,7 @@ public class AdvanceTeamUC implements CheckUserPermissionIF{
     }
 
     // Get games from a certain level.
-    public List<Game> returnLevelGames(Game head, int roundNum){
+    public static List<Game> returnLevelGames(Game head, int roundNum){
         List<Game> games = new ArrayList<>();
         if (head == null) {
             return games;
@@ -107,18 +107,24 @@ public class AdvanceTeamUC implements CheckUserPermissionIF{
 
     public void insertTeam(Team team, Game game){
         // We are inserting the team to the round immediately after the round the game is in. That is, the current
-        // round plus 1.
-        ArrayList<Game> games = (ArrayList<Game>) returnLevelGames(game, this.game.getGameRound() + 1);
+        // round minus 1 - rounds are counted backwards in the tree.
+        ArrayList<Game> games = (ArrayList<Game>) returnLevelGames(game, this.game.getGameRound() - 1);
         for (Game g : games){
             // Find the node in tree s.t. its previous node(1/2) == game. Insert team into that node.
             if (g.getPrevGame1().getGameID() == game.getGameID() || g.getPrevGame2().getGameID() == game.getGameID()){
-                // Does this alias?
                 g.setTeam(team, 0);
             }
         }
     }
 
-
+//    public static void main(String[] args) {
+//        DefaultGame defaultGame = new DefaultGame();
+//        ArrayList<Game> games = (ArrayList<Game>) returnLevelGames(defaultGame, 0);
+//        for (Game g : games){
+//            System.out.println(defaultGame.getGameID());
+//            System.out.println(g == defaultGame);
+//        }
+//    }
 
 
 //    public void insertTeam(Team team, Game game) {
