@@ -32,8 +32,7 @@ public class CreateBracketUC {
     public Bracket createBracket(String username, AccountRepo accounts, String bracketType, String bracketName,
                                  int numTeams, int maxTeamSize, int winCondition) {
         int tournamentID = generateBracketID();
-//        creator = accounts.getUser(username);
-        User creator = new DefaultUser();
+        User creator = accounts.getUser(username);
         this.assembler = new BracketAssembler();
         this.assembler.assembleBracket(bracketType, creator, bracketName, tournamentID,
                 numTeams, maxTeamSize, winCondition);
