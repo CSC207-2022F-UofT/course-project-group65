@@ -1,11 +1,23 @@
 package entities;
 
+import java.sql.Array;
+import java.util.HashMap;
 import java.util.ArrayList;
 
 public class AccountRepo {
-    private ArrayList<User> users;
+    private HashMap<String, User> users;
 
-    public void addUser(User user) {this.users.add(user); }
+    public void addUser(User user) {this.users.put(user.getUsername(), user); }
 
-    public ArrayList<User> getUsers() { return users; }
+    public HashMap<String, User> getUsers() { return users; }
+
+    public ArrayList<String> getAllUsernames() { return new ArrayList<String>(users.keySet()); }
+
+    public ArrayList<String> getAllPasswords() {
+        ArrayList<String> passwords = new ArrayList<>();
+        for (User user : users.values()) {
+            passwords.add(user.getPassword());
+        }
+        return passwords;
+    }
 }
