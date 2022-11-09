@@ -62,9 +62,9 @@ public class ChangePointsUC implements CheckUserPermissionIF{
     // Assume that there is a getter for the user's role in the bracket.
     public boolean checkUserPermission(User user) {
         String userRole = user.getBracketRole(this.bracket.getTournamentID());
-        User assignedOversser = this.game.getObserver();
+        User assignedObserver = this.game.getObserver();
         String username = user.getUsername();
-        String assignedObserverUsername = assignedOversser.getUsername();
+        String assignedObserverUsername = assignedObserver.getUsername();
 
         if (userRole.equals("Overseer")) {
             return true;
