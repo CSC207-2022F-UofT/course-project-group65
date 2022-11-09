@@ -77,6 +77,7 @@ public class ChangePointsUC implements CheckUserPermissionIF{
 
 
     // Assume that there is a getter for the team's points in the bracket.
+    // Make helpers private.
     public boolean checkTeam(Team team) {
         List<Team> teams = this.bracket.getTeams();
         return teams.contains(team);
