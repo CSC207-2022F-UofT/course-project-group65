@@ -1,10 +1,9 @@
 package useCases.createBracket;
 
 import entities.DefaultBracket;
+import entities.Game;
 import entities.Team;
 import entities.User;
-
-import java.util.ArrayList;
 
 public class DefaultBracketBuilder implements BracketBuilder {
     /*
@@ -24,18 +23,25 @@ public class DefaultBracketBuilder implements BracketBuilder {
         this.bracket.setTournamentID(tournamentID);
     }
 
-    public ArrayList<Team> buildTeams(int numTeams) {
-        // TODO Auto-generated method stub
-        return new ArrayList<>();
-    }
-
-    public void buildGames(int numTeams, ArrayList<Team> teams) {
-        // TODO Auto-generated method stub
-
+    public void buildTeams(int numTeams) {
+        TeamFactory teamFactory = new DefaultTeamFactory();
+        for (int i = 0; i < numTeams; i++) {
+            Team team = teamFactory.getTeam("Default");
+            this.bracket.addTeam(team);
+        }
     }
 
     public void setMaxTeamSize(int maxTeamSize) {
-        bracket.setTeamSize(maxTeamSize);
+        this.bracket.setTeamSize(maxTeamSize);
+        for (Team team : this.bracket.getTeams()) {
+            team.setTeamSize(maxTeamSize);
+        }
+    }
+
+    public void buildGames(int numTeams) {
+        GamesFactory gamesFactory = new DefaultGamesFactory();
+        Game finalGame = gamesFactory.getGames(numTeams, this.bracket.getTeams());
+        this.bracket.setFinalGame(finalGame);
     }
 
     public void addOverseer(User overseer, int tournamentID) {

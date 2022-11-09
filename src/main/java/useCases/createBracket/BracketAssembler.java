@@ -1,10 +1,7 @@
 package useCases.createBracket;
 
 import entities.Bracket;
-import entities.Team;
 import entities.User;
-
-import java.util.ArrayList;
 
 public class BracketAssembler {
     /*
@@ -29,9 +26,9 @@ public class BracketAssembler {
     public void buildBracket(User creator, String bracketName, int tournamentID, int numTeams, int maxTeamSize, int winCondition) {
         this.builder.setName(bracketName);
         this.builder.setID(tournamentID);
-        ArrayList<Team> new_teams = this.builder.buildTeams(numTeams);
-        this.builder.buildGames(numTeams, new_teams);
+        this.builder.buildTeams(numTeams);
         this.builder.setMaxTeamSize(maxTeamSize);
+        this.builder.buildGames(numTeams);
         this.builder.addOverseer(creator, tournamentID);
         this.builder.setWinCon(winCondition);
     }

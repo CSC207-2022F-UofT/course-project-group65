@@ -1,10 +1,7 @@
 package useCases.createBracket;
 
 import entities.Bracket;
-import entities.Team;
 import entities.User;
-
-import java.util.ArrayList;
 
 public interface BracketBuilder {
     /*
@@ -15,9 +12,9 @@ public interface BracketBuilder {
 
     void setID(int tournamentID);
 
-    ArrayList<Team> buildTeams(int numTeams);
+    void buildTeams(int numTeams);
 
-    void buildGames(int numTeams, ArrayList<Team> teams);
+    void buildGames(int numTeams);
 
     void setMaxTeamSize(int maxTeamSize);
 

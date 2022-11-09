@@ -1,8 +1,6 @@
 package useCases.createBracket;
 
-import entities.Bracket;
-import entities.BracketRepo;
-import entities.User;
+import entities.*;
 
 public class CreateBracketUC {
 /*
@@ -17,9 +15,20 @@ public class CreateBracketUC {
     }
 
 //    USER HAS A DEPENDENCY ISSUE I BELIEVE
-    public Bracket createBracket(User creator, String bracketType, String bracketName,
-                           int numTeams, int maxTeamSize, int winCondition) {
+//    public Bracket createBracket(User creator, String bracketType, String bracketName,
+//                           int numTeams, int maxTeamSize, int winCondition) {
+//        int tournamentID = generateBracketID();
+//        this.assembler = new BracketAssembler();
+//        this.assembler.assembleBracket(bracketType, creator, bracketName, tournamentID,
+//                numTeams, maxTeamSize, winCondition);
+//        return this.assembler.getBracket();
+//    }
+
+    public Bracket createBracket(String username, AccountRepo accounts, String bracketType, String bracketName,
+                                 int numTeams, int maxTeamSize, int winCondition) {
         int tournamentID = generateBracketID();
+//        creator = accounts.getUser(username);
+        User creator = new DefaultUser();
         this.assembler = new BracketAssembler();
         this.assembler.assembleBracket(bracketType, creator, bracketName, tournamentID,
                 numTeams, maxTeamSize, winCondition);
