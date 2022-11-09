@@ -5,7 +5,7 @@ import java.util.List;
 public class DefaultTeam implements Team{
     private String teamName;
     private int teamSize;
-    private List<User> teamMembers;
+    private ArrayList<User> teamMembers;
 
     public DefaultTeam(){
         teamName = "";
@@ -19,7 +19,7 @@ public class DefaultTeam implements Team{
     public int getTeamSize() {return teamSize;}
 
     public void setTeamSize(int teamSize) {this.teamSize = teamSize;}
-    public List<User> getTeamMembers() {return teamMembers;}
+    public ArrayList<User> getTeamMembers() {return teamMembers;}
 
     public void addTeamMember(User teamMember) {teamMembers.add(teamMember);}
 }
