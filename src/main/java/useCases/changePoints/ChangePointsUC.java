@@ -86,7 +86,7 @@ public class ChangePointsUC implements CheckUserPermissionIF{
     }
 
     public List<Game> returnLevelGames(Game head, int roundNum){
-        List<Game> games = new ArrayList<Game>();
+        List<Game> games = new ArrayList<>();
         if (head == null) {
             return games;
         } else if (head.getPrevGame1() == null && head.getPrevGame2() == null) {
@@ -108,6 +108,7 @@ public class ChangePointsUC implements CheckUserPermissionIF{
         int teamRound = game.getGameRound();
         List<Game> games = returnLevelGames(this.bracket.getFinalGame(), teamRound);
         for (Game g: games){
+            // See if we can generalise this. This restricts us to only 2 teams per game.
             if (g.getNumTeams() < 2){
                 return false;
             }
@@ -115,9 +116,17 @@ public class ChangePointsUC implements CheckUserPermissionIF{
         return true;
     }
 
-    public boolean validPoints(int points){
+    public boolean validPoints(Game game, int points){
         int changedPoints = points + this.game.getTeamPoints(this.team);
-        return changedPoints <= this.bracket.getWinCondition() && changedPoints >= 0;
+        // Adding an additional condition that adding points is valid if there isn't a team that has already won
+        // There is one issue with this type of implementation. The game being finished is not the same as only one
+        // team matching the win condition. So we could still end up in a scenario where there are two teams matching
+        // the win condition.
+        if (!game.getGameStatus()) {
+            return changedPoints <= this.bracket.getWinCondition() && changedPoints >= 0;
+        } else {
+            return false;
+        }
     }
 
     // This is the main function. Each of the previous methods can be thought of as "helper" methods so that I
@@ -126,11 +135,12 @@ public class ChangePointsUC implements CheckUserPermissionIF{
         //List<Team> teams = this.game.getTeams();
         int prevPoints = this.game.getTeamPoints(this.team);
         if (checkUserPermission(this.user) && checkTeam(this.team) && checkAllGamesFull(this.game) &&
-                validPoints(this.newPoints) && checkGame(this.game)) {
+                validPoints(this.game, this.newPoints) && checkGame(this.game)) {
             this.game.setTeam(this.team, this.newPoints + prevPoints);
             return true;
         }
         // Think about throwing an exception here
+        // Have to let the user know the reason that their request was not fulfilled.
         return false;
     }
 
