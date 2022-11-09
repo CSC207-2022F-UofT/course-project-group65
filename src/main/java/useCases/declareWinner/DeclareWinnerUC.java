@@ -1,10 +1,9 @@
 package useCases.declareWinner;
 
-import entities.Bracket;
-import entities.Game;
-import entities.Team;
-import entities.User;
+import entities.*;
 import useCases.generalInterfaces.CheckUserPermissionIF;
+
+import java.util.ArrayList;
 
 public class DeclareWinnerUC implements CheckUserPermissionIF {
 
@@ -22,6 +21,39 @@ public class DeclareWinnerUC implements CheckUserPermissionIF {
         this.username = username;
         this.bracketID = bracketID;
         this.gameID = gameID;
+    }
+
+    public void changePoints(int bracketID, Team team, String username, int gameID, int points) {
+        this.newPoints = points;
+        this.team = team;
+        this.username = username;
+        this.bracketID = bracketID;
+        this.gameID = gameID;
+    }
+    // When this use case is instantiated, you also have to call the following three methods. This is so user, bracket,
+    // and game can take the correct values.
+    public void findUser(AccountRepo accountRepo) {
+        ArrayList<User> users = accountRepo.getUsers();
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                this.user = user;
+            }
+        }
+    }
+
+    public void findBracket(BracketRepo bracketRepo) {
+        this.bracket = bracketRepo.getBracket(this.bracketID);
+    }
+
+    public void findGame(int gameID, Game head) {
+        if (head == null) {
+            return;
+        } else if (head.getGameID() == gameID) {
+            this.game = head;
+        } else {
+            findGame(gameID, head.getPrevGame1());
+            findGame(gameID, head.getPrevGame2());
+        }
     }
 
     public boolean checkUserPermission(User user) {
