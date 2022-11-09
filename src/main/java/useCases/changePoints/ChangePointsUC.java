@@ -81,6 +81,9 @@ public class ChangePointsUC implements CheckUserPermissionIF{
         List<Team> teams = this.bracket.getTeams();
         return teams.contains(team);
     }
+    public boolean checkGame(Game game) {
+        return this.game != null;
+    }
 
     public List<Game> returnLevelGames(Game head, int roundNum){
         List<Game> games = new ArrayList<Game>();
@@ -123,7 +126,7 @@ public class ChangePointsUC implements CheckUserPermissionIF{
         //List<Team> teams = this.game.getTeams();
         int prevPoints = this.game.getTeamPoints(this.team);
         if (checkUserPermission(this.user) && checkTeam(this.team) && checkAllGamesFull(this.game) &&
-                validPoints(this.newPoints)) {
+                validPoints(this.newPoints) && checkGame(this.game)) {
             this.game.setTeam(this.team, this.newPoints + prevPoints);
             return true;
         }
