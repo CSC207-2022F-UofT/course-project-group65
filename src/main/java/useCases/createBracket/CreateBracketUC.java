@@ -2,6 +2,11 @@ package useCases.createBracket;
 
 import entities.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+
 public class CreateBracketUC {
 /*
     * This is a use case for creating a bracket.
@@ -39,6 +44,15 @@ public class CreateBracketUC {
 //        Stores the bracket in the repo and returns the bracketID
         repo.addBracket(bracket);
         return bracket.getTournamentID();
+    }
+
+    public static void main(String[] args) {
+        HashMap<String, Integer> passwords = new HashMap<String, Integer>();
+        passwords.put("user1", 1234);
+        ArrayList<String> usernames = new ArrayList<String>(passwords.keySet());
+        System.out.println(passwords);
+        System.out.println(passwords.keySet());
+        System.out.println(usernames);
     }
 
 }
