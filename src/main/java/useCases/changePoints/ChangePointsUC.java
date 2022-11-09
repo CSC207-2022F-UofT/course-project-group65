@@ -32,6 +32,7 @@ public class ChangePointsUC implements CheckUserPermissionIF{
         }
     // When this use case is instantiated, you also have to call the following three methods. This is so user, bracket,
     // and game can take the correct values.
+    // I only get the team name. So I have to go through the bracket to get the actual team.
     public void findUser(AccountRepo accountRepo) {
         ArrayList<User> users = accountRepo.getUsers();
         for (User user : users) {
