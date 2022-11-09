@@ -56,7 +56,7 @@ public class DefaultGame implements Game{
 
 //    May need to change getTeams()
     public ArrayList<Team> getTeams() {
-        return new ArrayList<Team>(this.teams.keySet());
+        return new ArrayList<Team>(teams.keySet());
     }
 
     public int getTeamPoints(Team team) {
