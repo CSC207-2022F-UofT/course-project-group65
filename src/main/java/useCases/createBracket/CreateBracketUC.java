@@ -45,13 +45,19 @@ public class CreateBracketUC {
         return bracket.getTournamentID();
     }
 
-    public static void main(String[] args) {
-        HashMap<String, Integer> passwords = new HashMap<String, Integer>();
-        passwords.put("user1", 1234);
-        ArrayList<String> usernames = new ArrayList<String>(passwords.keySet());
-        System.out.println(passwords);
-        System.out.println(passwords.keySet());
-        System.out.println(usernames);
-    }
+//    public static void main(String[] args) {
+//        HashMap<String, Integer> passwords = new HashMap<String, Integer>();
+//        passwords.put("user1", 1234);
+//        ArrayList<String> usernames = new ArrayList<String>(passwords.keySet());
+//        System.out.println(passwords);
+//        System.out.println(passwords.keySet());
+//        System.out.println(usernames);
+//        CreateBracketUC uc = new CreateBracketUC();
+//        AccountRepo accounts = new AccountRepo();
+//        uc.createBracket("user1", accounts, "Single Elimination", "Test Bracket",
+//                4, 1, 1);
+//        BracketRepo repo = new BracketRepo();
+//        int num = uc.storeBracket(repo, uc.assembler.getBracket());
+//    }
 
 }
