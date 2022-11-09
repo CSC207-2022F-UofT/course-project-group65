@@ -1,15 +1,14 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DefaultBracket implements Bracket {
     private String tournamentName;
     private int tournamentID;
     private Game finalGame;
-    private List<Team> teams;
+    private ArrayList<Team> teams;
     private int teamSize;
-    private List<User> referees;
+    private ArrayList<User> referees;
     private int winCondition;
     private boolean tournamentCondition;
 
@@ -52,7 +51,7 @@ public class DefaultBracket implements Bracket {
         teams.add(team);
     }
 
-    public List<Team> getTeams() {
+    public ArrayList<Team> getTeams() {
         return teams;
     }
 
@@ -68,7 +67,7 @@ public class DefaultBracket implements Bracket {
         referees.add(referee);
     }
 
-    public List<User> getReferees() {
+    public ArrayList<User> getReferees() {
         return referees;
     }
 
