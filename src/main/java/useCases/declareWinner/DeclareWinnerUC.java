@@ -80,6 +80,7 @@ public class DeclareWinnerUC implements CheckUserPermissionIF {
                 }
             }
         } // Think about throwing an appropriate exception here.
+        // Particularly, if the user does not have permission, you should throw an exception, etc.
         return false;
     }
 }
