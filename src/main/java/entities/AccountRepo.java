@@ -9,7 +9,9 @@ public class AccountRepo {
 
     public void addUser(User user) {this.users.put(user.getUsername(), user); }
 
-    public HashMap<String, User> getUsers() { return users; }
+    public HashMap<String, User> getAllUsers() { return users; }
+
+    public User getUser(String username) {return users.get(username); }
 
     public ArrayList<String> getAllUsernames() { return new ArrayList<String>(users.keySet()); }
 
