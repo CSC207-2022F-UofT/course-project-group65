@@ -1,9 +1,12 @@
 package useCases.createBracket;
 
 import entities.DefaultGame;
+import entities.DefaultTeam;
 import entities.Game;
 import entities.Team;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DefaultGamesFactory implements GamesFactory {
@@ -11,7 +14,7 @@ public class DefaultGamesFactory implements GamesFactory {
      * This is a factory for creating a game.
      */
 
-    public Game getGames(int numTeams, List<Team> teams) {
+    public DefaultGame getGames(int numTeams, List<Team> teams) {
         if (numTeams == 2) {
             DefaultGame headGame = new DefaultGame();
 
@@ -185,6 +188,54 @@ public class DefaultGamesFactory implements GamesFactory {
             return headGame;
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+//        ArrayList<Team> teams = new ArrayList<Team>();
+//        for (int i = 0; i < 2; i++) {
+//            Team team = new DefaultTeam();
+////            team.setTeamName("Team " + i);
+//            teams.add(team);
+//        }
+//
+//        HashMap<String, Integer> games = new HashMap<String, Integer>();
+//        for (int i = 0; i <= 1; i++) {
+//            games.put(teams.get(i).getTeamName(), i);
+//        }
+//        System.out.println(games);
+//
+//        HashMap<Team, Integer> games2 = new HashMap<Team, Integer>();
+//        for (int i = 0; i <= 1; i++) {
+//            games2.put(teams.get(i), i);
+//        }
+//        System.out.println(games2);
+
+        ArrayList<Team> teams2 = new ArrayList<Team>();
+        DefaultTeamFactory teamFactory = new DefaultTeamFactory();
+        for (int i = 0; i < 4; i++) {
+            Team team = teamFactory.getTeam("Default");
+            teams2.add(team);
+        }
+
+        DefaultGamesFactory factory = new DefaultGamesFactory();
+        DefaultGame headGame = factory.getGames(4, teams2);
+
+        System.out.println(headGame.getGameID());
+        System.out.println(headGame.getPrevGame1().getGameID());
+        System.out.println(headGame.getPrevGame2().getGameID());
+
+        System.out.println("\n");
+        System.out.print(headGame.getGameRound());
+        System.out.println("\n");
+        System.out.print(headGame.getPrevGame1().getGameRound());
+        System.out.println("\n");
+        System.out.print(headGame.getPrevGame2().getGameRound());
+        System.out.println("\n");
+
+        for (Team team : teams2) {
+            System.out.println(team.getTeamName());
+        }
+
     }
 }
 
