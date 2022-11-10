@@ -275,6 +275,13 @@ public class DefaultGamesFactory implements GamesFactory {
         c.setTeamName("IT'S");
         d.setTeamName("ME");
 
+        System.out.println("From Tree");
+        System.out.println(a.getTeamName());
+        System.out.println(b.getTeamName());
+        System.out.println(c.getTeamName());
+        System.out.println(d.getTeamName());
+        System.out.println("\n");
+
         System.out.println("From List");
         for (Team team : teams) {
             System.out.println(team.getTeamName());
