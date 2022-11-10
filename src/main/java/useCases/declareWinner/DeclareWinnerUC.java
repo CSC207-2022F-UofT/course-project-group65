@@ -23,12 +23,7 @@ public class DeclareWinnerUC implements CheckUserPermissionIF {
     // When this use case is instantiated, you also have to call the following three methods. This is so user, bracket,
     // and game can take the correct values.
     public void findUser(AccountRepo accountRepo) {
-        ArrayList<User> users = accountRepo.getUsers();
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                this.user = user;
-            }
-        }
+        this.user = accountRepo.getUser(username);
     }
 
     public void findBracket(BracketRepo bracketRepo) {
