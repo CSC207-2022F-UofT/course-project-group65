@@ -31,6 +31,8 @@ public class BracketAssembler {
         this.builder.buildGames(numTeams);
         this.builder.addOverseer(creator, tournamentID);
         this.builder.setWinCon(winCondition);
+        this.builder.setPlayerInvite();
+        this.builder.setObserverInvite();
     }
 
     public Bracket getBracket() {

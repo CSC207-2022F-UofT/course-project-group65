@@ -22,6 +22,10 @@ public interface BracketBuilder {
 
     void setWinCon(int winCondition);
 
+    void setPlayerInvite();
+
+    void setObserverInvite();
+
     Bracket getBracket();
 
 }

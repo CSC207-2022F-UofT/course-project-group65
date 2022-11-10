@@ -53,6 +53,14 @@ public class DefaultBracketBuilder implements BracketBuilder {
         bracket.setWinCondition(winCondition);
     }
 
+    public void setPlayerInvite() {
+        bracket.setPlayerInvite();
+    }
+
+    public void setObserverInvite() {
+        bracket.setObserverInvite();
+    }
+
     public DefaultBracket getBracket() {
         return bracket;
     }
