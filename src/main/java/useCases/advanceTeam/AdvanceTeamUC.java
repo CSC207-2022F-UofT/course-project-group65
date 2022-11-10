@@ -112,22 +112,6 @@ public class AdvanceTeamUC implements CheckUserPermissionIF{
         }
     }
 
-//    public static void main(String[] args) {
-//        DefaultGame defaultGame = new DefaultGame();
-//        ArrayList<Game> games = (ArrayList<Game>) returnLevelGames(defaultGame, 0);
-//        for (Game g : games){
-//            System.out.println(g == defaultGame);
-//        }
-//    }
-//    public static void main(String[] args) {
-//        DefaultGame defaultGame = new DefaultGame();
-//        AdvanceTeamUC advanceTeamUC = new AdvanceTeamUC();
-//        ArrayList<Game> games = (ArrayList<Game>) returnLevelGames(defaultGame, 0);
-//        for (Game g : games){
-//            System.out.println(g == defaultGame);
-//        }
-//    }
-
     public boolean advanceWinner(){
         // You cannot advance a team from the final.
         if (this.game.getGameRound() + 1 >= getTreeHeight(this.bracket.getFinalGame())) {
