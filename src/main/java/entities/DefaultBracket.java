@@ -11,6 +11,9 @@ public class DefaultBracket implements Bracket {
     private ArrayList<User> referees;
     private int winCondition;
     private boolean tournamentCondition;
+    private String playerInvite;
+
+    private String observerInvite;
 
     public DefaultBracket() {
         tournamentName = "";
@@ -21,6 +24,9 @@ public class DefaultBracket implements Bracket {
         referees = new ArrayList<User>();
         winCondition = 0;
         tournamentCondition = false;
+        playerInvite = "";
+        observerInvite = "";
+
     }
 
     public void setTournamentName(String tournamentName) {
@@ -85,6 +91,22 @@ public class DefaultBracket implements Bracket {
 
     public boolean getTournamentCondition() {
         return tournamentCondition;
+    }
+
+    public void setPlayerInvite() {
+        this.playerInvite = "PL" + tournamentID + this.tournamentName;
+    }
+
+    public String getPlayerInvite() {
+        return playerInvite;
+    }
+
+    public void setObserverInvite() {
+        this.observerInvite = "OB" + tournamentID + this.tournamentName;
+    }
+
+    public String getObserverInvite() {
+        return observerInvite;
     }
 
 }
