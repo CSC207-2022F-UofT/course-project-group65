@@ -34,12 +34,7 @@ public class ChangePointsUC implements CheckUserPermissionIF{
     // and game can take the correct values.
     // I only get the team name. So I have to go through the bracket to get the actual team.
     public void findUser(AccountRepo accountRepo) {
-        ArrayList<User> users = accountRepo.getUsers();
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                this.user = user;
-            }
-        }
+        this.user = accountRepo.getUser(this.username);
     }
 
     public void findBracket(BracketRepo bracketRepo) {
