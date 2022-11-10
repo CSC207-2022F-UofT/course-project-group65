@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.ArrayList;
 import entities.AccountRepo;
 import entities.BracketRepo;
-//import useCases.Strategies.TreeTraveral.ReturnLevel;
 
 
 public class ChangePointsUC implements CheckUserPermissionIF{
@@ -30,9 +29,7 @@ public class ChangePointsUC implements CheckUserPermissionIF{
         this.bracketID = bracketID;
         this.gameID = gameID;
         }
-    // When this use case is instantiated, you also have to call the following three methods. This is so user, bracket,
-    // and game can take the correct values.
-    // I only get the team name. So I have to go through the bracket to get the actual team.
+
     public void findUser(AccountRepo accountRepo) {
         this.user = accountRepo.getUser(this.username);
     }
@@ -51,11 +48,6 @@ public class ChangePointsUC implements CheckUserPermissionIF{
             findGame(gameID, head.getPrevGame2());
         }
     }
-
-    //Only get username of User. So go through accountRepo.
-    //Get the bracket ID. Go through repo to get the actual bracket.
-    //I only get GameID. I need to get the game object by traversing the tree
-    // Assume that there is a getter for the user's role in the bracket.
     public boolean checkUserPermission(User user) {
         String userRole = user.getBracketRole(this.bracket.getTournamentID());
         User assignedObserver = this.game.getObserver();
