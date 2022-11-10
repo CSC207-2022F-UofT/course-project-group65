@@ -47,7 +47,7 @@ public class joinTeamUC {
         if (isPlayer && teamExistence && teamSpace){
             Team team = findTeam(teamName, bracket);
             team.addTeamMember(user);
-            System.out.println("successfully joined the team < " + teamName + " >");
+            System.out.println("Successfully joined the team < " + teamName + " >");
         }
 
     }
