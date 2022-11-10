@@ -21,12 +21,7 @@ public class AdvanceTeamUC implements CheckUserPermissionIF{
         this.gameID = gameID;
     }
     public void findUser(AccountRepo accountRepo) {
-        ArrayList<User> users = accountRepo.getUsers();
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                this.user = user;
-            }
-        }
+        this.user = accountRepo.getUser(username);
     }
 
     public void findBracket(BracketRepo bracketRepo) {
@@ -86,7 +81,7 @@ public class AdvanceTeamUC implements CheckUserPermissionIF{
     }
 
     // Get games from a certain level.
-    public static List<Game> returnLevelGames(Game head, int roundNum){
+    public List<Game> returnLevelGames(Game head, int roundNum){
         List<Game> games = new ArrayList<>();
         if (head == null) {
             return games;
@@ -107,8 +102,8 @@ public class AdvanceTeamUC implements CheckUserPermissionIF{
 
     public void insertTeam(Team team, Game game){
         // We are inserting the team to the round immediately after the round the game is in. That is, the current
-        // round minus 1 - rounds are counted backwards in the tree.
-        ArrayList<Game> games = (ArrayList<Game>) returnLevelGames(game, this.game.getGameRound() - 1);
+        // round plus 1 - rounds are counted backwards in the tree.
+        ArrayList<Game> games = (ArrayList<Game>) returnLevelGames(game, this.game.getGameRound() + 1);
         for (Game g : games){
             // Find the node in tree s.t. its previous node(1/2) == game. Insert team into that node.
             if (g.getPrevGame1().getGameID() == game.getGameID() || g.getPrevGame2().getGameID() == game.getGameID()){
@@ -121,27 +116,16 @@ public class AdvanceTeamUC implements CheckUserPermissionIF{
 //        DefaultGame defaultGame = new DefaultGame();
 //        ArrayList<Game> games = (ArrayList<Game>) returnLevelGames(defaultGame, 0);
 //        for (Game g : games){
-//            System.out.println(defaultGame.getGameID());
 //            System.out.println(g == defaultGame);
 //        }
 //    }
-
-
-//    public void insertTeam(Team team, Game game) {
-//        // Find the node in tree s.t. its previous node(1/2) == game.
-//        int currGameId = game.getGameID();
-//        Game head = this.bracket.getFinalGame();
-//        if (game.getPrevGame1().getGameID() == currGameId || game.getPrevGame2().getGameID() == currGameId) {
-//            game.
+//    public static void main(String[] args) {
+//        DefaultGame defaultGame = new DefaultGame();
+//        AdvanceTeamUC advanceTeamUC = new AdvanceTeamUC();
+//        ArrayList<Game> games = (ArrayList<Game>) returnLevelGames(defaultGame, 0);
+//        for (Game g : games){
+//            System.out.println(g == defaultGame);
 //        }
-////        if (game.getPrevGame1().getGameID() == gameId) {
-////            game.getPrevGame1().setTeam(team);
-////        } else if (game.getPrevGame2().getGameID() == gameId) {
-////            game.getPrevGame2().setTeam(team);
-////        } else {
-////            insertTeam(team, game.getPrevGame1());
-////            insertTeam(team, game.getPrevGame2());
-////        }
 //    }
 
     public boolean advanceWinner(){
