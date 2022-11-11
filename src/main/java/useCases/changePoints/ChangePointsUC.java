@@ -1,14 +1,11 @@
 package useCases.changePoints;
 
-import entities.Bracket;
-import entities.User;
-import entities.Team;
-import entities.Game;
+import entities.*;
+import useCases.advanceTeam.AdvanceTeamID;
 import useCases.generalInterfaces.CheckUserPermissionIF;
-import java.util.List;
 import java.util.ArrayList;
-import entities.AccountRepo;
-import entities.BracketRepo;
+import useCases.generalClasses.*;
+
 
 
 public class ChangePointsUC implements CheckUserPermissionIF{
@@ -16,38 +13,29 @@ public class ChangePointsUC implements CheckUserPermissionIF{
     public int newPoints;
     public Team team;
     public User user;
-    public String username;
     public Game game;
-    public int bracketID;
-    public int gameID;
+    public TreeMethods treeMethodAccess;
+    public ChangePointsOB outputBoundary;
 
-
-    public void changePoints(int bracketID, Team team, String username, int gameID, int points) {
-        this.newPoints = points;
-        this.team = team;
-        this.username = username;
-        this.bracketID = bracketID;
-        this.gameID = gameID;
-        }
-
-    public void findUser(AccountRepo accountRepo) {
-        this.user = accountRepo.getUser(this.username);
+    public ChangePointsUC(ChangePointsOB outputBoundary) {
+        this.outputBoundary = outputBoundary;
     }
 
-    public void findBracket(BracketRepo bracketRepo) {
-        this.bracket = bracketRepo.getBracket(this.bracketID);
+    public void findUser(ChangePointsID inputData){
+        this.user = inputData.getUserCP();
+    }
+
+    public void findBracket(ChangePointsID inputData) {
+        this.bracket = inputData.getBracketCP();
+        String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
+        this.treeMethodAccess = new TreeMethods(bracketType);
+        findGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
     }
 
     public void findGame(int gameID, Game head) {
-        if (head == null) {
-            return;
-        } else if (head.getGameID() == gameID) {
-            this.game = head;
-        } else {
-            findGame(gameID, head.getPrevGame1());
-            findGame(gameID, head.getPrevGame2());
-        }
+        this.game = this.treeMethodAccess.findGame(gameID, head);
     }
+
     public boolean checkUserPermission(User user) {
         String userRole = user.getBracketRole(this.bracket.getTournamentID());
         User assignedObserver = this.game.getObserver();
@@ -67,35 +55,21 @@ public class ChangePointsUC implements CheckUserPermissionIF{
     // Assume that there is a getter for the team's points in the bracket.
     // Make helpers private.
     public boolean checkTeam(Team team) {
-        List<Team> teams = this.bracket.getTeams();
+        ArrayList<Team> teams = (ArrayList<Team>) this.bracket.getTeams();
         return teams.contains(team);
     }
+
     public boolean checkGame(Game game) {
         return this.game != null;
     }
 
-    public List<Game> returnLevelGames(Game head, int roundNum){
-        List<Game> games = new ArrayList<>();
-        if (head == null) {
-            return games;
-        } else if (head.getPrevGame1() == null && head.getPrevGame2() == null) {
-            if (head.getGameRound() == roundNum) {
-                games.add(head);
-            }
-            return games;
-        } else {
-            if (head.getGameRound() == roundNum) {
-                games.add(head);
-            }
-            games.addAll(returnLevelGames(head.getPrevGame1(), roundNum));
-            games.addAll(returnLevelGames(head.getPrevGame2(), roundNum));
-            return games;
-        }
+    public ArrayList<Game> returnLevelGames(Game head, int roundNum){
+        return this.treeMethodAccess.levelNodes(head, roundNum);
     }
 
     public boolean checkAllGamesFull(Game game){
         int teamRound = game.getGameRound();
-        List<Game> games = returnLevelGames(this.bracket.getFinalGame(), teamRound);
+        ArrayList<Game> games = returnLevelGames(this.bracket.getFinalGame(), teamRound);
         for (Game g: games){
             // See if we can generalise this. This restricts us to only 2 teams per game.
             if (g.getNumTeams() < 2){ // compare against maxTeamSize instead of 2
