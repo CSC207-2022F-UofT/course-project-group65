@@ -98,7 +98,7 @@ public class ChangePointsUC implements CheckUserPermissionIF{
         List<Game> games = returnLevelGames(this.bracket.getFinalGame(), teamRound);
         for (Game g: games){
             // See if we can generalise this. This restricts us to only 2 teams per game.
-            if (g.getNumTeams() < 2){
+            if (g.getNumTeams() < 2){ // compare against maxTeamSize instead of 2
                 return false;
             }
         }
