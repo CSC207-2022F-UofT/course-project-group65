@@ -1,4 +1,7 @@
 package useCases.changePoints;
 
-public class ChangePointsOB {
+public interface ChangePointsOB {
+    ChangePointsOD presentSuccess(ChangePointsOD outputData);
+    ChangePointsOD presentError(String errorMessage);
 }
+

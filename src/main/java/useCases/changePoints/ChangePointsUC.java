@@ -1,14 +1,13 @@
 package useCases.changePoints;
 
 import entities.*;
-import useCases.advanceTeam.AdvanceTeamID;
 import useCases.generalInterfaces.CheckUserPermissionIF;
 import java.util.ArrayList;
 import useCases.generalClasses.*;
 
 
 
-public class ChangePointsUC implements CheckUserPermissionIF{
+public class ChangePointsUC implements CheckUserPermissionIF, ChangePointsIB{
     public Bracket bracket;
     public int newPoints;
     public Team team;
@@ -51,9 +50,6 @@ public class ChangePointsUC implements CheckUserPermissionIF{
         }
     }
 
-
-    // Assume that there is a getter for the team's points in the bracket.
-    // Make helpers private.
     public boolean checkTeam(Team team) {
         ArrayList<Team> teams = (ArrayList<Team>) this.bracket.getTeams();
         return teams.contains(team);
@@ -71,8 +67,7 @@ public class ChangePointsUC implements CheckUserPermissionIF{
         int teamRound = game.getGameRound();
         ArrayList<Game> games = returnLevelGames(this.bracket.getFinalGame(), teamRound);
         for (Game g: games){
-            // See if we can generalise this. This restricts us to only 2 teams per game.
-            if (g.getNumTeams() < 2){ // compare against maxTeamSize instead of 2
+            if (g.getNumTeams() < 2){
                 return false;
             }
         }
@@ -94,20 +89,37 @@ public class ChangePointsUC implements CheckUserPermissionIF{
 
     // This is the main function. Each of the previous methods can be thought of as "helper" methods so that I
     // have all the requisite information to run this method. This method is the one that actually changes the points.
-    public boolean changePoints() {
-        //List<Team> teams = this.game.getTeams();
-        int prevPoints = this.game.getTeamPoints(this.team);
-        if (checkUserPermission(this.user) && checkTeam(this.team) && checkAllGamesFull(this.game) &&
-                validPoints(this.game, this.newPoints) && checkGame(this.game)) {
-            this.game.setTeam(this.team, this.newPoints + prevPoints);
-            return true;
+
+    public ChangePointsOD changePoints(ChangePointsID inputData) {
+        findUser(inputData);
+        findBracket(inputData);
+        this.newPoints = inputData.getNewPointsCP();
+        this.team = inputData.getTeamCP();
+
+        if (!checkUserPermission(this.user)) {
+            return this.outputBoundary.presentError("You do not have permission to change points.");
         }
-        // Think about throwing an exception here
-        // Have to let the user know the reason that their request was not fulfilled.
-        return false;
+        if (!checkTeam(this.team)) {
+            return this.outputBoundary.presentError("The team you are trying to change points for is not " +
+                    "in the bracket.");
+        }
+        if (!checkGame(this.game)) {
+            return this.outputBoundary.presentError("The game you are trying to change points in is not " +
+                    "in the bracket.");
+        }
+
+        if (!validPoints(this.game, this.newPoints)) {
+            return this.outputBoundary.presentError("The points you are trying to change to are not valid.");
+        }
+
+        if (!checkAllGamesFull(this.game)) {
+            return this.outputBoundary.presentError("Not all games in the round are full. You cannot " +
+                    "add points yet");
+        }
+
+        this.game.setTeam(this.team, this.newPoints);
+        ChangePointsOD outputData = new ChangePointsOD(this.game, this.team, this.game.getTeamPoints(this.team),
+                this.bracket);
+        return this.outputBoundary.presentSuccess(outputData);
     }
-
-
-
-
 }
