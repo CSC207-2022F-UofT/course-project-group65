@@ -1,44 +1,36 @@
 package useCases.declareWinner;
 
 import entities.*;
+import useCases.generalClasses.TreeMethods;
 import useCases.generalInterfaces.CheckUserPermissionIF;
 
 import java.util.ArrayList;
 
-public class DeclareWinnerUC implements CheckUserPermissionIF {
+public class DeclareWinnerUC implements CheckUserPermissionIF, DeclareWinnerIB {
 
     public Bracket bracket;
     public User user;
-    public String username;
     public Game game;
-    public int bracketID;
-    public int gameID;
+    public DeclareWinnerOB outputBoundary;
+    public TreeMethods treeMethodAccess;
 
-    public void declareWinner(int bracketID, String username, int gameID) {
-        this.username = username;
-        this.bracketID = bracketID;
-        this.gameID = gameID;
+    public void DeclareWinner(DeclareWinnerOB outputBoundary) {
+        this.outputBoundary = outputBoundary;
     }
 
-    // When this use case is instantiated, you also have to call the following three methods. This is so user, bracket,
-    // and game can take the correct values.
-    public void findUser(AccountRepo accountRepo) {
-        this.user = accountRepo.getUser(username);
+    public void findUser(DeclareWinnerID inputData){
+        this.user = inputData.getUserDW();
     }
 
-    public void findBracket(BracketRepo bracketRepo) {
-        this.bracket = bracketRepo.getBracket(this.bracketID);
+    public void findBracket(DeclareWinnerID inputData) {
+        this.bracket = inputData.getBracketDW();
+        String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
+        this.treeMethodAccess = new TreeMethods(bracketType);
+        findGame(inputData.getGameIDDW(), this.bracket.getFinalGame());
     }
 
     public void findGame(int gameID, Game head) {
-        if (head == null) {
-            return;
-        } else if (head.getGameID() == gameID) {
-            this.game = head;
-        } else {
-            findGame(gameID, head.getPrevGame1());
-            findGame(gameID, head.getPrevGame2());
-        }
+        this.game = this.treeMethodAccess.findGame(gameID, head);
     }
 
     public boolean checkUserPermission(User user) {
@@ -62,20 +54,28 @@ public class DeclareWinnerUC implements CheckUserPermissionIF {
         return this.game != null;
     }
 
-    // I've merged check winner into the set winner method. There is no need to check winner separately.
-    // Note that this is also the main method that has to be called for the UC to do its job.
-    public boolean setWinner() {
+    public DeclareWinnerOD setWinner(DeclareWinnerID inputData) {
+        findUser(inputData);
+        findBracket(inputData);
+
+        if (!checkUserPermission(user)) {
+            return this.outputBoundary.presentError("You do not have permission to declare a winner for " +
+                    "this game.");
+        }
+
+        if (!checkGame(game)) {
+            return this.outputBoundary.presentError("This game does not exist.");
+        }
+
         ArrayList<Team> teams = this.game.getTeams();
-        if (checkUserPermission(this.user) && checkGame(this.game)) {
-            for (Team team : teams) {
-                if (this.game.getTeamPoints(team) == this.bracket.getWinCondition()) {
-                    this.game.setWinner(team);
-                    this.game.setGameStatus(true);
-                    return true;
-                }
+        for (Team team : teams) {
+            if (this.game.getTeamPoints(team) == this.bracket.getWinCondition()) {
+                this.game.setWinner(team);
+                this.game.setGameStatus(true);
+                DeclareWinnerOD outputData = new DeclareWinnerOD(this.game, team, this.bracket);
+                return this.outputBoundary.presentSuccess(outputData);
             }
-        } // Think about throwing an appropriate exception here.
-        // Particularly, if the user does not have permission, you should throw an exception, etc.
-        return false;
+        }
+        return this.outputBoundary.presentError("The game has not been completed yet.");
     }
 }
