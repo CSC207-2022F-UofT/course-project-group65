@@ -12,12 +12,16 @@ public class AdvanceTeamUC implements CheckUserPermissionIF, AdvanceTeamIB {
     public Game game;
     public TreeMethods treeMethodAccess;
     public AdvanceTeamOB outputBoundary;
+    // ^ This is actually going to be the output data (AdvanceTeamOD), but it is of type AdvanceTeamOB for CA purposes.
 
     public AdvanceTeamUC(AdvanceTeamOB outputBoundary) {
         this.outputBoundary = outputBoundary;
     }
 
 
+    // Notice how we are using the same input data class that was passed in from the controller and NOT directly
+    // taking in data from main or the view. This is because we want to keep the use case independent of the
+    // view and main.
     public void findUser(AdvanceTeamID inputData){
         this.user = inputData.getUser();
     }
@@ -79,6 +83,10 @@ public class AdvanceTeamUC implements CheckUserPermissionIF, AdvanceTeamIB {
     }
 
     // This is the method that runs the use case.
+    // If any of the checks fail, the output data will be set to null (you'll see this in the presenter) and an
+    // exception with the string error message will be thrown.
+    // If all the checks pass, the use case runs, and an instance of the output data is returned via the output
+    // boundary - again for CA purposes.
     public AdvanceTeamOD advanceWinner(AdvanceTeamID inputData) {
         findUser(inputData);
         findBracket(inputData);
