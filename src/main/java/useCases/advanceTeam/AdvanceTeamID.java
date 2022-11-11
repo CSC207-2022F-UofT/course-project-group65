@@ -18,13 +18,6 @@ public class AdvanceTeamID {
         this.accountRepo = accountRepo;
     }
 
-//    public int getBracketID() {
-//        return bracketID;
-//    }
-//
-//    public String getUsername() {
-//        return username;
-//    }
 
     public void setBracketID(int bracketID) {
         this.bracketID = bracketID;
@@ -34,19 +27,19 @@ public class AdvanceTeamID {
         this.username = username;
     }
 
-    public void setGameID(int gameID) {
+    public void setGameIDAT(int gameID) {
         this.gameID = gameID;
     }
 
-    public int getGameID() {
+    public int getGameIDAT() {
         return gameID;
     }
 
-    public Bracket getBracket() {
+    public Bracket getBracketAT() {
         return bracketRepo.getBracket(this.bracketID);
     }
 
-    public User getUser() {
+    public User getUserAT() {
         return accountRepo.getUser(this.username);
     }
 }

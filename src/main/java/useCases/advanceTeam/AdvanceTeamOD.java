@@ -13,7 +13,7 @@ public class AdvanceTeamOD {
         this.winningTeam = winningTeam;
     }
 
-    public Bracket getBracket(){
+    public Bracket getUpdatedBracket(){
         return this.bracket;
     }
 
@@ -25,7 +25,7 @@ public class AdvanceTeamOD {
         return this.winningTeam;
     }
 
-    public void setBracket(Bracket bracket){
+    public void setUpdatedBracket(Bracket bracket){
         this.bracket = bracket;
     }
 

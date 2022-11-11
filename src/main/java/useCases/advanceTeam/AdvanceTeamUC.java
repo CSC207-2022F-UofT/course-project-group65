@@ -23,15 +23,15 @@ public class AdvanceTeamUC implements CheckUserPermissionIF, AdvanceTeamIB {
     // taking in data from main or the view. This is because we want to keep the use case independent of the
     // view and main.
     public void findUser(AdvanceTeamID inputData){
-        this.user = inputData.getUser();
+        this.user = inputData.getUserAT();
     }
 
     // This method finds the bracket, and the game in the bracket using the treeMethods class
     public void findBracket(AdvanceTeamID inputData) {
-        this.bracket = inputData.getBracket();
+        this.bracket = inputData.getBracketAT();
         String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
         this.treeMethodAccess = new TreeMethods(bracketType);
-        findGame(inputData.getGameID(), this.bracket.getFinalGame()); //I NEED TO ADD THIS TO ALL OF MY PERSONAL USECASES
+        findGame(inputData.getGameIDAT(), this.bracket.getFinalGame()); //I NEED TO ADD THIS TO ALL OF MY PERSONAL USECASES
 
     }
 
