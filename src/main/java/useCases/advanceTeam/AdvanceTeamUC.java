@@ -1,5 +1,6 @@
 package useCases.advanceTeam;
 
+import com.sun.source.tree.Tree;
 import entities.*;
 import useCases.generalInterfaces.CheckUserPermissionIF;
 import useCases.generalClasses.*;
@@ -24,12 +25,29 @@ public class AdvanceTeamUC implements CheckUserPermissionIF {
         this.user = accountRepo.getUser(username);
     }
 
+    // This method finds the bracket, and the game in the bracket using the treeMethods class
     public void findBracket(BracketRepo bracketRepo) {
         this.bracket = bracketRepo.getBracket(this.bracketID);
         String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
         this.treeMethodAccess = new TreeMethods(bracketType);
-        findGame(this.bracketID, this.bracket.getFinalGame()); //ADD THIS TO ALL THE USECASES
+        findGame(this.bracketID, this.bracket.getFinalGame()); //I NEED TO ADD THIS TO ALL OF MY PERSONAL USECASES
     }
+
+    // Quick testing of base case.
+//    public static void main(String[] args) {
+//        AdvanceTeamUC advanceTeamUC = new AdvanceTeamUC();
+//        advanceTeamUC.advanceTeam(0, "user1", 1);
+//        DefaultGame game = new DefaultGame();
+//        BracketRepo bracketRepo = new BracketRepo();
+//        DefaultBracket bracket = new DefaultBracket();
+//        bracket.setFinalGame(game);
+//        bracketRepo.addBracket(bracket);
+//        System.out.println(bracketRepo.getBracket(0));
+//
+//        advanceTeamUC.findBracket(bracketRepo);
+//        System.out.println(advanceTeamUC.bracket);
+//        System.out.println(advanceTeamUC.game);
+//    }
 
     public void findGame(int gameID, Game head) {
         this.game = this.treeMethodAccess.findGame(gameID, head);
@@ -75,6 +93,7 @@ public class AdvanceTeamUC implements CheckUserPermissionIF {
             }
         }
     }
+
 
     public boolean advanceWinner(){
         // You cannot advance a team from the final.
