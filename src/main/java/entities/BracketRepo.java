@@ -16,4 +16,8 @@ public class BracketRepo {
     public Bracket getBracket(int bracketID) {
         return brackets.get(bracketID);
     }
+
+    public HashMap<Integer, Bracket> getBrackets() {
+        return brackets;
+    }
 }

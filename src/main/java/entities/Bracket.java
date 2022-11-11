@@ -38,4 +38,11 @@ public interface Bracket {
 
     boolean getTournamentCondition();
 
+    void setPlayerInvite();
+
+    String getPlayerInvite();
+
+    void setObserverInvite();
+
+    String getObserverInvite();
 }
