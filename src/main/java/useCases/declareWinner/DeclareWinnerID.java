@@ -25,11 +25,11 @@ public class DeclareWinnerID {
         this.bracketID = bracketID;
     }
 
-    public void setUsername(String username) {
+    public void setUsernameDW(String username) {
         this.username = username;
     }
 
-    public void setGameID(int gameID) {
+    public void setGameIDDW(int gameID) {
         this.gameID = gameID;
     }
 
