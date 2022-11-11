@@ -1,53 +1,35 @@
 package useCases.advanceTeam;
-
-import com.sun.source.tree.Tree;
 import entities.*;
 import useCases.generalInterfaces.CheckUserPermissionIF;
 import useCases.generalClasses.*;
 
 import java.util.ArrayList;
 
-public class AdvanceTeamUC implements CheckUserPermissionIF {
+public class AdvanceTeamUC implements CheckUserPermissionIF, AdvanceTeamIB {
 
     public Bracket bracket;
     public User user;
-    public String username;
     public Game game;
-    public int bracketID, gameID;
     public TreeMethods treeMethodAccess;
+    public AdvanceTeamOB outputBoundary;
 
-    public void advanceTeam(int bracketID, String username, int gameID) {
-        this.username = username;
-        this.bracketID = bracketID;
-        this.gameID = gameID;
+    public AdvanceTeamUC(AdvanceTeamOB outputBoundary) {
+        this.outputBoundary = outputBoundary;
     }
-    public void findUser(AccountRepo accountRepo) {
-        this.user = accountRepo.getUser(username);
+
+
+    public void findUser(AdvanceTeamID inputData){
+        this.user = inputData.getUser();
     }
 
     // This method finds the bracket, and the game in the bracket using the treeMethods class
-    public void findBracket(BracketRepo bracketRepo) {
-        this.bracket = bracketRepo.getBracket(this.bracketID);
+    public void findBracket(AdvanceTeamID inputData) {
+        this.bracket = inputData.getBracket();
         String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
         this.treeMethodAccess = new TreeMethods(bracketType);
-        findGame(this.bracketID, this.bracket.getFinalGame()); //I NEED TO ADD THIS TO ALL OF MY PERSONAL USECASES
-    }
+        findGame(inputData.getGameID(), this.bracket.getFinalGame()); //I NEED TO ADD THIS TO ALL OF MY PERSONAL USECASES
 
-    // Quick testing of base case.
-//    public static void main(String[] args) {
-//        AdvanceTeamUC advanceTeamUC = new AdvanceTeamUC();
-//        advanceTeamUC.advanceTeam(0, "user1", 1);
-//        DefaultGame game = new DefaultGame();
-//        BracketRepo bracketRepo = new BracketRepo();
-//        DefaultBracket bracket = new DefaultBracket();
-//        bracket.setFinalGame(game);
-//        bracketRepo.addBracket(bracket);
-//        System.out.println(bracketRepo.getBracket(0));
-//
-//        advanceTeamUC.findBracket(bracketRepo);
-//        System.out.println(advanceTeamUC.bracket);
-//        System.out.println(advanceTeamUC.game);
-//    }
+    }
 
     public void findGame(int gameID, Game head) {
         this.game = this.treeMethodAccess.findGame(gameID, head);
@@ -82,7 +64,7 @@ public class AdvanceTeamUC implements CheckUserPermissionIF {
         return this.treeMethodAccess.levelNodes(head, roundNum);
     }
 
-    public void insertTeam(Team team, Game game){
+    public Game insertTeam(Team team, Game game){
         // We are inserting the team to the round immediately after the round the game is in. That is, the current
         // round plus 1 - rounds are counted backwards in the tree.
         ArrayList<Game> games = returnLevelGames(game, this.game.getGameRound() + 1);
@@ -90,23 +72,37 @@ public class AdvanceTeamUC implements CheckUserPermissionIF {
             // Find the node in tree s.t. its previous node(1/2) == game. Insert team into that node.
             if (g.getPrevGame1().getGameID() == game.getGameID() || g.getPrevGame2().getGameID() == game.getGameID()){
                 g.setTeam(team, 0);
+                return g;
             }
         }
+        return null;
     }
 
+    // This is the method that runs the use case.
+    public AdvanceTeamOD advanceWinner(AdvanceTeamID inputData) {
+        findUser(inputData);
+        findBracket(inputData);
+        if (this.game.getGameRound() + 1 >= getTreeHeight(this.game)) {
+            return this.outputBoundary.presentError("This game is in the final round.");
+        }
 
-    public boolean advanceWinner(){
-        // You cannot advance a team from the final.
-        if (this.game.getGameRound() + 1 >= getTreeHeight(this.game)){
-            return false;
+        if (!checkUserPermission(this.user)) {
+            return this.outputBoundary.presentError("You do not have permission to advance this team.");
         }
-        // Standard checks
-        if (!checkUserPermission(this.user) || !checkGame(this.game) || !checkGameWinner(this.game)) {
-            return false;
+
+        if (!checkGame(this.game)) {
+            return this.outputBoundary.presentError("This game does not exist.");
         }
-        Team winner = this.game.getWinner();
-        insertTeam(winner, this.game);
-        return true;
+
+        if (!checkGameWinner(this.game)) {
+            return this.outputBoundary.presentError("This game has not been completed.");
+        }
+
+        Team winningTeam = this.game.getWinner();
+        Game advancedGame = insertTeam(winningTeam, this.game);
+
+        AdvanceTeamOD outputData = new AdvanceTeamOD(this.bracket, advancedGame, winningTeam);
+        return this.outputBoundary.presentSuccess(outputData);
     }
 
 }
