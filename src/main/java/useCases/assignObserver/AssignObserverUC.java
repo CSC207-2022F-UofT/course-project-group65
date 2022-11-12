@@ -4,9 +4,11 @@ import entities.Bracket;
 import entities.Game;
 import entities.User;
 import useCases.generalInterfaces.CheckUserPermissionIF;
+import useCases.generalClasses.*;
 
 public class AssignObserverUC implements CheckUserPermissionIF, AssignObserverIB {
-    final AssignObserverOB outputBound;
+    private final AssignObserverOB outputBound;
+    private Bracket bracket;
 
     public AssignObserverUC(AssignObserverOB outputBound){
         this.outputBound = outputBound;
@@ -21,11 +23,13 @@ public class AssignObserverUC implements CheckUserPermissionIF, AssignObserverIB
      * create a message saying the observer was successfully added
      */
     public AssignObserverOD assignObserver(AssignObserverID input){
-        if (!checkUserPermission(input.getCurrUser(), input.getTournament())){
+        bracket = input.getTournament();
+        if (!checkUserPermission(input.getCurrUser())){
             return outputBound.prepareFailView("You do not have permission to preform this action.");
         }
-        User ref = findReferee(input.getTournament(), input.getAssignee());
-        Game game = findGame(input.getTournament().getFinalGame(), input.getGameID());
+        User ref = findReferee(bracket, input.getAssignee());
+        TreeMethods treeMethodAccess = new DefaultBracketMethods();
+        Game game = findGame(treeMethodAccess, input.getGameID(), bracket.getFinalGame());
         if (ref == null){
             return outputBound.prepareFailView("Assignee is not an Observer.");
         }
@@ -49,23 +53,12 @@ public class AssignObserverUC implements CheckUserPermissionIF, AssignObserverIB
         return null;
     }
 
-    private Game findGame(Game game, int gameID){
-        if (game == null || game.getGameID() == gameID){
-            return game;
-        }
-        else {
-            Game prev = findGame(game.getPrevGame1(), gameID);
-            if (prev == null) {
-                return findGame(game.getPrevGame2(), gameID);
-            }
-            else {
-                return prev;
-            }
-        }
+    public Game findGame(TreeMethods treeMethodAccess, int gameID, Game head) {
+        return treeMethodAccess.findGame(gameID, head);
     }
 
     @Override
-    public boolean checkUserPermission(User user, Bracket tournament) {
-        return user.getBracketRole(tournament.getTournamentID()).equals("Overseer");
+    public boolean checkUserPermission(User user) {
+        return user.getBracketRole(bracket.getTournamentID()).equals("Overseer");
     }
 }
