@@ -1,8 +1,9 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class DefaultBracket implements Bracket {
+public class DefaultBracket implements Bracket, Serializable {
     private String tournamentName;
     private int tournamentID;
     private Game finalGame;

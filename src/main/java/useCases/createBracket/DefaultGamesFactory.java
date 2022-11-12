@@ -236,57 +236,57 @@ public class DefaultGamesFactory implements GamesFactory {
 //            System.out.println(team.getTeamName());
 //        }
 
-    public static void main(String[] args) {
-//        Testing tree access
-        ArrayList<Team> teams = new ArrayList<Team>();
-        DefaultTeamFactory teamFactory = new DefaultTeamFactory();
-        for (int i = 0; i < 4; i++) {
-            Team team = teamFactory.getTeam("Default");
-            teams.add(team);
-        }
-
-        System.out.println("From List");
-        for (Team team : teams) {
-            System.out.println(team.getTeamName());
-        }
-
-        System.out.println("\n");
-
-        DefaultGamesFactory factory = new DefaultGamesFactory();
-        DefaultGame headGame = factory.getGames(4, teams);
-
-        ArrayList<Team> t = headGame.getPrevGame1().getTeams();
-        ArrayList<Team> t2 = headGame.getPrevGame2().getTeams();
-
-        Team a = t.get(0);
-        Team b = t.get(1);
-        Team c = t2.get(0);
-        Team d = t2.get(1);
-
-        System.out.println("From Tree");
-        System.out.println(a.getTeamName());
-        System.out.println(b.getTeamName());
-        System.out.println(c.getTeamName());
-        System.out.println(d.getTeamName());
-        System.out.println("\n");
-
-        a.setTeamName("HELLO");
-        b.setTeamName("WORLD");
-        c.setTeamName("IT'S");
-        d.setTeamName("ME");
-
-        System.out.println("From Tree");
-        System.out.println(a.getTeamName());
-        System.out.println(b.getTeamName());
-        System.out.println(c.getTeamName());
-        System.out.println(d.getTeamName());
-        System.out.println("\n");
-
-        System.out.println("From List");
-        for (Team team : teams) {
-            System.out.println(team.getTeamName());
-        }
-
-    }
+//    public static void main(String[] args) {
+////        Testing tree access
+//        ArrayList<Team> teams = new ArrayList<Team>();
+//        DefaultTeamFactory teamFactory = new DefaultTeamFactory();
+//        for (int i = 0; i < 4; i++) {
+//            Team team = teamFactory.getTeam("Default");
+//            teams.add(team);
+//        }
+//
+//        System.out.println("From List");
+//        for (Team team : teams) {
+//            System.out.println(team.getTeamName());
+//        }
+//
+//        System.out.println("\n");
+//
+//        DefaultGamesFactory factory = new DefaultGamesFactory();
+//        DefaultGame headGame = factory.getGames(4, teams);
+//
+//        ArrayList<Team> t = headGame.getPrevGame1().getTeams();
+//        ArrayList<Team> t2 = headGame.getPrevGame2().getTeams();
+//
+//        Team a = t.get(0);
+//        Team b = t.get(1);
+//        Team c = t2.get(0);
+//        Team d = t2.get(1);
+//
+//        System.out.println("From Tree");
+//        System.out.println(a.getTeamName());
+//        System.out.println(b.getTeamName());
+//        System.out.println(c.getTeamName());
+//        System.out.println(d.getTeamName());
+//        System.out.println("\n");
+//
+//        a.setTeamName("HELLO");
+//        b.setTeamName("WORLD");
+//        c.setTeamName("IT'S");
+//        d.setTeamName("ME");
+//
+//        System.out.println("From Tree");
+//        System.out.println(a.getTeamName());
+//        System.out.println(b.getTeamName());
+//        System.out.println(c.getTeamName());
+//        System.out.println(d.getTeamName());
+//        System.out.println("\n");
+//
+//        System.out.println("From List");
+//        for (Team team : teams) {
+//            System.out.println(team.getTeamName());
+//        }
+//
+//    }
 }
 

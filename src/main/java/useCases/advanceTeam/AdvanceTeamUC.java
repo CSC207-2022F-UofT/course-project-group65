@@ -13,9 +13,11 @@ public class AdvanceTeamUC implements CheckUserPermissionIF, AdvanceTeamIB {
     public TreeMethods treeMethodAccess;
     public AdvanceTeamOB outputBoundary;
     // ^ This is actually going to be the output data (AdvanceTeamOD), but it is of type AdvanceTeamOB for CA purposes.
+    public AdvanceTeamGateway gateway;
 
-    public AdvanceTeamUC(AdvanceTeamOB outputBoundary) {
+    public AdvanceTeamUC(AdvanceTeamOB outputBoundary, AdvanceTeamGateway gateway) {
         this.outputBoundary = outputBoundary;
+        this.gateway = gateway;
     }
 
 
@@ -108,6 +110,14 @@ public class AdvanceTeamUC implements CheckUserPermissionIF, AdvanceTeamIB {
 
         Team winningTeam = this.game.getWinner();
         Game advancedGame = insertTeam(winningTeam, this.game);
+
+        // This is where we would save the bracket to the database, but we don't have a database yet.
+        AdvanceTeamDSID dsInputData = new AdvanceTeamDSID(inputData.getBracketRepoAT());
+        try {
+            this.gateway.save(dsInputData);
+        } catch (Exception e) {
+            return this.outputBoundary.presentError("There was an error saving the bracket to the database.");
+        }
 
         AdvanceTeamOD outputData = new AdvanceTeamOD(this.bracket, advancedGame, winningTeam);
         return this.outputBoundary.presentSuccess(outputData);

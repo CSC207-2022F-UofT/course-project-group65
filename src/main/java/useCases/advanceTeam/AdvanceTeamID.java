@@ -35,6 +35,14 @@ public class AdvanceTeamID {
         return gameID;
     }
 
+    public BracketRepo getBracketRepoAT() {
+        return bracketRepo;
+    }
+
+    public AccountRepo getAccountRepoAT() {
+        return accountRepo;
+    }
+
     public Bracket getBracketAT() {
         return bracketRepo.getBracket(this.bracketID);
     }

@@ -2,7 +2,9 @@ package useCases.createBracket;
 
 import entities.DefaultTeam;
 
-public class DefaultTeamFactory implements TeamFactory {
+import java.io.Serializable;
+
+public class DefaultTeamFactory implements TeamFactory, Serializable {
     /*
      * This is a factory for creating a team.
      */

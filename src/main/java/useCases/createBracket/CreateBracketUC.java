@@ -2,12 +2,13 @@ package useCases.createBracket;
 
 import entities.*;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
-public class CreateBracketUC {
+public class CreateBracketUC implements Serializable {
 /*
     * This is a use case for creating a bracket.
  */

@@ -1,9 +1,10 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DefaultGame implements Game{
+public class DefaultGame implements Game, Serializable {
     private int gameID;
     private int gameRound;
     private int numTeams;

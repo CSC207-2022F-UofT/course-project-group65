@@ -1,11 +1,12 @@
 package entities;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class DefaultUser implements User{
+public class DefaultUser implements User, Serializable {
     private String username;
     private String password;
     private HashMap<Integer, String> bracketRole;
