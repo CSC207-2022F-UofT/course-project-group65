@@ -3,6 +3,8 @@ package database;
 import java.io.*;
 import entities.BracketRepo;
 
+//UNUSED CLASS. KEPT FOR ARCHIVAL PURPOSES
+
 public class BracketsReadWriter implements BracketReadWriterIF {
 
     @Override

@@ -4,6 +4,8 @@ import entities.*;
 
 import java.io.IOException;
 
+//UNUSED INTERFACE. KEPT FOR ARCHIVAL PURPOSES
+
 public interface BracketReadWriterIF {
     /**
      * @param filename location of ser file
