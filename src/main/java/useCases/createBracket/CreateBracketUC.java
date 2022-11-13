@@ -2,17 +2,25 @@ package useCases.createBracket;
 
 import entities.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.Objects;
 
-public class CreateBracketUC {
+public class CreateBracketUC implements CreateBracketIB{
 /*
     * This is a use case for creating a bracket.
  */
     private int bracketID = 0;
-    private BracketAssembler assembler;
+    private CreateBracketOB outputBoundary;
+    private String currentUser;
+    private AccountRepo accounts;
+    private BracketRepo brackets;
+
+    public CreateBracketUC(CreateBracketOB advanceTeamOB, String currentUser, AccountRepo accounts, BracketRepo brackets) {
+        this.outputBoundary = advanceTeamOB;
+        this.currentUser = currentUser;
+        this.accounts = accounts;
+        this.brackets = brackets;
+    }
 
     public int generateBracketID() {
         this.bracketID++;
@@ -29,14 +37,14 @@ public class CreateBracketUC {
 //        return this.assembler.getBracket();
 //    }
 
-    public Bracket createBracket(String username, AccountRepo accounts, String bracketType, String bracketName,
+    public Bracket createBracket(String bracketType, String bracketName,
                                  int numTeams, int maxTeamSize, int winCondition) {
         int tournamentID = generateBracketID();
-        User creator = accounts.getUser(username);
-        this.assembler = new BracketAssembler();
-        this.assembler.assembleBracket(bracketType, creator, bracketName, tournamentID,
+        User creator = accounts.getUser(currentUser);
+        BracketAssembler assembler = new BracketAssembler();
+        assembler.assembleBracket(bracketType, creator, bracketName, tournamentID,
                 numTeams, maxTeamSize, winCondition);
-        return this.assembler.getBracket();
+        return assembler.getBracket();
     }
 
     public int storeBracket(BracketRepo repo, Bracket bracket) {
@@ -44,6 +52,28 @@ public class CreateBracketUC {
         repo.addBracket(bracket);
         return bracket.getTournamentID();
     }
+
+    public CreateBracketOD create(CreateBracketID createBracketID) {
+        Bracket bracket = createBracket(
+                createBracketID.getBracketType(), createBracketID.getBracketName(),
+                createBracketID.getNumTeams(), createBracketID.getMaxTeamSize(),
+                createBracketID.getWinCondition());
+
+        int bracketID = storeBracket(brackets, bracket);
+        String bracketType = createBracketID.getBracketType();
+        ArrayList<String> teams = new ArrayList<>();
+        for (Team team : bracket.getTeams()) {
+            teams.add(team.getTeamName());
+        }
+        CreateBracketOD outputData = new CreateBracketOD(currentUser, accounts, brackets, bracketType, bracketID, teams);
+
+        if (Objects.equals(bracket.getTournamentName(), "")){
+            return this.outputBoundary.presentError("Please enter a name for your bracket.");
+        } else {
+            return this.outputBoundary.presentSuccess(outputData);
+        }
+    }
+
 
 //    public static void main(String[] args) {
 //        HashMap<String, Integer> passwords = new HashMap<String, Integer>();

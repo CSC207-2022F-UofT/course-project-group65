@@ -9,9 +9,12 @@ public class MainFrame extends JFrame {
     private JButton btnOK;
     private JButton btnClear;
     private JPanel mainPanel;
+    private JLabel test;
 
     public MainFrame() {
+        int bracketID = 12;
         setContentPane(mainPanel);
+        test.setText("Bracket ID: " + bracketID);
         setTitle("Welcome");
         setSize(450, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
