@@ -26,16 +26,16 @@ public class enterBracketInfo extends JFrame implements ActionListener {
 
         bracketType.addItem("Default");
 
-        numTeams.addItem(2);
+//        numTeams.addItem(2);
         numTeams.addItem(4);
-        numTeams.addItem(8);
+//        numTeams.addItem(8);
 //        numTeams.addItem(16);
 
         for (int i = 1; i < 14; i++) {
             winCondition.addItem(i);
         }
 
-        for (int i = 1; i < 11; i++) {
+        for (int i = 1; i < 6; i++) {
             teamSizes.addItem(i);
         }
 

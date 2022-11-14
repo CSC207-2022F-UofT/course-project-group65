@@ -27,15 +27,6 @@ public class CreateBracketUC implements CreateBracketIB{
         return this.bracketID;
     }
 
-//    USER HAS A DEPENDENCY ISSUE I BELIEVE
-//    public Bracket createBracket(User creator, String bracketType, String bracketName,
-//                           int numTeams, int maxTeamSize, int winCondition) {
-//        int tournamentID = generateBracketID();
-//        this.assembler = new BracketAssembler();
-//        this.assembler.assembleBracket(bracketType, creator, bracketName, tournamentID,
-//                numTeams, maxTeamSize, winCondition);
-//        return this.assembler.getBracket();
-//    }
 
     public Bracket createBracket(String bracketType, String bracketName,
                                  int numTeams, int maxTeamSize, int winCondition) {
