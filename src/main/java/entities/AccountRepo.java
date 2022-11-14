@@ -22,4 +22,8 @@ public class AccountRepo {
         }
         return passwords;
     }
+
+    public AccountRepo() {
+        this.users = new HashMap<>();
+    }
 }
