@@ -3,6 +3,7 @@ package screens.createBracket;
 import useCases.createBracket.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -44,6 +45,7 @@ public class enterBracketInfo extends JFrame implements ActionListener {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
+        this.setPreferredSize(new Dimension(800, 600));
         this.pack();
     }
 
@@ -64,11 +66,13 @@ public class enterBracketInfo extends JFrame implements ActionListener {
             System.out.println(winCondition);
             System.out.println(teamSizes);
 
-            CreateBracketOD outputData = createBracketController.create(bracketType, bracketName, numTeams, teamSizes, winCondition);
+            CreateBracketOD outputData = createBracketController.create(bracketType, bracketName, numTeams, teamSizes,
+                    winCondition);
 
 
         } catch (Exception exception) {
             System.out.println("Error: " + exception);
+            JOptionPane.showMessageDialog(this, exception.getMessage());
         }
     }
 }

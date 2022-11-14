@@ -4,6 +4,7 @@ import entities.AccountRepo;
 import entities.BracketRepo;
 import entities.DefaultUser;
 import entities.User;
+import screens.bracketView;
 import useCases.createBracket.CreateBracketIB;
 import useCases.createBracket.CreateBracketOB;
 import useCases.createBracket.CreateBracketUC;
@@ -22,6 +23,9 @@ public class mainTest {
         CreateBracketController controller = new CreateBracketController(interactor);
 
         enterBracketInfo frame = new enterBracketInfo(controller);
+        bracketView view = new bracketView();
+
+//        view.setVisible(true);
         frame.setVisible(true);
     }
 }
