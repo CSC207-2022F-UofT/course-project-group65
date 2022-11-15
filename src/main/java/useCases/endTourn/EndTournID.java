@@ -25,6 +25,7 @@ public class EndTournID {
         return this.bracket;
     }
 
+    public User getUser() {return this.user;}
     public Game getFinalGame() { return this.bracket.getFinalGame(); }
 
     public Team getFinalWinner() {

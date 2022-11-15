@@ -1,6 +1,7 @@
 package useCases.endTourn;
 
 import entities.Bracket;
+import entities.User;
 
 import java.util.Objects;
 import java.lang.Math;
@@ -9,6 +10,7 @@ import java.lang.Math;
 public class EndTournUC implements EndTournIB{
     public EndTournOB outputBoundary;
     public Bracket bracket;
+    public User user;
 
     public EndTournUC(EndTournOB outputBoundary) {
         this.outputBoundary = outputBoundary;
@@ -17,6 +19,9 @@ public class EndTournUC implements EndTournIB{
     public void findBracket(EndTournID inputData) {
         this.bracket = inputData.getBracket();}
 
+    public void findUser(EndTournID inputData) {
+        this.user = inputData.getUser();
+    }
     public boolean checkUserRole(EndTournID inputData) {
         return (Objects.equals(inputData.getUserRole(), "Overseer"));
     }
@@ -47,7 +52,7 @@ public class EndTournUC implements EndTournIB{
         }
 
         inputData.getBracket().setTournamentCondition(false);
-        EndTournOD outputData = new EndTournOD(this.bracket);
+        EndTournOD outputData = new EndTournOD(this.bracket, this.user);
         return this.outputBoundary.presentSuccess(outputData);
     }
 

@@ -2,12 +2,14 @@ package useCases.startTourn;
 
 import entities.Bracket;
 import entities.Game;
+import entities.User;
 
 import java.util.Objects;
 
 public class StartTournUC implements StartTournIB{
     public StartTournOB outputBoundary;
     public Bracket bracket;
+    public User user;
 
     public StartTournUC(StartTournOB outputBoundary){
         this.outputBoundary = outputBoundary;
@@ -15,6 +17,10 @@ public class StartTournUC implements StartTournIB{
 
     public void findBracket(StartTournID inputData) {
         this.bracket = inputData.getBracket();
+    }
+
+    public void findUser(StartTournID inputdata) {
+        this.user = inputdata.getUser();
     }
 
     public boolean checkUserRole(StartTournID inputData) {
@@ -81,7 +87,7 @@ public class StartTournUC implements StartTournIB{
 
         inputData.getBracket().setTournamentCondition(true);
 
-        StartTournOD outputData = new StartTournOD(this.bracket);
+        StartTournOD outputData = new StartTournOD(this.bracket, this.user);
         return this.outputBoundary.presentSuccess(outputData);
     }
 }

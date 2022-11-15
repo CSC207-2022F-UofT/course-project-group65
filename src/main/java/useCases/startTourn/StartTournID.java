@@ -21,6 +21,8 @@ public class StartTournID {
         return this.bracket;
     }
 
+    public User getUser() { return this.user;}
+
     public String getUserRole() {
         return user.getBracketRole(bracket.getTournamentID());
     }
