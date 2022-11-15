@@ -1,11 +1,15 @@
-package useCases.generalClasses;
-import entities.*;
-
+package useCases.generalClasses.traversalStrategies;
+import entities.Game;
 import java.util.ArrayList;
 
 public class TreeMethods {
 
     String bracketType;
+
+    /**
+     * Access to for different tree methods based on bracket type.
+     * @param bracketType The type of bracket to be used
+     */
 
     public TreeMethods(String bracketType) {
         this.bracketType = bracketType;
@@ -14,17 +18,15 @@ public class TreeMethods {
     public Game findGame(int gameID, Game head) {
         if (this.bracketType.equals("Default")) {
             return new DefaultBracketMethods().defaultFindGame(gameID, head);
-            //return defaultFindGame(gameID, head);
         }
-        return null; // Throw bracketType notimplmented exception
+        throw new RuntimeException("Bracket type not implemented");
     }
 
     public ArrayList<Game> levelNodes(Game head, int roundNum) {
         if (this.bracketType.equals("Default")) {
-            //return defaultLevelNodes(head, roundNum);
             return new DefaultBracketMethods().defaultLevelNodes(head, roundNum);
         }
-        return new ArrayList<Game>(); // Throw bracketType notimplmented exception
+        throw new RuntimeException("Bracket type not implemented");
     }
 
     public int findHeight(Game head) {
@@ -32,7 +34,7 @@ public class TreeMethods {
             //return defaultFindHeight(head);
             return new DefaultBracketMethods().defaultFindHeight(head);
         }
-        return -1; // Throw bracketType notimplmented exception
+        throw new RuntimeException("Bracket type not implemented");
     }
 }
 

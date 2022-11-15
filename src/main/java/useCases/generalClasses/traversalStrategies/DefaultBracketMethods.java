@@ -1,4 +1,4 @@
-package useCases.generalClasses;
+package useCases.generalClasses.traversalStrategies;
 
 import entities.Game;
 
@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class DefaultBracketMethods {
 
+
+    // Find the game with the given gameID in the tree
     public Game defaultFindGame(int gameID, Game head) {
         if (head == null) {
             return null;
@@ -20,6 +22,7 @@ public class DefaultBracketMethods {
         }
     }
 
+    // Find all the games in the given round/tree level
     public ArrayList<Game> defaultLevelNodes(Game head, int roundNum) {
         ArrayList<Game> games = new ArrayList<>();
         if (head == null) {
@@ -39,6 +42,7 @@ public class DefaultBracketMethods {
         }
     }
 
+    // Find the height of the tree
     public int defaultFindHeight(Game head) {
         if (head == null) {
             return 0;

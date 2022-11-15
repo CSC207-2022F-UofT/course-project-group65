@@ -10,6 +10,12 @@ public class AdvanceTeamFileWriter implements AdvanceTeamGateway {
 
     private final String filename;
 
+    /**
+     * Construct a new AdvanceTeamFileWriter that will write to the given file.
+     *
+     * @param filename The file to write to
+     */
+
     public AdvanceTeamFileWriter(String filename) {
         this.filename = filename;
     }

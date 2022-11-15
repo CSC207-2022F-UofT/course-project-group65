@@ -1,21 +1,15 @@
 package useCases.advanceTeam;
 
-import entities.*;
-
 public class AdvanceTeamID {
     private int bracketID;
     private String username;
     private int gameID;
-    private BracketRepo bracketRepo;
-    private AccountRepo accountRepo;
 
 
-    public AdvanceTeamID(int bracketID, String username, int gameID, BracketRepo bracketRepo, AccountRepo accountRepo) {
+    public AdvanceTeamID(int bracketID, String username, int gameID) {
         this.bracketID = bracketID;
         this.username = username;
         this.gameID = gameID;
-        this.bracketRepo = bracketRepo;
-        this.accountRepo = accountRepo;
     }
 
 
@@ -23,8 +17,16 @@ public class AdvanceTeamID {
         this.bracketID = bracketID;
     }
 
-    public void setUsername(String username) {
+    public void setUsernameAT(String username) {
         this.username = username;
+    }
+
+    public String getUsernameAT() {
+        return this.username;
+    }
+
+    public int getBracketIDAT() {
+        return this.bracketID;
     }
 
     public void setGameIDAT(int gameID) {
@@ -33,21 +35,5 @@ public class AdvanceTeamID {
 
     public int getGameIDAT() {
         return gameID;
-    }
-
-    public BracketRepo getBracketRepoAT() {
-        return bracketRepo;
-    }
-
-    public AccountRepo getAccountRepoAT() {
-        return accountRepo;
-    }
-
-    public Bracket getBracketAT() {
-        return bracketRepo.getBracket(this.bracketID);
-    }
-
-    public User getUserAT() {
-        return accountRepo.getUser(this.username);
     }
 }

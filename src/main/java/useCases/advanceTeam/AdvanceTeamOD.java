@@ -1,5 +1,8 @@
 package useCases.advanceTeam;
-import entities.*;
+
+import entities.Bracket;
+import entities.Game;
+import entities.Team;
 
 public class AdvanceTeamOD {
 

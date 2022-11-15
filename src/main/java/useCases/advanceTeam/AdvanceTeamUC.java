@@ -1,76 +1,82 @@
 package useCases.advanceTeam;
 import entities.*;
-import useCases.generalInterfaces.CheckUserPermissionIF;
-import useCases.generalClasses.*;
-
+import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
+import useCases.generalClasses.traversalStrategies.TreeMethods;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class AdvanceTeamUC implements CheckUserPermissionIF, AdvanceTeamIB {
+public class AdvanceTeamUC implements AdvanceTeamIB {
 
     public Bracket bracket;
     public User user;
     public Game game;
     public TreeMethods treeMethodAccess;
     public AdvanceTeamOB outputBoundary;
-    // ^ This is actually going to be the output data (AdvanceTeamOD), but it is of type AdvanceTeamOB for CA purposes.
     public AdvanceTeamGateway gateway;
+    private final BracketRepo bracketRepo;
+    private final AccountRepo accountRepo;
 
-    public AdvanceTeamUC(AdvanceTeamOB outputBoundary, AdvanceTeamGateway gateway) {
+    /**
+     * Construct an AdvanceTeamUC interactor instance with the given BracketRepo and AccountRepo.
+     *
+     * @param bracketRepo    The BracketRepo to use
+     * @param accountRepo    The AccountRepo to use
+     * @param gateway        The gateway to use
+     * @param outputBoundary The output boundary to use
+     */
+
+    public AdvanceTeamUC(AdvanceTeamOB outputBoundary, AdvanceTeamGateway gateway,
+                         BracketRepo bracketRepo, AccountRepo accountRepo) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
+        this.bracketRepo = bracketRepo;
+        this.accountRepo = accountRepo;
     }
 
-
-    // Notice how we are using the same input data class that was passed in from the controller and NOT directly
-    // taking in data from main or the view. This is because we want to keep the use case independent of the
-    // view and main.
-    public void findUser(AdvanceTeamID inputData){
-        this.user = inputData.getUserAT();
+    private void findUser(AdvanceTeamID inputData){
+        this.user = this.accountRepo.getUser(inputData.getUsernameAT());
     }
 
-    // This method finds the bracket, and the game in the bracket using the treeMethods class
-    public void findBracket(AdvanceTeamID inputData) {
-        this.bracket = inputData.getBracketAT();
+    private void findBracket(AdvanceTeamID inputData) {
+        int bracketID = inputData.getBracketIDAT();
+        this.bracket = this.bracketRepo.getBracket(bracketID);
         String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
         this.treeMethodAccess = new TreeMethods(bracketType);
-        findGame(inputData.getGameIDAT(), this.bracket.getFinalGame()); //I NEED TO ADD THIS TO ALL OF MY PERSONAL USECASES
-
     }
 
-    public void findGame(int gameID, Game head) {
+    private void findGame(int gameID, Game head) {
         this.game = this.treeMethodAccess.findGame(gameID, head);
     }
 
+    private boolean checkUserPermission(User user) {
+        PermissionChecker permissionChecker = new PermissionChecker();
+        ArrayList<String> permittedUsers = new ArrayList<>(Arrays.asList("Observer", "Overseer"));
+        return permissionChecker.checkUserPermission(permittedUsers, user, this.bracket.getTournamentID());
+    }
 
-    public boolean checkUserPermission(User user) {
-        String userRole = user.getBracketRole(this.bracket.getTournamentID());
+    private boolean checkObserverAssigned(User user) {
         User assignedObserver = this.game.getObserver();
-        if (userRole.equals("Overseer")) {
-            return true;
-        } else if (userRole.equals("Observer")) {
-            return user.getUsername().equals(assignedObserver.getUsername());
-        } else {
-            return false;
-        }
+        return user.getUsername().equals(assignedObserver.getUsername());
     }
 
-    public boolean checkGame(Game game) {
-        return this.game != null;
+    private boolean checkGame(Game game) {
+        return game != null;
     }
 
-    public boolean checkGameWinner(Game game) {
+    private boolean checkGameWinner(Game game) {
         return game.getGameStatus();
     }
 
-    public int getTreeHeight(Game head){
+    private int getTreeHeight(Game head){
         return this.treeMethodAccess.findHeight(head);
     }
 
-    public ArrayList<Game> returnLevelGames(Game head, int roundNum){
+    private ArrayList<Game> returnLevelGames(Game head, int roundNum){
         return this.treeMethodAccess.levelNodes(head, roundNum);
     }
 
-    public Game insertTeam(Team team, Game game){
+    // This method is used to insert the winning team into the next game in the bracket
+    private Game insertTeam(Team team, Game game){
         // We are inserting the team to the round immediately after the round the game is in. That is, the current
         // round plus 1 - rounds are counted backwards in the tree.
         ArrayList<Game> games = returnLevelGames(game, this.game.getGameRound() + 1);
@@ -84,20 +90,26 @@ public class AdvanceTeamUC implements CheckUserPermissionIF, AdvanceTeamIB {
         return null;
     }
 
-    // This is the method that runs the use case.
-    // If any of the checks fail, the output data will be set to null (you'll see this in the presenter) and an
-    // exception with the string error message will be thrown.
-    // If all the checks pass, the use case runs, and an instance of the output data is returned via the output
-    // boundary - again for CA purposes.
+    /**
+     * Advance the team of the given game to the next round, and return the output data if checks pass, and save
+     * the updated bracket repo to the gateway.
+     *
+     * @param inputData The input data to use
+     */
     public AdvanceTeamOD advanceWinner(AdvanceTeamID inputData) {
         findUser(inputData);
         findBracket(inputData);
+        findGame(inputData.getGameIDAT(), this.bracket.getFinalGame());
         if (this.game.getGameRound() + 1 >= getTreeHeight(this.game)) {
             return this.outputBoundary.presentError("This game is in the final round.");
         }
 
         if (!checkUserPermission(this.user)) {
             return this.outputBoundary.presentError("You do not have permission to advance this team.");
+        }
+
+        if (!checkObserverAssigned(this.user)) {
+            return this.outputBoundary.presentError("You are not assigned to this game.");
         }
 
         if (!checkGame(this.game)) {
@@ -111,16 +123,15 @@ public class AdvanceTeamUC implements CheckUserPermissionIF, AdvanceTeamIB {
         Team winningTeam = this.game.getWinner();
         Game advancedGame = insertTeam(winningTeam, this.game);
 
-        // This is where we would save the bracket to the database, but we don't have a database yet.
-        AdvanceTeamDSID dsInputData = new AdvanceTeamDSID(inputData.getBracketRepoAT());
+        // This is where we would save the bracket to the database, but we don't have a database. We save locally.
+        AdvanceTeamDSID dsInputData = new AdvanceTeamDSID(this.bracketRepo);
         try {
             this.gateway.save(dsInputData);
         } catch (Exception e) {
-            return this.outputBoundary.presentError("There was an error saving the bracket to the database.");
+            return this.outputBoundary.presentError("There was an error saving the information.");
         }
 
         AdvanceTeamOD outputData = new AdvanceTeamOD(this.bracket, advancedGame, winningTeam);
         return this.outputBoundary.presentSuccess(outputData);
     }
-
 }
