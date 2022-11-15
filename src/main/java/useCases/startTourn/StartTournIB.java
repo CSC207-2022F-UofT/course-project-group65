@@ -1,5 +1,5 @@
 package useCases.startTourn;
 
 public interface StartTournIB {
-    StartTournOD startTourn(StartTournID advanceTeamID);
+    StartTournOD startTourn(StartTournID startTournID);
 }

@@ -1,6 +1,5 @@
 package useCases.endTourn;
 
 public interface EndTournIB {
-
-    EndTournOD endTourn(EndTournID advanceTeamID);
+    EndTournOD endTourn(EndTournID endTournID);
 }
