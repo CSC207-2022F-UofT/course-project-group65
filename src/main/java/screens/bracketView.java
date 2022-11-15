@@ -47,7 +47,6 @@ public class bracketView extends JFrame {
     private JButton assignGame4;
 //    Overseer Controls
     private JButton startTournamentButton;
-    private JButton startNextRoundButton;
     private JButton declareWinnerEndTournamentButton;
 
     public bracketView() {
