@@ -7,19 +7,23 @@ public class ChangePointsID {
     private String username;
     private int gameID;
     private int newPoints;
-    private BracketRepo bracketRepo;
-    private AccountRepo accountRepo;
-    private Team team;
+    // private Team team;
+    private String teamName;
 
-    public ChangePointsID(int bracketID, String username, int gameID, int newPoints, BracketRepo bracketRepo,
-                          AccountRepo accountRepo, Team team) {
+    public ChangePointsID(int bracketID, String username, int gameID, int newPoints, String teamName) {
         this.bracketID = bracketID;
         this.username = username;
         this.gameID = gameID;
         this.newPoints = newPoints;
-        this.bracketRepo = bracketRepo;
-        this.accountRepo = accountRepo;
-        this.team = team;
+        this.teamName = teamName;
+    }
+
+    public void setTeamNameCPID(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public String getTeamNameCPID() {
+        return this.teamName;
     }
 
     public void setBracketIDCP(int bracketID) {
@@ -30,6 +34,14 @@ public class ChangePointsID {
         this.username = username;
     }
 
+    public String getUsernameCP() {
+        return this.username;
+    }
+
+    public int getBracketIDCP() {
+        return this.bracketID;
+    }
+
     public void setGameIDCP(int gameID) {
         this.gameID = gameID;
     }
@@ -38,28 +50,13 @@ public class ChangePointsID {
         this.newPoints = newPoints;
     }
 
-    public void setTeamCP(Team team) {
-        this.team = team;
-    }
-
     public int getGameIDCP() {
         return gameID;
-    }
-
-    public Bracket getBracketCP() {
-        return bracketRepo.getBracket(this.bracketID);
-    }
-
-    public User getUserCP() {
-        return accountRepo.getUser(this.username);
     }
 
     public int getNewPointsCP() {
         return newPoints;
     }
 
-    public Team getTeamCP() {
-        return team;
-    }
 
 }
