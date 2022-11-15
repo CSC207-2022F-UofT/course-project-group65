@@ -4,7 +4,7 @@ import useCases.startTourn.StartTournOD;
 
 public interface EndTournOB {
 
-    public EndTournOD presentSuccess(String successMessage);
+    public EndTournOD presentSuccess(EndTournOD outputData);
 
     public EndTournOD presentError(String errorMessage);
 }

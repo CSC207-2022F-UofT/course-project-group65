@@ -1,5 +1,14 @@
 package useCases.startTourn;
 
+import entities.Bracket;
+
 public class StartTournOD {
-    // I'm not sure if we need OD for this UC.
+    private Bracket bracket;
+    public StartTournOD(Bracket bracket) {
+        this.bracket = bracket;
+    }
+
+    public Bracket getBracket() {
+        return this.bracket;
+    }
 }

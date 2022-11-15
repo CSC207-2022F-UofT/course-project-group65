@@ -1,14 +1,20 @@
 package useCases.startTourn;
 
+import entities.Bracket;
 import entities.Game;
 
 import java.util.Objects;
 
 public class StartTournUC implements StartTournIB{
     public StartTournOB outputBoundary;
+    public Bracket bracket;
 
     public StartTournUC(StartTournOB outputBoundary){
         this.outputBoundary = outputBoundary;
+    }
+
+    public void findBracket(StartTournID inputData) {
+        this.bracket = inputData.getBracket();
     }
 
     public boolean checkUserRole(StartTournID inputData) {
@@ -56,24 +62,26 @@ public class StartTournUC implements StartTournIB{
     /// start the tournament anyway. but for now I don't know how to implement that so I'm just leaving it.
     @Override
     public StartTournOD startTourn(StartTournID inputData) {
+        findBracket(inputData);
 //        if (!checkUserRole(inputData)) {
 //            return this.outputBoundary.presentError("You do not have permission to start the tournament.");
 //        }
 //
 //        if (!checkNumTeams(inputData)) {
-//            return this.outputBoundary.presentError("");
+//            return this.outputBoundary.presentError("The number of teams is invalid.");
 //        }
 //
 //        if (!checkGameObserver(inputData)) {
-//
+//              return this.outputBoundary.presentError("There is at least one game that does not have an observer assigned.");
 //        }
 //
 //        if (!checkTeamFull(inputData)) {
-//
+//              return this.outputBoundary.presentError("The teams are not full.");
 //        }
 
         inputData.getBracket().setTournamentCondition(true);
 
-        return this.outputBoundary.presentSuccess("The tournament has been started successfully.");
+        StartTournOD outputData = new StartTournOD(this.bracket);
+        return this.outputBoundary.presentSuccess(outputData);
     }
 }

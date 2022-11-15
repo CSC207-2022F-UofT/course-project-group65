@@ -1,16 +1,21 @@
 package useCases.endTourn;
 
+import entities.Bracket;
+
 import java.util.Objects;
 import java.lang.Math;
 
-import static java.lang.Math.log;
 
 public class EndTournUC implements EndTournIB{
     public EndTournOB outputBoundary;
+    public Bracket bracket;
 
     public EndTournUC(EndTournOB outputBoundary) {
         this.outputBoundary = outputBoundary;
     }
+
+    public void findBracket(EndTournID inputData) {
+        this.bracket = inputData.getBracket();}
 
     public boolean checkUserRole(EndTournID inputData) {
         return (Objects.equals(inputData.getUserRole(), "Overseer"));
@@ -26,23 +31,24 @@ public class EndTournUC implements EndTournIB{
         return (inputData.getFinalWinner() != null);
     }
 
-    // TODO: implement the check part after finishing front end.
     @Override
     public EndTournOD endTourn(EndTournID inputData) {
-//        if (!checkGame(inputData)) {
-//            return this.outputBoundary.presentError("This round is not the final round.");
-//        }
-//
-//        if (!checkFinalWinner(inputData)) {
-//            return this.outputBoundary.presentError("No final winner has been decided yet.");
-//        }
-//
-//        if (!checkUserRole(inputData)) {
-//            return this.outputBoundary.presentError("You do not have permission to end the tournament.");
-//        }
+        findBracket(inputData);
+        if (!checkGame(inputData)) {
+            return this.outputBoundary.presentError("This round is not the final round.");
+        }
+
+        if (!checkFinalWinner(inputData)) {
+            return this.outputBoundary.presentError("No final winner has been decided yet.");
+        }
+
+        if (!checkUserRole(inputData)) {
+            return this.outputBoundary.presentError("You do not have permission to end the tournament.");
+        }
 
         inputData.getBracket().setTournamentCondition(false);
-        return this.outputBoundary.presentSuccess("The tournament has been ended successfully.");
+        EndTournOD outputData = new EndTournOD(this.bracket);
+        return this.outputBoundary.presentSuccess(outputData);
     }
 
 

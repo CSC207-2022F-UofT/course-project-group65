@@ -1,5 +1,14 @@
 package useCases.endTourn;
 
+import entities.Bracket;
+
 public class EndTournOD {
-    // I'm not sure if we need OD for this either.
+    private Bracket bracket;
+    public EndTournOD(Bracket bracket) {
+        this.bracket = bracket;
+    }
+
+    public Bracket getBracket() {
+        return this.bracket;
+    }
 }
