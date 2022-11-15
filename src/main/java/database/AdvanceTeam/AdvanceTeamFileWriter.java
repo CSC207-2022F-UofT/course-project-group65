@@ -1,5 +1,4 @@
 package database.AdvanceTeam;
-import database.BracketsReadWriter;
 import useCases.advanceTeam.*;
 
 import java.io.FileOutputStream;
