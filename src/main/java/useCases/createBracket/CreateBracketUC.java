@@ -56,9 +56,13 @@ public class CreateBracketUC implements CreateBracketIB{
         for (Team team : bracket.getTeams()) {
             teams.add(team.getTeamName());
         }
-        CreateBracketOD outputData = new CreateBracketOD(currentUser, accounts, brackets, bracketType, bracketID, teams);
+        String bracketName = bracket.getTournamentName();
+        CreateBracketOD outputData = new CreateBracketOD(currentUser, accounts, brackets, bracketType,
+                bracketID, teams, bracketName);
 
         if (Objects.equals(bracket.getTournamentName(), "")){
+//            Bracket failed to create, so we need to retract our bracketID
+            this.bracketID--;
             return this.outputBoundary.presentError("Please enter a name for your bracket.");
         } else {
             return this.outputBoundary.presentSuccess(outputData);
