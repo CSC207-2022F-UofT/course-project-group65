@@ -59,6 +59,7 @@ public class ChangePointsUC implements ChangePointsIB{
         }
     }
 
+    // Check whether the user has permission to change the points of a team in a game
     private boolean checkUserPermission(User user) {
         PermissionChecker permissionChecker = new PermissionChecker();
         ArrayList<String> permittedUsers = new ArrayList<>(Arrays.asList("Observer", "Overseer"));
