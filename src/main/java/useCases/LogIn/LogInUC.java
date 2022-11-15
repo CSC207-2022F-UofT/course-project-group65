@@ -1,6 +1,7 @@
 package useCases.LogIn;
 
 import entities.AccountRepo;
+import entities.BracketRepo;
 import entities.User;
 
 import java.util.Objects;
@@ -21,7 +22,7 @@ public class LogInUC implements LogInIB{
 
 
     @Override
-    public LoginResult logIn(LogInID requestModel, String username, String password, AccountRepo data) {
+    public LoginResult logIn(LogInID requestModel, String username, String password, AccountRepo data, BracketRepo bracketData) {
         if (usernameExists(requestModel, data) && passwordMatch(username, password, data)) {
             return LoginResult.SUCCESS;
         } else {
