@@ -7,22 +7,32 @@ import entities.*;
 
 
 public class teamCreationUC implements teamCreationIB {
-    final teamCreationOB outputBoundary;
+    private final teamCreationOB outputBoundary;
+    private final String creatorName;
 
-    public teamCreationUC(teamCreationOB outputBoundary){
+    private final int bracketID;
+    private final AccountRepo accounts;
+    private final BracketRepo brackets;
+
+    public teamCreationUC(teamCreationOB outputBoundary, String creatorName, int bracketID, AccountRepo accounts,
+                          BracketRepo brackets){
         this.outputBoundary = outputBoundary;
+        this.creatorName = creatorName;
+        this.bracketID = bracketID;
+        this.accounts = accounts;
+        this.brackets = brackets;
     }
 
-    public boolean checkPlayer(teamCreationID userInput){
-        User creator = userInput.getUser();
-        Bracket curBracket = userInput.getBracket();
+    public boolean checkPlayer(){
+        Bracket curBracket = brackets.getBracket(bracketID);
+        User creator = accounts.getUser(creatorName);
         return creator.getBracketRole(curBracket.getTournamentID()).equals("Player");
     }
 
     //used to check if a team with the same teamName exists in the bracket
     public boolean checkTeamNameExists(teamCreationID userInput){
         String teamName = userInput.getTeamName();
-        Bracket curBracket = userInput.getBracket();
+        Bracket curBracket = brackets.getBracket(bracketID);
         List<Team> teams = curBracket.getTeams();
         for(Team team: teams){
             if(team.getTeamName().equals(teamName)){
@@ -33,8 +43,8 @@ public class teamCreationUC implements teamCreationIB {
     }
 
     //find a blank team in the bracket, returns null if the bracket is full
-    public Team findBlankTeam(teamCreationID userInput){
-        Bracket curBracket = userInput.getBracket();
+    public Team findBlankTeam(){
+        Bracket curBracket = brackets.getBracket(bracketID);
         List<Team> teams = curBracket.getTeams();
         for(Team team: teams){
             if(team.getTeamName().substring(0, 9).equals("BlankTeam")){
@@ -48,8 +58,8 @@ public class teamCreationUC implements teamCreationIB {
     public String createTeam(teamCreationID userInput){
         String teamName = userInput.getTeamName();
         int teamSize = userInput.getTeamSize();
-        User creator = userInput.getUser();
-        Team newTeam = findBlankTeam(userInput);
+        User creator = accounts.getUser(creatorName);
+        Team newTeam = findBlankTeam();
         newTeam.setTeamName(teamName);
         newTeam.setTeamSize(teamSize);
         newTeam.addTeamMember(creator);
@@ -61,15 +71,20 @@ public class teamCreationUC implements teamCreationIB {
     public teamCreationOD createNewTeam(teamCreationID userInput) {
         if (checkTeamNameExists(userInput)) {
             return outputBoundary.prepareFailView("Team already exists.");
-        } else if (findBlankTeam(userInput) == null) {
+        } else if (findBlankTeam() == null) {
             return outputBoundary.prepareFailView("The bracket is full, please join an existing team.");
-        } else if (!checkPlayer(userInput)){
+        } else if (!checkPlayer()){
             return outputBoundary.prepareFailView("Only players can create a new team.");
         }
 
         String success = createTeam(userInput);
+        Bracket curBracket = brackets.getBracket(bracketID);
+        ArrayList<String> teams = new ArrayList<>();
+        for (Team team : curBracket.getTeams()) {
+            teams.add(team.getTeamName());
+        }
 
-        teamCreationOD outputData = new teamCreationOD(userInput.getBracket(), success);
+        teamCreationOD outputData = new teamCreationOD(creatorName, curBracket, teams, success);
         return outputBoundary.prepareSuccessView(outputData);
     }
 }
