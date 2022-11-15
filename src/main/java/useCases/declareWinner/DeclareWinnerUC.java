@@ -1,12 +1,11 @@
 package useCases.declareWinner;
 
 import entities.*;
-import useCases.generalClasses.TreeMethods;
-import useCases.generalInterfaces.CheckUserPermissionIF;
+import useCases.generalClasses.traversalStrategies.TreeMethods;
 
 import java.util.ArrayList;
 
-public class DeclareWinnerUC implements CheckUserPermissionIF, DeclareWinnerIB {
+public class DeclareWinnerUC implements DeclareWinnerIB {
 
     public Bracket bracket;
     public User user;

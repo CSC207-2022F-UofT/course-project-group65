@@ -1,13 +1,12 @@
 package useCases.changePoints;
 
 import entities.*;
-import useCases.generalInterfaces.CheckUserPermissionIF;
+import useCases.generalClasses.traversalStrategies.TreeMethods;
+
 import java.util.ArrayList;
-import useCases.generalClasses.*;
 
 
-
-public class ChangePointsUC implements CheckUserPermissionIF, ChangePointsIB{
+public class ChangePointsUC implements ChangePointsIB{
     public Bracket bracket;
     public int newPoints;
     public Team team;
