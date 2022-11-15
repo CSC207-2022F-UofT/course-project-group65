@@ -24,6 +24,6 @@ public class AccountRepo {
     }
 
     public AccountRepo() {
-        this.users = new HashMap<>();
+        this.users = new HashMap<String, User>();
     }
 }
