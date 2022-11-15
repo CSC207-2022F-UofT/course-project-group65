@@ -1,7 +1,7 @@
 package useCases.teamCreation;
 
 public interface teamCreationOB {
-    teamCreationOD prepareSuccessView(teamCreationOD team);
+    teamCreationOD prepareSuccessView(teamCreationOD teamData);
 
     teamCreationOD prepareFailView(String error);
 }
