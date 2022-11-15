@@ -91,7 +91,6 @@ public class bracketView extends JFrame implements ActionListener {
         assignGame3.addActionListener(this);
 //        Overseer Controls
         startTournamentButton.addActionListener(this);
-        startNextRoundButton.addActionListener(this);
         declareWinnerEndTournamentButton.addActionListener(this);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -205,10 +204,6 @@ public class bracketView extends JFrame implements ActionListener {
 //            Calls corresponding UC through controller
         } else if (e.getSource() == startTournamentButton) {
             System.out.println("Start Tournament Button Clicked");
-            //            TODO
-//            Calls corresponding UC through controller
-        } else if (e.getSource() == startNextRoundButton) {
-            System.out.println("Start Next Round Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == declareWinnerEndTournamentButton) {
