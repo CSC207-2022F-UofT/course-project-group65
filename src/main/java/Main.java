@@ -1,14 +1,6 @@
-import database.AdvanceTeam.AdvanceTeamFileWriter;
-import entities.*;
-import database.*;
-import java.io.*;
-
-import screens.advanceTeam.AdvanceTeamPresenter;
-import useCases.advanceTeam.*;
-
 public class Main {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) {
          //Test case for overwriting the file - and yes, it works.
 //        AccountRepo repo = new AccountRepo();
 //        DefaultUser user = new DefaultUser();
