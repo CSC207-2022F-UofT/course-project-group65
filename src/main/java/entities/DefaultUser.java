@@ -10,7 +10,7 @@ public class DefaultUser implements User{
     private String password;
     private HashMap<Integer, String> bracketRole;
     private int currentTournament;
-    private ArrayList<Integer> currentTournaments;
+    private ArrayList<Integer> currentTournaments; //is this needed?
 
     public DefaultUser() {
         username = "";

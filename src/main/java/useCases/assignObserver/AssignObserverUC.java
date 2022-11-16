@@ -1,17 +1,23 @@
 package useCases.assignObserver;
 
-import entities.Bracket;
-import entities.Game;
-import entities.User;
-import useCases.generalInterfaces.CheckUserPermissionIF;
-import useCases.generalClasses.*;
+import entities.*;
+import useCases.generalClasses.traversalStrategies.TreeMethods;
+import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class AssignObserverUC implements CheckUserPermissionIF, AssignObserverIB {
+public class AssignObserverUC implements AssignObserverIB {
     private final AssignObserverOB outputBound;
+    private final BracketRepo bracketRepo;
+    private final AccountRepo accountRepo;
     private Bracket bracket;
+    private User currUser;
 
-    public AssignObserverUC(AssignObserverOB outputBound){
+    public AssignObserverUC(AssignObserverOB outputBound, BracketRepo bracketRepo, AccountRepo accountRepo, String currUser){
         this.outputBound = outputBound;
+        this.bracketRepo = bracketRepo;
+        this.accountRepo = accountRepo;
+        this.currUser = accountRepo.getUser(currUser);
     }
 
     /**
@@ -22,14 +28,14 @@ public class AssignObserverUC implements CheckUserPermissionIF, AssignObserverIB
      * @return A message stating whether the observer could not be added or data to
      * create a message saying the observer was successfully added
      */
+    @Override
     public AssignObserverOD assignObserver(AssignObserverID input){
-        bracket = input.getTournament();
-        if (!checkUserPermission(input.getCurrUser())){
+        bracket = bracketRepo.getBracket(currUser.getCurrentTournament());
+        if (!checkUserPermission(currUser)){
             return outputBound.prepareFailView("You do not have permission to preform this action.");
         }
         User ref = findReferee(bracket, input.getAssignee());
-        TreeMethods treeMethodAccess = new DefaultBracketMethods();
-        Game game = findGame(treeMethodAccess, input.getGameID(), bracket.getFinalGame());
+        Game game = findGame(new TreeMethods("Default"), input.getGameID(), bracket.getFinalGame());
         if (ref == null){
             return outputBound.prepareFailView("Assignee is not an Observer.");
         }
@@ -53,12 +59,13 @@ public class AssignObserverUC implements CheckUserPermissionIF, AssignObserverIB
         return null;
     }
 
-    public Game findGame(TreeMethods treeMethodAccess, int gameID, Game head) {
+    public Game findGame(TreeMethods treeMethodAccess, int gameID, Game head) { //may change depending on if we refactor
         return treeMethodAccess.findGame(gameID, head);
     }
 
-    @Override
-    public boolean checkUserPermission(User user) {
-        return user.getBracketRole(bracket.getTournamentID()).equals("Overseer");
+    private boolean checkUserPermission(User user) {
+        PermissionChecker permissionChecker = new PermissionChecker();
+        ArrayList<String> permittedUsers = new ArrayList<>(Arrays.asList("Observer", "Overseer"));
+        return permissionChecker.checkUserPermission(permittedUsers, user, this.bracket.getTournamentID());
     }
 }
