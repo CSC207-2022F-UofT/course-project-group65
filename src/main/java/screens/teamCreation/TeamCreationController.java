@@ -13,7 +13,7 @@ public class TeamCreationController {
     }
 
     public teamCreationOD createNewTeam(String teamName, int teamSize) {
-        teamCreationID inputData = new teamCreationID(teamName, teamSize);
+        teamCreationID inputData = new teamCreationID(teamName);
 
         return userInput.createNewTeam(inputData);
     }

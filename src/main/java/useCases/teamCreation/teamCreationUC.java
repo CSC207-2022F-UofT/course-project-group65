@@ -57,11 +57,9 @@ public class teamCreationUC implements teamCreationIB {
     // creates the team and returns a string that indicates whether the team has been successfully created
     public String createTeam(teamCreationID userInput){
         String teamName = userInput.getTeamName();
-        int teamSize = userInput.getTeamSize();
         User creator = accounts.getUser(creatorName);
         Team newTeam = findBlankTeam();
         newTeam.setTeamName(teamName);
-        newTeam.setTeamSize(teamSize);
         newTeam.addTeamMember(creator);
         return "Your team has been successfully created.";
 

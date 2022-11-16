@@ -13,8 +13,6 @@ import java.awt.event.ActionListener;
 public class UserInput extends JFrame{
     private JLabel TeamName;
     private JTextField tfTeamName;
-    private JLabel TeamSize;
-    private JTextField tfTeamSize;
     private JButton btnCreate;
     private JPanel inputPanel;
 
@@ -29,7 +27,6 @@ public class UserInput extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String teamName = tfTeamName.getText();
-                int teamSize = Integer.parseInt(tfTeamSize.getText());
                 teamCreationOB presenter = new TeamCreationPresenter();
                 // the remaining variables are local, how do we access them?
 //                teamCreationIB interactor = new teamCreationUC(presenter, username, bracketID, accounts, brackets);
