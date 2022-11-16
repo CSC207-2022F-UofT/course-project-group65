@@ -30,6 +30,8 @@ public class CreateAccountUC implements CreateAccountIB {
         User user = userFactory.create(requestModel.getUsername(), requestModel.getPassword(),
                 new HashMap<Integer, String>(), 0, new ArrayList<Integer>());
 
+        data.addUser(user);
+
         CreateAccountOD accountOD = new CreateAccountOD(user.getUsername(), user.getPassword());
         return userCreateAccountOB.prepareSuccessView(accountOD);
     }
