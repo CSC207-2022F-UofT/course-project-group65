@@ -65,7 +65,7 @@ public class AssignObserverUC implements AssignObserverIB {
 
     private boolean checkUserPermission(User user) {
         PermissionChecker permissionChecker = new PermissionChecker();
-        ArrayList<String> permittedUsers = new ArrayList<>(Arrays.asList("Observer", "Overseer"));
+        ArrayList<String> permittedUsers = new ArrayList<>(Arrays.asList("Overseer"));
         return permissionChecker.checkUserPermission(permittedUsers, user, this.bracket.getTournamentID());
     }
 }
