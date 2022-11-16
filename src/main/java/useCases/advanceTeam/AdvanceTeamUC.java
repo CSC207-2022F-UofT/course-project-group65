@@ -56,7 +56,10 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
 
     private boolean checkObserverAssigned(User user) {
         User assignedObserver = this.game.getObserver();
-        return user.getUsername().equals(assignedObserver.getUsername());
+        if (user.getBracketRole(this.bracket.getTournamentID()).equals("Observer")) {
+            return assignedObserver.getUsername().equals(user.getUsername());
+        }
+        return true;
     }
 
     private boolean checkGame(Game game) {
