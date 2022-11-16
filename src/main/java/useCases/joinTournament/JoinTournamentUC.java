@@ -1,23 +1,28 @@
 package useCases.joinTournament;
 
+import entities.AccountRepo;
 import entities.BracketRepo;
 import entities.User;
 
 public class JoinTournamentUC implements JoinTournamentIB{
     final JoinTournamentOB outputBound;
+    private final BracketRepo bracketRepo;
+    private final AccountRepo accountRepo;
+    private User currUser;
 
-    public JoinTournamentUC(JoinTournamentOB outputBound){
+    public JoinTournamentUC(JoinTournamentOB outputBound, BracketRepo bracketRepo, AccountRepo accountRepo, String currUser){
         this.outputBound = outputBound;
+        this.bracketRepo = bracketRepo;
+        this.accountRepo = accountRepo;
+        this.currUser = accountRepo.getUser(currUser);
     }
 
     public JoinTournamentOD joinBracket(JoinTournamentID input){
         String role = input.getInvite().substring(0, 2);
         String idAndName = input.getInvite().substring(2);
         int tournamentID = Integer.parseInt(idAndName.split("(?<=\\d)(?=\\D)")[0]);
-        User currUser = input.getCurrUser();
-        BracketRepo repo = input.getRepo();
 
-        if (!repo.getBrackets().containsKey(tournamentID)){
+        if (!bracketRepo.getBrackets().containsKey(tournamentID)){
             return outputBound.prepareFailView("Tournament does not exist.");
         }
         else if (currUser.getAllTournaments().contains(tournamentID)){
@@ -35,7 +40,7 @@ public class JoinTournamentUC implements JoinTournamentIB{
         }
         else {
             currUser.setBracketRole(tournamentID, "Observer");
-            repo.getBracket(tournamentID).addReferee(currUser);
+            bracketRepo.getBracket(tournamentID).addReferee(currUser);
             output = new JoinTournamentOD(tournamentID, "Observer");
         }
         return outputBound.prepareSuccessView(output);
