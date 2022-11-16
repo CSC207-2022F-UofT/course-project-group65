@@ -56,7 +56,11 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
 
     private boolean checkObserverAssigned(User user) {
         User assignedObserver = this.game.getObserver();
-        return user.getUsername().equals(assignedObserver.getUsername());
+        if (user.getBracketRole(this.bracket.getTournamentID()).equals("Observer")) {
+            return user.getUsername().equals(assignedObserver.getUsername());
+        } else {
+            return true;
+        }
     }
 
     private boolean checkGame(Game game) {
