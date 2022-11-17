@@ -1,8 +1,9 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class BracketRepo {
+public class BracketRepo implements Serializable {
     private HashMap<Integer, Bracket> brackets;
 
     public BracketRepo() {
