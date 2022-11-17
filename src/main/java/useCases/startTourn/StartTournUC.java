@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A use case for starting the tournament.
+ */
 public class StartTournUC implements StartTournIB{
     private StartTournOB outputBoundary;
     private String currentUser;

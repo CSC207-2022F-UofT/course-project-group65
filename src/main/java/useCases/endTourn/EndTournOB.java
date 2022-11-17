@@ -1,6 +1,8 @@
 package useCases.endTourn;
 
-import useCases.startTourn.StartTournOD;
+/**
+ *  An interface for the output boundary of the end tournament use case.
+ */
 
 public interface EndTournOB {
 

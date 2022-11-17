@@ -1,8 +1,10 @@
 package screens;
 
 import screens.endTourn.EndTournController;
+import screens.startTourn.StartTournController;
 import useCases.endTourn.EndTournIB;
 import useCases.endTourn.EndTournID;
+import useCases.startTourn.StartTournID;
 
 import javax.swing.*;
 import java.awt.*;
@@ -211,13 +213,18 @@ public class bracketView extends JFrame implements ActionListener {
 
             //            TODO
 //            Calls corresponding UC through controller
+//
+//            StartTournID userInput = new StartTournID(brackets, userName, accounts, bracketId);
+//            StartTournController startTournController = new StartTournController(userInput);
+//            startTournController.startTourn()
         } else if (e.getSource() == declareWinnerEndTournamentButton) {
             System.out.println("Declare Winner End Tournament Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
-
             // End Tournament below
-//            EndTournID userInput = new EndTournID();
+            // for now I assumed I have all the infos about the inputs for ID.
+//
+//            EndTournID userInput = new EndTournID(brackets, userName, accounts, bracketId);
 //            EndTournController endTournController = new EndTournController(userInput);
         }
     }

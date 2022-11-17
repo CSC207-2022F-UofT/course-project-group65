@@ -8,7 +8,9 @@ import entities.User;
 import java.util.Objects;
 import java.lang.Math;
 
-
+/**
+ * A use case for ending the tournament.
+ */
 public class EndTournUC implements EndTournIB{
     private EndTournOB outputBoundary;
     private String currentUser;

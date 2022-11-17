@@ -8,6 +8,9 @@ import useCases.endTourn.EndTournIB;
 import useCases.endTourn.EndTournID;
 import useCases.endTourn.EndTournOD;
 
+/**
+ * A class for the Controller of the end tournament use case.
+ */
 public class EndTournController {
     final EndTournIB userInput;
 

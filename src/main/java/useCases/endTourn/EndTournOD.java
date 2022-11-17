@@ -5,6 +5,9 @@ import entities.Bracket;
 import entities.BracketRepo;
 import entities.User;
 
+/**
+ * The output data class for the end tournament output boundary.
+ */
 public class EndTournOD {
     private String username;
     private AccountRepo accounts;

@@ -8,6 +8,9 @@ import useCases.startTourn.StartTournIB;
 import useCases.startTourn.StartTournID;
 import useCases.startTourn.StartTournOD;
 
+/**
+ * A class for the Controller of the start tournament use case.
+ */
 public class StartTournController {
     final StartTournIB userInput;
 

@@ -5,6 +5,9 @@ import entities.*;
 
 import java.util.List;
 
+/**
+ * The input data class for the start bracket input boundary.
+ */
 public class EndTournID {
     private BracketRepo brackets;
     private String currentUser;
