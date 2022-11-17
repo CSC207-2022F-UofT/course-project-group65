@@ -1,6 +1,6 @@
 package entities;
 
-import java.util.List;
+import java.util.ArrayList;
 public interface Team {
     /*
      * This interface represents a team in a Game.
@@ -13,7 +13,7 @@ public interface Team {
 
     void setTeamSize(int teamSize);
 
-    List<User> getTeamMembers();
+    ArrayList<User> getTeamMembers();
 
     void addTeamMember(User teamMember);
 }
