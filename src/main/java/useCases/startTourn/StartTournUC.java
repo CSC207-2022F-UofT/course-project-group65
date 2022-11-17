@@ -3,7 +3,10 @@ package useCases.startTourn;
 import entities.Bracket;
 import entities.Game;
 import entities.User;
+import entities.Team;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class StartTournUC implements StartTournIB{
@@ -28,20 +31,15 @@ public class StartTournUC implements StartTournIB{
     }
 
     public boolean checkNumTeams(StartTournID inputData) {
-        return helperCheckNumTeams(inputData.getFinalGame());
+        List<Team> teams = inputData.getTeams();
+        for (Team team : teams) {
+            if (Objects.equals(team.getTeamName(), "Default Team")) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    // Recursive helper method for checkNumTeams.
-    public boolean helperCheckNumTeams(Game game) {
-        if (game.getNumTeams() != 2) {
-            return false;
-        } else if (game.getPrevGame1() == null) {
-            return true;
-        } else {
-            return (helperCheckGameObserver(game.getPrevGame1()) &&
-                    helperCheckGameObserver(game.getPrevGame2()));
-        }
-    }
 
     public boolean checkTeamFull(StartTournID inputData) {
         return (inputData.getMaxNumTeams() == inputData.getTeams().size());
