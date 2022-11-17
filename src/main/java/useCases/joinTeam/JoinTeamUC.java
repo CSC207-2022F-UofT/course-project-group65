@@ -1,15 +1,16 @@
 package useCases.joinTeam;
+import java.util.ArrayList;
 import java.util.List;
 import entities.*;
 
-public class joinTeamUC implements joinTeamIB {
-    private final joinTeamOB outputBoundary;
+public class JoinTeamUC implements JoinTeamIB {
+    private final JoinTeamOB outputBoundary;
     private final String userName;
     private final int bracketID;
     private final AccountRepo accounts;
     private final BracketRepo brackets;
 
-    public joinTeamUC(joinTeamOB outputBoundary, String userName, int bracketID, AccountRepo accounts,
+    public JoinTeamUC(JoinTeamOB outputBoundary, String userName, int bracketID, AccountRepo accounts,
                       BracketRepo brackets){
         this.outputBoundary = outputBoundary;
         this.userName = userName;
@@ -24,7 +25,7 @@ public class joinTeamUC implements joinTeamIB {
         return user.getBracketRole(curBracket.getTournamentID()).equals("Player");
     }
 
-    public Team findTeam(joinTeamID input){
+    public Team findTeam(JoinTeamID input){
         String teamName = input.getTeamName();
         Bracket curBracket = brackets.getBracket(bracketID);
         List<Team> team_lst = curBracket.getTeams();
@@ -36,11 +37,11 @@ public class joinTeamUC implements joinTeamIB {
         return null;
     }
 
-    public boolean checkTeamExistence(joinTeamID input){
+    public boolean checkTeamExistence(JoinTeamID input){
         return findTeam(input) != null;
     }
 
-    public boolean checkTeamSpace(joinTeamID input) {
+    public boolean checkTeamSpace(JoinTeamID input) {
         Team team = findTeam(input);
         if (team != null) {
             return team.getTeamSize() > team.getTeamMembers().size();
@@ -48,8 +49,7 @@ public class joinTeamUC implements joinTeamIB {
         return false;
     }
 
-    public String join(joinTeamID input){
-        String teamName = input.getTeamName();
+    public String join(JoinTeamID input){
         User user = accounts.getUser(userName);
         Team team = findTeam(input);
         team.addTeamMember(user);
@@ -57,7 +57,7 @@ public class joinTeamUC implements joinTeamIB {
 
     }
     @Override
-    public joinTeamOD joinTeam(joinTeamID input){
+    public JoinTeamOD joinTeam(JoinTeamID input){
         boolean isPlayer = checkPlayer();
         boolean teamExistence = checkTeamExistence(input);
         boolean teamSpace = checkTeamSpace(input);
@@ -73,11 +73,14 @@ public class joinTeamUC implements joinTeamIB {
 
         User user = accounts.getUser(userName);
         String success = join(input);
-        Bracket curBracket = brackets.getBracket(bracketID);
         Team team = findTeam(input);
         team.addTeamMember(user);
-        List<User> teamMembers = team.getTeamMembers();
-        joinTeamOD outputData = new joinTeamOD(success, userName, teamMembers, curBracket);
+        ArrayList<User> teamMembers = team.getTeamMembers();
+        ArrayList<String> membersNames = new ArrayList<>();
+        for (User member : teamMembers){
+            membersNames.add(member.getUsername());
+        }
+        JoinTeamOD outputData = new JoinTeamOD(success, userName, membersNames);
         return outputBoundary.SuccessView(outputData);
     }
 }
