@@ -56,7 +56,10 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
 
     private boolean checkObserverAssigned(User user) {
         User assignedObserver = this.game.getObserver();
-        return user.getUsername().equals(assignedObserver.getUsername());
+        if (user.getBracketRole(this.bracket.getTournamentID()).equals("Observer")) {
+            return assignedObserver.getUsername().equals(user.getUsername());
+        }
+        return true;
     }
 
     private boolean checkGame(Game game) {
@@ -121,7 +124,15 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
         }
 
         Team winningTeam = this.game.getWinner();
+        User winningObserver = this.game.getObserver();
         Game advancedGame = insertTeam(winningTeam, this.game);
+
+        // Advances the observer refereeing the winning team to the next round.
+        try {
+            advancedGame.setObserver(winningObserver);
+        } catch (NullPointerException e) {
+            return this.outputBoundary.presentError("Next game does not exist.");
+        }
 
         // This is where we would save the bracket to the database, but we don't have a database. We save locally.
         AdvanceTeamDSID dsInputData = new AdvanceTeamDSID(this.bracketRepo);
