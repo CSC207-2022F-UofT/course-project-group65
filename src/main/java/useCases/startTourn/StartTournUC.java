@@ -33,13 +33,12 @@ public class StartTournUC implements StartTournIB{
     public boolean checkNumTeams(StartTournID inputData) {
         List<Team> teams = inputData.getTeams();
         for (Team team : teams) {
-            if (Objects.equals(team.getTeamName(), "Default Team")) {
+            if (Objects.equals(team.getTeamName(), "BlankTeam")) {
                 return false;
             }
         }
         return true;
     }
-
 
     public boolean checkTeamFull(StartTournID inputData) {
         return (inputData.getMaxNumTeams() == inputData.getTeams().size());
