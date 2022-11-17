@@ -1,37 +1,23 @@
 package useCases.endTourn;
 
 
-import entities.Bracket;
-import entities.Game;
-import entities.Team;
-import entities.User;
+import entities.*;
 
 import java.util.List;
 
 public class EndTournID {
-    private User user;
-    private Bracket bracket;
+    private BracketRepo brackets;
+    private String currentUser;
+    private AccountRepo accountRepo;
+    private int bracketId;
 
-    public EndTournID(User user, Bracket bracket) {
-        this.user = user;
-        this.bracket = bracket;
+    public EndTournID(BracketRepo brackets, String currentUser, AccountRepo accountRepo, int bracketId) {
+        this.brackets = brackets;
+        this.currentUser = currentUser;
+        this.accountRepo = accountRepo;
+        this.bracketId = bracketId;
     }
 
-    public String getUserRole() {
-        return this.user.getBracketRole(this.bracket.getTournamentID());
-    }
 
-    public Bracket getBracket() {
-        return this.bracket;
-    }
-
-    public User getUser() {return this.user;}
-    public Game getFinalGame() { return this.bracket.getFinalGame(); }
-
-    public Team getFinalWinner() {
-        return this.bracket.getFinalGame().getWinner();
-    }
-
-    public List getTeams() { return this.bracket.getTeams(); }
 }
 

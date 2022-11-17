@@ -1,37 +1,42 @@
 package useCases.startTourn;
 
-import entities.Bracket;
-import entities.Game;
-import entities.User;
-import entities.Team;
+import entities.*;
+import useCases.endTourn.EndTournOB;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class StartTournUC implements StartTournIB{
-    public StartTournOB outputBoundary;
-    public Bracket bracket;
-    public User user;
+    private StartTournOB outputBoundary;
+    private String currentUser;
+    private AccountRepo accounts;
+    private BracketRepo brackets;
+    private int bracketId;
+    private Bracket bracket;
+    private User user;
 
-    public StartTournUC(StartTournOB outputBoundary){
+    public StartTournUC(StartTournOB outputBoundary, String currentUser, AccountRepo accounts, BracketRepo brackets,
+                      int bracketId) {
         this.outputBoundary = outputBoundary;
+        this.currentUser = currentUser;
+        this.accounts = accounts;
+        this.brackets = brackets;
+        this.bracketId = bracketId;
+        this.bracket = brackets.getBracket(bracketId);
+        this.user = accounts.getUser(currentUser);
+
     }
 
-    public void findBracket(StartTournID inputData) {
-        this.bracket = inputData.getBracket();
+
+
+
+    public boolean checkUserRole() {
+        return (Objects.equals(this.user.getBracketRole(bracketId), "Overseer"));
     }
 
-    public void findUser(StartTournID inputdata) {
-        this.user = inputdata.getUser();
-    }
-
-    public boolean checkUserRole(StartTournID inputData) {
-        return (Objects.equals(inputData.getUserRole(), "Overseer"));
-    }
-
-    public boolean checkNumTeams(StartTournID inputData) {
-        List<Team> teams = inputData.getTeams();
+    public boolean checkNumTeams() {
+        List<Team> teams = this.bracket.getTeams();
         for (Team team : teams) {
             if (Objects.equals(team.getTeamName(), "BlankTeam")) {
                 return false;
@@ -40,9 +45,9 @@ public class StartTournUC implements StartTournIB{
         return true;
     }
 
-    public boolean checkTeamFull(StartTournID inputData) {
-        int maxTeamSize = inputData.getBracket().getTeamSize();
-        List<Team> teams = inputData.getTeams();
+    public boolean checkTeamFull() {
+        int maxTeamSize = this.bracket.getTeamSize();
+        List<Team> teams = this.bracket.getTeams();
         for (Team team : teams) {
             int thisTeamSize = team.getTeamSize();
             if (thisTeamSize < maxTeamSize) {
@@ -52,8 +57,8 @@ public class StartTournUC implements StartTournIB{
         return true;
     }
 
-    public  boolean checkGameObserver(StartTournID inputData) {
-        return helperCheckGameObserver(inputData.getFinalGame());
+    public  boolean checkGameObserver() {
+        return helperCheckGameObserver(this.bracket.getFinalGame());
     }
 
     // Recursive helper method for checkGameObserver.
@@ -73,7 +78,7 @@ public class StartTournUC implements StartTournIB{
     /// start the tournament anyway. but for now I don't know how to implement that so I'm just leaving it.
     @Override
     public StartTournOD startTourn(StartTournID inputData) {
-        findBracket(inputData);
+
 //        if (!checkUserRole(inputData)) {
 //            return this.outputBoundary.presentError("You do not have permission to start the tournament.");
 //        }
@@ -92,7 +97,7 @@ public class StartTournUC implements StartTournIB{
 
         inputData.getBracket().setTournamentCondition(true);
 
-        StartTournOD outputData = new StartTournOD(this.bracket, this.user);
+        StartTournOD outputData = new StartTournOD(currentUser, accounts, brackets, bracketId);
         return this.outputBoundary.presentSuccess(outputData);
     }
 }
