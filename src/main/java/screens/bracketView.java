@@ -1,5 +1,9 @@
 package screens;
 
+import screens.endTourn.EndTournController;
+import useCases.endTourn.EndTournIB;
+import useCases.endTourn.EndTournID;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -204,12 +208,17 @@ public class bracketView extends JFrame implements ActionListener {
 //            Calls corresponding UC through controller
         } else if (e.getSource() == startTournamentButton) {
             System.out.println("Start Tournament Button Clicked");
+
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == declareWinnerEndTournamentButton) {
             System.out.println("Declare Winner End Tournament Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
+
+            // End Tournament below
+//            EndTournID userInput = new EndTournID();
+//            EndTournController endTournController = new EndTournController(userInput);
         }
     }
 }
