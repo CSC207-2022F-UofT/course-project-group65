@@ -3,14 +3,16 @@ package useCases.joinTeam;
 import java.util.ArrayList;
 
 public class JoinTeamOD {
+    /*
+    The output data class for the join team use case.
+     */
     private String success;
-    private String username;
 
     private ArrayList<String> membersNames;
+    // Used to update the corresponding team members list in the bracketView screen
 
-    public JoinTeamOD(String success, String username, ArrayList<String> membersNames){
+    public JoinTeamOD(String success, ArrayList<String> membersNames){
         this.success = success;
-        this.username = username;
         this.membersNames = membersNames;
     }
 
@@ -20,14 +22,6 @@ public class JoinTeamOD {
 
     public void setSuccess(String success){
         this.success = success;
-    }
-
-    public String getUsername(){
-        return this.username;
-    }
-
-    public void setUsername(String username){
-        this.username = username;
     }
 
     public ArrayList<String> getMembersNames() {return this.membersNames;}
