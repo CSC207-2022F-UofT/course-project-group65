@@ -41,7 +41,15 @@ public class StartTournUC implements StartTournIB{
     }
 
     public boolean checkTeamFull(StartTournID inputData) {
-        return (inputData.getMaxNumTeams() == inputData.getTeams().size());
+        int maxTeamSize = inputData.getBracket().getTeamSize();
+        List<Team> teams = inputData.getTeams();
+        for (Team team : teams) {
+            int thisTeamSize = team.getTeamSize();
+            if (thisTeamSize < maxTeamSize) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public  boolean checkGameObserver(StartTournID inputData) {
