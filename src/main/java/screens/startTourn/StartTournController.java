@@ -1,6 +1,8 @@
 package screens.startTourn;
 
+import entities.AccountRepo;
 import entities.Bracket;
+import entities.BracketRepo;
 import entities.User;
 import useCases.startTourn.StartTournIB;
 import useCases.startTourn.StartTournID;
@@ -13,8 +15,8 @@ public class StartTournController {
         this.userInput = userInput;
     }
 
-    public StartTournOD startTourn(User user, Bracket bracket) {
-        StartTournID inputData = new StartTournID(user, bracket);
+    public StartTournOD startTourn(BracketRepo brackets, String currentUser, AccountRepo accountRepo, int bracketId) {
+        StartTournID inputData = new StartTournID(brackets, currentUser, accountRepo, bracketId);
 
         return userInput.startTourn(inputData);
     }
