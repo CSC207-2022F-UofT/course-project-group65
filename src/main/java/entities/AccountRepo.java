@@ -23,8 +23,4 @@ public class AccountRepo implements Serializable {
         }
         return passwords;
     }
-
-    public AccountRepo() {
-        this.users = new HashMap<String, User>();
-    }
 }
