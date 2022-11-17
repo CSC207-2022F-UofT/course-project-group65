@@ -4,6 +4,7 @@ import entities.AccountRepo;
 import entities.BracketRepo;
 import useCases.LogIn.LogInIB;
 import useCases.LogIn.LogInID;
+import useCases.LogIn.LogInOD;
 import useCases.LogIn.LogInUC;
 
 public class LogInController {
@@ -15,7 +16,7 @@ public class LogInController {
 
     public void runLogin(LogInID requestModel, String username, String password, AccountRepo data, BracketRepo bracketData) {
         // Note: hands off the work to the use case class.
-        LogInUC.LoginResult result = logInIB.logIn(requestModel, username, password, data, bracketData);
+        LogInOD result = logInIB.logIn(requestModel, username, password, data, bracketData);
 
     }
 }

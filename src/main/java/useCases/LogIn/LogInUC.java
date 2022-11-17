@@ -2,14 +2,23 @@ package useCases.LogIn;
 
 import entities.AccountRepo;
 import entities.BracketRepo;
+import entities.DefaultUser;
 import entities.User;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class LogInUC implements LogInIB{
+    final LogInOB userLogInOB;
+    final String username;
+    final AccountRepo data;
+    final BracketRepo bracketData;
 
-    public enum LoginResult {
-        SUCCESS, FAILURE // Should we do NO_SUCH_USER as well as SUCCESS and FAILURE?
+    public LogInUC(LogInOB userLogInOB, String username, AccountRepo data, BracketRepo bracketData) {
+        this.userLogInOB = userLogInOB;
+        this.username = username;
+        this.data = data;
+        this.bracketData = bracketData;
     }
 
     public boolean usernameExists(LogInID requestModel, AccountRepo data) {
@@ -22,11 +31,13 @@ public class LogInUC implements LogInIB{
 
 
     @Override
-    public LoginResult logIn(LogInID requestModel, String username, String password, AccountRepo data, BracketRepo bracketData) {
+    public LogInOD logIn(LogInID requestModel, String username, String password, AccountRepo data, BracketRepo bracketData) {
         if (usernameExists(requestModel, data) && passwordMatch(username, password, data)) {
-            return LoginResult.SUCCESS;
+            User currentUser = data.getUser(username);
+            return userLogInOB.prepareSuccessView(new LogInOD(username, new HashMap<Integer, String>(), 0));
+
         } else {
-            return LoginResult.FAILURE;
+            return userLogInOB.prepareFailView("username and/or password is incorrect");
         }
     }
 }

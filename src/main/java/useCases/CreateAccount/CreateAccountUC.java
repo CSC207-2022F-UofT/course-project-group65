@@ -1,6 +1,7 @@
 package useCases.CreateAccount;
 
 import entities.AccountRepo;
+import entities.BracketRepo;
 import entities.User;
 import entities.UserFactory;
 
@@ -10,10 +11,14 @@ import java.util.HashMap;
 public class CreateAccountUC implements CreateAccountIB {
     final CreateAccountOB userCreateAccountOB;
     final UserFactory userFactory;
+    final AccountRepo data;
+    final BracketRepo bracketData;
 
-    public CreateAccountUC(CreateAccountOB userCreateAccountOB, UserFactory userFactory) {
+    public CreateAccountUC(CreateAccountOB userCreateAccountOB, UserFactory userFactory, AccountRepo data, BracketRepo bracketData) {
         this.userFactory = userFactory;
         this.userCreateAccountOB = userCreateAccountOB;
+        this.data = data;
+        this.bracketData = bracketData;
     }
 
     public boolean usernameExists(CreateAccountID requestModel, AccountRepo data) {
