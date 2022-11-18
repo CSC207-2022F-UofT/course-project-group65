@@ -77,14 +77,16 @@ public class StartTournUC implements StartTournIB{
     }
 
     public void start() {
+//        System.out.println(bracket.getTournamentCondition());
         this.bracket.setTournamentCondition(true);
+//        System.out.println(bracket.getTournamentCondition());
     }
 
     // TODO: implement the check part after finishing front end.
     /// TODO: after returning the error message to the user, we want to know whether the user still wants to
     /// start the tournament anyway. but for now I don't know how to implement that so I'm just leaving it.
     @Override
-    public StartTournOD startTourn(StartTournID inputData) {
+    public StartTournOD startTourn() {
         ArrayList<String> errors = new ArrayList<String>();
         String errorType1 = "USERROLE";
         String errorType2 = "NUMTEAMS";
@@ -96,7 +98,7 @@ public class StartTournUC implements StartTournIB{
 //            return this.outputBoundary.presentError("You do not have permission to start the tournament.");
         }
 
-        if (!checkNumTeams()) {
+        if (checkNumTeams()) {
             errors.add(errorType2);
 //            return this.outputBoundary.presentError("The number of teams is invalid.");
         }
@@ -106,7 +108,7 @@ public class StartTournUC implements StartTournIB{
 //              return this.outputBoundary.presentError("There is at least one game that does not have an observer assigned.");
         }
 
-        if (!checkTeamFull()) {
+        if (checkTeamFull()) {
             errors.add(errorType4);
 //              return this.outputBoundary.presentError("The teams are not full.");
         }

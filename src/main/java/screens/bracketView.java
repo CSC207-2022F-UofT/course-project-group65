@@ -1,11 +1,16 @@
 package screens;
 
 import screens.endTourn.EndTournController;
+import screens.startTourn.StartTournController;
+import screens.startTourn.startErrors;
+import useCases.startTourn.StartTournOD;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class bracketView extends JFrame implements ActionListener {
 //    The main panel for the bracket view screen
@@ -56,11 +61,13 @@ public class bracketView extends JFrame implements ActionListener {
 //    Controllers for all Buttons (Go below)
 //    Overseer Control controllers
     private EndTournController endTournController;
+    private StartTournController startTournController;
 
-    public bracketView(EndTournController endTournController) {
+    public bracketView(EndTournController endTournController, StartTournController startTournController) {
         super("Bracket View");
 //        Assign all controllers for this view
         this.endTournController = endTournController;
+        this.startTournController = startTournController;
 
 //        Default Text for New Bracket View
 //        Info Bar
@@ -224,10 +231,21 @@ public class bracketView extends JFrame implements ActionListener {
 
             //            TODO
 //            Calls corresponding UC through controller
-//
-//            StartTournID userInput = new StartTournID(brackets, userName, accounts, bracketId);
-//            StartTournController startTournController = new StartTournController(userInput);
-//            startTournController.startTourn()
+            StartTournOD startData = startTournController.startTourn();
+            ArrayList<String> startErrors = startData.getErrors();
+            startErrors errorView = new startErrors(this.startTournController);
+            for (String error : startErrors) {
+                if (Objects.equals(error, "USERROLE")) {
+                    errorView.setWarning1("You do not have permission to start the tournament.");
+                } else if (Objects.equals(error, "NUMTEAMS")) {
+                    errorView.setWarning2("There are not enough teams in the tournament.");
+                } else if (Objects.equals(error, "NOOBSERVER")) {
+                    errorView.setWarning3("There is at least one game that does not have an observer assigned.");
+                } else if (Objects.equals(error, "TEAMNOTFULL")) {
+                    errorView.setWarning4("There is at least one team that is not full.");
+                }
+            }
+            errorView.setVisible(true);
         } else if (e.getSource() == declareWinnerEndTournamentButton) {
             System.out.println("Declare Winner End Tournament Button Clicked");
             //            TODO
