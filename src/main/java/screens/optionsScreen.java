@@ -1,6 +1,5 @@
 package screens;
 
-<<<<<<< HEAD
 import screens.createBracket.enterBracketInfo;
 import screens.joinTournament.JoinTournamentInfo;
 import screens.logIn.logInInfo;
@@ -53,10 +52,10 @@ public class optionsScreen extends JFrame implements ActionListener {
             joinTournamentInfo.setVisible(true);
 
         } else if (e.getSource() == btLogOut) {
-                // Go back to home screen
-                homeScreen homeScreen = new homeScreen();
-                this.dispose();
-                homeScreen.setVisible(true);
+            // Go back to home screen
+            homeScreen homeScreen = new homeScreen();
+            this.dispose();
+            homeScreen.setVisible(true);
             }
         }
     }
