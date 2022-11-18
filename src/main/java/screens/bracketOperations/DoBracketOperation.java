@@ -1,14 +1,15 @@
 package screens.bracketOperations;
 
+import database.AdvanceTeam.AdvanceTeamFileWriter;
+import entities.*;
 import screens.advanceTeam.AdvanceTeamController;
 import screens.advanceTeam.AdvanceTeamFailed;
+import screens.advanceTeam.AdvanceTeamPresenter;
 import screens.changePoints.ChangePointsController;
 import screens.changePoints.ChangePointsFailed;
 import screens.declareWinner.DeclareWinnerController;
 import screens.declareWinner.DeclareWinnerFailed;
-import useCases.advanceTeam.AdvanceTeamIB;
-import useCases.advanceTeam.AdvanceTeamID;
-import useCases.advanceTeam.AdvanceTeamOD;
+import useCases.advanceTeam.*;
 import useCases.changePoints.ChangePointsIB;
 import useCases.changePoints.ChangePointsID;
 import useCases.changePoints.ChangePointsOD;
@@ -60,7 +61,6 @@ public class DoBracketOperation extends JFrame implements ActionListener {
         advanceButton.addActionListener(this);
         changePointsButton.addActionListener(this);
         declareButton.addActionListener(this);
-        changePointsButton.addActionListener(this);
         changePtsTF.addActionListener(this);
         changePtsBox.addActionListener(this);
 
@@ -98,13 +98,62 @@ public class DoBracketOperation extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
+
+//
+//        BracketRepo repo = new BracketRepo();
+//        DefaultBracket bracket = new DefaultBracket();
+//        DefaultGame game = new DefaultGame();
+//        DefaultGame game2 = new DefaultGame();
+//        game2.setGameID(1);
+//        DefaultGame game3 = new DefaultGame();
+//        game3.setGameID(2);
+//        bracket.setFinalGame(game);
+//        game.setPrevGame1(game2);
+//        game.setPrevGame2(game3);
+//        repo.addBracket(bracket);
+//        //game.setGameStatus(true);
+//        game2.setGameStatus(true);
+//        game3.setGameStatus(true);
+//        game.setGameRound(2);
+//        game2.setGameRound(1);
+//        game3.setGameRound(1);
+//
+//        Team team1 = new DefaultTeam();
+//        Team team2 = new DefaultTeam();
+//        game2.setTeam(team1, bracket.getWinCondition());
+//        game3.setTeam(team2, 0);
+//        game2.setWinner(team1);
+//
+//
+//        AccountRepo repo1 = new AccountRepo();
+//        DefaultUser user2 = new DefaultUser();
+//        user2.setUsername("test");
+//        user2.setPassword("test2");
+//        user2.setBracketRole(bracket.getTournamentID(), "Overseer");
+//        repo1.addUser(user2);
+//
+//        AdvanceTeamID inputData = new AdvanceTeamID(1);
+//
+//        AdvanceTeamGateway userRepository = new AdvanceTeamFileWriter("UC Test.txt");
+//        AdvanceTeamOB outputBoundary = new AdvanceTeamPresenter(); // dummy class
+//        AdvanceTeamIB interactor = new AdvanceTeamUC(outputBoundary, userRepository, repo, repo1, bracket.getTournamentID(), user2.getUsername());
+//        AdvanceTeamController advanceTeamController1 = new AdvanceTeamController(interactor);
+//        advanceTeamController1.create(1);
+//
+//        System.out.println("Game 1: " + game.getGameStatus());
+//        System.out.println("Game 2: " + game2.getGameStatus());
+//        System.out.println("Game 3: " + game3.getGameStatus());
+//        System.out.println("Final:" + game.getPrevGame1().getGameID());
+//        game2.setWinner(team1);
+//        System.out.println(game3.getTeams());
+
+
         AdvanceTeamController advanceTeamController1 = new AdvanceTeamController(new AdvanceTeamIB() {
             @Override
             public AdvanceTeamOD advanceWinner(AdvanceTeamID advanceTeamID) {
                 return null;
             }
         });
-
         DeclareWinnerController declareWinnerController1 = new DeclareWinnerController(new DeclareWinnerIB() {
             @Override
             public DeclareWinnerOD setWinner(DeclareWinnerID declareWinnerID) {
@@ -132,6 +181,7 @@ public class DoBracketOperation extends JFrame implements ActionListener {
             } else if (e.getSource() == declareButton) {
                 declareWinnerController.create(gameID);
             } else if (e.getSource() == changePointsButton){
+
                 int points = Integer.parseInt(changePtsTF.getText().trim());
                 String teamName = (String) changePtsBox.getSelectedItem();
                 if (teamName == null) {
@@ -144,139 +194,12 @@ public class DoBracketOperation extends JFrame implements ActionListener {
         } catch (NumberFormatException ex){
             JOptionPane.showMessageDialog(null, "Please enter a valid integer.");
         } catch (AdvanceTeamFailed advanceTeamFailed) {
-            JOptionPane.showMessageDialog(null, "Advance Team Failed.");
+            JOptionPane.showMessageDialog(null, advanceTeamFailed.getMessage());
         } catch (DeclareWinnerFailed declareWinnerFailed) {
-            JOptionPane.showMessageDialog(null, "Declare Winner Failed.");
+            JOptionPane.showMessageDialog(null, declareWinnerFailed.getMessage());
         } catch (ChangePointsFailed changePointsFailed) {
-            JOptionPane.showMessageDialog(null, "Change Points Failed.");
+            JOptionPane.showMessageDialog(null, changePointsFailed.getMessage());
         }
 
-
-//        if (e.getSource() == advanceButton) {
-//            advanceTeamController.create(gameID);
-//        } else if (e.getSource() == changePointsButton) {
-//            int points = 0;
-//            try {
-//                points = Integer.parseInt(changePtsTF.getText().trim());
-//            } catch (NumberFormatException ex) {
-//                JOptionPane.showMessageDialog(null, "Please enter a valid integer.");
-//            }
-//
-//            String teamName = (String) changePtsBox.getSelectedItem();
-//            if (teamName == null) {
-//                JOptionPane.showMessageDialog(null, "Please select a team.");
-//            }
-//            changePointsController.create(gameID, points, teamName);
-//        } else if (e.getSource() == declareButton) {
-//            declareWinnerController.create(gameID);
-//        }
-
     }
-
-
-
-
-
-
-//    public DoBracketOperation() {
-//        super("Bracket Operations");
-//
-//        showScreen();
-//        advanceButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                advanceTeamController.create(gameID);
-//            }
-//        });
-//        changePointsButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                int points = 0;
-//                try {
-//                    points = Integer.parseInt(changePtsTF.getText().trim());
-//                } catch (NumberFormatException ex) {
-//                    JOptionPane.showMessageDialog(null, "Please enter a valid integer.");
-//                }
-//
-//                String teamName = (String) changePtsBox.getSelectedItem();
-//                if (teamName == null) {
-//                    JOptionPane.showMessageDialog(null, "Please select a team.");
-//                }
-//                changePointsController.create(gameID, points, teamName);
-//            }
-//        });
-//        declareButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                declareWinnerController.create(gameID);
-//            }
-//        });
-//    }
-
-    // Overloading the constructor to allow for multiple use cases to be handled
-
-//    public DoBracketOperation(AdvanceTeamController controller){
-//        super("Bracket Operations");
-//        advanceTeamController = controller;
-//        showScreen();
-//        advanceButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                advanceTeamController.create(gameID);
-//            }
-//        });
-//    }
-
-//    public DoBracketOperation(DeclareWinnerController controller){
-//        super("Bracket Operations");
-//        declareWinnerController = controller;
-//        showScreen();
-//        declareButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                declareWinnerController.create(gameID);
-//            }
-//        });
-//    }
-//
-//    public DoBracketOperation(ChangePointsController controller){
-//        super("Bracket Operations");
-//        changePointsController = controller;
-//        showScreen();
-//        changePointsButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                int points = 0;
-//                String teamName = (String) changePtsBox.getSelectedItem();
-//                if (teamName == null) {
-//                    JOptionPane.showMessageDialog(null, "Please select a team.");
-//                }
-//
-//                try {
-//                    points = Integer.parseInt(changePtsTF.getText().trim());
-//                } catch (NumberFormatException ex) {
-//                    JOptionPane.showMessageDialog(null, "Please enter a valid integer.");
-//                }
-//
-//                changePointsController.create(gameID, points, teamName);
-//            }
-//        });
-//    }
-
-
-//    public void showScreen() {
-//        gameNumLabel.setText("Game Number: 0");
-//        teamsLabel.setText("Teams: ");
-//        advanceTeamLabel.setText("Advance Winning Team");
-//        chngPtsLabel.setText("Change Points for Team");
-//        declareButton.setText("Declare Winner");
-//        declareWInnerLabel.setText("Declare the Winner");
-//
-//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        this.setContentPane(bracketOpWindow);
-//        this.setPreferredSize(new Dimension(650, 300));
-//        this.pack();
-//        this.setVisible(true);
-//    }
-
 }
