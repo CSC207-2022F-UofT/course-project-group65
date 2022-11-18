@@ -14,9 +14,9 @@ public class LogInController {
         this.logInIB = logInIB;
     }
 
-    public LogInOD login(LogInID requestModel, String username, String password, AccountRepo data, BracketRepo bracketData) {
+    public LogInOD login(String username, String password) {
         LogInID logInID = new LogInID(username, password);
 
-        return logInIB.logIn(logInID, username, password, data, bracketData);
+        return logInIB.logIn(logInID);
     }
 }
