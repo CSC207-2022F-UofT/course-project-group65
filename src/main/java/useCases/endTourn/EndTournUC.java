@@ -1,10 +1,8 @@
 package useCases.endTourn;
 
-import entities.AccountRepo;
-import entities.Bracket;
-import entities.BracketRepo;
-import entities.User;
+import entities.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.lang.Math;
 
@@ -38,8 +36,8 @@ public class EndTournUC implements EndTournIB{
 
     // Calculating the total # of rounds in the tournament using log base 2.
     public boolean checkGame() {
-        return (this.bracket.getFinalGame().getGameRound() ==
-                Math.round((Math.log(this.bracket.getTeams().size()) / Math.log(2))));
+        Game finalGame = this.bracket.getFinalGame();
+        return (finalGame.getNumTeams() < 2);
     }
 
     public boolean checkFinalWinner() {
