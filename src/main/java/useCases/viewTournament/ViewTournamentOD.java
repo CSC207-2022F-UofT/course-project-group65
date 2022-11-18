@@ -10,7 +10,8 @@ public class ViewTournamentOD {
     int tournamentID;
     String role;
 
-    public ViewTournamentOD(String username, AccountRepo accounts, BracketRepo brackets, int tournamentID, String role){
+    public ViewTournamentOD(String username, AccountRepo accounts, BracketRepo brackets,
+                            int tournamentID, String role){
         this.username = username;
         this.accounts = accounts;
         this.brackets = brackets;

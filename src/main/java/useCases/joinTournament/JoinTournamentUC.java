@@ -10,7 +10,8 @@ public class JoinTournamentUC implements JoinTournamentIB{
     private final AccountRepo accountRepo;
     private User currUser;
 
-    public JoinTournamentUC(JoinTournamentOB outputBound, BracketRepo bracketRepo, AccountRepo accountRepo, String currUser){
+    public JoinTournamentUC(JoinTournamentOB outputBound, BracketRepo bracketRepo,
+                            AccountRepo accountRepo, String currUser){
         this.outputBound = outputBound;
         this.bracketRepo = bracketRepo;
         this.accountRepo = accountRepo;
@@ -36,12 +37,14 @@ public class JoinTournamentUC implements JoinTournamentIB{
         JoinTournamentOD output;
         if (role.equals("PL")){
             currUser.setBracketRole(tournamentID, "Player");
-            output = new JoinTournamentOD(currUser.getUsername(), accountRepo, bracketRepo, tournamentID, "Player");
+            output = new JoinTournamentOD(currUser.getUsername(), accountRepo, bracketRepo,
+                    tournamentID, "Player");
         }
         else {
             currUser.setBracketRole(tournamentID, "Observer");
             bracketRepo.getBracket(tournamentID).addReferee(currUser);
-            output = new JoinTournamentOD(currUser.getUsername(), accountRepo, bracketRepo, tournamentID, "Observer");
+            output = new JoinTournamentOD(currUser.getUsername(), accountRepo, bracketRepo,
+                    tournamentID, "Observer");
         }
         return outputBound.prepareSuccessView(output);
     }

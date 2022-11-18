@@ -10,7 +10,8 @@ public class JoinTournamentOD {
     int tournamentID;
     String role;
 
-    public JoinTournamentOD(String username, AccountRepo accounts, BracketRepo brackets, int tournamentID, String role){
+    public JoinTournamentOD(String username, AccountRepo accounts, BracketRepo brackets,
+                            int tournamentID, String role){
         this.username = username;
         this.accounts = accounts;
         this.brackets = brackets;

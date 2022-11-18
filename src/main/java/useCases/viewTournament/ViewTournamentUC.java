@@ -10,7 +10,8 @@ public class ViewTournamentUC implements ViewTournamentIB {
     private final AccountRepo accountRepo;
     private User currUser;
 
-    public ViewTournamentUC(ViewTournamentOB outputBound, BracketRepo bracketRepo, AccountRepo accountRepo, String currUser){
+    public ViewTournamentUC(ViewTournamentOB outputBound, BracketRepo bracketRepo,
+                            AccountRepo accountRepo, String currUser){
         this.outputBound = outputBound;
         this.bracketRepo =bracketRepo;
         this.accountRepo = accountRepo;
@@ -25,7 +26,8 @@ public class ViewTournamentUC implements ViewTournamentIB {
         }
 
         String role = currUser.getBracketRole(tournamentID);
-        ViewTournamentOD output = new ViewTournamentOD(currUser.getUsername(), accountRepo, bracketRepo, tournamentID, role);
+        ViewTournamentOD output = new ViewTournamentOD(currUser.getUsername(), accountRepo,
+                bracketRepo, tournamentID, role);
 
         return outputBound.prepareSuccessView(output);
     }
