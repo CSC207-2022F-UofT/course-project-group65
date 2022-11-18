@@ -125,7 +125,7 @@ public class ChangePointsUC implements ChangePointsIB{
 
         if (!checkTeam(this.team)) {
             return this.outputBoundary.presentError("The team you are trying to change points for is not " +
-                    "in the bracket.");
+                    "in the game.");
         }
         if (!checkGame(this.game)) {
             return this.outputBoundary.presentError("The game you are trying to change points in is not " +
