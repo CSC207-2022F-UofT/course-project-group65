@@ -7,5 +7,4 @@ public class CreateBracketFailed extends RuntimeException{
    public CreateBracketFailed(String errorMessage) {
        super(errorMessage);
    }
-
 }

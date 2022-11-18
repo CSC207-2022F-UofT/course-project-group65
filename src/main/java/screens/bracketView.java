@@ -1,11 +1,5 @@
 package screens;
 
-import screens.endTourn.EndTournController;
-import screens.startTourn.StartTournController;
-import useCases.endTourn.EndTournIB;
-import useCases.endTourn.EndTournID;
-import useCases.startTourn.StartTournID;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -23,6 +17,7 @@ public class bracketView extends JFrame implements ActionListener {
     private JPanel observerControls;
     private JPanel tournamentControls;
     private JButton logOut;
+    private JButton returnOptions;
 
 //    Bracket View
     private JButton game2Button;
