@@ -24,7 +24,6 @@ public class DoBracketOperation extends JFrame {
     private JComboBox<String> changePtsBox;
     private JLabel changePtsInstruction;
     private JPanel bracketOpWindow;
-    private JTextField changeptsfield;
 
     private AdvanceTeamController advanceTeamController;
     private DeclareWinnerController declareWinnerController;
@@ -46,8 +45,8 @@ public class DoBracketOperation extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int points = 0;
                 try {
-                    points = Integer.parseInt(changeptsfield.getText());
-                } catch (NullPointerException ex) {
+                    points = Integer.parseInt(changePtsTF.getText());
+                } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Please enter a valid integer.");
                 }
 
@@ -69,6 +68,7 @@ public class DoBracketOperation extends JFrame {
     // Overloading the constructor to allow for multiple use cases to be handled
 
     public DoBracketOperation(AdvanceTeamController controller){
+        super("Bracket Operations");
         advanceTeamController = controller;
         showScreen();
         advanceButton.addActionListener(new ActionListener() {
@@ -80,6 +80,7 @@ public class DoBracketOperation extends JFrame {
     }
 
     public DoBracketOperation(DeclareWinnerController controller){
+        super("Bracket Operations");
         declareWinnerController = controller;
         showScreen();
         declareButton.addActionListener(new ActionListener() {
@@ -91,22 +92,24 @@ public class DoBracketOperation extends JFrame {
     }
 
     public DoBracketOperation(ChangePointsController controller){
+        super("Bracket Operations");
         changePointsController = controller;
         showScreen();
         changePointsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int points = 0;
-                try {
-                    points = Integer.parseInt(changeptsfield.getText());
-                } catch (NullPointerException ex) {
-                    JOptionPane.showMessageDialog(null, "Please enter a valid integer.");
-                }
-
                 String teamName = (String) changePtsBox.getSelectedItem();
                 if (teamName == null) {
                     JOptionPane.showMessageDialog(null, "Please select a team.");
                 }
+
+                try {
+                    points = Integer.parseInt(changePtsTF.getText());
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid integer.");
+                }
+
                 changePointsController.create(gameID, points, teamName);
             }
         });
@@ -123,7 +126,7 @@ public class DoBracketOperation extends JFrame {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(bracketOpWindow);
-        this.setPreferredSize(new Dimension(800, 600));
+        this.setPreferredSize(new Dimension(650, 300));
         this.pack();
         this.setVisible(true);
     }
