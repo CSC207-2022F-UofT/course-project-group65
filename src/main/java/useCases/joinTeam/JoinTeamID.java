@@ -1,9 +1,9 @@
 package useCases.joinTeam;
 
+/**
+ The data class for the join team input data.
+ */
 public class JoinTeamID {
-    /*
-    The data class for the join team input data.
-     */
     private String teamName;
 
     public JoinTeamID(String teamName){

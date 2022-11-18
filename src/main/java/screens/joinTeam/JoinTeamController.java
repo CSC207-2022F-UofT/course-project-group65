@@ -4,7 +4,9 @@ import useCases.joinTeam.JoinTeamIB;
 import useCases.joinTeam.JoinTeamID;
 import useCases.joinTeam.JoinTeamOD;
 
-
+/**
+ * A class for the Controller of the join team use case.
+ */
 public class JoinTeamController {
     final JoinTeamIB input;
 

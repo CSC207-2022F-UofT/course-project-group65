@@ -10,6 +10,14 @@ public class ViewTournamentUC implements ViewTournamentIB {
     private final AccountRepo accountRepo;
     private User currUser;
 
+    /**
+     * Construct a ViewTournamentUC interactor instance with the given BracketRepo and AccountRepo.
+     *
+     * @param outputBound The output boundary to use
+     * @param bracketRepo The BracketRepo to use
+     * @param accountRepo The AccountRepo to use
+     * @param currUser    The username of the user who is joining the tournament
+     */
     public ViewTournamentUC(ViewTournamentOB outputBound, BracketRepo bracketRepo,
                             AccountRepo accountRepo, String currUser){
         this.outputBound = outputBound;
@@ -18,6 +26,12 @@ public class ViewTournamentUC implements ViewTournamentIB {
         this.currUser = accountRepo.getUser(currUser);
     }
 
+    /**
+     * Allows the user to access a tournament that they have already joined
+     *
+     * @param input the inputData to use
+     * @return the output data
+     */
     public ViewTournamentOD viewBracket(ViewTournamentID input){
         int tournamentID = input.getTournamentID();
 

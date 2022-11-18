@@ -10,6 +10,14 @@ public class JoinTournamentUC implements JoinTournamentIB{
     private final AccountRepo accountRepo;
     private User currUser;
 
+    /**
+     * Construct a JoinTournamentUC interactor instance with the given BracketRepo and AccountRepo.
+     *
+     * @param outputBound The output boundary to use
+     * @param bracketRepo The BracketRepo to use
+     * @param accountRepo The AccountRepo to use
+     * @param currUser    The username of the user who is joining the tournament
+     */
     public JoinTournamentUC(JoinTournamentOB outputBound, BracketRepo bracketRepo,
                             AccountRepo accountRepo, String currUser){
         this.outputBound = outputBound;
@@ -18,6 +26,12 @@ public class JoinTournamentUC implements JoinTournamentIB{
         this.currUser = accountRepo.getUser(currUser);
     }
 
+    /**
+     * Allows the user to access a tournament for the first time
+     *
+     * @param input the inputData to use
+     * @return the output data
+     */
     public JoinTournamentOD joinBracket(JoinTournamentID input){
         String role = input.getInvite().substring(0, 2);
         String idAndName = input.getInvite().substring(2);

@@ -2,10 +2,11 @@ package useCases.joinTeam;
 
 import java.util.ArrayList;
 
+/**
+ The output data class for the join team use case.
+ */
+
 public class JoinTeamOD {
-    /*
-    The output data class for the join team use case.
-     */
     private String success;
 
     private ArrayList<String> membersNames;

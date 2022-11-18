@@ -3,10 +3,10 @@ import java.util.ArrayList;
 import java.util.List;
 import entities.*;
 
+/**
+ * This is a use case for joining a team.
+ */
 public class JoinTeamUC implements JoinTeamIB {
-    /*
-     * This is a use case for joining a team.
-     */
     private final JoinTeamOB outputBoundary;
     private final String userName;
     private final int bracketID;
