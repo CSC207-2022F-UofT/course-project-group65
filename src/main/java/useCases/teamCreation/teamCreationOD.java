@@ -5,14 +5,12 @@ import java.util.ArrayList;
 
 public class teamCreationOD {
     private String success;
-    private String username;
+    private ArrayList<ArrayList<String>> teamMembers;
     private ArrayList<String> teams;
-    private Bracket updatedBracket;
 
-    public teamCreationOD(String username, Bracket updatedBracket, ArrayList<String> teams, String success){
+    public teamCreationOD(ArrayList<ArrayList<String>> teamMembers, ArrayList<String> teams, String success){
         this.success = success;
-        this.updatedBracket = updatedBracket;
-        this.username = username;
+        this.teamMembers = teamMembers;
         this.teams = teams;
     }
 
@@ -24,27 +22,19 @@ public class teamCreationOD {
         this.success = success;
     }
 
-    public String getUsername(){
-        return this.username;
-    }
-
-    public void setUsername(String username){
-        this.username = username;
-    }
-
-    public Bracket getUpdatedBracket(){
-        return this.updatedBracket;
-    }
-
-    public void setUpdatedBracket(Bracket updatedBracket){
-        this.updatedBracket = updatedBracket;
-    }
-
     public ArrayList<String> getTeams() {
         return teams;
     }
 
     public void setTeams(ArrayList<String> teams){
         this.teams = teams;
+    }
+
+    public ArrayList<ArrayList<String>> getTeamMembers() {
+        return teamMembers;
+    }
+
+    public void setTeamMembers(ArrayList<ArrayList<String>> teamMembers){
+        this.teamMembers = teamMembers;
     }
 }
