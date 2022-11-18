@@ -2,6 +2,16 @@ package screens.teamCreation;
 
 
 import screens.bracketView;
+import screens.endTourn.EndTournController;
+import screens.endTourn.EndTournPresenter;
+import screens.startTourn.StartTournController;
+import screens.startTourn.StartTournPresenter;
+import useCases.endTourn.EndTournIB;
+import useCases.endTourn.EndTournOB;
+import useCases.endTourn.EndTournUC;
+import useCases.startTourn.StartTournIB;
+import useCases.startTourn.StartTournOB;
+import useCases.startTourn.StartTournUC;
 import useCases.teamCreation.teamCreationIB;
 import useCases.teamCreation.teamCreationOB;
 import useCases.teamCreation.teamCreationOD;
@@ -34,7 +44,18 @@ public class UserInput extends JFrame implements ActionListener{
 
         try {
             teamCreationOD outputData = teamCreationController.createNewTeam(tfTeamName.getText());
-            bracketView view = new bracketView();
+            EndTournOB endTournOB = new EndTournPresenter();
+            EndTournIB endTournIB = new EndTournUC(endTournOB, outputData.getUsername(), outputData.getAccounts(),
+                    outputData.getBrackets(), outputData.getBracketID());
+            EndTournController endTournController = new EndTournController(endTournIB);
+
+            StartTournOB startTournOB = new StartTournPresenter();
+            StartTournIB startTournIB = new StartTournUC(startTournOB, outputData.getUsername(), outputData.getAccounts(),
+                    outputData.getBrackets(), outputData.getBracketID());
+            StartTournController startTournController = new StartTournController(startTournIB);
+
+            bracketView view = new bracketView(endTournController, startTournController);
+
             ArrayList<String> teams = outputData.getTeams();
             ArrayList<ArrayList<String>> teamMembers = outputData.getTeamMembers();
             view.setTeam1Name(teams.get(0));
