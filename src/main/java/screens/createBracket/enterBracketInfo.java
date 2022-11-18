@@ -89,6 +89,8 @@ public class enterBracketInfo extends JFrame implements ActionListener {
             view.setBracketName(outputData.getBracketName());
             view.setCurrentUser(outputData.getUsername());
             view.setCurrentTournament(outputData.getBracketID());
+            view.setPlayerInvite(outputData.getPlayerInvite());
+            view.setObserverInvite(outputData.getObserverInvite());
             this.dispose();
             view.setVisible(true);
 

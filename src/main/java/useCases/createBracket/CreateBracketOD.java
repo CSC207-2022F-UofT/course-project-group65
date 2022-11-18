@@ -19,9 +19,13 @@ public class CreateBracketOD {
     private ArrayList<String> teams;
 
     private String bracketName;
+    private String playerInvite;
+    private String observerInvite;
 
 
-    public CreateBracketOD(String username, AccountRepo accounts, BracketRepo brackets, String bracketType, int bracketID, ArrayList<String> teams, String bracketName) {
+    public CreateBracketOD(String username, AccountRepo accounts, BracketRepo brackets, String bracketType,
+                           int bracketID, ArrayList<String> teams, String bracketName,
+                           String playerInvite, String observerInvite){
         this.username = username;
         this.accounts = accounts;
         this.brackets = brackets;
@@ -29,6 +33,8 @@ public class CreateBracketOD {
         this.bracketID = bracketID;
         this.teams = teams;
         this.bracketName = bracketName;
+        this.playerInvite = playerInvite;
+        this.observerInvite = observerInvite;
     }
 
     public String getUsername() {
@@ -57,5 +63,13 @@ public class CreateBracketOD {
 
     public String getBracketName() {
         return bracketName;
+    }
+
+    public String getPlayerInvite() {
+        return playerInvite;
+    }
+
+    public String getObserverInvite() {
+        return observerInvite;
     }
 }
