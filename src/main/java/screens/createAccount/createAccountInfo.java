@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class createAccountInfo extends JFrame {
+public class createAccountInfo extends JFrame implements ActionListener{
 
     private JLabel lbUsername;
     private JLabel lbPassword;
@@ -22,16 +22,15 @@ public class createAccountInfo extends JFrame {
         setSize(450, 300);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-        btSubmit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = tfUsername.getText();
-                String password = tfPassword.getText();
-            }
-        });
+
+        btSubmit.addActionListener(this);
     }
 
-    public static void main(String[] args) {
-        createAccountInfo createAccountInfo = new createAccountInfo();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btSubmit) {
+            String username = tfUsername.getText();
+            String password = tfPassword.getText();
+        }
     }
 }

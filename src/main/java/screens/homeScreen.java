@@ -1,10 +1,13 @@
 package screens;
 
+import screens.createAccount.createAccountInfo;
+import screens.logIn.logInInfo;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class homeScreen extends JFrame{
+public class homeScreen extends JFrame implements ActionListener{
     private JLabel header;
     private JButton btLogIn;
     private JButton btCreateAccount;
@@ -17,21 +20,26 @@ public class homeScreen extends JFrame{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
-//        btLogIn.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                ...
-//            }
-//        });
-//        btCreateAccount.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                ...
-//            }
-//        });
+        btLogIn.addActionListener(this);
+        btCreateAccount.addActionListener(this);
     }
 
     public static void main(String[] args) {
         homeScreen homeScreen = new homeScreen();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btCreateAccount) {
+            createAccountInfo createAccountScreen = new createAccountInfo();
+            this.dispose();
+            createAccountScreen.setVisible(true);
+        }
+
+        if (e.getSource() == btLogIn) {
+            logInInfo logInScreen = new logInInfo();
+            this.dispose();
+            logInScreen.setVisible(true);
+        }
     }
 }
