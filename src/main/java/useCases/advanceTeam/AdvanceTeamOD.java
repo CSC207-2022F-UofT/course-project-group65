@@ -6,37 +6,28 @@ import entities.Team;
 
 public class AdvanceTeamOD {
 
-    private Bracket bracket;
-    private Game advancedGame;
-    private Team winningTeam;
+    private int advancedGame;
+    private String winningTeam;
 
-    public AdvanceTeamOD(Bracket bracket, Game advancedGame, Team winningTeam){
-        this.bracket = bracket;
+    public AdvanceTeamOD(int advancedGame, String winningTeam){
         this.advancedGame = advancedGame;
         this.winningTeam = winningTeam;
     }
 
-    public Bracket getUpdatedBracket(){
-        return this.bracket;
-    }
 
-    public Game getAdvancedGame(){
+    public int getAdvancedGame(){
         return this.advancedGame;
     }
 
-    public Team getWinningTeam(){
+    public String getWinningTeam(){
         return this.winningTeam;
     }
 
-    public void setUpdatedBracket(Bracket bracket){
-        this.bracket = bracket;
-    }
-
-    public void setAdvancedGame(Game advancedGame){
+    public void setAdvancedGame(int advancedGame){
         this.advancedGame = advancedGame;
     }
 
-    public void setWinningTeam(Team winningTeam){
+    public void setWinningTeam(String winningTeam){
         this.winningTeam = winningTeam;
     }
 
