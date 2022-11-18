@@ -1,5 +1,7 @@
 package screens;
 
+import screens.endTourn.EndTournController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -52,10 +54,13 @@ public class bracketView extends JFrame implements ActionListener {
     private JLabel playerInvite;
     private JLabel observerInvite;
 //    Controllers for all Buttons (Go below)
+//    Overseer Control controllers
+    private EndTournController endTournController;
 
-    public bracketView() {
+    public bracketView(EndTournController endTournController) {
         super("Bracket View");
 //        Assign all controllers for this view
+        this.endTournController = endTournController;
 
 //        Default Text for New Bracket View
 //        Info Bar
@@ -230,8 +235,7 @@ public class bracketView extends JFrame implements ActionListener {
             // End Tournament below
             // for now I assumed I have all the infos about the inputs for ID.
 //
-//            EndTournID userInput = new EndTournID(brackets, userName, accounts, bracketId);
-//            EndTournController endTournController = new EndTournController(userInput);
+            endTournController.endTourn();
         }
     }
 }

@@ -1,7 +1,12 @@
 package screens.createBracket;
 
 import screens.bracketView;
+import screens.endTourn.EndTournController;
+import screens.endTourn.EndTournPresenter;
 import useCases.createBracket.*;
+import useCases.endTourn.EndTournIB;
+import useCases.endTourn.EndTournOB;
+import useCases.endTourn.EndTournUC;
 
 import javax.swing.*;
 import java.awt.*;
@@ -85,7 +90,14 @@ public class enterBracketInfo extends JFrame implements ActionListener {
 
 //            Will need to add controller initialization here when we have the controllers as
 //            parameters to the view constructor
-            bracketView view = new bracketView();
+
+//            Overseer Controls controllers
+            EndTournOB endTournOB = new EndTournPresenter();
+            EndTournIB endTournIB = new EndTournUC(endTournOB, outputData.getUsername(), outputData.getAccounts(),
+                    outputData.getBrackets(), outputData.getBracketID());
+            EndTournController endTournController = new EndTournController(endTournIB);
+
+            bracketView view = new bracketView(endTournController);
             view.setBracketName(outputData.getBracketName());
             view.setCurrentUser(outputData.getUsername());
             view.setCurrentTournament(outputData.getBracketID());
