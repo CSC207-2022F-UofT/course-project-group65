@@ -1,17 +1,19 @@
 package screens.bracketOperations;
 
+import screens.advanceTeam.AdvanceTeamController;
+import screens.changePoints.ChangePointsController;
+import screens.declareWinner.DeclareWinnerController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class DoBracketOperation extends JFrame implements ActionListener {
+public class DoBracketOperation extends JFrame {
     private JLabel title;
     private JLabel gameNumLabel;
     private JLabel teamsLabel;
-    private JButton declareAWinnerButton;
-    private JComboBox<String> advanceTeamBox;
     private JLabel advanceTeamLabel;
     private JLabel declareWInnerLabel;
     private JButton declareButton;
@@ -19,38 +21,119 @@ public class DoBracketOperation extends JFrame implements ActionListener {
     private JButton advanceButton;
     private JTextField changePtsTF;
     private JButton changePointsButton;
-    private JButton declareWinnerButton;
     private JComboBox<String> changePtsBox;
     private JLabel changePtsInstruction;
-    private JButton submitAdvanceChoice;
-    private JButton submitChangePtsChoice;
+    private JPanel bracketOpWindow;
     private JTextField changeptsfield;
+
+    private AdvanceTeamController advanceTeamController;
+    private DeclareWinnerController declareWinnerController;
+    private ChangePointsController changePointsController;
+    public int gameID;
 
     public DoBracketOperation() {
         super("Bracket Operations");
 
+        showScreen();
+        advanceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                advanceTeamController.create(gameID);
+            }
+        });
+        changePointsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int points = 0;
+                try {
+                    points = Integer.parseInt(changeptsfield.getText());
+                } catch (NullPointerException ex) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid integer.");
+                }
 
+                String teamName = (String) changePtsBox.getSelectedItem();
+                if (teamName == null) {
+                    JOptionPane.showMessageDialog(null, "Please select a team.");
+                }
+                changePointsController.create(gameID, points, teamName);
+            }
+        });
+        declareButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                declareWinnerController.create(gameID);
+            }
+        });
+    }
+
+    // Overloading the constructor to allow for multiple use cases to be handled
+
+    public DoBracketOperation(AdvanceTeamController controller){
+        advanceTeamController = controller;
+        showScreen();
+        advanceButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                advanceTeamController.create(gameID);
+            }
+        });
+    }
+
+    public DoBracketOperation(DeclareWinnerController controller){
+        declareWinnerController = controller;
+        showScreen();
+        declareButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                declareWinnerController.create(gameID);
+            }
+        });
+    }
+
+    public DoBracketOperation(ChangePointsController controller){
+        changePointsController = controller;
+        showScreen();
+        changePointsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int points = 0;
+                try {
+                    points = Integer.parseInt(changeptsfield.getText());
+                } catch (NullPointerException ex) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid integer.");
+                }
+
+                String teamName = (String) changePtsBox.getSelectedItem();
+                if (teamName == null) {
+                    JOptionPane.showMessageDialog(null, "Please select a team.");
+                }
+                changePointsController.create(gameID, points, teamName);
+            }
+        });
+    }
+
+
+    public void showScreen() {
         gameNumLabel.setText("Game Number: 0");
         teamsLabel.setText("Teams: ");
         advanceTeamLabel.setText("Advance Winning Team");
         chngPtsLabel.setText("Change Points for Team");
         declareButton.setText("Declare Winner");
-
-        advanceButton.addActionListener(this);
-        changePointsButton.addActionListener(this);
-        declareWinnerButton.addActionListener(this);
-        changePointsButton.addActionListener(this);
-        changePtsTF.addActionListener(this);
-        changePtsBox.addActionListener(this);
-
+        declareWInnerLabel.setText("Declare the Winner");
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setContentPane(title);
+        this.setContentPane(bracketOpWindow);
         this.setPreferredSize(new Dimension(800, 600));
         this.pack();
+        this.setVisible(true);
     }
 
-    // Setter methods
+    // Getter Methods
+    // I have to get the game ID somehow from next screen data or something.
+    public void setGameForOperation(int gameID) {
+        this.gameID = gameID;
+    }
+
     public void setGameNumLabel(String gameID) {
         this.gameNumLabel.setText("Game Number:" + gameID);
     }
@@ -64,54 +147,11 @@ public class DoBracketOperation extends JFrame implements ActionListener {
     public void setChangePointsBox(ArrayList<String> teams) {
         this.changePtsBox.removeAllItems();
         for (String team : teams) {
-            this.advanceTeamBox.addItem(team);
+            this.changePtsBox.addItem(team);
         }
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        if (e.getSource() == changePointsButton){
-            changePtsInstruction.setText("Enter the new points for the team");
-            changePtsBox.setVisible(true);
-            changeptsfield.setVisible(true);
-            submitChangePtsChoice.setVisible(true);
-        }
-        else if (e.getSource() == advanceButton){
-            changePtsInstruction.setText("Select the team to advance");
-            changePtsBox.setVisible(true);
-            submitChangePtsChoice.setVisible(true);
-        }
-        else if (e.getSource() == submitChangePtsChoice){
-            changePtsBox.setVisible(false);
-            changeptsfield.setVisible(false);
-            submitChangePtsChoice.setVisible(false);
-        }
-        else if (e.getSource() == submitAdvanceChoice){
-            changePtsBox.setVisible(false);
-            submitChangePtsChoice.setVisible(false);
-        }
-
-//        if(e.getSource() == submitAdvanceChoice) {
-//            try {
-//                String team = Objects.requireNonNull(advanceTeamBox.getSelectedItem()).toString();
-//                // Call controller
-//                // AdvanceTeamController advanceTeamController = new AdvanceTeamController(team);
-//            } catch (Exception ex) {
-//                JOptionPane.showMessageDialog(null, "Please select a team to advance.");
-//            }
-//        }
-//        else if(e.getSource() == submitChangePtsChoice) {
-//            try {
-//                int pts = Integer.parseInt(changeptsfield.getText());
-//                // Call controller
-//            } catch (Exception ex) {
-//                JOptionPane.showMessageDialog(null, "Please enter a valid number of points.");
-//            }
-//        } else if (e.getSource() == declareAWinnerButton) {
-//            // TODO: Implement this
-//            // Call controller method to declare a winner
-//        }
-
+    public static void main(String[] args) {
+        DoBracketOperation doBracketOperation = new DoBracketOperation();
     }
 }
