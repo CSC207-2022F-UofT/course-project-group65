@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class logInInfo extends JFrame{
+public class logInInfo extends JFrame implements ActionListener{
     private JLabel lbUsername;
     private JLabel lbPassword;
     private JPanel logIn;
@@ -20,16 +20,14 @@ public class logInInfo extends JFrame{
         setSize(450, 300);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-        btSubmit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = tfUsername.getText();
-                String password = tfPassword.getText();
-            }
-        });
-    }
 
-    public static void main(String[] args) {
-        logInInfo logInInfo = new logInInfo();
+        btSubmit.addActionListener(this);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btSubmit) {
+            String username = tfUsername.getText();
+            String password = tfPassword.getText();
+        }
     }
 }

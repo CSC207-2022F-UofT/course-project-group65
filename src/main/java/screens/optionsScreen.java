@@ -1,10 +1,13 @@
 package screens;
 
+import screens.logIn.logInInfo;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.activation.ActivationInstantiator;
 
-public class optionsScreen extends JFrame{
+public class optionsScreen extends JFrame implements ActionListener {
     private JLabel lbHeader;
     private JButton btCreateBracket;
     private JButton btJoinNew;
@@ -19,33 +22,31 @@ public class optionsScreen extends JFrame{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
-//        btCreateBracket.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//            }
-//        });
-//        btJoinNew.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//            }
-//        });
-//        btJoinExisting.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//            }
-//        });
-//        btLogOut.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//
-//            }
-//        });
+        btCreateBracket.addActionListener(this);
+        btJoinNew.addActionListener(this);
+        btJoinExisting.addActionListener(this);
+        btLogOut.addActionListener(this);
+
     }
 
-    public static void main(String[] args) {
-        optionsScreen optionsScreen = new optionsScreen();
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btCreateBracket){
+            // TODO
+        }
+
+        if (e.getSource() == btJoinExisting){
+            // TODO
+        }
+
+        if (e.getSource() == btJoinNew){
+            // TODO
+        }
+
+        if (e.getSource() == btLogOut){
+            logInInfo logInScreen = new logInInfo();
+            this.dispose();
+            logInScreen.setVisible(true);
+        }
     }
 }
