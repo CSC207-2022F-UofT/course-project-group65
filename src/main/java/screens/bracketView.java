@@ -1,9 +1,30 @@
 package screens;
 
+import database.AdvanceTeam.AdvanceTeamFileWriter;
+import database.ChangePoints.ChangePointsFileWriter;
+import database.DeclareWinner.DeclareWinnerFileWriter;
+import screens.advanceTeam.AdvanceTeamController;
+import screens.advanceTeam.AdvanceTeamPresenter;
+import screens.bracketOperations.DoBracketOperation;
+import screens.changePoints.ChangePointsController;
+import screens.changePoints.ChangePointsPresenter;
+import screens.declareWinner.DeclareWinnerController;
+import screens.declareWinner.DeclareWinnerPresenter;
 import screens.endTourn.EndTournController;
-import screens.joinTeam.JoinTeamController;
 import screens.startTourn.StartTournController;
 import screens.startTourn.startErrors;
+import useCases.advanceTeam.AdvanceTeamGateway;
+import useCases.advanceTeam.AdvanceTeamIB;
+import useCases.advanceTeam.AdvanceTeamOB;
+import useCases.advanceTeam.AdvanceTeamUC;
+import useCases.changePoints.ChangePointsGateway;
+import useCases.changePoints.ChangePointsIB;
+import useCases.changePoints.ChangePointsOB;
+import useCases.changePoints.ChangePointsUC;
+import useCases.declareWinner.DeclareWinnerGateway;
+import useCases.declareWinner.DeclareWinnerIB;
+import useCases.declareWinner.DeclareWinnerOB;
+import useCases.declareWinner.DeclareWinnerUC;
 import useCases.startTourn.StartTournOD;
 
 import javax.swing.*;
@@ -14,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class bracketView extends JFrame implements ActionListener {
-    //    The main panel for the bracket view screen
+//    The main panel for the bracket view screen
     private JPanel mainPanel;
     //    Panel Bar and General Info
     private JLabel currentUser;
@@ -27,14 +48,14 @@ public class bracketView extends JFrame implements ActionListener {
     private JButton logOut;
     private JButton returnOptions;
 
-    //    Bracket View
+//    Bracket View
     private JButton game2Button;
     private JButton game3Button;
     private JButton game1Button;
     private JLabel game3Label;
     private JLabel game1Label;
     private JLabel game2Label;
-    //    Team View
+//    Team View
     private JLabel team1Name;
     private JList<String> team1List;
     private JButton joinTeam1;
@@ -47,31 +68,31 @@ public class bracketView extends JFrame implements ActionListener {
     private JList<String> team4List;
     private JButton joinTeam4;
     private JLabel team4Name;
-    //    Observer Assignments
+//    Observer Assignments
     private JComboBox<String> observerGame1;
     private JButton assignGame1;
     private JComboBox<String> observerGame2;
     private JButton assignGame2;
     private JComboBox<String> observerGame3;
     private JButton assignGame3;
-    //    Overseer Controls
+//    Overseer Controls
     private JButton startTournamentButton;
     private JButton declareWinnerEndTournamentButton;
     private JLabel playerInvite;
     private JLabel observerInvite;
-    //    Controllers for all Buttons (Go below)
+
+    private NextScreenData nextScreenData;
+//    Controllers for all Buttons (Go below)
 //    Overseer Control controllers
     private EndTournController endTournController;
     private StartTournController startTournController;
-    private JoinTeamController joinTeamController;
 
-    public bracketView(EndTournController endTournController, StartTournController startTournController,
-                       JoinTeamController joinTeamController) {
+    public bracketView(NextScreenData nextScreenData, EndTournController endTournController, StartTournController startTournController) {
         super("Bracket View");
 //        Assign all controllers for this view
+        this.nextScreenData = nextScreenData;
         this.endTournController = endTournController;
         this.startTournController = startTournController;
-        this.joinTeamController = joinTeamController;
 
 //        Default Text for New Bracket View
 //        Info Bar
@@ -120,7 +141,7 @@ public class bracketView extends JFrame implements ActionListener {
         this.pack();
     }
 
-    //    Setter Methods to update the view, or used when creating a new instance of
+//    Setter Methods to update the view, or used when creating a new instance of
 //    a tournament that is currently in progress
 //    Info Bar
     public void setCurrentUser(String username) {
@@ -132,7 +153,7 @@ public class bracketView extends JFrame implements ActionListener {
     public void setCurrentTournament(int tournamentID) {
         currentTournament.setText("ID: " + tournamentID);
     }
-    //    Bracket View
+//    Bracket View
     public void setGame1Label(String team1 , String team2, int team1Score, int team2Score) {
         this.game1Label.setText("[" + team1 + "] " + team1Score + " - " + team2Score + " [" + team2 + "]");
     }
@@ -142,7 +163,7 @@ public class bracketView extends JFrame implements ActionListener {
     public void setGame3Label(String team1 , String team2, int team1Score, int team2Score) {
         this.game3Label.setText("[" + team1 + "] " + team1Score + " - " + team2Score + " [" + team2 + "]");
     }
-    //    Team View
+//    Team View
     public void setTeam1Name(String team1Name) {
         this.team1Name.setText(team1Name);
     }
@@ -167,7 +188,7 @@ public class bracketView extends JFrame implements ActionListener {
     public void setTeam4PlayerList(String[] team4List) {
         this.team4List.setListData(team4List);
     }
-    //    Observer Assignments
+//    Observer Assignments
     public void setObserverListGame1(String[] observers) {
         this.observerGame1.setModel(new DefaultComboBoxModel<>(observers));
     }
@@ -177,7 +198,7 @@ public class bracketView extends JFrame implements ActionListener {
     public void setObserverListGame3(String[] observers) {
         this.observerGame3.setModel(new DefaultComboBoxModel<>(observers));
     }
-    //    Invites
+//    Invites
     public void setPlayerInvite(String invite) {
         this.playerInvite.setText("Player Invite: " + invite);
     }
@@ -186,16 +207,44 @@ public class bracketView extends JFrame implements ActionListener {
     }
 
 
-    //    Action Listeners for all Buttons (Controllers are connected here)
+//    Action Listeners for all Buttons (Controllers are connected here)
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Click " + e.getActionCommand());
-//        Replace print statements with controller calls
+
+//        Controller Initiation
+        //        Advance Team
+        AdvanceTeamOB advanceTeamOB = new AdvanceTeamPresenter();
+//        Next line is not implemented or used.
+        AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamFileWriter("");
+        AdvanceTeamIB advanceTeamIB = new AdvanceTeamUC(advanceTeamOB, advanceTeamGateway,
+                nextScreenData.getBrackets(), nextScreenData.getAccounts(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        AdvanceTeamController advanceTeamController = new AdvanceTeamController(advanceTeamIB);
+        //       Declare Winner
+        DeclareWinnerOB declareWinnerOB = new DeclareWinnerPresenter();
+        DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerFileWriter("");
+        DeclareWinnerIB declareWinnerIB = new DeclareWinnerUC(declareWinnerOB, declareWinnerGateway,
+                nextScreenData.getBrackets(), nextScreenData.getAccounts(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        DeclareWinnerController declareWinnerController = new DeclareWinnerController(declareWinnerIB);
+        //      Change Points
+        ChangePointsOB changePointsOB = new ChangePointsPresenter();
+        ChangePointsGateway changePointsGateway = new ChangePointsFileWriter("");
+        ChangePointsIB changePointsIB = new ChangePointsUC(changePointsOB, changePointsGateway,
+                 nextScreenData.getAccounts(),nextScreenData.getBrackets(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        ChangePointsController changePointsController = new ChangePointsController(changePointsIB);
+
         if (e.getSource() == game1Button) {
             System.out.println("Game 1 Button Clicked");
 //            Create new screen for game 1
 //            In that screen have buttons linked to change points and advance teams
 //            TODO
+            DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
+                    declareWinnerController, changePointsController);
+            doBracketOperations.setVisible(true);
+
         } else if (e.getSource() == game2Button) {
             System.out.println("Game 2 Button Clicked");
             //            TODO
@@ -206,50 +255,18 @@ public class bracketView extends JFrame implements ActionListener {
             System.out.println("Join Team 1 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
-            String team1Name = this.team1Name.getText();
-            try {
-                joinTeamController.joinTeam(team1Name);
-            }
-            catch (Exception exception) {
-                System.out.println( "Error: " + exception);
-                JOptionPane.showMessageDialog(this, exception.getMessage());
-            }
         } else if (e.getSource() == joinTeam2) {
             System.out.println("Join Team 2 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
-            String team2Name = this.team2Name.getText();
-            try {
-                joinTeamController.joinTeam(team2Name);
-            }
-            catch (Exception exception) {
-                System.out.println( "Error: " + exception);
-                JOptionPane.showMessageDialog(this, exception.getMessage());
-            }
         } else if (e.getSource() == joinTeam3) {
             System.out.println("Join Team 3 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
-            String team3Name = this.team3Name.getText();
-            try {
-                joinTeamController.joinTeam(team3Name);
-            }
-            catch (Exception exception) {
-                System.out.println( "Error: " + exception);
-                JOptionPane.showMessageDialog(this, exception.getMessage());
-            }
         } else if (e.getSource() == joinTeam4) {
             System.out.println("Join Team 4 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
-            String team4Name = this.team4Name.getText();
-            try {
-                joinTeamController.joinTeam(team4Name);
-            }
-            catch (Exception exception) {
-                System.out.println( "Error: " + exception);
-                JOptionPane.showMessageDialog(this, exception.getMessage());
-            }
         } else if (e.getSource() == assignGame1) {
             System.out.println("Assign Game 1 Button Clicked");
             //            TODO

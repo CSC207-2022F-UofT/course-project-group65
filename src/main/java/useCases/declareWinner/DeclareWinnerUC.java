@@ -26,7 +26,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
      * @param bracketID      The ID of the bracket the user is advancing the team in
      */
 
-    public void DeclareWinner(DeclareWinnerOB outputBoundary, DeclareWinnerGateway gateway,
+    public DeclareWinnerUC(DeclareWinnerOB outputBoundary, DeclareWinnerGateway gateway,
                               BracketRepo bracketRepo, AccountRepo accountRepo, int bracketID, String username) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
