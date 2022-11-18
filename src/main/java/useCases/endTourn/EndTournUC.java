@@ -47,7 +47,7 @@ public class EndTournUC implements EndTournIB{
     }
 
     @Override
-    public EndTournOD endTourn(EndTournID endTournID) {
+    public EndTournOD endTourn() {
 
         if (!checkGame()) {
             return this.outputBoundary.presentError("This round is not the final round.");

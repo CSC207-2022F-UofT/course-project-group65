@@ -18,9 +18,9 @@ public class EndTournController {
         this.userInput = userInput;
     }
 
-    public EndTournOD endTourn(BracketRepo brackets, String currentUser, AccountRepo accountRepo, int bracketId) {
-        EndTournID inputData = new EndTournID(brackets, currentUser, accountRepo, bracketId);
-        return userInput.endTourn(inputData);
+    //
+    public EndTournOD endTourn() {
+        return userInput.endTourn();
     }
 
 }
