@@ -159,7 +159,7 @@ public class ChangePointsUC implements ChangePointsIB{
 
         assert otherTeam != null;
         ChangePointsOD outputData = new ChangePointsOD(this.game.getGameID(), this.team.getTeamName(), otherTeam.getTeamName(),
-                newPoints, this.game.getTeamPoints(otherTeam));
+                this.game.getTeamPoints(this.team), this.game.getTeamPoints(otherTeam));
 
 //        ChangePointsOD outputData = new ChangePointsOD(this.game, this.team, this.game.getTeamPoints(this.team),
 //                this.bracket);
