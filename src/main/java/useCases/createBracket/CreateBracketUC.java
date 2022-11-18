@@ -57,8 +57,10 @@ public class CreateBracketUC implements CreateBracketIB{
             teams.add(team.getTeamName());
         }
         String bracketName = bracket.getTournamentName();
+        String playerInvite = bracket.getPlayerInvite();
+        String observerInvite = bracket.getObserverInvite();
         CreateBracketOD outputData = new CreateBracketOD(currentUser, accounts, brackets, bracketType,
-                bracketID, teams, bracketName);
+                bracketID, teams, bracketName, playerInvite, observerInvite);
 
         if (Objects.equals(bracket.getTournamentName(), "")){
 //            Bracket failed to create, so we need to retract our bracketID
