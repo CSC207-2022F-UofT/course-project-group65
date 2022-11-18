@@ -115,7 +115,7 @@ public class StartTournUC implements StartTournIB{
 
 //        inputData.getBracket().setTournamentCondition(true);
 
-        StartTournOD outputData = new StartTournOD(currentUser, accounts, brackets, bracketId, errors);
+        StartTournOD outputData = new StartTournOD(errors);
         return this.outputBoundary.presentSuccess(outputData);
     }
 }

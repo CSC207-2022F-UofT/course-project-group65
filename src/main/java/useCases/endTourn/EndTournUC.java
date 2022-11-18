@@ -60,7 +60,7 @@ public class EndTournUC implements EndTournIB{
         }
 
         this.bracket.setTournamentCondition(false);
-        EndTournOD outputData = new EndTournOD(currentUser, accounts, brackets, bracketId);
+        EndTournOD outputData = new EndTournOD();
         return this.outputBoundary.presentSuccess(outputData);
     }
 
