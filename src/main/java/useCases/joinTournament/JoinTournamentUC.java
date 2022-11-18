@@ -36,12 +36,12 @@ public class JoinTournamentUC implements JoinTournamentIB{
         JoinTournamentOD output;
         if (role.equals("PL")){
             currUser.setBracketRole(tournamentID, "Player");
-            output = new JoinTournamentOD(tournamentID, "Player");
+            output = new JoinTournamentOD(currUser.getUsername(), accountRepo, bracketRepo, tournamentID, "Player");
         }
         else {
             currUser.setBracketRole(tournamentID, "Observer");
             bracketRepo.getBracket(tournamentID).addReferee(currUser);
-            output = new JoinTournamentOD(tournamentID, "Observer");
+            output = new JoinTournamentOD(currUser.getUsername(), accountRepo, bracketRepo, tournamentID, "Observer");
         }
         return outputBound.prepareSuccessView(output);
     }
