@@ -54,6 +54,8 @@ public class bracketView extends JFrame implements ActionListener {
 //    Overseer Controls
     private JButton startTournamentButton;
     private JButton declareWinnerEndTournamentButton;
+    private JLabel playerInvite;
+    private JLabel observerInvite;
 //    Controllers for all Buttons (Go below)
 
     public bracketView() {
@@ -98,6 +100,8 @@ public class bracketView extends JFrame implements ActionListener {
 //        Overseer Controls
         startTournamentButton.addActionListener(this);
         declareWinnerEndTournamentButton.addActionListener(this);
+        playerInvite.setText("Player Invite: ");
+        observerInvite.setText("Observer Invite: ");
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
@@ -161,6 +165,13 @@ public class bracketView extends JFrame implements ActionListener {
     }
     public void setObserverListGame3(String[] observers) {
         this.observerGame3.setModel(new DefaultComboBoxModel<>(observers));
+    }
+//    Invites
+    public void setPlayerInvite(String invite) {
+        this.playerInvite.setText("Player Invite: " + invite);
+    }
+    public void setObserverInvite(String invite) {
+        this.observerInvite.setText("Observer Invite: " + invite);
     }
 
 
