@@ -18,10 +18,10 @@ public class AdvanceTeamController {
     }
 
     // Prepare the output data for the view
-    public AdvanceTeamOD create(int bracketID, String username, int gameID){
+    public AdvanceTeamOD create(int gameID){
 
         // the input data is created.
-        AdvanceTeamID inputData = new AdvanceTeamID(bracketID, username, gameID);
+        AdvanceTeamID inputData = new AdvanceTeamID(gameID);
 
         // this simultaneously runs the use case (by passing in ID), and returns the output data
         // This is not using anything rn because we are using the presenter instead.
