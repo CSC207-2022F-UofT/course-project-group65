@@ -1,10 +1,8 @@
 package screens.bracketOperations;
 
-import database.AdvanceTeam.AdvanceTeamFileWriter;
-import entities.*;
 import screens.advanceTeam.AdvanceTeamController;
 import screens.advanceTeam.AdvanceTeamFailed;
-import screens.advanceTeam.AdvanceTeamPresenter;
+import screens.bracketView;
 import screens.changePoints.ChangePointsController;
 import screens.changePoints.ChangePointsFailed;
 import screens.declareWinner.DeclareWinnerController;
@@ -34,22 +32,25 @@ public class DoBracketOperation extends JFrame implements ActionListener {
     private JButton advanceButton;
     private JTextField changePtsTF;
     private JButton changePointsButton;
-    private JComboBox<String> changePtsBox;
     private JLabel changePtsInstruction;
     private JPanel bracketOpWindow;
+    private JTextField teamPointsBox;
 
     private AdvanceTeamController advanceTeamController;
     private DeclareWinnerController declareWinnerController;
     private ChangePointsController changePointsController;
     public int gameID;
 
+    private bracketView viewChange;
+
     public DoBracketOperation(AdvanceTeamController advanceTeamController,
                               DeclareWinnerController declareWinnerController,
-                              ChangePointsController changePointsController){
+                              ChangePointsController changePointsController, bracketView viewChange) {
         super("Bracket Operations");
         this.advanceTeamController = advanceTeamController;
         this.declareWinnerController = declareWinnerController;
         this.changePointsController = changePointsController;
+        this.viewChange = viewChange;
 
         gameNumLabel.setText("Game Number: 0");
         teamsLabel.setText("Teams: ");
@@ -62,10 +63,9 @@ public class DoBracketOperation extends JFrame implements ActionListener {
         changePointsButton.addActionListener(this);
         declareButton.addActionListener(this);
         changePtsTF.addActionListener(this);
-        changePtsBox.addActionListener(this);
 
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(bracketOpWindow);
         this.setPreferredSize(new Dimension(650, 300));
         this.pack();
@@ -84,17 +84,11 @@ public class DoBracketOperation extends JFrame implements ActionListener {
         this.gameNumLabel.setText("Game Number:" + gameID);
     }
 
-    public void setTeamsLabel(ArrayList<String> teams) {
-        for (String team : teams) {
-            this.teamsLabel.setText(this.teamsLabel.getText() + team + " ");
-        }
+    public void setTeamsLabel(String label) {
+        this.teamsLabel.setText(label);
     }
-
-    public void setChangePointsBox(ArrayList<String> teams) {
-        this.changePtsBox.removeAllItems();
-        for (String team : teams) {
-            this.changePtsBox.addItem(team);
-        }
+    public String getTeamsLabel() {
+        return this.teamsLabel.getText();
     }
 
     public static void main(String[] args) {
@@ -169,12 +163,19 @@ public class DoBracketOperation extends JFrame implements ActionListener {
             }
         });
 
-        DoBracketOperation doBracketOperation = new DoBracketOperation(advanceTeamController1, declareWinnerController1, changePointsController1);
+//        DoBracketOperation doBracketOperation = new DoBracketOperation(advanceTeamController1, declareWinnerController1, changePointsController1);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+//        teamsLabel.setText("TEST CHANGE");
+//        if (this.gameID == 1) {
+//            this.viewChange.changeGame1Label("TEST CHANGE");
+//        } else if (this.gameID == 2) {
+//            this.viewChange.changeGame2Label("TEST CHANGE");
+//        } else if (this.gameID == 3) {
+//            this.viewChange.changeGame3Label("TEST CHANGE");
+//        }
         try {
             if (e.getSource() == advanceButton) {
                 advanceTeamController.create(gameID);
@@ -183,8 +184,8 @@ public class DoBracketOperation extends JFrame implements ActionListener {
             } else if (e.getSource() == changePointsButton){
 
                 int points = Integer.parseInt(changePtsTF.getText().trim());
-                String teamName = (String) changePtsBox.getSelectedItem();
-                if (teamName == null) {
+                String teamName = (String) teamPointsBox.getText().trim();
+                if (teamName.equals("")) {
                     JOptionPane.showMessageDialog(null, "Please select a team.");
                 }
                 changePointsController.create(gameID, points, teamName);
@@ -202,4 +203,5 @@ public class DoBracketOperation extends JFrame implements ActionListener {
         }
 
     }
+
 }

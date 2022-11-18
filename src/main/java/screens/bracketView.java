@@ -157,11 +157,20 @@ public class bracketView extends JFrame implements ActionListener {
     public void setGame1Label(String team1 , String team2, int team1Score, int team2Score) {
         this.game1Label.setText("[" + team1 + "] " + team1Score + " - " + team2Score + " [" + team2 + "]");
     }
+    public void changeGame1Label(String change){
+        this.game1Label.setText(change);
+    }
     public void setGame2Label(String team1 , String team2, int team1Score, int team2Score) {
         this.game2Label.setText("[" + team1 + "] " + team1Score + " - " + team2Score + " [" + team2 + "]");
     }
+    public void changeGame2Label(String change){
+        this.game2Label.setText(change);
+    }
     public void setGame3Label(String team1 , String team2, int team1Score, int team2Score) {
         this.game3Label.setText("[" + team1 + "] " + team1Score + " - " + team2Score + " [" + team2 + "]");
+    }
+    public void changeGame3Label(String change){
+        this.game3Label.setText(change);
     }
 //    Team View
     public void setTeam1Name(String team1Name) {
@@ -242,15 +251,28 @@ public class bracketView extends JFrame implements ActionListener {
 //            In that screen have buttons linked to change points and advance teams
 //            TODO
             DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
-                    declareWinnerController, changePointsController);
+                    declareWinnerController, changePointsController, this);
+            doBracketOperations.setGameForOperation(1);
+            doBracketOperations.setGameNumLabel("Game 1");
+            doBracketOperations.setTeamsLabel(game1Label.getText());
             doBracketOperations.setVisible(true);
-
         } else if (e.getSource() == game2Button) {
             System.out.println("Game 2 Button Clicked");
-            //            TODO
+            DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
+                    declareWinnerController, changePointsController, this);
+            doBracketOperations.setGameForOperation(2);
+            doBracketOperations.setGameNumLabel("Game 2");
+            doBracketOperations.setTeamsLabel(game2Label.getText());
+            doBracketOperations.setVisible(true);
+
         } else if (e.getSource() == game3Button) {
             System.out.println("Game 3 Button Clicked");
-            //            TODO
+            DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
+                    declareWinnerController, changePointsController, this);
+            doBracketOperations.setGameForOperation(3);
+            doBracketOperations.setGameNumLabel("Game 3");
+            doBracketOperations.setTeamsLabel(game3Label.getText());
+            doBracketOperations.setVisible(true);
         } else if (e.getSource() == joinTeam1) {
             System.out.println("Join Team 1 Button Clicked");
             //            TODO
