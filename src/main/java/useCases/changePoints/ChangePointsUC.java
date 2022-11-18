@@ -143,13 +143,13 @@ public class ChangePointsUC implements ChangePointsIB{
 
         this.game.setTeam(this.team, this.newPoints);
 
-        ChangePointsDSID dsInputData = new ChangePointsDSID(this.bracketRepo);
-
-        try {
-            this.gateway.save(dsInputData);
-        } catch (Exception e) {
-            return this.outputBoundary.presentError("There was an error saving the bracket.");
-        }
+//        ChangePointsDSID dsInputData = new ChangePointsDSID(this.bracketRepo);
+//
+//        try {
+//            this.gateway.save(dsInputData);
+//        } catch (Exception e) {
+//            return this.outputBoundary.presentError("There was an error saving the bracket.");
+//        }
 
         ChangePointsOD outputData = new ChangePointsOD(this.game, this.team, this.game.getTeamPoints(this.team),
                 this.bracket);
