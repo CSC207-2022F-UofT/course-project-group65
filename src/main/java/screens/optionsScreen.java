@@ -44,9 +44,10 @@ public class optionsScreen extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == btLogOut){
-            logInInfo logInScreen = new logInInfo();
+            // Go back to home screen
+            homeScreen homeScreen = new homeScreen();
             this.dispose();
-            logInScreen.setVisible(true);
+            homeScreen.setVisible(true);
         }
     }
 }

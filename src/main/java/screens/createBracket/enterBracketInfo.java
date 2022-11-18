@@ -25,10 +25,10 @@ public class enterBracketInfo extends JFrame implements ActionListener {
     private CreateBracketController createBracketController;
 
 
-    public enterBracketInfo(CreateBracketController controller) {
+    public enterBracketInfo(CreateBracketController createBracketController) {
         super("Create Bracket");
 
-        this.createBracketController = controller;
+        this.createBracketController = createBracketController;
 
         bracketType.addItem("Default");
 

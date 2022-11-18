@@ -1,6 +1,7 @@
 package screens.logIn;
 
 import screens.homeScreen;
+import screens.optionsScreen;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -28,6 +29,13 @@ public class logInInfo extends JFrame implements ActionListener{
         if (e.getSource() == btSubmit) {
             String username = tfUsername.getText();
             String password = tfPassword.getText();
+
+            CreateAccountOD outputData = createAccountController.create(username, password);
+
+            // Go to options screen
+            optionsScreen optionsScreen = new optionsScreen();
+            this.dispose();
+            optionsScreen.setVisible(true);
         }
     }
 }

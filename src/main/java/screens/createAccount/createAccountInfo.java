@@ -1,6 +1,9 @@
 package screens.createAccount;
 
+import entities.AccountRepo;
 import screens.homeScreen;
+import screens.logIn.logInInfo;
+import useCases.CreateAccount.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,14 +17,17 @@ public class createAccountInfo extends JFrame implements ActionListener{
     private JTextField tfPassword;
     private JButton btSubmit;
     private JPanel createAccount;
+    private CreateAccountController createAccountController;
 
 
-    public createAccountInfo() {
+    public createAccountInfo(CreateAccountController createAccountController) {
         setContentPane(createAccount);
         setTitle("Creating An Account");
         setSize(450, 300);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+
+        this.createAccountController = createAccountController;
 
         btSubmit.addActionListener(this);
     }
@@ -31,6 +37,13 @@ public class createAccountInfo extends JFrame implements ActionListener{
         if (e.getSource() == btSubmit) {
             String username = tfUsername.getText();
             String password = tfPassword.getText();
+
+            CreateAccountOD outputData = createAccountController.create(username, password);
+
+            // Go back to home screen
+            homeScreen homeScreen = new homeScreen();
+            this.dispose();
+            homeScreen.setVisible(true);
         }
     }
 }

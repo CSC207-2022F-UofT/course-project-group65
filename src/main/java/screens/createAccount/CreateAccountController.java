@@ -12,8 +12,8 @@ public class CreateAccountController {
         this.createAccountIB = createAccountIB;
     }
 
-    public CreateAccountOD create(String username, String password, AccountRepo accountRepo) {
+    public CreateAccountOD create(String username, String password) {
         CreateAccountID createAccountID = new CreateAccountID(username, password);
-        return createAccountIB.create(createAccountID, accountRepo);
+        return createAccountIB.create(createAccountID);
     };
 }
