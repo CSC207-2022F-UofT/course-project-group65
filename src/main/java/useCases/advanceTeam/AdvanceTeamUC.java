@@ -73,6 +73,7 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
         for (Game g : games){
             if (g.getPrevGame1().getGameID() == game.getGameID() || g.getPrevGame2().getGameID() == game.getGameID()){
                 g.setTeam(team, 0);
+                g.setNumTeams(g.getNumTeams() + 1); // Increases the number of teams in the game by 1
                 return g;
             }
         }
