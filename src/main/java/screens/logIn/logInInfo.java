@@ -35,8 +35,6 @@ public class logInInfo extends JFrame implements ActionListener{
             String username = tfUsername.getText();
             String password = tfPassword.getText();
 
-//            CreateAccountOD outputData = createAccountController.create(username, password);
-
             LogInOD outputData = logInController.login(username, password);
 
             // Go to options screen

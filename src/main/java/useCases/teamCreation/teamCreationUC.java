@@ -89,7 +89,8 @@ public class teamCreationUC implements teamCreationIB {
         }
 
 
-        teamCreationOD outputData = new teamCreationOD(teamMembers, teams, success);
+        teamCreationOD outputData = new teamCreationOD(teamMembers, teams, success, creatorName,
+                bracketID, accounts, brackets);
         return outputBoundary.prepareSuccessView(outputData);
     }
 }
