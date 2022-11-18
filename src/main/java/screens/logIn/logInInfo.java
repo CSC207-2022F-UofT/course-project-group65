@@ -2,6 +2,7 @@ package screens.logIn;
 
 import screens.homeScreen;
 import screens.optionsScreen;
+import useCases.LogIn.LogInOD;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,12 +16,16 @@ public class logInInfo extends JFrame implements ActionListener{
     private JTextField tfPassword;
     private JButton btSubmit;
 
-    public logInInfo() {
+    private LogInController logInController;
+
+    public logInInfo(LogInController logInController) {
         setContentPane(logIn);
         setTitle("Log In");
         setSize(450, 300);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
+
+        this.logInController = logInController;
 
         btSubmit.addActionListener(this);
     }
@@ -30,7 +35,9 @@ public class logInInfo extends JFrame implements ActionListener{
             String username = tfUsername.getText();
             String password = tfPassword.getText();
 
-            CreateAccountOD outputData = createAccountController.create(username, password);
+//            CreateAccountOD outputData = createAccountController.create(username, password);
+
+            LogInOD outputData = logInController.login(username, password);
 
             // Go to options screen
             optionsScreen optionsScreen = new optionsScreen();

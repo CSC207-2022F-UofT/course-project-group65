@@ -1,6 +1,9 @@
 package screens;
 
+import screens.createBracket.enterBracketInfo;
+import screens.joinTournament.JoinTournamentInfo;
 import screens.logIn.logInInfo;
+import screens.viewTournament.ViewTournamentInfo;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,15 +35,24 @@ public class optionsScreen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btCreateBracket){
-            // TODO
+            // enterbracketinfo
+            enterBracketInfo enterBracketInfo = new enterBracketInfo();
+            this.dispose();
+            enterBracketInfo.setVisible(true);
         }
 
         if (e.getSource() == btJoinExisting){
-            // TODO
+            // Join an Existing Bracket
+            ViewTournamentInfo viewTournamentInfo = new ViewTournamentInfo();
+            this.dispose();
+            viewTournamentInfo.setVisible(true);
         }
 
         if (e.getSource() == btJoinNew){
-            // TODO
+            // Join a new bracket
+            JoinTournamentInfo joinTournamentInfo = new JoinTournamentInfo();
+            this.dispose();
+            joinTournamentInfo.setVisible(true);
         }
 
         if (e.getSource() == btLogOut){
