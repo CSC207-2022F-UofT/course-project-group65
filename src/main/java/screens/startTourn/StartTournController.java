@@ -18,9 +18,10 @@ public class StartTournController {
         this.userInput = userInput;
     }
 
-    public StartTournOD startTourn(BracketRepo brackets, String currentUser, AccountRepo accountRepo, int bracketId) {
-        StartTournID inputData = new StartTournID(brackets, currentUser, accountRepo, bracketId);
-
-        return userInput.startTourn(inputData);
+    public StartTournOD startTourn() {
+        return userInput.startTourn();
+    }
+    public void start(){
+        userInput.start();
     }
 }
