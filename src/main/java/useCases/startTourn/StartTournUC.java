@@ -76,31 +76,44 @@ public class StartTournUC implements StartTournIB{
         }
     }
 
+    public void start() {
+        this.bracket.setTournamentCondition(true);
+    }
+
     // TODO: implement the check part after finishing front end.
     /// TODO: after returning the error message to the user, we want to know whether the user still wants to
     /// start the tournament anyway. but for now I don't know how to implement that so I'm just leaving it.
     @Override
     public StartTournOD startTourn(StartTournID inputData) {
+        ArrayList<String> errors = new ArrayList<String>();
+        String errorType1 = "USERROLE";
+        String errorType2 = "NUMTEAMS";
+        String errorType3 = "NOOBSERVER";
+        String errorType4 = "TEAMNOTFULL";
 
-//        if (!checkUserRole(inputData)) {
+        if (!checkUserRole()) {
+            errors.add(errorType1);
 //            return this.outputBoundary.presentError("You do not have permission to start the tournament.");
-//        }
-//
-//        if (!checkNumTeams(inputData)) {
+        }
+
+        if (!checkNumTeams()) {
+            errors.add(errorType2);
 //            return this.outputBoundary.presentError("The number of teams is invalid.");
-//        }
-//
-//        if (!checkGameObserver(inputData)) {
+        }
+
+        if (!checkGameObserver()) {
+            errors.add(errorType3);
 //              return this.outputBoundary.presentError("There is at least one game that does not have an observer assigned.");
-//        }
-//
-//        if (!checkTeamFull(inputData)) {
+        }
+
+        if (!checkTeamFull()) {
+            errors.add(errorType4);
 //              return this.outputBoundary.presentError("The teams are not full.");
-//        }
+        }
 
-        inputData.getBracket().setTournamentCondition(true);
+//        inputData.getBracket().setTournamentCondition(true);
 
-        StartTournOD outputData = new StartTournOD(currentUser, accounts, brackets, bracketId);
+        StartTournOD outputData = new StartTournOD(currentUser, accounts, brackets, bracketId, errors);
         return this.outputBoundary.presentSuccess(outputData);
     }
 }
