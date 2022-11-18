@@ -235,7 +235,13 @@ public class bracketView extends JFrame implements ActionListener {
             // End Tournament below
             // for now I assumed I have all the infos about the inputs for ID.
 //
-            endTournController.endTourn();
+            try {
+                endTournController.endTourn();
+            }
+            catch (Exception exception) {
+                System.out.println("Error: " + exception);
+                JOptionPane.showMessageDialog(this, exception.getMessage());
+            }
         }
     }
 }
