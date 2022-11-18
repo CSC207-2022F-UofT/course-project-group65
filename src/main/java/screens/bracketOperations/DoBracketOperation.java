@@ -45,7 +45,7 @@ public class DoBracketOperation extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int points = 0;
                 try {
-                    points = Integer.parseInt(changePtsTF.getText());
+                    points = Integer.parseInt(changePtsTF.getText().trim());
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Please enter a valid integer.");
                 }
@@ -105,7 +105,7 @@ public class DoBracketOperation extends JFrame {
                 }
 
                 try {
-                    points = Integer.parseInt(changePtsTF.getText());
+                    points = Integer.parseInt(changePtsTF.getText().trim());
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Please enter a valid integer.");
                 }
