@@ -1,5 +1,6 @@
 package screens.createBracket;
 
+import screens.NextScreenData;
 import screens.bracketView;
 import screens.endTourn.EndTournController;
 import screens.endTourn.EndTournPresenter;
@@ -107,7 +108,13 @@ public class enterBracketInfo extends JFrame implements ActionListener {
                     outputData.getBrackets(), outputData.getBracketID());
             StartTournController startTournController = new StartTournController(startTournIB);
 
-            bracketView view = new bracketView(endTournController, startTournController);
+            NextScreenData nextScreenData = new NextScreenData();
+            nextScreenData.setBrackets(outputData.getBrackets());
+            nextScreenData.setAccounts(outputData.getAccounts());
+            nextScreenData.setCurrentUser(outputData.getUsername());
+            nextScreenData.setCurrentBracketID(outputData.getBracketID());
+
+            bracketView view = new bracketView(nextScreenData, endTournController, startTournController);
             view.setBracketName(outputData.getBracketName());
             view.setCurrentUser(outputData.getUsername());
             view.setCurrentTournament(outputData.getBracketID());

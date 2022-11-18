@@ -1,8 +1,30 @@
 package screens;
 
+import database.AdvanceTeam.AdvanceTeamFileWriter;
+import database.ChangePoints.ChangePointsFileWriter;
+import database.DeclareWinner.DeclareWinnerFileWriter;
+import screens.advanceTeam.AdvanceTeamController;
+import screens.advanceTeam.AdvanceTeamPresenter;
+import screens.bracketOperations.DoBracketOperation;
+import screens.changePoints.ChangePointsController;
+import screens.changePoints.ChangePointsPresenter;
+import screens.declareWinner.DeclareWinnerController;
+import screens.declareWinner.DeclareWinnerPresenter;
 import screens.endTourn.EndTournController;
 import screens.startTourn.StartTournController;
 import screens.startTourn.startErrors;
+import useCases.advanceTeam.AdvanceTeamGateway;
+import useCases.advanceTeam.AdvanceTeamIB;
+import useCases.advanceTeam.AdvanceTeamOB;
+import useCases.advanceTeam.AdvanceTeamUC;
+import useCases.changePoints.ChangePointsGateway;
+import useCases.changePoints.ChangePointsIB;
+import useCases.changePoints.ChangePointsOB;
+import useCases.changePoints.ChangePointsUC;
+import useCases.declareWinner.DeclareWinnerGateway;
+import useCases.declareWinner.DeclareWinnerIB;
+import useCases.declareWinner.DeclareWinnerOB;
+import useCases.declareWinner.DeclareWinnerUC;
 import useCases.startTourn.StartTournOD;
 
 import javax.swing.*;
@@ -58,14 +80,17 @@ public class bracketView extends JFrame implements ActionListener {
     private JButton declareWinnerEndTournamentButton;
     private JLabel playerInvite;
     private JLabel observerInvite;
+
+    private NextScreenData nextScreenData;
 //    Controllers for all Buttons (Go below)
 //    Overseer Control controllers
     private EndTournController endTournController;
     private StartTournController startTournController;
 
-    public bracketView(EndTournController endTournController, StartTournController startTournController) {
+    public bracketView(NextScreenData nextScreenData, EndTournController endTournController, StartTournController startTournController) {
         super("Bracket View");
 //        Assign all controllers for this view
+        this.nextScreenData = nextScreenData;
         this.endTournController = endTournController;
         this.startTournController = startTournController;
 
@@ -186,12 +211,40 @@ public class bracketView extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Click " + e.getActionCommand());
-//        Replace print statements with controller calls
+
+//        Controller Initiation
+        //        Advance Team
+        AdvanceTeamOB advanceTeamOB = new AdvanceTeamPresenter();
+//        Next line is not implemented or used.
+        AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamFileWriter("");
+        AdvanceTeamIB advanceTeamIB = new AdvanceTeamUC(advanceTeamOB, advanceTeamGateway,
+                nextScreenData.getBrackets(), nextScreenData.getAccounts(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        AdvanceTeamController advanceTeamController = new AdvanceTeamController(advanceTeamIB);
+        //       Declare Winner
+        DeclareWinnerOB declareWinnerOB = new DeclareWinnerPresenter();
+        DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerFileWriter("");
+        DeclareWinnerIB declareWinnerIB = new DeclareWinnerUC(declareWinnerOB, declareWinnerGateway,
+                nextScreenData.getBrackets(), nextScreenData.getAccounts(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        DeclareWinnerController declareWinnerController = new DeclareWinnerController(declareWinnerIB);
+        //      Change Points
+        ChangePointsOB changePointsOB = new ChangePointsPresenter();
+        ChangePointsGateway changePointsGateway = new ChangePointsFileWriter("");
+        ChangePointsIB changePointsIB = new ChangePointsUC(changePointsOB, changePointsGateway,
+                 nextScreenData.getAccounts(),nextScreenData.getBrackets(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        ChangePointsController changePointsController = new ChangePointsController(changePointsIB);
+
         if (e.getSource() == game1Button) {
             System.out.println("Game 1 Button Clicked");
 //            Create new screen for game 1
 //            In that screen have buttons linked to change points and advance teams
 //            TODO
+            DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
+                    declareWinnerController, changePointsController);
+            doBracketOperations.setVisible(true);
+
         } else if (e.getSource() == game2Button) {
             System.out.println("Game 2 Button Clicked");
             //            TODO
