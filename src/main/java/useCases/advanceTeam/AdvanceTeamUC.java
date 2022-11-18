@@ -69,7 +69,7 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
 
     // This method is used to insert the winning team into the next game in the bracket
     private Game insertTeam(Team team, Game game){
-        ArrayList<Game> games = returnLevelGames(game, this.game.getGameRound() + 1);
+        ArrayList<Game> games = returnLevelGames(this.bracket.getFinalGame(), this.game.getGameRound() + 1);
         for (Game g : games){
             if (g.getPrevGame1().getGameID() == game.getGameID() || g.getPrevGame2().getGameID() == game.getGameID()){
                 g.setTeam(team, 0);
@@ -88,7 +88,10 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
      */
     public AdvanceTeamOD advanceWinner(AdvanceTeamID inputData) {
         findGame(inputData.getGameIDAT(), this.bracket.getFinalGame());
-        if (this.game.getGameRound() + 1 >= getTreeHeight(this.game)) {
+//        if (this.game.getGameRound() > getTreeHeight(this.bracket.getFinalGame())) {
+//            return this.outputBoundary.presentError("This game is in the final round.");
+//        }
+        if (this.game.getGameRound() >= this.bracket.getFinalGame().getGameRound()) {
             return this.outputBoundary.presentError("This game is in the final round.");
         }
 
@@ -122,12 +125,12 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
         }
 
         // This is where we would save the bracket to the database, but we don't have a database. We save locally.
-        AdvanceTeamDSID dsInputData = new AdvanceTeamDSID(this.bracketRepo);
-        try {
-            this.gateway.save(dsInputData);
-        } catch (Exception e) {
-            return this.outputBoundary.presentError("There was an error saving the information.");
-        }
+//        AdvanceTeamDSID dsInputData = new AdvanceTeamDSID(this.bracketRepo);
+//        try {
+//            this.gateway.save(dsInputData);
+//        } catch (Exception e) {
+//            return this.outputBoundary.presentError("There was an error saving the information.");
+//        }
 
         AdvanceTeamOD outputData = new AdvanceTeamOD(this.bracket, advancedGame, winningTeam);
         return this.outputBoundary.presentSuccess(outputData);
