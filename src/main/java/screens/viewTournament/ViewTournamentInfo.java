@@ -1,5 +1,17 @@
 package screens.viewTournament;
 
+import entities.Bracket;
+import screens.bracketView;
+import screens.endTourn.EndTournController;
+import screens.endTourn.EndTournPresenter;
+import screens.startTourn.StartTournController;
+import screens.startTourn.StartTournPresenter;
+import useCases.endTourn.EndTournIB;
+import useCases.endTourn.EndTournOB;
+import useCases.endTourn.EndTournUC;
+import useCases.startTourn.StartTournIB;
+import useCases.startTourn.StartTournOB;
+import useCases.startTourn.StartTournUC;
 import useCases.viewTournament.ViewTournamentOD;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +29,8 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
         setTitle("View Tournament");
         setSize(450, 300);
         setVisible(true);
+        //cbTournamentID.add() adding tournaments from users current tournaments
+        // may just change to a Jtextfield if too difficult
         btSubmit.addActionListener(this);
         setContentPane(viewTournament);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,8 +41,28 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
         int tournamentID = (Integer) cbTournamentID.getSelectedItem();
         try {
             ViewTournamentOD outData = controller.viewTournament(tournamentID);
+
+            EndTournOB endTournOB = new EndTournPresenter();
+            EndTournIB endTournIB = new EndTournUC(endTournOB, outData.getUsername(), outData.getAccounts(),
+                    outData.getBrackets(), outData.getTournamentID());
+            EndTournController endTournController = new EndTournController(endTournIB);
+
+            StartTournOB startTournOB = new StartTournPresenter();
+            StartTournIB startTournIB = new StartTournUC(startTournOB, outData.getUsername(), outData.getAccounts(),
+                    outData.getBrackets(), outData.getTournamentID());
+            StartTournController startTournController = new StartTournController(startTournIB);
+
+            bracketView view = new bracketView(endTournController, startTournController);
+            Bracket bracket = outData.getBrackets().getBracket(outData.getTournamentID());
+            view.setBracketName(bracket.getTournamentName());
+            view.setCurrentUser(outData.getUsername());
+            view.setCurrentTournament(outData.getTournamentID());
+            view.setPlayerInvite(bracket.getPlayerInvite());
+            view.setObserverInvite(bracket.getObserverInvite());
+            this.dispose();
+            view.setVisible(true);
         }
-        catch (Exception ex){
+        catch (ViewTournamentFailed ex){
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }

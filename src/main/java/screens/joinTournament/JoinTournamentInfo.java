@@ -1,5 +1,6 @@
 package screens.joinTournament;
 
+import screens.optionsScreen2;
 import useCases.joinTournament.JoinTournamentOD;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -28,7 +29,7 @@ public class JoinTournamentInfo extends JFrame implements ActionListener {
         try{
             JoinTournamentOD outData = controller.joinTournament(invite);
         }
-        catch (Exception ex){
+        catch (JoinTournamentFailed ex){
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }

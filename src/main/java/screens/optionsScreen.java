@@ -1,6 +1,10 @@
 package screens;
 
+import screens.joinTournament.JoinTournamentController;
+import screens.joinTournament.JoinTournamentInfo;
 import screens.logIn.logInInfo;
+import screens.viewTournament.ViewTournamentInfo;
+import useCases.joinTournament.JoinTournamentIB;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -35,15 +39,15 @@ public class optionsScreen extends JFrame implements ActionListener {
             // TODO
         }
 
-        if (e.getSource() == btJoinExisting){
+        else if (e.getSource() == btJoinExisting){
             // TODO
         }
 
-        if (e.getSource() == btJoinNew){
+        else if (e.getSource() == btJoinNew){
             // TODO
         }
 
-        if (e.getSource() == btLogOut){
+        else if (e.getSource() == btLogOut){
             // Go back to home screen
             homeScreen homeScreen = new homeScreen();
             this.dispose();
