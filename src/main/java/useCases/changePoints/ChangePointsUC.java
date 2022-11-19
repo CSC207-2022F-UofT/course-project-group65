@@ -107,7 +107,10 @@ public class ChangePointsUC implements ChangePointsIB{
     public ChangePointsOD changePoints(ChangePointsID inputData) {
         findGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
         findTeam(inputData);
-
+        if (!this.bracket.getTournamentCondition()) {
+            return this.outputBoundary.presentError("The tournament is not in progress. " +
+                    "Tournament had ended or has not yet started.");
+        }
         if (!checkTeam(this.team)) {
             return this.outputBoundary.presentError("The team you are trying to change points for is not " +
                     "in the game.");

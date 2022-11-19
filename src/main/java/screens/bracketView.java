@@ -226,7 +226,7 @@ public class bracketView extends JFrame implements ActionListener {
 //    Action Listeners for all Buttons (Controllers are connected here)
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Click " + e.getActionCommand());
+//        System.out.println("Click " + e.getActionCommand());
 
 //        Controller Initiation
         //        Advance Team
@@ -253,7 +253,7 @@ public class bracketView extends JFrame implements ActionListener {
         ChangePointsController changePointsController = new ChangePointsController(changePointsIB);
 
         if (e.getSource() == game1Button) {
-            System.out.println("Game 1 Button Clicked");
+//            System.out.println("Game 1 Button Clicked");
 //            Create new screen for game 1
 //            In that screen have buttons linked to change points and advance teams
 //            TODO
@@ -264,7 +264,7 @@ public class bracketView extends JFrame implements ActionListener {
             doBracketOperations.setTeamsLabel(game1Label.getText());
             doBracketOperations.setVisible(true);
         } else if (e.getSource() == game2Button) {
-            System.out.println("Game 2 Button Clicked");
+//            System.out.println("Game 2 Button Clicked");
             DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
                     declareWinnerController, changePointsController, this);
             doBracketOperations.setGameForOperation(2);
@@ -273,7 +273,7 @@ public class bracketView extends JFrame implements ActionListener {
             doBracketOperations.setVisible(true);
 
         } else if (e.getSource() == game3Button) {
-            System.out.println("Game 3 Button Clicked");
+//            System.out.println("Game 3 Button Clicked");
             DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
                     declareWinnerController, changePointsController, this);
             doBracketOperations.setGameForOperation(3);
@@ -281,35 +281,35 @@ public class bracketView extends JFrame implements ActionListener {
             doBracketOperations.setTeamsLabel(game3Label.getText());
             doBracketOperations.setVisible(true);
         } else if (e.getSource() == joinTeam1) {
-            System.out.println("Join Team 1 Button Clicked");
+//            System.out.println("Join Team 1 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == joinTeam2) {
-            System.out.println("Join Team 2 Button Clicked");
+//            System.out.println("Join Team 2 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == joinTeam3) {
-            System.out.println("Join Team 3 Button Clicked");
+//            System.out.println("Join Team 3 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == joinTeam4) {
-            System.out.println("Join Team 4 Button Clicked");
+//            System.out.println("Join Team 4 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == assignGame1) {
-            System.out.println("Assign Game 1 Button Clicked");
+//            System.out.println("Assign Game 1 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == assignGame2) {
-            System.out.println("Assign Game 2 Button Clicked");
+//            System.out.println("Assign Game 2 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == assignGame3) {
-            System.out.println("Assign Game 3 Button Clicked");
+//            System.out.println("Assign Game 3 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == startTournamentButton) {
-            System.out.println("Start Tournament Button Clicked");
+//            System.out.println("Start Tournament Button Clicked");
 
             //            TODO
 //            Calls corresponding UC through controller
@@ -329,7 +329,7 @@ public class bracketView extends JFrame implements ActionListener {
             }
             errorView.setVisible(true);
         } else if (e.getSource() == declareWinnerEndTournamentButton) {
-            System.out.println("Declare Winner End Tournament Button Clicked");
+//            System.out.println("Declare Winner End Tournament Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
             // End Tournament below
@@ -340,7 +340,7 @@ public class bracketView extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Tournament Ended");
             }
             catch (Exception exception) {
-                System.out.println("Error: " + exception);
+//                System.out.println("Error: " + exception);
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
         }

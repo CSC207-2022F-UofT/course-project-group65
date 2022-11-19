@@ -66,7 +66,7 @@ public class enterBracketInfo extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Click " + e.getActionCommand());
+//        System.out.println("Click " + e.getActionCommand());
 
 
         try {
@@ -84,11 +84,11 @@ public class enterBracketInfo extends JFrame implements ActionListener {
             int numTeams = (int) this.numTeams.getSelectedItem();
             int winCondition = (int) this.winCondition.getSelectedItem();
             int teamSizes = (int) this.teamSizes.getSelectedItem();
-            System.out.println(bracketName);
-            System.out.println(bracketType);
-            System.out.println(numTeams);
-            System.out.println(winCondition);
-            System.out.println(teamSizes);
+//            System.out.println(bracketName);
+//            System.out.println(bracketType);
+//            System.out.println(numTeams);
+//            System.out.println(winCondition);
+//            System.out.println(teamSizes);
 
             CreateBracketOD outputData = createBracketController.create(bracketType, bracketName, numTeams, teamSizes,
                     winCondition);
@@ -125,7 +125,7 @@ public class enterBracketInfo extends JFrame implements ActionListener {
 
 
         } catch (Exception exception) {
-            System.out.println("Error: " + exception);
+//            System.out.println("Error: " + exception);
             JOptionPane.showMessageDialog(this, exception.getMessage());
         }
     }

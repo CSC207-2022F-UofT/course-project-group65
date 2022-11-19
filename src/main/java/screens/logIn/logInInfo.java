@@ -1,9 +1,17 @@
 package screens.logIn;
 
+import entities.AccountRepo;
+import entities.BracketRepo;
+import screens.NextScreenData;
 import screens.createAccount.CreateAccountController;
+import screens.createBracket.CreateBracketController;
+import screens.createBracket.CreateBracketPresenter;
 import screens.homeScreen;
 import screens.optionsScreen;
 import useCases.LogIn.LogInOD;
+import useCases.createBracket.CreateBracketIB;
+import useCases.createBracket.CreateBracketOB;
+import useCases.createBracket.CreateBracketUC;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -48,6 +56,26 @@ public class logInInfo extends JFrame implements ActionListener{
             try {
                 LogInOD outputData = logInController.login(username, password);
                 JOptionPane.showMessageDialog(this, "Welcome " + outputData.getUsername());
+
+                String currentUser = outputData.getUsername();
+                AccountRepo currentAccounts = outputData.getAccountRepo();
+                BracketRepo currentBrackets = outputData.getBracketRepo();
+
+                NextScreenData nextScreenData = new NextScreenData();
+                nextScreenData.setCurrentUser(currentUser);
+                nextScreenData.setAccounts(currentAccounts);
+                nextScreenData.setBrackets(currentBrackets);
+
+                CreateBracketOB createBracketOB = new CreateBracketPresenter();
+                CreateBracketIB interactor = new CreateBracketUC(createBracketOB, currentUser,
+                        currentAccounts, currentBrackets);
+                CreateBracketController createBracketCon = new CreateBracketController(interactor);
+
+                optionsScreen optionsScreen = new optionsScreen(nextScreenData, this.createAccountController,
+                        this.logInController, createBracketCon);
+                this.dispose();
+                optionsScreen.setVisible(true);
+
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
