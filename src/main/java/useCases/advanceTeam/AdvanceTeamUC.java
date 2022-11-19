@@ -132,7 +132,7 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
 //            return this.outputBoundary.presentError("There was an error saving the information.");
 //        }
 
-        ArrayList<Team> teams = this.game.getTeams();
+        ArrayList<Team> teams = advancedGame.getTeams();
         ArrayList<String> teamNames = new ArrayList<>(Arrays.asList("", ""));
         for (Team team : teams) {
             if (team != null) {
