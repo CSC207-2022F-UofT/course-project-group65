@@ -111,6 +111,7 @@ public class ChangePointsUC implements ChangePointsIB{
         findGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
         findTeam(inputData);
         this.newPoints = inputData.getNewPointsCP();
+        int changedPoints = this.newPoints + this.game.getTeamPoints(this.team);
 
         if (!checkUserPermission(this.user)) {
             return this.outputBoundary.presentError("You do not have permission to change points.");
@@ -140,7 +141,7 @@ public class ChangePointsUC implements ChangePointsIB{
                     "add points yet");
         }
 
-        this.game.setTeam(this.team, this.newPoints);
+        this.game.setTeam(this.team, changedPoints);
 
 //        ChangePointsDSID dsInputData = new ChangePointsDSID(this.bracketRepo);
 //
@@ -159,7 +160,7 @@ public class ChangePointsUC implements ChangePointsIB{
 
         assert otherTeam != null;
         ChangePointsOD outputData = new ChangePointsOD(this.game.getGameID(), this.team.getTeamName(), otherTeam.getTeamName(),
-                this.game.getTeamPoints(this.team), this.game.getTeamPoints(otherTeam));
+                changedPoints, this.game.getTeamPoints(otherTeam));
 
 //        ChangePointsOD outputData = new ChangePointsOD(this.game, this.team, this.game.getTeamPoints(this.team),
 //                this.bracket);
