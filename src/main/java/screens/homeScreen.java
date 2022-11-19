@@ -2,6 +2,7 @@ package screens;
 
 import screens.createAccount.CreateAccountController;
 import screens.createAccount.createAccountInfo;
+import screens.logIn.LogInController;
 import screens.logIn.logInInfo;
 
 import javax.swing.*;
@@ -14,8 +15,9 @@ public class homeScreen extends JFrame implements ActionListener{
     private JButton btCreateAccount;
     private JPanel homeScreen;
     private CreateAccountController createAccountController;
+    private LogInController logInController;
 
-    public homeScreen(CreateAccountController createAccountController) {
+    public homeScreen(CreateAccountController createAccountController, LogInController logInController) {
         setContentPane(homeScreen);
         setTitle("Home Screen");
         setSize(450, 300);
@@ -23,25 +25,22 @@ public class homeScreen extends JFrame implements ActionListener{
         setVisible(true);
 
         this.createAccountController = createAccountController;
+        this.logInController = logInController;
 
         btLogIn.addActionListener(this);
         btCreateAccount.addActionListener(this);
     }
 
-    public static void main(String[] args) {
-        homeScreen homeScreen = new homeScreen();
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btCreateAccount) {
-            createAccountInfo createAccountScreen = new createAccountInfo(createAccountController);
+            createAccountInfo createAccountScreen = new createAccountInfo(this.createAccountController, this.logInController);
             this.dispose();
             createAccountScreen.setVisible(true);
         }
 
         if (e.getSource() == btLogIn) {
-            logInInfo logInScreen = new logInInfo();
+            logInInfo logInScreen = new logInInfo(this.logInController);
             this.dispose();
             logInScreen.setVisible(true);
         }

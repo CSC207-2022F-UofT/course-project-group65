@@ -2,6 +2,7 @@ package screens.createAccount;
 
 import entities.AccountRepo;
 import screens.homeScreen;
+import screens.logIn.LogInController;
 import screens.logIn.logInInfo;
 import useCases.CreateAccount.*;
 
@@ -18,9 +19,10 @@ public class createAccountInfo extends JFrame implements ActionListener{
     private JButton btSubmit;
     private JPanel createAccount;
     private CreateAccountController createAccountController;
+    private LogInController logInController;
 
 
-    public createAccountInfo(CreateAccountController createAccountController) {
+    public createAccountInfo(CreateAccountController createAccountController, LogInController logInController) {
         setContentPane(createAccount);
         setTitle("Creating An Account");
         setSize(450, 300);
@@ -28,6 +30,7 @@ public class createAccountInfo extends JFrame implements ActionListener{
         setVisible(true);
 
         this.createAccountController = createAccountController;
+        this.logInController = logInController;
 
         btSubmit.addActionListener(this);
     }
@@ -41,9 +44,9 @@ public class createAccountInfo extends JFrame implements ActionListener{
             CreateAccountOD outputData = createAccountController.create(username, password);
 
             // Go back to home screen
-            homeScreen homeScreen = new homeScreen();
-            this.dispose();
-            homeScreen.setVisible(true);
+//            homeScreen homeScreen = new homeScreen();
+//            this.dispose();
+//            homeScreen.setVisible(true);
         }
     }
 }

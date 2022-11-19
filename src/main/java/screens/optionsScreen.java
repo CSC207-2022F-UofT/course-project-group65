@@ -33,29 +33,29 @@ public class optionsScreen extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == btCreateBracket) {
-            // Create a new bracket
-            enterBracketInfo enterBracketInfo = new enterBracketInfo();
-            this.dispose();
-            enterBracketInfo.setVisible(true);
-
-        } else if (e.getSource() == btJoinExisting) {
-            // Join an Existing Bracket
-            ViewTournamentInfo viewTournamentInfo = new ViewTournamentInfo();
-            this.dispose();
-            viewTournamentInfo.setVisible(true);
-
-        } else if (e.getSource() == btJoinNew) {
-            // Join a new bracket
-            JoinTournamentInfo joinTournamentInfo = new JoinTournamentInfo();
-            this.dispose();
-            joinTournamentInfo.setVisible(true);
-
-        } else if (e.getSource() == btLogOut) {
-            // Go back to home screen
-            homeScreen homeScreen = new homeScreen();
-            this.dispose();
-            homeScreen.setVisible(true);
-            }
+//        if (e.getSource() == btCreateBracket) {
+//            // Create a new bracket
+//            enterBracketInfo enterBracketInfo = new enterBracketInfo();
+//            this.dispose();
+//            enterBracketInfo.setVisible(true);
+//
+//        } else if (e.getSource() == btJoinExisting) {
+//            // Join an Existing Bracket
+//            ViewTournamentInfo viewTournamentInfo = new ViewTournamentInfo();
+//            this.dispose();
+//            viewTournamentInfo.setVisible(true);
+//
+//        } else if (e.getSource() == btJoinNew) {
+//            // Join a new bracket
+//            JoinTournamentInfo joinTournamentInfo = new JoinTournamentInfo();
+//            this.dispose();
+//            joinTournamentInfo.setVisible(true);
+//
+//        } else if (e.getSource() == btLogOut) {
+//            // Go back to home screen
+//            homeScreen homeScreen = new homeScreen();
+//            this.dispose();
+//            homeScreen.setVisible(true);
+//            }
         }
     }
