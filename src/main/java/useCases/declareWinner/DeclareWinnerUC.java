@@ -93,14 +93,14 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
             return this.outputBoundary.presentError("This game does not exist.");
         }
 
+        if (this.game.getGameStatus()){
+            return this.outputBoundary.presentError("This game has already been won.");
+        }
+
         boolean winnerDeclared = determineWinner(this.game);
 
         if (!winnerDeclared) {
             return this.outputBoundary.presentError("No team has won this game yet.");
-        }
-
-        if (this.game.getGameStatus()){
-            return this.outputBoundary.presentError("This game has already been won.");
         }
 
 //        DeclareWinnerDSID declareWinnerDSID = new DeclareWinnerDSID(this.bracketRepo);
