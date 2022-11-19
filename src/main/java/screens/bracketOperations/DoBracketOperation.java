@@ -179,10 +179,16 @@ public class DoBracketOperation extends JFrame implements ActionListener {
         try {
             if (e.getSource() == advanceButton) {
                 advanceTeamController.create(gameID);
-                this.dispose();
             } else if (e.getSource() == declareButton) {
-                declareWinnerController.create(gameID);
-                this.dispose();
+                DeclareWinnerOD outputWinner = declareWinnerController.create(gameID);
+                System.out.println(outputWinner.getWinningTeamName());
+                if (this.gameID == 1) {
+                    this.viewChange.setGame1Winner(outputWinner.getWinningTeamName());
+                } else if (this.gameID == 2) {
+                    this.viewChange.setGame2Winner(outputWinner.getWinningTeamName());
+                } else if (this.gameID == 3) {
+                    this.viewChange.setGame3Winner(outputWinner.getWinningTeamName());
+                }
             } else if (e.getSource() == changePointsButton){
 
                 int points = Integer.parseInt(changePtsTF.getText().trim());
@@ -196,37 +202,29 @@ public class DoBracketOperation extends JFrame implements ActionListener {
                             outputData.getNewPoints(), outputData.getOtherTeamPoints());
                     this.viewChange.setGame1Label(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
                             outputData.getNewPoints(), outputData.getOtherTeamPoints());
-                    this.dispose();
                 } else if (this.gameID == 2) {
                     this.changeTeamsLabel(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
                             outputData.getNewPoints(), outputData.getOtherTeamPoints());
                     this.viewChange.setGame2Label(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
                             outputData.getNewPoints(), outputData.getOtherTeamPoints());
-                    this.dispose();
                 } else if (this.gameID == 3) {
                     this.changeTeamsLabel(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
                             outputData.getNewPoints(), outputData.getOtherTeamPoints());
                     this.viewChange.setGame3Label(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
                             outputData.getNewPoints(), outputData.getOtherTeamPoints());
-                    this.dispose();
                 }
             }
 
 
         } catch (NumberFormatException ex){
             JOptionPane.showMessageDialog(null, "Please enter a valid integer.");
-            this.dispose();
         } catch (AdvanceTeamFailed advanceTeamFailed) {
             JOptionPane.showMessageDialog(null, advanceTeamFailed.getMessage());
-            this.dispose();
         } catch (DeclareWinnerFailed declareWinnerFailed) {
             JOptionPane.showMessageDialog(null, declareWinnerFailed.getMessage());
-            this.dispose();
         } catch (ChangePointsFailed changePointsFailed) {
             JOptionPane.showMessageDialog(null, changePointsFailed.getMessage());
-            this.dispose();
         }
-//
     }
 
 }

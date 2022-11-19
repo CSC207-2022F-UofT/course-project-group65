@@ -110,6 +110,12 @@ public class ChangePointsUC implements ChangePointsIB{
     public ChangePointsOD changePoints(ChangePointsID inputData) {
         findGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
         findTeam(inputData);
+
+        if (!checkTeam(this.team)) {
+            return this.outputBoundary.presentError("The team you are trying to change points for is not " +
+                    "in the game.");
+        }
+
         this.newPoints = inputData.getNewPointsCP();
         int changedPoints = this.newPoints + this.game.getTeamPoints(this.team);
 
@@ -123,10 +129,6 @@ public class ChangePointsUC implements ChangePointsIB{
             }
         }
 
-        if (!checkTeam(this.team)) {
-            return this.outputBoundary.presentError("The team you are trying to change points for is not " +
-                    "in the game.");
-        }
         if (!checkGame(this.game)) {
             return this.outputBoundary.presentError("The game you are trying to change points in is not " +
                     "in the bracket.");
