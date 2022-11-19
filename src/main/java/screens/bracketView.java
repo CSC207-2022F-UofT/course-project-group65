@@ -336,6 +336,7 @@ public class bracketView extends JFrame implements ActionListener {
 //
             try {
                 endTournController.endTourn();
+                JOptionPane.showMessageDialog(this, "Tournament Ended");
             }
             catch (Exception exception) {
                 System.out.println("Error: " + exception);

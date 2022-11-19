@@ -178,7 +178,11 @@ public class DoBracketOperation extends JFrame implements ActionListener {
 //        }
         try {
             if (e.getSource() == advanceButton) {
-                advanceTeamController.create(gameID);
+                AdvanceTeamOD outputAdvance = advanceTeamController.create(gameID);
+                if (outputAdvance.getAdvancedGame() == 1) {
+                    this.viewChange.setGame1Label(outputAdvance.getTeams().get(0),
+                            outputAdvance.getTeams().get(1), 0, 0);
+                }
             } else if (e.getSource() == declareButton) {
                 DeclareWinnerOD outputWinner = declareWinnerController.create(gameID);
                 System.out.println(outputWinner.getWinningTeamName());
