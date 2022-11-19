@@ -1,21 +1,14 @@
 package screens;
 
-import entities.UserFactory;
-import screens.teamCreation.UserInput;
-
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
-
-public class optionsScreen2 extends JFrame {
-    private JButton btJoinTeam;
-    private JButton btCreateTeam;
-    private JButton btPrevious;
+public class optionsScreen2 extends JFrame{
+    private JButton joinAnExistingTeamButton;
+    private JButton createANewTeamButton;
+    private JButton backToPreviousScreenButton;
     private JPanel optionsScreen2;
-
 
     public optionsScreen2() {
         setContentPane(optionsScreen2);
@@ -24,24 +17,27 @@ public class optionsScreen2 extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
 
-        btJoinTeam.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                dispose();
-                optionsScreen2.setVisible(false);
-//                JFrame createTeam = new UserInput();
-//                createTeam.setVisible(true);
-            }
-        });
-        btCreateTeam.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                optionsScreen2.setVisible(false);
-//                JFrame joinTeam = new bracketView();
-//                joinTeam.setVisible(true);
-            }
-        });
+//        createANewTeamButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent actionEvent) {
+//
+//            }
+//        });
+//        joinAnExistingTeamButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent actionEvent) {
+//
+//            }
+//        });
+//        backToPreviousScreenButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent actionEvent) {
+//
+//            }
+//        });
 
-
+    }
+    public static void main(String[] args) {
+        optionsScreen2 optionsScreen2 = new optionsScreen2();
     }
 }

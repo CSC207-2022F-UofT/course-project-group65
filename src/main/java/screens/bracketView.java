@@ -80,6 +80,9 @@ public class bracketView extends JFrame implements ActionListener {
     private JButton declareWinnerEndTournamentButton;
     private JLabel playerInvite;
     private JLabel observerInvite;
+    private JLabel game1Winner;
+    private JLabel game2Winner;
+    private JLabel game3Winner;
 
     private NextScreenData nextScreenData;
 //    Controllers for all Buttons (Go below)
@@ -103,6 +106,9 @@ public class bracketView extends JFrame implements ActionListener {
         game1Label.setText("[] 0 - 0 []");
         game2Label.setText("[BlankTeam 1] 0 - 0 [BlankTeam 2]");
         game3Label.setText("[BlankTeam 3] 0 - 0 [BlankTeam 4]");
+        game2Winner.setText("Winner: ");
+        game1Winner.setText("Winner: ");
+        game3Winner.setText("Winner: ");
 //        Team View
         team1Name.setText("BlankTeam 1");
         team1List.setListData(new String[]{});
@@ -157,20 +163,20 @@ public class bracketView extends JFrame implements ActionListener {
     public void setGame1Label(String team1 , String team2, int team1Score, int team2Score) {
         this.game1Label.setText("[" + team1 + "] " + team1Score + " - " + team2Score + " [" + team2 + "]");
     }
-    public void changeGame1Label(String change){
-        this.game1Label.setText(change);
-    }
     public void setGame2Label(String team1 , String team2, int team1Score, int team2Score) {
         this.game2Label.setText("[" + team1 + "] " + team1Score + " - " + team2Score + " [" + team2 + "]");
-    }
-    public void changeGame2Label(String change){
-        this.game2Label.setText(change);
     }
     public void setGame3Label(String team1 , String team2, int team1Score, int team2Score) {
         this.game3Label.setText("[" + team1 + "] " + team1Score + " - " + team2Score + " [" + team2 + "]");
     }
-    public void changeGame3Label(String change){
-        this.game3Label.setText(change);
+    public void setGame1Winner(String winner) {
+        this.game1Winner.setText("Winner: " + winner);
+    }
+    public void setGame2Winner(String winner) {
+        this.game2Winner.setText("Winner: " + winner);
+    }
+    public void setGame3Winner(String winner) {
+        this.game3Winner.setText("Winner: " + winner);
     }
 //    Team View
     public void setTeam1Name(String team1Name) {
