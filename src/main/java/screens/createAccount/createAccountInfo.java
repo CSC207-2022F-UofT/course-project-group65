@@ -1,9 +1,7 @@
 package screens.createAccount;
 
-import entities.AccountRepo;
 import screens.homeScreen;
 import screens.logIn.LogInController;
-import screens.logIn.logInInfo;
 import useCases.CreateAccount.*;
 
 import javax.swing.*;
@@ -18,6 +16,7 @@ public class createAccountInfo extends JFrame implements ActionListener{
     private JTextField tfPassword;
     private JButton btSubmit;
     private JPanel createAccount;
+    private JButton backBtn;
     private CreateAccountController createAccountController;
     private LogInController logInController;
 
@@ -33,27 +32,31 @@ public class createAccountInfo extends JFrame implements ActionListener{
         this.logInController = logInController;
 
         btSubmit.addActionListener(this);
+        backBtn.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == backBtn) {
+            homeScreen homeScreen = new homeScreen(createAccountController, logInController);
+            homeScreen.setVisible(true);
+            this.dispose();
+        }
+
         if (e.getSource() == btSubmit) {
             String username = tfUsername.getText();
             String password = tfPassword.getText();
 
-            CreateAccountOD outputData = createAccountController.create(username, password);
-            System.out.println(outputData.getUsername());
 
-//            try {
-//                CreateAccountOD outputData = createAccountController.create(username, password);
-//                System.out.println(outputData.getUsername());
-////                JOptionPane.showMessageDialog(this, "Successfully created account!");
-//            } catch (Exception exception) {
-//                JOptionPane.showMessageDialog(this, exception.getMessage());
-//            }
-//            homeScreen homeScreen = new homeScreen(this.createAccountController, this.logInController);
-//            this.dispose();
-//            homeScreen.setVisible(true);
+            try {
+                CreateAccountOD outputData = createAccountController.create(username, password);
+                JOptionPane.showMessageDialog(this, "Successfully created account!");
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(this, exception.getMessage());
+            }
+            homeScreen homeScreen = new homeScreen(this.createAccountController, this.logInController);
+            this.dispose();
+            homeScreen.setVisible(true);
 
 
             // Go back to home screen

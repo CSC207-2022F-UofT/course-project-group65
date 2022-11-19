@@ -40,7 +40,7 @@ public class homeScreen extends JFrame implements ActionListener{
         }
 
         if (e.getSource() == btLogIn) {
-            logInInfo logInScreen = new logInInfo(this.logInController);
+            logInInfo logInScreen = new logInInfo(this.logInController, this.createAccountController);
             this.dispose();
             logInScreen.setVisible(true);
         }
