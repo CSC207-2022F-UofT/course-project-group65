@@ -47,6 +47,7 @@ public class DefaultBracketBuilder implements BracketBuilder {
     public void addOverseer(User overseer, int tournamentID) {
         overseer.setBracketRole(tournamentID, "Overseer");
         bracket.addReferee(overseer);
+        overseer.setCurrentTournament(tournamentID);
     }
 
     public void setWinCon(int winCondition) {
