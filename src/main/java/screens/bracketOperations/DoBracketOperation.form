@@ -112,14 +112,6 @@
           <text value="Change Points"/>
         </properties>
       </component>
-      <component id="dd09c" class="javax.swing.JComboBox" binding="changePtsBox">
-        <constraints>
-          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <model/>
-        </properties>
-      </component>
       <component id="f6c37" class="javax.swing.JLabel" binding="changePtsInstruction">
         <constraints>
           <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -127,6 +119,14 @@
         <properties>
           <text value="Select team above and enter points below"/>
         </properties>
+      </component>
+      <component id="8a996" class="javax.swing.JTextField" binding="teamPointsBox">
+        <constraints>
+          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
       </component>
     </children>
   </grid>

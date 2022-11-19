@@ -66,8 +66,7 @@ public class ChangePointsUC implements ChangePointsIB{
     }
 
     private boolean checkTeam(Team team) {
-        ArrayList<Team> teams = (ArrayList<Team>) this.bracket.getTeams();
-        return teams.contains(team);
+        return this.game.getTeams().contains(team);
     }
 
     private boolean checkGame(Game game) {
@@ -125,7 +124,7 @@ public class ChangePointsUC implements ChangePointsIB{
 
         if (!checkTeam(this.team)) {
             return this.outputBoundary.presentError("The team you are trying to change points for is not " +
-                    "in the bracket.");
+                    "in the game.");
         }
         if (!checkGame(this.game)) {
             return this.outputBoundary.presentError("The game you are trying to change points in is not " +
@@ -150,9 +149,20 @@ public class ChangePointsUC implements ChangePointsIB{
 //        } catch (Exception e) {
 //            return this.outputBoundary.presentError("There was an error saving the bracket.");
 //        }
+        Team otherTeam = null;
+        ArrayList<Team> teams = (ArrayList<Team>) this.game.getTeams();
+        for (Team team : teams) {
+            if (!team.getTeamName().equals(this.team.getTeamName())) {
+                otherTeam = team;
+            }
+        }
 
-        ChangePointsOD outputData = new ChangePointsOD(this.game, this.team, this.game.getTeamPoints(this.team),
-                this.bracket);
+        assert otherTeam != null;
+        ChangePointsOD outputData = new ChangePointsOD(this.game.getGameID(), this.team.getTeamName(), otherTeam.getTeamName(),
+                this.game.getTeamPoints(this.team), this.game.getTeamPoints(otherTeam));
+
+//        ChangePointsOD outputData = new ChangePointsOD(this.game, this.team, this.game.getTeamPoints(this.team),
+//                this.bracket);
         return this.outputBoundary.presentSuccess(outputData);
     }
 }

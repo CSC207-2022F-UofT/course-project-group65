@@ -2,37 +2,27 @@ package useCases.declareWinner;
 import entities.*;
 
 public class DeclareWinnerOD {
-    private Bracket bracket;
-    private Game finishedGame;
-    private Team winningTeam;
+    private int finishedGameID;
+    private String winningTeamName;
 
-    public DeclareWinnerOD(Game finishedGame, Team winningTeam, Bracket bracket){
-        this.bracket = bracket;
-        this.finishedGame = finishedGame;
-        this.winningTeam = winningTeam;
+    public DeclareWinnerOD(int finishedGameID, String winningTeamName){
+        this.finishedGameID = finishedGameID;
+        this.winningTeamName = winningTeamName;
     }
 
-    public Bracket getUpdatedBracket(){
-        return this.bracket;
+    public int getFinishedGameID() {
+        return finishedGameID;
     }
 
-    public Game getFinishedGame(){
-        return this.finishedGame;
+    public String getWinningTeamName() {
+        return winningTeamName;
     }
 
-    public Team getWinningTeam(){
-        return this.winningTeam;
+    public void setFinishedGameID(int finishedGameID) {
+        this.finishedGameID = finishedGameID;
     }
 
-    public void setUpdatedBracket(Bracket bracket){
-        this.bracket = bracket;
-    }
-
-    public void setFinishedGame(Game finishedGame){
-        this.finishedGame = finishedGame;
-    }
-
-    public void setWinningTeam(Team winningTeam){
-        this.winningTeam = winningTeam;
+    public void setWinningTeamName(String winningTeamName) {
+        this.winningTeamName = winningTeamName;
     }
 }
