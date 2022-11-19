@@ -10,15 +10,11 @@ import java.util.Objects;
 
 public class LogInUC implements LogInIB{
     final LogInOB userLogInOB;
-    final String username;
-    final String password;
     final AccountRepo data;
     final BracketRepo bracketData;
 
-    public LogInUC(LogInOB userLogInOB, String username, String password, AccountRepo data, BracketRepo bracketData) {
+    public LogInUC(LogInOB userLogInOB, AccountRepo data, BracketRepo bracketData) {
         this.userLogInOB = userLogInOB;
-        this.username = username;
-        this.password = password;
         this.data = data;
         this.bracketData = bracketData;
     }
@@ -34,9 +30,9 @@ public class LogInUC implements LogInIB{
 
     @Override
     public LogInOD logIn(LogInID requestModel) {
-        if (usernameExists(requestModel, data) && passwordMatch(username, password, data)) {
-            User currentUser = data.getUser(username);
-            return userLogInOB.prepareSuccessView(new LogInOD(username, new HashMap<Integer, String>(), 0));
+        if (usernameExists(requestModel, data) && passwordMatch(requestModel.getUsername(), requestModel.getPassword(), data)) {
+            User currentUser = data.getUser(requestModel.getUsername());
+            return userLogInOB.prepareSuccessView(new LogInOD(requestModel.getUsername(), new HashMap<Integer, String>(), 0));
 
         } else {
             return userLogInOB.prepareFailView("username and/or password is incorrect");
