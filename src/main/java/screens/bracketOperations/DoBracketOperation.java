@@ -226,7 +226,7 @@ public class DoBracketOperation extends JFrame implements ActionListener {
             JOptionPane.showMessageDialog(null, changePointsFailed.getMessage());
             this.dispose();
         }
-
+//
     }
 
 }
