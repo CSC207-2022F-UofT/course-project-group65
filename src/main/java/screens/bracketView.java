@@ -56,6 +56,7 @@ public class bracketView extends JFrame implements ActionListener {
     private JLabel game1Label;
     private JLabel game2Label;
 //    Team View
+    private JButton createTeamBtn;
     private JLabel team1Name;
     private JList<String> team1List;
     private JButton joinTeam1;
