@@ -94,12 +94,9 @@ public class ChangePointsUC implements ChangePointsIB{
     // This method checks if the points are valid.
     private boolean validPoints(Game game, int points){
         int changedPoints = points + this.game.getTeamPoints(this.team);
-        if (!game.getGameStatus()) {
-            return changedPoints <= this.bracket.getWinCondition() && changedPoints >= 0;
-        } else {
-            return false;
-        }
+        return changedPoints <= this.bracket.getWinCondition() && changedPoints >= 0;
     }
+
 
     /**
      * Change the points of a team in a game, provided that all the checks pass.
@@ -112,6 +109,10 @@ public class ChangePointsUC implements ChangePointsIB{
         findTeam(inputData);
         this.newPoints = inputData.getNewPointsCP();
         int changedPoints = this.newPoints + this.game.getTeamPoints(this.team);
+
+        if (game.getGameStatus()){
+            return this.outputBoundary.presentError("This game has already been won.");
+        }
 
         if (!checkUserPermission(this.user)) {
             return this.outputBoundary.presentError("You do not have permission to change points.");
