@@ -81,7 +81,7 @@ public class DoBracketOperation extends JFrame implements ActionListener {
     }
 
     public void setGameNumLabel(String gameID) {
-        this.gameNumLabel.setText("Game Number:" + gameID);
+        this.gameNumLabel.setText("Game Number: " + gameID);
     }
 
     public void setTeamsLabel(String label) {
