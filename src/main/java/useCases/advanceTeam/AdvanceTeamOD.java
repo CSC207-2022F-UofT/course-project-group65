@@ -4,14 +4,16 @@ import entities.Bracket;
 import entities.Game;
 import entities.Team;
 
+import java.util.ArrayList;
+
 public class AdvanceTeamOD {
 
     private int advancedGame;
-    private String winningTeam;
+    private ArrayList<String> teams;
 
-    public AdvanceTeamOD(int advancedGame, String winningTeam){
+    public AdvanceTeamOD(int advancedGame, ArrayList<String> teams) {
         this.advancedGame = advancedGame;
-        this.winningTeam = winningTeam;
+        this.teams = teams;
     }
 
 
@@ -19,16 +21,15 @@ public class AdvanceTeamOD {
         return this.advancedGame;
     }
 
-    public String getWinningTeam(){
-        return this.winningTeam;
-    }
-
     public void setAdvancedGame(int advancedGame){
         this.advancedGame = advancedGame;
     }
+    public ArrayList<String> getTeams(){
+        return this.teams;
+    }
 
-    public void setWinningTeam(String winningTeam){
-        this.winningTeam = winningTeam;
+    public void setTeams(ArrayList<String> teams){
+        this.teams = teams;
     }
 
 }
