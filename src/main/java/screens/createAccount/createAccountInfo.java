@@ -42,6 +42,19 @@ public class createAccountInfo extends JFrame implements ActionListener{
             String password = tfPassword.getText();
 
             CreateAccountOD outputData = createAccountController.create(username, password);
+            System.out.println(outputData.getUsername());
+
+//            try {
+//                CreateAccountOD outputData = createAccountController.create(username, password);
+//                System.out.println(outputData.getUsername());
+////                JOptionPane.showMessageDialog(this, "Successfully created account!");
+//            } catch (Exception exception) {
+//                JOptionPane.showMessageDialog(this, exception.getMessage());
+//            }
+//            homeScreen homeScreen = new homeScreen(this.createAccountController, this.logInController);
+//            this.dispose();
+//            homeScreen.setVisible(true);
+
 
             // Go back to home screen
 //            homeScreen homeScreen = new homeScreen();

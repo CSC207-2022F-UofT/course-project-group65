@@ -4,11 +4,15 @@ import entities.DefaultUserFactory;
 import entities.UserFactory;
 import screens.createAccount.CreateAccountController;
 import screens.createAccount.CreateAccountPresenter;
+import screens.homeScreen;
+import screens.logIn.LogInController;
 import screens.logIn.LogInPresenter;
 import useCases.CreateAccount.CreateAccountIB;
 import useCases.CreateAccount.CreateAccountOB;
 import useCases.CreateAccount.CreateAccountUC;
+import useCases.LogIn.LogInIB;
 import useCases.LogIn.LogInOB;
+import useCases.LogIn.LogInUC;
 
 public class TournamentSimulator {
     public static void main(String[] args) {
@@ -22,6 +26,11 @@ public class TournamentSimulator {
         CreateAccountController createAccountController = new CreateAccountController(createAccountIB);
 
         LogInOB logInOB = new LogInPresenter();
+        LogInIB logInIB = new LogInUC(logInOB, mainAccountRepo, mainBracketRepo);
+        LogInController logInController = new LogInController(logInIB);
+
+        homeScreen homeScreen = new homeScreen(createAccountController, logInController);
+        homeScreen.setVisible(true);
 
     }
 }

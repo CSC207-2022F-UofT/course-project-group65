@@ -28,6 +28,8 @@ public class CreateAccountUC implements CreateAccountIB {
 
     @Override
     public CreateAccountOD create(CreateAccountID requestModel) {
+        System.out.println(requestModel.getUsername());
+        System.out.println(requestModel.getPassword());
         if (usernameExists(requestModel, data)) {
             return userCreateAccountOB.prepareFailView("User already exists.");
         }
@@ -36,6 +38,7 @@ public class CreateAccountUC implements CreateAccountIB {
                 new HashMap<Integer, String>(), 0, new ArrayList<Integer>());
 
         data.addUser(user);
+        System.out.println(user.getUsername());
 
         CreateAccountOD accountOD = new CreateAccountOD(user.getUsername(), user.getPassword());
         return userCreateAccountOB.prepareSuccessView(accountOD);
