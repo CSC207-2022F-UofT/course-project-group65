@@ -1,11 +1,12 @@
 package entities;
 
+import java.io.Serializable;
 import java.sql.Array;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-public class AccountRepo {
-    private HashMap<String, User> users;
+public class AccountRepo implements Serializable {
+    private HashMap<String, User> users = new HashMap<String, User>();
 
     public void addUser(User user) {this.users.put(user.getUsername(), user); }
 

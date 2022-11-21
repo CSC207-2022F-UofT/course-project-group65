@@ -1,8 +1,9 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-public class DefaultTeam implements Team{
+public class DefaultTeam implements Team, Serializable {
     private String teamName;
     private int teamSize;
     private ArrayList<User> teamMembers;

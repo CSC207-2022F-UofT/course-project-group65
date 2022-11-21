@@ -22,11 +22,9 @@ public class AssignObserverUC implements AssignObserverIB {
 
     /**
      * Assigns a user as an observer to a particular game in a bracket.
-     * @param input input data containing the logged-in user, username of assignee,
-     *              gameID of the game assignee is being assigned to, and the current
-     *              tournament the user is viewing
-     * @return A message stating whether the observer could not be added or data to
-     * create a message saying the observer was successfully added
+     *
+     * @param input the input data to use
+     * @return the output data
      */
     @Override
     public AssignObserverOD assignObserver(AssignObserverID input){
@@ -59,7 +57,7 @@ public class AssignObserverUC implements AssignObserverIB {
         return null;
     }
 
-    public Game findGame(TreeMethods treeMethodAccess, int gameID, Game head) { //may change depending on if we refactor
+    private Game findGame(TreeMethods treeMethodAccess, int gameID, Game head) { //may change depending on if we refactor
         return treeMethodAccess.findGame(gameID, head);
     }
 
