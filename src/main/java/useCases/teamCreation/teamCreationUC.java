@@ -78,11 +78,19 @@ public class teamCreationUC implements teamCreationIB {
         String success = createTeam(userInput);
         Bracket curBracket = brackets.getBracket(bracketID);
         ArrayList<String> teams = new ArrayList<>();
+        ArrayList<ArrayList<String>> teamMembers = new ArrayList<>();
         for (Team team : curBracket.getTeams()) {
             teams.add(team.getTeamName());
+            ArrayList<String> members = new ArrayList<>();
+            for(User member : team.getTeamMembers()){
+                members.add(member.getUsername());
+            }
+            teamMembers.add(members);
         }
 
-        teamCreationOD outputData = new teamCreationOD(creatorName, curBracket, teams, success);
+
+        teamCreationOD outputData = new teamCreationOD(teamMembers, teams, success, creatorName,
+                bracketID, accounts, brackets);
         return outputBoundary.prepareSuccessView(outputData);
     }
 }

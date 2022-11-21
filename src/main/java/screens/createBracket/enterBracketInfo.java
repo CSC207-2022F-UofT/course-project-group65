@@ -1,7 +1,18 @@
 package screens.createBracket;
 
+import screens.NextScreenData;
 import screens.bracketView;
+import screens.endTourn.EndTournController;
+import screens.endTourn.EndTournPresenter;
+import screens.startTourn.StartTournController;
+import screens.startTourn.StartTournPresenter;
 import useCases.createBracket.*;
+import useCases.endTourn.EndTournIB;
+import useCases.endTourn.EndTournOB;
+import useCases.endTourn.EndTournUC;
+import useCases.startTourn.StartTournIB;
+import useCases.startTourn.StartTournOB;
+import useCases.startTourn.StartTournUC;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,10 +31,10 @@ public class enterBracketInfo extends JFrame implements ActionListener {
     private CreateBracketController createBracketController;
 
 
-    public enterBracketInfo(CreateBracketController controller) {
+    public enterBracketInfo(CreateBracketController createBracketController) {
         super("Create Bracket");
 
-        this.createBracketController = controller;
+        this.createBracketController = createBracketController;
 
         bracketType.addItem("Default");
 
@@ -55,7 +66,7 @@ public class enterBracketInfo extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Click " + e.getActionCommand());
+//        System.out.println("Click " + e.getActionCommand());
 
 
         try {
@@ -73,11 +84,11 @@ public class enterBracketInfo extends JFrame implements ActionListener {
             int numTeams = (int) this.numTeams.getSelectedItem();
             int winCondition = (int) this.winCondition.getSelectedItem();
             int teamSizes = (int) this.teamSizes.getSelectedItem();
-            System.out.println(bracketName);
-            System.out.println(bracketType);
-            System.out.println(numTeams);
-            System.out.println(winCondition);
-            System.out.println(teamSizes);
+//            System.out.println(bracketName);
+//            System.out.println(bracketType);
+//            System.out.println(numTeams);
+//            System.out.println(winCondition);
+//            System.out.println(teamSizes);
 
             CreateBracketOD outputData = createBracketController.create(bracketType, bracketName, numTeams, teamSizes,
                     winCondition);
@@ -85,16 +96,36 @@ public class enterBracketInfo extends JFrame implements ActionListener {
 
 //            Will need to add controller initialization here when we have the controllers as
 //            parameters to the view constructor
-            bracketView view = new bracketView();
+
+//            Overseer Controls controllers
+            EndTournOB endTournOB = new EndTournPresenter();
+            EndTournIB endTournIB = new EndTournUC(endTournOB, outputData.getUsername(), outputData.getAccounts(),
+                    outputData.getBrackets(), outputData.getBracketID());
+            EndTournController endTournController = new EndTournController(endTournIB);
+
+            StartTournOB startTournOB = new StartTournPresenter();
+            StartTournIB startTournIB = new StartTournUC(startTournOB, outputData.getUsername(), outputData.getAccounts(),
+                    outputData.getBrackets(), outputData.getBracketID());
+            StartTournController startTournController = new StartTournController(startTournIB);
+
+            NextScreenData nextScreenData = new NextScreenData();
+            nextScreenData.setBrackets(outputData.getBrackets());
+            nextScreenData.setAccounts(outputData.getAccounts());
+            nextScreenData.setCurrentUser(outputData.getUsername());
+            nextScreenData.setCurrentBracketID(outputData.getBracketID());
+
+            bracketView view = new bracketView(nextScreenData, endTournController, startTournController);
             view.setBracketName(outputData.getBracketName());
             view.setCurrentUser(outputData.getUsername());
             view.setCurrentTournament(outputData.getBracketID());
+            view.setPlayerInvite(outputData.getPlayerInvite());
+            view.setObserverInvite(outputData.getObserverInvite());
             this.dispose();
             view.setVisible(true);
 
 
         } catch (Exception exception) {
-            System.out.println("Error: " + exception);
+//            System.out.println("Error: " + exception);
             JOptionPane.showMessageDialog(this, exception.getMessage());
         }
     }

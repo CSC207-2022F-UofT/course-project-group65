@@ -14,32 +14,24 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
     public AdvanceTeamOB outputBoundary;
     public AdvanceTeamGateway gateway;
     private final BracketRepo bracketRepo;
-    private final AccountRepo accountRepo;
 
     /**
      * Construct an AdvanceTeamUC interactor instance with the given BracketRepo and AccountRepo.
      *
      * @param bracketRepo    The BracketRepo to use
-     * @param accountRepo    The AccountRepo to use
      * @param gateway        The gateway to use
      * @param outputBoundary The output boundary to use
+     * @param username         The ID of the user who is advancing the team
+     * @param bracketID      The ID of the bracket the user is advancing the team in
      */
 
     public AdvanceTeamUC(AdvanceTeamOB outputBoundary, AdvanceTeamGateway gateway,
-                         BracketRepo bracketRepo, AccountRepo accountRepo) {
+                         BracketRepo bracketRepo, AccountRepo accountRepo, int bracketID, String username) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
         this.bracketRepo = bracketRepo;
-        this.accountRepo = accountRepo;
-    }
-
-    private void findUser(AdvanceTeamID inputData){
-        this.user = this.accountRepo.getUser(inputData.getUsernameAT());
-    }
-
-    private void findBracket(AdvanceTeamID inputData) {
-        int bracketID = inputData.getBracketIDAT();
-        this.bracket = this.bracketRepo.getBracket(bracketID);
+        this.bracket = bracketRepo.getBracket(bracketID);
+        this.user = accountRepo.getUser(username);
         String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
         this.treeMethodAccess = new TreeMethods(bracketType);
     }
@@ -56,10 +48,7 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
 
     private boolean checkObserverAssigned(User user) {
         User assignedObserver = this.game.getObserver();
-        if (user.getBracketRole(this.bracket.getTournamentID()).equals("Observer")) {
-            return assignedObserver.getUsername().equals(user.getUsername());
-        }
-        return true;
+        return user.getUsername().equals(assignedObserver.getUsername());
     }
 
     private boolean checkGame(Game game) {
@@ -80,13 +69,11 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
 
     // This method is used to insert the winning team into the next game in the bracket
     private Game insertTeam(Team team, Game game){
-        // We are inserting the team to the round immediately after the round the game is in. That is, the current
-        // round plus 1 - rounds are counted backwards in the tree.
-        ArrayList<Game> games = returnLevelGames(game, this.game.getGameRound() + 1);
+        ArrayList<Game> games = returnLevelGames(this.bracket.getFinalGame(), this.game.getGameRound() + 1);
         for (Game g : games){
-            // Find the node in tree s.t. its previous node(1/2) == game. Insert team into that node.
             if (g.getPrevGame1().getGameID() == game.getGameID() || g.getPrevGame2().getGameID() == game.getGameID()){
                 g.setTeam(team, 0);
+                g.setNumTeams(g.getNumTeams() + 1); // Increases the number of teams in the game by 1
                 return g;
             }
         }
@@ -100,10 +87,11 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
      * @param inputData The input data to use
      */
     public AdvanceTeamOD advanceWinner(AdvanceTeamID inputData) {
-        findUser(inputData);
-        findBracket(inputData);
         findGame(inputData.getGameIDAT(), this.bracket.getFinalGame());
-        if (this.game.getGameRound() + 1 >= getTreeHeight(this.game)) {
+//        if (this.game.getGameRound() > getTreeHeight(this.bracket.getFinalGame())) {
+//            return this.outputBoundary.presentError("This game is in the final round.");
+//        }
+        if (this.game.getGameRound() >= this.bracket.getFinalGame().getGameRound()) {
             return this.outputBoundary.presentError("This game is in the final round.");
         }
 
@@ -111,8 +99,10 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
             return this.outputBoundary.presentError("You do not have permission to advance this team.");
         }
 
-        if (!checkObserverAssigned(this.user)) {
-            return this.outputBoundary.presentError("You are not assigned to this game.");
+        if (this.user.getBracketRole(this.bracket.getTournamentID()).equals("Observer")) {
+            if (!checkObserverAssigned(this.user)) {
+                return this.outputBoundary.presentError("You are not assigned to this game.");
+            }
         }
 
         if (!checkGame(this.game)) {
@@ -135,14 +125,22 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
         }
 
         // This is where we would save the bracket to the database, but we don't have a database. We save locally.
-        AdvanceTeamDSID dsInputData = new AdvanceTeamDSID(this.bracketRepo);
-        try {
-            this.gateway.save(dsInputData);
-        } catch (Exception e) {
-            return this.outputBoundary.presentError("There was an error saving the information.");
+//        AdvanceTeamDSID dsInputData = new AdvanceTeamDSID(this.bracketRepo);
+//        try {
+//            this.gateway.save(dsInputData);
+//        } catch (Exception e) {
+//            return this.outputBoundary.presentError("There was an error saving the information.");
+//        }
+
+        ArrayList<Team> teams = advancedGame.getTeams();
+        ArrayList<String> teamNames = new ArrayList<>(Arrays.asList("", ""));
+        for (Team team : teams) {
+            if (team != null) {
+                teamNames.set(teams.indexOf(team), team.getTeamName());
+            }
         }
 
-        AdvanceTeamOD outputData = new AdvanceTeamOD(this.bracket, advancedGame, winningTeam);
+        AdvanceTeamOD outputData = new AdvanceTeamOD(advancedGame.getGameID(), teamNames);
         return this.outputBoundary.presentSuccess(outputData);
     }
 }

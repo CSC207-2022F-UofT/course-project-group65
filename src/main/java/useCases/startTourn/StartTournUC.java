@@ -1,54 +1,67 @@
 package useCases.startTourn;
 
-import entities.Bracket;
-import entities.Game;
-import entities.User;
+import entities.*;
+import useCases.endTourn.EndTournOB;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+/**
+ * A use case for starting the tournament.
+ */
 public class StartTournUC implements StartTournIB{
-    public StartTournOB outputBoundary;
-    public Bracket bracket;
-    public User user;
+    private StartTournOB outputBoundary;
+    private String currentUser;
+    private AccountRepo accounts;
+    private BracketRepo brackets;
+    private int bracketId;
+    private Bracket bracket;
+    private User user;
 
-    public StartTournUC(StartTournOB outputBoundary){
+    public StartTournUC(StartTournOB outputBoundary, String currentUser, AccountRepo accounts, BracketRepo brackets,
+                      int bracketId) {
         this.outputBoundary = outputBoundary;
+        this.currentUser = currentUser;
+        this.accounts = accounts;
+        this.brackets = brackets;
+        this.bracketId = bracketId;
+        this.bracket = brackets.getBracket(bracketId);
+        this.user = accounts.getUser(currentUser);
+
     }
 
-    public void findBracket(StartTournID inputData) {
-        this.bracket = inputData.getBracket();
+
+
+
+    public boolean checkUserRole() {
+        return (Objects.equals(this.user.getBracketRole(bracketId), "Overseer"));
     }
 
-    public void findUser(StartTournID inputdata) {
-        this.user = inputdata.getUser();
-    }
-
-    public boolean checkUserRole(StartTournID inputData) {
-        return (Objects.equals(inputData.getUserRole(), "Overseer"));
-    }
-
-    public boolean checkNumTeams(StartTournID inputData) {
-        return helperCheckNumTeams(inputData.getFinalGame());
-    }
-
-    // Recursive helper method for checkNumTeams.
-    public boolean helperCheckNumTeams(Game game) {
-        if (game.getNumTeams() != 2) {
-            return false;
-        } else if (game.getPrevGame1() == null) {
-            return true;
-        } else {
-            return (helperCheckGameObserver(game.getPrevGame1()) &&
-                    helperCheckGameObserver(game.getPrevGame2()));
+    public boolean checkNumTeams() {
+        List<Team> teams = this.bracket.getTeams();
+        for (Team team : teams) {
+            if (Objects.equals(team.getTeamName(), "BlankTeam")) {
+                return false;
+            }
         }
+        return true;
     }
 
-    public boolean checkTeamFull(StartTournID inputData) {
-        return (inputData.getMaxNumTeams() == inputData.getTeams().size());
+    public boolean checkTeamFull() {
+        int maxTeamSize = this.bracket.getTeamSize();
+        List<Team> teams = this.bracket.getTeams();
+        for (Team team : teams) {
+            int thisTeamSize = team.getTeamSize();
+            if (thisTeamSize < maxTeamSize) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    public  boolean checkGameObserver(StartTournID inputData) {
-        return helperCheckGameObserver(inputData.getFinalGame());
+    public  boolean checkGameObserver() {
+        return helperCheckGameObserver(this.bracket.getFinalGame());
     }
 
     // Recursive helper method for checkGameObserver.
@@ -63,31 +76,46 @@ public class StartTournUC implements StartTournIB{
         }
     }
 
+    public void start() {
+//        System.out.println(bracket.getTournamentCondition());
+        this.bracket.setTournamentCondition(true);
+//        System.out.println(bracket.getTournamentCondition());
+    }
+
     // TODO: implement the check part after finishing front end.
     /// TODO: after returning the error message to the user, we want to know whether the user still wants to
     /// start the tournament anyway. but for now I don't know how to implement that so I'm just leaving it.
     @Override
-    public StartTournOD startTourn(StartTournID inputData) {
-        findBracket(inputData);
-//        if (!checkUserRole(inputData)) {
+    public StartTournOD startTourn() {
+        ArrayList<String> errors = new ArrayList<String>();
+        String errorType1 = "USERROLE";
+        String errorType2 = "NUMTEAMS";
+        String errorType3 = "NOOBSERVER";
+        String errorType4 = "TEAMNOTFULL";
+
+        if (!checkUserRole()) {
+            errors.add(errorType1);
 //            return this.outputBoundary.presentError("You do not have permission to start the tournament.");
-//        }
-//
-//        if (!checkNumTeams(inputData)) {
+        }
+
+        if (checkNumTeams()) {
+            errors.add(errorType2);
 //            return this.outputBoundary.presentError("The number of teams is invalid.");
-//        }
-//
-//        if (!checkGameObserver(inputData)) {
+        }
+
+        if (!checkGameObserver()) {
+            errors.add(errorType3);
 //              return this.outputBoundary.presentError("There is at least one game that does not have an observer assigned.");
-//        }
-//
-//        if (!checkTeamFull(inputData)) {
+        }
+
+        if (checkTeamFull()) {
+            errors.add(errorType4);
 //              return this.outputBoundary.presentError("The teams are not full.");
-//        }
+        }
 
-        inputData.getBracket().setTournamentCondition(true);
+//        inputData.getBracket().setTournamentCondition(true);
 
-        StartTournOD outputData = new StartTournOD(this.bracket, this.user);
+        StartTournOD outputData = new StartTournOD(errors);
         return this.outputBoundary.presentSuccess(outputData);
     }
 }

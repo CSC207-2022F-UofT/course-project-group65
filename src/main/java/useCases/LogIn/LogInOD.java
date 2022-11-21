@@ -1,31 +1,34 @@
 package useCases.LogIn;
 
+import entities.AccountRepo;
+import entities.BracketRepo;
+
 import java.util.HashMap;
 
 public class LogInOD {
     private String username;
-    private HashMap<Integer, String> bracketRole;
-    private int currentTournament;
+    private AccountRepo accountRepo;
+    private BracketRepo bracketRepo;
 
-    public LogInOD(String username, HashMap<Integer, String> bracketRole, int currentTournament) {
+    public LogInOD(String username, AccountRepo accountRepo, BracketRepo bracketRepo) {
         this.username = username;
-        this.bracketRole = bracketRole;
-        this.currentTournament = currentTournament;
+        this.accountRepo = accountRepo;
+        this.bracketRepo = bracketRepo;
     }
 
     public String getUsername() { return username; }
 
     public void setUsername(String username) {this.username = username; }
 
-    public void setBracketRole(int tournamentID, String role) {
-        bracketRole.put(tournamentID, role);
+    public AccountRepo getAccountRepo() {return accountRepo; }
+
+    public void setAccountRepo(AccountRepo accountRepo) {
+        this.accountRepo = accountRepo;
     }
 
-    public String getBracketRole(int tournamentID) {
-        return bracketRole.get(tournamentID);
+    public BracketRepo getBracketRepo() {return bracketRepo; }
+
+    public void setBracketRepo(BracketRepo bracketRepo) {
+        this.bracketRepo = bracketRepo;
     }
-
-    public void setCurrentTournament(int tournamentID) { this.currentTournament = tournamentID; }
-
-    public int getCurrentTournament() { return currentTournament; }
 }

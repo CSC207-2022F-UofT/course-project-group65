@@ -1,58 +1,66 @@
 package useCases.endTourn;
 
-import entities.Bracket;
-import entities.User;
+import entities.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.lang.Math;
 
-
+/**
+ * A use case for ending the tournament.
+ */
 public class EndTournUC implements EndTournIB{
-    public EndTournOB outputBoundary;
-    public Bracket bracket;
-    public User user;
+    private EndTournOB outputBoundary;
+    private String currentUser;
+    private AccountRepo accounts;
+    private BracketRepo brackets;
+    private int bracketId;
+    private Bracket bracket;
+    private User user;
 
-    public EndTournUC(EndTournOB outputBoundary) {
+    public EndTournUC(EndTournOB outputBoundary, String currentUser, AccountRepo accounts, BracketRepo brackets,
+                      int bracketId) {
         this.outputBoundary = outputBoundary;
+        this.currentUser = currentUser;
+        this.accounts = accounts;
+        this.brackets = brackets;
+        this.bracketId = bracketId;
+        this.bracket = brackets.getBracket(bracketId);
+        this.user = accounts.getUser(currentUser);
+
     }
 
-    public void findBracket(EndTournID inputData) {
-        this.bracket = inputData.getBracket();}
-
-    public void findUser(EndTournID inputData) {
-        this.user = inputData.getUser();
-    }
-    public boolean checkUserRole(EndTournID inputData) {
-        return (Objects.equals(inputData.getUserRole(), "Overseer"));
+    public boolean checkUserRole() {
+        return (Objects.equals(this.user.getBracketRole(this.bracketId), "Overseer"));
     }
 
     // Calculating the total # of rounds in the tournament using log base 2.
-    public boolean checkGame(EndTournID inputData) {
-        return (inputData.getFinalGame().getGameRound() ==
-                Math.log(inputData.getTeams().size()) / Math.log(2));
+    public boolean checkGame() {
+        Game finalGame = this.bracket.getFinalGame();
+        return (finalGame.getNumTeams() < 2);
     }
 
-    public boolean checkFinalWinner(EndTournID inputData) {
-        return (inputData.getFinalWinner() != null);
+    public boolean checkFinalWinner() {
+        return (bracket.getFinalGame().getWinner() != null);
     }
 
     @Override
-    public EndTournOD endTourn(EndTournID inputData) {
-        findBracket(inputData);
-        if (!checkGame(inputData)) {
+    public EndTournOD endTourn() {
+
+        if (checkGame()) {
             return this.outputBoundary.presentError("This round is not the final round.");
         }
 
-        if (!checkFinalWinner(inputData)) {
+        if (!checkFinalWinner()) {
             return this.outputBoundary.presentError("No final winner has been decided yet.");
         }
 
-        if (!checkUserRole(inputData)) {
+        if (!checkUserRole()) {
             return this.outputBoundary.presentError("You do not have permission to end the tournament.");
         }
 
-        inputData.getBracket().setTournamentCondition(false);
-        EndTournOD outputData = new EndTournOD(this.bracket, this.user);
+        this.bracket.setTournamentCondition(false);
+        EndTournOD outputData = new EndTournOD();
         return this.outputBoundary.presentSuccess(outputData);
     }
 

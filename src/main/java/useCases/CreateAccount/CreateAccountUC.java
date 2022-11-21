@@ -27,7 +27,7 @@ public class CreateAccountUC implements CreateAccountIB {
 
 
     @Override
-    public CreateAccountOD create(CreateAccountID requestModel, AccountRepo data) {
+    public CreateAccountOD create(CreateAccountID requestModel) {
         if (usernameExists(requestModel, data)) {
             return userCreateAccountOB.prepareFailView("User already exists.");
         }

@@ -1,21 +1,22 @@
 package useCases.startTourn;
 
+import entities.AccountRepo;
 import entities.Bracket;
+import entities.BracketRepo;
 import entities.User;
 
+import java.util.ArrayList;
+
+/**
+ * The output data class for the start tournament output boundary.
+ */
 public class StartTournOD {
-    private Bracket bracket;
-    private User user;
-    public StartTournOD(Bracket bracket, User user) {
-        this.bracket = bracket;
-        this.user = user;
+    private ArrayList<String> errors;
+    public StartTournOD(ArrayList<String> errors) {
+        this.errors = errors;
     }
 
-    public Bracket getBracket() {
-        return this.bracket;
-    }
-
-    public User getUser() {
-        return this.user;
+    public ArrayList<String> getErrors() {
+        return this.errors;
     }
 }

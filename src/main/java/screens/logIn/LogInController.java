@@ -1,4 +1,4 @@
-package screens;
+package screens.logIn;
 
 import entities.AccountRepo;
 import entities.BracketRepo;
@@ -14,9 +14,9 @@ public class LogInController {
         this.logInIB = logInIB;
     }
 
-    public void runLogin(LogInID requestModel, String username, String password, AccountRepo data, BracketRepo bracketData) {
-        // Note: hands off the work to the use case class.
-        LogInOD result = logInIB.logIn(requestModel, username, password, data, bracketData);
+    public LogInOD login(String username, String password) {
+        LogInID logInID = new LogInID(username, password);
 
+        return logInIB.logIn(logInID);
     }
 }

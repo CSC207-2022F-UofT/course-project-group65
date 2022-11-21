@@ -4,40 +4,32 @@ import entities.Bracket;
 import entities.Game;
 import entities.Team;
 
+import java.util.ArrayList;
+
 public class AdvanceTeamOD {
 
-    private Bracket bracket;
-    private Game advancedGame;
-    private Team winningTeam;
+    private int advancedGame;
+    private ArrayList<String> teams;
 
-    public AdvanceTeamOD(Bracket bracket, Game advancedGame, Team winningTeam){
-        this.bracket = bracket;
+    public AdvanceTeamOD(int advancedGame, ArrayList<String> teams) {
         this.advancedGame = advancedGame;
-        this.winningTeam = winningTeam;
+        this.teams = teams;
     }
 
-    public Bracket getUpdatedBracket(){
-        return this.bracket;
-    }
 
-    public Game getAdvancedGame(){
+    public int getAdvancedGame(){
         return this.advancedGame;
     }
 
-    public Team getWinningTeam(){
-        return this.winningTeam;
-    }
-
-    public void setUpdatedBracket(Bracket bracket){
-        this.bracket = bracket;
-    }
-
-    public void setAdvancedGame(Game advancedGame){
+    public void setAdvancedGame(int advancedGame){
         this.advancedGame = advancedGame;
     }
+    public ArrayList<String> getTeams(){
+        return this.teams;
+    }
 
-    public void setWinningTeam(Team winningTeam){
-        this.winningTeam = winningTeam;
+    public void setTeams(ArrayList<String> teams){
+        this.teams = teams;
     }
 
 }

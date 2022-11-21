@@ -1,19 +1,12 @@
 package useCases.endTourn;
 
+import entities.AccountRepo;
 import entities.Bracket;
+import entities.BracketRepo;
 import entities.User;
 
+/**
+ * The output data class for the end tournament output boundary.
+ */
 public class EndTournOD {
-    private Bracket bracket;
-    private User user;
-    public EndTournOD(Bracket bracket, User user) {
-        this.bracket = bracket;
-        this.user = user;
-    }
-
-    public Bracket getBracket() {
-        return this.bracket;
-    }
-
-    public User getUser() { return this.user; }
 }

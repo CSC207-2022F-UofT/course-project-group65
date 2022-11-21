@@ -1,9 +1,38 @@
 package screens;
 
+import database.AdvanceTeam.AdvanceTeamFileWriter;
+import database.ChangePoints.ChangePointsFileWriter;
+import database.DeclareWinner.DeclareWinnerFileWriter;
+import screens.advanceTeam.AdvanceTeamController;
+import screens.advanceTeam.AdvanceTeamPresenter;
+import screens.bracketOperations.DoBracketOperation;
+import screens.changePoints.ChangePointsController;
+import screens.changePoints.ChangePointsPresenter;
+import screens.declareWinner.DeclareWinnerController;
+import screens.declareWinner.DeclareWinnerPresenter;
+import screens.endTourn.EndTournController;
+import screens.startTourn.StartTournController;
+import screens.startTourn.startErrors;
+import useCases.advanceTeam.AdvanceTeamGateway;
+import useCases.advanceTeam.AdvanceTeamIB;
+import useCases.advanceTeam.AdvanceTeamOB;
+import useCases.advanceTeam.AdvanceTeamUC;
+import useCases.changePoints.ChangePointsGateway;
+import useCases.changePoints.ChangePointsIB;
+import useCases.changePoints.ChangePointsOB;
+import useCases.changePoints.ChangePointsUC;
+import useCases.declareWinner.DeclareWinnerGateway;
+import useCases.declareWinner.DeclareWinnerIB;
+import useCases.declareWinner.DeclareWinnerOB;
+import useCases.declareWinner.DeclareWinnerUC;
+import useCases.startTourn.StartTournOD;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class bracketView extends JFrame implements ActionListener {
 //    The main panel for the bracket view screen
@@ -17,6 +46,7 @@ public class bracketView extends JFrame implements ActionListener {
     private JPanel observerControls;
     private JPanel tournamentControls;
     private JButton logOut;
+    private JButton returnOptions;
 
 //    Bracket View
     private JButton game2Button;
@@ -26,6 +56,7 @@ public class bracketView extends JFrame implements ActionListener {
     private JLabel game1Label;
     private JLabel game2Label;
 //    Team View
+    private JButton createTeamBtn;
     private JLabel team1Name;
     private JList<String> team1List;
     private JButton joinTeam1;
@@ -48,11 +79,24 @@ public class bracketView extends JFrame implements ActionListener {
 //    Overseer Controls
     private JButton startTournamentButton;
     private JButton declareWinnerEndTournamentButton;
-//    Controllers for all Buttons (Go below)
+    private JLabel playerInvite;
+    private JLabel observerInvite;
+    private JLabel game1Winner;
+    private JLabel game2Winner;
+    private JLabel game3Winner;
 
-    public bracketView() {
+    private NextScreenData nextScreenData;
+//    Controllers for all Buttons (Go below)
+//    Overseer Control controllers
+    private EndTournController endTournController;
+    private StartTournController startTournController;
+
+    public bracketView(NextScreenData nextScreenData, EndTournController endTournController, StartTournController startTournController) {
         super("Bracket View");
 //        Assign all controllers for this view
+        this.nextScreenData = nextScreenData;
+        this.endTournController = endTournController;
+        this.startTournController = startTournController;
 
 //        Default Text for New Bracket View
 //        Info Bar
@@ -63,6 +107,9 @@ public class bracketView extends JFrame implements ActionListener {
         game1Label.setText("[] 0 - 0 []");
         game2Label.setText("[BlankTeam 1] 0 - 0 [BlankTeam 2]");
         game3Label.setText("[BlankTeam 3] 0 - 0 [BlankTeam 4]");
+        game2Winner.setText("Winner: ");
+        game1Winner.setText("Winner: ");
+        game3Winner.setText("Winner: ");
 //        Team View
         team1Name.setText("BlankTeam 1");
         team1List.setListData(new String[]{});
@@ -92,6 +139,8 @@ public class bracketView extends JFrame implements ActionListener {
 //        Overseer Controls
         startTournamentButton.addActionListener(this);
         declareWinnerEndTournamentButton.addActionListener(this);
+        playerInvite.setText("Player Invite: ");
+        observerInvite.setText("Observer Invite: ");
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
@@ -120,6 +169,15 @@ public class bracketView extends JFrame implements ActionListener {
     }
     public void setGame3Label(String team1 , String team2, int team1Score, int team2Score) {
         this.game3Label.setText("[" + team1 + "] " + team1Score + " - " + team2Score + " [" + team2 + "]");
+    }
+    public void setGame1Winner(String winner) {
+        this.game1Winner.setText("Winner: " + winner);
+    }
+    public void setGame2Winner(String winner) {
+        this.game2Winner.setText("Winner: " + winner);
+    }
+    public void setGame3Winner(String winner) {
+        this.game3Winner.setText("Winner: " + winner);
     }
 //    Team View
     public void setTeam1Name(String team1Name) {
@@ -156,60 +214,135 @@ public class bracketView extends JFrame implements ActionListener {
     public void setObserverListGame3(String[] observers) {
         this.observerGame3.setModel(new DefaultComboBoxModel<>(observers));
     }
+//    Invites
+    public void setPlayerInvite(String invite) {
+        this.playerInvite.setText("Player Invite: " + invite);
+    }
+    public void setObserverInvite(String invite) {
+        this.observerInvite.setText("Observer Invite: " + invite);
+    }
 
 
 //    Action Listeners for all Buttons (Controllers are connected here)
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Click " + e.getActionCommand());
-//        Replace print statements with controller calls
+//        System.out.println("Click " + e.getActionCommand());
+
+//        Controller Initiation
+        //        Advance Team
+        AdvanceTeamOB advanceTeamOB = new AdvanceTeamPresenter();
+//        Next line is not implemented or used.
+        AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamFileWriter("");
+        AdvanceTeamIB advanceTeamIB = new AdvanceTeamUC(advanceTeamOB, advanceTeamGateway,
+                nextScreenData.getBrackets(), nextScreenData.getAccounts(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        AdvanceTeamController advanceTeamController = new AdvanceTeamController(advanceTeamIB);
+        //       Declare Winner
+        DeclareWinnerOB declareWinnerOB = new DeclareWinnerPresenter();
+        DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerFileWriter("");
+        DeclareWinnerIB declareWinnerIB = new DeclareWinnerUC(declareWinnerOB, declareWinnerGateway,
+                nextScreenData.getBrackets(), nextScreenData.getAccounts(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        DeclareWinnerController declareWinnerController = new DeclareWinnerController(declareWinnerIB);
+        //      Change Points
+        ChangePointsOB changePointsOB = new ChangePointsPresenter();
+        ChangePointsGateway changePointsGateway = new ChangePointsFileWriter("");
+        ChangePointsIB changePointsIB = new ChangePointsUC(changePointsOB, changePointsGateway,
+                 nextScreenData.getAccounts(),nextScreenData.getBrackets(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        ChangePointsController changePointsController = new ChangePointsController(changePointsIB);
+
         if (e.getSource() == game1Button) {
-            System.out.println("Game 1 Button Clicked");
+//            System.out.println("Game 1 Button Clicked");
 //            Create new screen for game 1
 //            In that screen have buttons linked to change points and advance teams
 //            TODO
+            DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
+                    declareWinnerController, changePointsController, this);
+            doBracketOperations.setGameForOperation(1);
+            doBracketOperations.setGameNumLabel("Game 1");
+            doBracketOperations.setTeamsLabel(game1Label.getText());
+            doBracketOperations.setVisible(true);
         } else if (e.getSource() == game2Button) {
-            System.out.println("Game 2 Button Clicked");
-            //            TODO
+//            System.out.println("Game 2 Button Clicked");
+            DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
+                    declareWinnerController, changePointsController, this);
+            doBracketOperations.setGameForOperation(2);
+            doBracketOperations.setGameNumLabel("Game 2");
+            doBracketOperations.setTeamsLabel(game2Label.getText());
+            doBracketOperations.setVisible(true);
+
         } else if (e.getSource() == game3Button) {
-            System.out.println("Game 3 Button Clicked");
-            //            TODO
+//            System.out.println("Game 3 Button Clicked");
+            DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
+                    declareWinnerController, changePointsController, this);
+            doBracketOperations.setGameForOperation(3);
+            doBracketOperations.setGameNumLabel("Game 3");
+            doBracketOperations.setTeamsLabel(game3Label.getText());
+            doBracketOperations.setVisible(true);
         } else if (e.getSource() == joinTeam1) {
-            System.out.println("Join Team 1 Button Clicked");
+//            System.out.println("Join Team 1 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == joinTeam2) {
-            System.out.println("Join Team 2 Button Clicked");
+//            System.out.println("Join Team 2 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == joinTeam3) {
-            System.out.println("Join Team 3 Button Clicked");
+//            System.out.println("Join Team 3 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == joinTeam4) {
-            System.out.println("Join Team 4 Button Clicked");
+//            System.out.println("Join Team 4 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == assignGame1) {
-            System.out.println("Assign Game 1 Button Clicked");
+//            System.out.println("Assign Game 1 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == assignGame2) {
-            System.out.println("Assign Game 2 Button Clicked");
+//            System.out.println("Assign Game 2 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == assignGame3) {
-            System.out.println("Assign Game 3 Button Clicked");
+//            System.out.println("Assign Game 3 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
         } else if (e.getSource() == startTournamentButton) {
-            System.out.println("Start Tournament Button Clicked");
+//            System.out.println("Start Tournament Button Clicked");
+
             //            TODO
 //            Calls corresponding UC through controller
+            StartTournOD startData = startTournController.startTourn();
+            ArrayList<String> startErrors = startData.getErrors();
+            startErrors errorView = new startErrors(this.startTournController);
+            for (String error : startErrors) {
+                if (Objects.equals(error, "USERROLE")) {
+                    errorView.setWarning1("You do not have permission to start the tournament.");
+                } else if (Objects.equals(error, "NUMTEAMS")) {
+                    errorView.setWarning2("There are not enough teams in the tournament.");
+                } else if (Objects.equals(error, "NOOBSERVER")) {
+                    errorView.setWarning3("There is at least one game that does not have an observer assigned.");
+                } else if (Objects.equals(error, "TEAMNOTFULL")) {
+                    errorView.setWarning4("There is at least one team that is not full.");
+                }
+            }
+            errorView.setVisible(true);
         } else if (e.getSource() == declareWinnerEndTournamentButton) {
-            System.out.println("Declare Winner End Tournament Button Clicked");
+//            System.out.println("Declare Winner End Tournament Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
+            // End Tournament below
+            // for now I assumed I have all the infos about the inputs for ID.
+//
+            try {
+                endTournController.endTourn();
+                JOptionPane.showMessageDialog(this, "Tournament Ended");
+            }
+            catch (Exception exception) {
+//                System.out.println("Error: " + exception);
+                JOptionPane.showMessageDialog(this, exception.getMessage());
+            }
         }
     }
 }

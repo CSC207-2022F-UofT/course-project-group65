@@ -1,15 +1,21 @@
 package useCases.joinTeam;
+import java.util.ArrayList;
 import java.util.List;
 import entities.*;
 
-public class joinTeamUC implements joinTeamIB {
-    private final joinTeamOB outputBoundary;
+/**
+ * This is a use case for joining a team.
+ */
+public class JoinTeamUC implements JoinTeamIB {
+    private final JoinTeamOB outputBoundary;
     private final String userName;
     private final int bracketID;
     private final AccountRepo accounts;
     private final BracketRepo brackets;
 
-    public joinTeamUC(joinTeamOB outputBoundary, String userName, int bracketID, AccountRepo accounts,
+    private Team curTeam;
+
+    public JoinTeamUC(JoinTeamOB outputBoundary, String userName, int bracketID, AccountRepo accounts,
                       BracketRepo brackets){
         this.outputBoundary = outputBoundary;
         this.userName = userName;
@@ -23,41 +29,45 @@ public class joinTeamUC implements joinTeamIB {
         User user = accounts.getUser(userName);
         return user.getBracketRole(curBracket.getTournamentID()).equals("Player");
     }
+    // Check whether the user is a player since only player can join a team.
 
-    public Team findTeam(joinTeamID input){
+    public Team findTeam(JoinTeamID input){
         String teamName = input.getTeamName();
         Bracket curBracket = brackets.getBracket(bracketID);
         List<Team> team_lst = curBracket.getTeams();
         for(Team team : team_lst){
             if(teamName.equals(team.getTeamName())){
-                return team;
+                this.curTeam = team;
             }
         }
-        return null;
+        return this.curTeam;
     }
+    // It's a helper function for checkTeamExistence and checkTeamSpace since both these two functions
+    // need to find the team first.
 
-    public boolean checkTeamExistence(joinTeamID input){
-        return findTeam(input) != null;
+    public boolean checkTeamExistence(JoinTeamID input){
+        return !findTeam(input).getTeamName().contains("BlankTeam");
     }
+    //Check whether the team existence by its team name is not "BlankTeam_"
 
-    public boolean checkTeamSpace(joinTeamID input) {
+    public boolean checkTeamSpace(JoinTeamID input) {
         Team team = findTeam(input);
-        if (team != null) {
+        if (!team.getTeamName().contains("BlankTeam") ) {
             return team.getTeamSize() > team.getTeamMembers().size();
         }
         return false;
     }
+    //Check whether the team still have space for the user to join.
 
-    public String join(joinTeamID input){
-        String teamName = input.getTeamName();
+    public String join(JoinTeamID input){
         User user = accounts.getUser(userName);
         Team team = findTeam(input);
         team.addTeamMember(user);
         return "You have been successfully joined the team ";
-
     }
+
     @Override
-    public joinTeamOD joinTeam(joinTeamID input){
+    public JoinTeamOD joinTeam(JoinTeamID input){
         boolean isPlayer = checkPlayer();
         boolean teamExistence = checkTeamExistence(input);
         boolean teamSpace = checkTeamSpace(input);
@@ -70,14 +80,19 @@ public class joinTeamUC implements joinTeamIB {
         if(!teamSpace){
             return outputBoundary.FailView("Fail to join the team(The team is already full");
         }
-
+// After all the checks passed, add the user into the teamMembers list and
+// return success and membersNames which is for
+// updating the corresponding team members list in the bracketView screen.
         User user = accounts.getUser(userName);
         String success = join(input);
-        Bracket curBracket = brackets.getBracket(bracketID);
         Team team = findTeam(input);
         team.addTeamMember(user);
-        List<User> teamMembers = team.getTeamMembers();
-        joinTeamOD outputData = new joinTeamOD(success, userName, teamMembers, curBracket);
+        ArrayList<User> teamMembers = team.getTeamMembers();
+        ArrayList<String> membersNames = new ArrayList<>();
+        for (User member : teamMembers){
+            membersNames.add(member.getUsername());
+        }
+        JoinTeamOD outputData = new JoinTeamOD(success, membersNames);
         return outputBoundary.SuccessView(outputData);
     }
 }

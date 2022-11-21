@@ -1,11 +1,16 @@
 package screens.endTourn;
 
+import entities.AccountRepo;
 import entities.Bracket;
+import entities.BracketRepo;
 import entities.User;
 import useCases.endTourn.EndTournIB;
 import useCases.endTourn.EndTournID;
 import useCases.endTourn.EndTournOD;
 
+/**
+ * A class for the Controller of the end tournament use case.
+ */
 public class EndTournController {
     final EndTournIB userInput;
 
@@ -13,10 +18,9 @@ public class EndTournController {
         this.userInput = userInput;
     }
 
-    public EndTournOD endTourn(User user, Bracket bracket) {
-        EndTournID inputData = new EndTournID(user, bracket);
-
-        return userInput.endTourn(inputData);
+    //
+    public EndTournOD endTourn() {
+        return userInput.endTourn();
     }
 
 }
