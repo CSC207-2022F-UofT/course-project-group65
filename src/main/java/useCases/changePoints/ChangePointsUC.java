@@ -2,18 +2,19 @@ package useCases.changePoints;
 
 import entities.*;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
-import useCases.generalClasses.traversalStrategies.TreeMethods;
+import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class ChangePointsUC implements ChangePointsIB{
+public class ChangePointsUC implements ChangePointsIB<DefaultBracket>{
     public Bracket bracket;
     public int newPoints;
     public Team team;
     public User user;
     public Game game;
-    public TreeMethods treeMethodAccess;
+    public DefaultBracketMethods treeMethodAccess;
     public ChangePointsOB outputBoundary;
     private final BracketRepo bracketRepo;
     public ChangePointsGateway gateway;
@@ -36,12 +37,7 @@ public class ChangePointsUC implements ChangePointsIB{
         this.bracketRepo = bracketRepo;
         this.bracket = this.bracketRepo.getBracket(bracketID);
         this.user = accountRepo.getUser(username);
-        String bracketType = "Default"; // This can be changed later to accommodate different types of brackets
-        this.treeMethodAccess = new TreeMethods(bracketType);
-    }
-
-    private void findGame(int gameID, Game head) {
-        this.game = this.treeMethodAccess.findGame(gameID, head);
+        this.treeMethodAccess = new DefaultBracketMethods((DefaultBracket)bracket);
     }
 
     private void findTeam(ChangePointsID inputData) {
@@ -73,8 +69,8 @@ public class ChangePointsUC implements ChangePointsIB{
         return game != null;
     }
 
-    public ArrayList<Game> returnLevelGames(Game head, int roundNum){
-        return this.treeMethodAccess.levelNodes(head, roundNum);
+    public ArrayList<Game> returnLevelGames(int roundNum){
+        return this.treeMethodAccess.getGamesInRound(roundNum);
     }
 
 
@@ -82,7 +78,7 @@ public class ChangePointsUC implements ChangePointsIB{
     // in the round are full
     private boolean checkAllGamesFull(Game game){
         int teamRound = game.getGameRound();
-        ArrayList<Game> games = returnLevelGames(this.bracket.getFinalGame(), teamRound);
+        ArrayList<Game> games = returnLevelGames(teamRound);
         for (Game g: games){
             if (g.getNumTeams() < 2){
                 return false;
@@ -105,7 +101,7 @@ public class ChangePointsUC implements ChangePointsIB{
      */
 
     public ChangePointsOD changePoints(ChangePointsID inputData) {
-        findGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
+        this.game = bracket.getGame(inputData.getGameIDCP());
         findTeam(inputData);
         if (!this.bracket.getTournamentCondition()) {
             return this.outputBoundary.presentError("The tournament is not in progress. " +
@@ -157,7 +153,7 @@ public class ChangePointsUC implements ChangePointsIB{
 //            return this.outputBoundary.presentError("There was an error saving the bracket.");
 //        }
         Team otherTeam = null;
-        ArrayList<Team> teams = (ArrayList<Team>) this.game.getTeams();
+        ArrayList<Team> teams = this.game.getTeams();
         for (Team team : teams) {
             if (!team.getTeamName().equals(this.team.getTeamName())) {
                 otherTeam = team;

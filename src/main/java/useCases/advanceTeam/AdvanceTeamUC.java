@@ -1,16 +1,17 @@
 package useCases.advanceTeam;
 import entities.*;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
-import useCases.generalClasses.traversalStrategies.TreeMethods;
+import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class AdvanceTeamUC implements AdvanceTeamIB {
+public class AdvanceTeamUC implements AdvanceTeamIB<DefaultBracket> {
 
     public Bracket bracket;
     public User user;
     public Game game;
-    public TreeMethods treeMethodAccess;
+    public DefaultBracketMethods treeMethodAccess;
     public AdvanceTeamOB outputBoundary;
     public AdvanceTeamGateway gateway;
     private final BracketRepo bracketRepo;
@@ -32,12 +33,7 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
         this.bracketRepo = bracketRepo;
         this.bracket = bracketRepo.getBracket(bracketID);
         this.user = accountRepo.getUser(username);
-        String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
-        this.treeMethodAccess = new TreeMethods(bracketType);
-    }
-
-    private void findGame(int gameID, Game head) {
-        this.game = this.treeMethodAccess.findGame(gameID, head);
+        this.treeMethodAccess = new DefaultBracketMethods((DefaultBracket)bracket);
     }
 
     private boolean checkUserPermission(User user) {
@@ -59,17 +55,9 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
         return game.getGameStatus();
     }
 
-    private int getTreeHeight(Game head){
-        return this.treeMethodAccess.findHeight(head);
-    }
-
-    private ArrayList<Game> returnLevelGames(Game head, int roundNum){
-        return this.treeMethodAccess.levelNodes(head, roundNum);
-    }
-
     // This method is used to insert the winning team into the next game in the bracket
     private Game insertTeam(Team team, Game game){
-        ArrayList<Game> games = returnLevelGames(this.bracket.getFinalGame(), this.game.getGameRound() + 1);
+        ArrayList<Game> games = treeMethodAccess.getGamesInRound(this.game.getGameRound() + 1);
         for (Game g : games){
             if (g.getPrevGame1().getGameID() == game.getGameID() || g.getPrevGame2().getGameID() == game.getGameID()){
                 g.setTeam(team, 0);
@@ -87,8 +75,8 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
      * @param inputData The input data to use
      */
     public AdvanceTeamOD advanceWinner(AdvanceTeamID inputData) {
-        findGame(inputData.getGameIDAT(), this.bracket.getFinalGame());
-//        if (this.game.getGameRound() > getTreeHeight(this.bracket.getFinalGame())) {
+        this.game = bracket.getGame(inputData.getGameIDAT());
+//        if (this.game.getGameRound() > bracket.getNumRounds()) {
 //            return this.outputBoundary.presentError("This game is in the final round.");
 //        }
         if (this.game.getGameRound() >= this.bracket.getFinalGame().getGameRound()) {

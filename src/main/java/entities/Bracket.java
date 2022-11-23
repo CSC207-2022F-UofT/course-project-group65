@@ -1,48 +1,150 @@
 package entities;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-public interface Bracket {
+public abstract class Bracket implements Serializable {
 /*
     * This interface represents a bracket in a tournament.
  */
-    void setTournamentName(String tournamentName);
+private String tournamentName;
+    int tournamentID;
+    Game finalGame;
+    ArrayList<Team> teams;
+    int teamSize;
+    ArrayList<User> referees;
+    int winCondition;
+    boolean tournamentCondition;
+    String playerInvite;
+    String observerInvite;
 
-    String getTournamentName();
+    public Bracket() {
+        tournamentName = "";
+        tournamentID = 0;
+        finalGame = null;
+        teams = new ArrayList<>();
+        teamSize = 0;
+        referees = new ArrayList<>();
+        winCondition = 0;
+        tournamentCondition = false;
+        playerInvite = "";
+        observerInvite = "";
 
-    void setTournamentID(int bracketID);
+    }
 
-    int getTournamentID();
+    public void setTournamentName(String tournamentName) {
+        this.tournamentName = tournamentName;
+    }
 
-    void setFinalGame(Game finalGame);
+    public String getTournamentName() {
+        return tournamentName;
+    }
 
-    Game getFinalGame();
+    public void setTournamentID(int bracketID) {
+        this.tournamentID = bracketID;
+    }
 
-    void addTeam(Team team);
+    public int getTournamentID() {
+        return tournamentID;
+    }
 
-    List<Team> getTeams();
+    public void setFinalGame(Game finalGame) {
+        this.finalGame = finalGame;
+    }
 
-    void setTeamSize(int teamSize);
+    public Game getFinalGame() {
+        return finalGame;
+    }
 
-    int getTeamSize();
+    public void addTeam(Team team) {
+        teams.add(team);
+    }
 
-    void addReferee(User referee);
+    public ArrayList<Team> getTeams() {
+        return teams;
+    }
 
-    List<User> getReferees();
+    public void setTeamSize(int teamSize) {
+        this.teamSize = teamSize;
+    }
 
-    void setWinCondition(int winCondition);
+    public int getTeamSize() {
+        return teamSize;
+    }
 
-    int getWinCondition();
+    public void addReferee(User referee) {
+        referees.add(referee);
+    }
 
-    void setTournamentCondition(boolean tournamentCondition);
+    public ArrayList<User> getReferees() {
+        return referees;
+    }
 
-    boolean getTournamentCondition();
+    public void setWinCondition(int winCondition) {
+        this.winCondition = winCondition;
+    }
 
-    void setPlayerInvite();
+    public int getWinCondition() {
+        return winCondition;
+    }
 
-    String getPlayerInvite();
+    public void setTournamentCondition(boolean tournamentCondition) {
+        this.tournamentCondition = tournamentCondition;
+    }
 
-    void setObserverInvite();
+    public boolean getTournamentCondition() {
+        return tournamentCondition;
+    }
 
-    String getObserverInvite();
+    public void setPlayerInvite() {
+        this.playerInvite = "PL" + tournamentID + this.tournamentName;
+    }
+
+    public String getPlayerInvite() {
+        return playerInvite;
+    }
+
+    public void setObserverInvite() {
+        this.observerInvite = "OB" + tournamentID + this.tournamentName;
+    }
+
+    public String getObserverInvite() {
+        return observerInvite;
+    }
+
+    public Game getGame(int gameID) {
+        return getGame(gameID, finalGame);
+    }
+
+    private Game getGame(int gameID, Game head){
+        if (head == null) {
+            return null;
+        } else if (head.getGameID() == gameID) {
+            return head;
+        } else {
+            Game game = getGame(gameID, head.getPrevGame1());
+            if (game != null) {
+                return game;
+            }
+            return getGame(gameID, head.getPrevGame2());
+        }
+    }
+
+    public int getNumRounds() {
+        return getNumRounds(finalGame);
+    }
+
+    private int getNumRounds(Game head) {
+        if (head == null) {
+            return 0;
+        } else {
+            int leftHeight = getNumRounds(head.getPrevGame1());
+            int rightHeight = getNumRounds(head.getPrevGame2());
+            if (leftHeight > rightHeight) {
+                return leftHeight + 1;
+            } else {
+                return rightHeight + 1;
+            }
+        }
+    }
 }

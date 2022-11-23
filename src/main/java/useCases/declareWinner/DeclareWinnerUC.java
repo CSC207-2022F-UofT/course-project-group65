@@ -2,17 +2,18 @@ package useCases.declareWinner;
 
 import entities.*;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
-import useCases.generalClasses.traversalStrategies.TreeMethods;
+import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class DeclareWinnerUC implements DeclareWinnerIB {
+public class DeclareWinnerUC implements DeclareWinnerIB<DefaultBracket> {
 
     public Bracket bracket;
     public User user;
     public Game game;
     public DeclareWinnerOB outputBoundary;
-    public TreeMethods treeMethodAccess;
+    public DefaultBracketMethods treeMethodAccess;
     public DeclareWinnerGateway gateway;
     private BracketRepo bracketRepo;
 
@@ -33,12 +34,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
         this.bracketRepo = bracketRepo;
         this.bracket = bracketRepo.getBracket(bracketID);
         this.user = accountRepo.getUser(username);
-        String bracketType = "Default"; // This can be changed later to accommodate different types of brackets
-        this.treeMethodAccess = new TreeMethods(bracketType);
-    }
-
-    private void findGame(int gameID, Game head) {
-        this.game = this.treeMethodAccess.findGame(gameID, head);
+        this.treeMethodAccess = new DefaultBracketMethods((DefaultBracket)bracket);
     }
 
     private boolean checkUserPermission(User user) {
@@ -76,7 +72,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
      */
 
     public DeclareWinnerOD setWinner(DeclareWinnerID inputData) {
-        findGame(inputData.getGameIDDW(), this.bracket.getFinalGame());
+        this.game = bracket.getGame(inputData.getGameIDDW());
 
         if (!checkUserPermission(this.user)) {
             return this.outputBoundary.presentError("You do not have permission to declare a winner for " +

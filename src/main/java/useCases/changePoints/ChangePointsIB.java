@@ -1,6 +1,8 @@
 package useCases.changePoints;
 
-public interface ChangePointsIB {
+import entities.Bracket;
+
+public interface ChangePointsIB<T extends Bracket> {
 
     ChangePointsOD changePoints(ChangePointsID changePointsID);
 
