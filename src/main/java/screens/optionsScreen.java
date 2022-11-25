@@ -11,7 +11,9 @@ import screens.joinTournament.JoinTournamentPresenter;
 import screens.logIn.LogInController;
 import screens.logIn.LogInPresenter;
 import screens.logIn.logInInfo;
+import screens.viewTournament.ViewTournamentController;
 import screens.viewTournament.ViewTournamentInfo;
+import screens.viewTournament.ViewTournamentPresenter;
 import useCases.CreateAccount.CreateAccountIB;
 import useCases.CreateAccount.CreateAccountOB;
 import useCases.CreateAccount.CreateAccountUC;
@@ -24,6 +26,9 @@ import useCases.createBracket.CreateBracketUC;
 import useCases.joinTournament.JoinTournamentIB;
 import useCases.joinTournament.JoinTournamentOB;
 import useCases.joinTournament.JoinTournamentUC;
+import useCases.viewTournament.ViewTournamentIB;
+import useCases.viewTournament.ViewTournamentOB;
+import useCases.viewTournament.ViewTournamentUC;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -101,9 +106,13 @@ public class optionsScreen extends JFrame implements ActionListener {
         } else if (e.getSource() == btJoinExisting) {
             // Join an Existing Bracket
             System.out.println("Join Existing Bracket");
-//            ViewTournamentInfo viewTournamentInfo = new ViewTournamentInfo();
-//            this.dispose();
-//            viewTournamentInfo.setVisible(true);
+            ViewTournamentOB viewTournamentOB = new ViewTournamentPresenter();
+            ViewTournamentIB viewTournamentIB = new ViewTournamentUC(viewTournamentOB, nextScreenData.getBrackets(),
+                    nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+            ViewTournamentController viewTournamentController = new ViewTournamentController(viewTournamentIB);
+            ViewTournamentInfo viewTournamentInfo = new ViewTournamentInfo(viewTournamentController);
+            this.dispose();
+            viewTournamentInfo.setVisible(true);
 
         } else if (e.getSource() == btJoinNew) {
             // Join a new bracket
@@ -115,9 +124,6 @@ public class optionsScreen extends JFrame implements ActionListener {
             JoinTournamentInfo joinTournamentInfo = new JoinTournamentInfo(joinTournamentController);
             this.dispose();
             joinTournamentInfo.setVisible(true);
-//            JoinTournamentInfo joinTournamentInfo = new JoinTournamentInfo();
-//            this.dispose();
-//            joinTournamentInfo.setVisible(true);
 
         } else if (e.getSource() == btLogOut) {
             // Go back to home screen
