@@ -36,10 +36,10 @@ public class teamCreationUC implements teamCreationIB {
         List<Team> teams = curBracket.getTeams();
         for(Team team: teams){
             if(team.getTeamName().equals(teamName)){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     //find a blank team in the bracket, returns null if the bracket is full

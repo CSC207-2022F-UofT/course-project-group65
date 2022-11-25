@@ -44,9 +44,10 @@ public class UserInput extends JFrame implements ActionListener{
         this.setSize(450,300);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
+        btnCreate.addActionListener(this);
     }
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+//        System.out.println("Click " + evt.getActionCommand());
 
         try {
             if(tfTeamName.getText() == null) {
