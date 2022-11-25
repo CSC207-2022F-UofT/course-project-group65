@@ -1,11 +1,6 @@
 package screens.startTourn;
 
-import entities.AccountRepo;
-import entities.Bracket;
-import entities.BracketRepo;
-import entities.User;
 import useCases.startTourn.StartTournIB;
-import useCases.startTourn.StartTournID;
 import useCases.startTourn.StartTournOD;
 
 /**
