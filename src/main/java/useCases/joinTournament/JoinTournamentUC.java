@@ -38,14 +38,14 @@ public class JoinTournamentUC implements JoinTournamentIB{
         try {
             int tournamentID = Integer.parseInt(idAndName.split("(?<=\\d)(?=\\D)")[0]);
 
-            if (!bracketRepo.getBrackets().containsKey(tournamentID)){
-                return outputBound.prepareFailView("Tournament does not exist.");
+            if (!role.equals("PL") && !role.equals("OB")){
+                return outputBound.prepareFailView("Role does not exist within tournament.");
             }
             else if (currUser.getAllTournaments().contains(tournamentID)){
                 return outputBound.prepareFailView("You have already joined this tournament.");
             }
-            else if (!role.equals("PL") && !role.equals("OB")){
-                return outputBound.prepareFailView("Role does not exist within tournament.");
+            else if (!bracketRepo.getBrackets().containsKey(tournamentID)){
+                return outputBound.prepareFailView("Tournament does not exist.");
             }
             currUser.setCurrentTournament(tournamentID);
             currUser.addTournament(tournamentID);
