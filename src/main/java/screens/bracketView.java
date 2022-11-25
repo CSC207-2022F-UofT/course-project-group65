@@ -3,20 +3,35 @@ package screens;
 import database.AdvanceTeam.AdvanceTeamFileWriter;
 import database.ChangePoints.ChangePointsFileWriter;
 import database.DeclareWinner.DeclareWinnerFileWriter;
+import entities.AccountRepo;
+import entities.BracketRepo;
 import screens.advanceTeam.AdvanceTeamController;
 import screens.advanceTeam.AdvanceTeamPresenter;
 import screens.bracketOperations.DoBracketOperation;
 import screens.changePoints.ChangePointsController;
 import screens.changePoints.ChangePointsPresenter;
+import screens.createAccount.CreateAccountController;
+import screens.createAccount.CreateAccountPresenter;
+import screens.createBracket.CreateBracketController;
+import screens.createBracket.CreateBracketPresenter;
 import screens.declareWinner.DeclareWinnerController;
 import screens.declareWinner.DeclareWinnerPresenter;
 import screens.endTourn.EndTournController;
 import screens.joinTeam.JoinTeamController;
+import screens.logIn.LogInController;
+import screens.logIn.LogInPresenter;
 import screens.startTourn.StartTournController;
 import screens.startTourn.startErrors;
 import screens.teamCreation.TeamCreationController;
 import screens.teamCreation.TeamCreationPresenter;
 import screens.teamCreation.UserInput;
+import useCases.CreateAccount.CreateAccountIB;
+import useCases.CreateAccount.CreateAccountOB;
+import useCases.CreateAccount.CreateAccountUC;
+import useCases.LogIn.LogInIB;
+import useCases.LogIn.LogInOB;
+import useCases.LogIn.LogInOD;
+import useCases.LogIn.LogInUC;
 import useCases.advanceTeam.AdvanceTeamGateway;
 import useCases.advanceTeam.AdvanceTeamIB;
 import useCases.advanceTeam.AdvanceTeamOB;
@@ -25,10 +40,14 @@ import useCases.changePoints.ChangePointsGateway;
 import useCases.changePoints.ChangePointsIB;
 import useCases.changePoints.ChangePointsOB;
 import useCases.changePoints.ChangePointsUC;
+import useCases.createBracket.CreateBracketIB;
+import useCases.createBracket.CreateBracketOB;
+import useCases.createBracket.CreateBracketUC;
 import useCases.declareWinner.DeclareWinnerGateway;
 import useCases.declareWinner.DeclareWinnerIB;
 import useCases.declareWinner.DeclareWinnerOB;
 import useCases.declareWinner.DeclareWinnerUC;
+import useCases.joinTeam.JoinTeamOB;
 import useCases.joinTeam.JoinTeamOD;
 import useCases.startTourn.StartTournOD;
 import useCases.teamCreation.teamCreationIB;
@@ -93,6 +112,8 @@ public class bracketView extends JFrame implements ActionListener {
     private JLabel game2Winner;
     private JLabel game3Winner;
 
+    private String team1NameString;
+
     private NextScreenData nextScreenData;
 //    Controllers for all Buttons (Go below)
 //    Overseer Control controllers
@@ -152,6 +173,9 @@ public class bracketView extends JFrame implements ActionListener {
 //        Overseer Controls
         startTournamentButton.addActionListener(this);
         declareWinnerEndTournamentButton.addActionListener(this);
+        returnOptions.addActionListener(this);
+        logOut.addActionListener(this);
+
         playerInvite.setText("Player Invite: ");
         observerInvite.setText("Observer Invite: ");
 
@@ -195,6 +219,7 @@ public class bracketView extends JFrame implements ActionListener {
 //    Team View
     public void setTeam1Name(String team1Name) {
         this.team1Name.setText(team1Name);
+        this.team1NameString = team1Name;
     }
     public void setTeam1PlayerList(String[] team1List) {
         this.team1List.setListData(team1List);
@@ -297,10 +322,13 @@ public class bracketView extends JFrame implements ActionListener {
 //            System.out.println("Join Team 1 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
-            String team1Name = this.team1Name.getText();
+            //String team1Name = this.team1Name.getText();
             try {
-                joinTeamController.joinTeam(team1Name);
-
+                this.team1NameString = "test 1";
+                System.out.println(this.team1NameString);
+                JoinTeamOD outputData = joinTeamController.joinTeam(this.team1NameString);
+                ArrayList<String> names = outputData.getMembersNames();
+                setTeam1PlayerList(names.toArray(new String[0]));
             }
             catch (Exception exception) {
                 System.out.println( "Error: " + exception);
@@ -310,9 +338,10 @@ public class bracketView extends JFrame implements ActionListener {
 //            System.out.println("Join Team 2 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
-            String team2Name = this.team2Name.getText();
+            // String team2Name = this.team2Name.getText();
             try {
-                joinTeamController.joinTeam(team2Name);
+                // joinTeamController.joinTeam(team2Name);
+                joinTeamController.joinTeam("test 2");
             }
             catch (Exception exception) {
                 System.out.println( "Error: " + exception);
@@ -324,7 +353,8 @@ public class bracketView extends JFrame implements ActionListener {
 //            Calls corresponding UC through controller
             String team3Name = this.team3Name.getText();
             try {
-                joinTeamController.joinTeam(team3Name);
+                //joinTeamController.joinTeam(team3Name);
+                joinTeamController.joinTeam("test 3");
             }
             catch (Exception exception) {
                 System.out.println( "Error: " + exception);
@@ -334,9 +364,10 @@ public class bracketView extends JFrame implements ActionListener {
 //            System.out.println("Join Team 4 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
-            String team4Name = this.team4Name.getText();
+            //String team4Name = this.team4Name.getText();
             try {
-                joinTeamController.joinTeam(team4Name);
+                //joinTeamController.joinTeam(team4Name);
+                joinTeamController.joinTeam("test 4");
 
             }
             catch (Exception exception) {
@@ -399,6 +430,59 @@ public class bracketView extends JFrame implements ActionListener {
             UserInput inputScreen = new UserInput(controller);
             inputScreen.setVisible(true);
 
+        } else if (e.getSource() == returnOptions){
+            try {
+                String username = nextScreenData.getCurrentUser();
+                String password = nextScreenData.getAccounts().getUser(username).getPassword();
+//                LogInOD outputData = logInController.login(username, password);
+
+                // String currentUser = outputData.getUsername();
+//                AccountRepo currentAccounts = outputData.getAccountRepo();
+//                BracketRepo currentBrackets = outputData.getBracketRepo();
+
+//                NextScreenData nextScreenData = new NextScreenData();
+                nextScreenData.setCurrentUser(username);
+//                nextScreenData.setAccounts(currentAccounts);
+//                nextScreenData.setBrackets(currentBrackets);
+
+//                CreateAccountOB createAccountOB = new CreateAccountPresenter();
+//                CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, mainUserFactory,
+//                        mainAccountRepo, mainBracketRepo);
+//                CreateAccountController createAccountController = new CreateAccountController(createAccountIB);
+//
+//                LogInOB logInOB = new LogInPresenter();
+//                LogInIB logInIB = new LogInUC(logInOB, mainAccountRepo, mainBracketRepo);
+//                LogInController logInController = new LogInController(logInIB);
+
+//                CreateBracketOB createBracketOB = new CreateBracketPresenter();
+//                CreateBracketIB interactor = new CreateBracketUC(createBracketOB, username,
+//                        nextScreenData.getAccounts(), nextScreenData.getBrackets());
+//                CreateBracketController createBracketCon = new CreateBracketController(interactor);
+
+                optionsScreen optionsScreen = new optionsScreen(nextScreenData);
+                this.dispose();
+                optionsScreen.setVisible(true);
+
+            } catch (Exception exception) {
+                JOptionPane.showMessageDialog(this, exception.getMessage());
+            }
+
+        } else if (e.getSource() == logOut) {
+            CreateAccountOB createAccountOB = new CreateAccountPresenter();
+            CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, nextScreenData.getAccounts(),
+                    nextScreenData.getBrackets());
+            CreateAccountController createAccountController = new CreateAccountController(createAccountIB);
+
+            LogInOB logInOB = new LogInPresenter();
+            LogInIB logInIB = new LogInUC(logInOB, nextScreenData.getAccounts(),
+                    nextScreenData.getBrackets());
+            LogInController logInController = new LogInController(logInIB);
+
+            homeScreen homeScreen = new homeScreen(createAccountController, logInController);
+
+//            homeScreen homeScreen = new homeScreen(this.createAccountController, this.logInController);
+            this.dispose();
+            homeScreen.setVisible(true);
         }
     }
 }

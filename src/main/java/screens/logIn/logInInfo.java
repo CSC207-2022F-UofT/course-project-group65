@@ -66,13 +66,14 @@ public class logInInfo extends JFrame implements ActionListener{
                 nextScreenData.setAccounts(currentAccounts);
                 nextScreenData.setBrackets(currentBrackets);
 
-                CreateBracketOB createBracketOB = new CreateBracketPresenter();
-                CreateBracketIB interactor = new CreateBracketUC(createBracketOB, currentUser,
-                        currentAccounts, currentBrackets);
-                CreateBracketController createBracketCon = new CreateBracketController(interactor);
+//                CreateBracketOB createBracketOB = new CreateBracketPresenter();
+//                CreateBracketIB interactor = new CreateBracketUC(createBracketOB, currentUser,
+//                        currentAccounts, currentBrackets);
+//                CreateBracketController createBracketCon = new CreateBracketController(interactor);
 
-                optionsScreen optionsScreen = new optionsScreen(nextScreenData, this.createAccountController,
-                        this.logInController, createBracketCon);
+//                optionsScreen optionsScreen = new optionsScreen(nextScreenData, this.createAccountController,
+//                        this.logInController, createBracketCon);
+                optionsScreen optionsScreen = new optionsScreen(nextScreenData);
                 this.dispose();
                 optionsScreen.setVisible(true);
 
