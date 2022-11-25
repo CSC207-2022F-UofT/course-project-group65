@@ -24,6 +24,7 @@ public class JoinTeamUC implements JoinTeamIB {
         this.brackets = brackets;
     }
 
+    /** Check whether the user is already in a team */
     public boolean checkInTeam(){
         Bracket curBracket = brackets.getBracket(bracketID);
         List<Team> team_lst = curBracket.getTeams();
@@ -101,7 +102,6 @@ public class JoinTeamUC implements JoinTeamIB {
         if (inTeam){
             return outputBoundary.FailView("Fail to join the team (You are already in a team)");
         }
-        User user = accounts.getUser(userName);
         String success = join(input);
         Team team = findTeam(input);
         ArrayList<User> teamMembers = team.getTeamMembers();
