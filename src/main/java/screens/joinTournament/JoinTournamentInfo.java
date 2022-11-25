@@ -32,5 +32,6 @@ public class JoinTournamentInfo extends JFrame implements ActionListener {
         catch (JoinTournamentFailed ex){
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
+        dispose();
     }
 }
