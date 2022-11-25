@@ -2,26 +2,23 @@ package useCases.endTourn;
 
 import entities.*;
 
-import java.util.List;
 import java.util.Objects;
-import java.lang.Math;
+
 
 /**
  * A use case for ending the tournament.
  */
 public class EndTournUC implements EndTournIB{
-    private EndTournOB outputBoundary;
-    private String currentUser;
-    private AccountRepo accounts;
-    private BracketRepo brackets;
-    private int bracketId;
-    private Bracket bracket;
-    private User user;
+    private final EndTournOB outputBoundary;
+    private final AccountRepo accounts;
+    private final BracketRepo brackets;
+    private final int bracketId;
+    private final Bracket bracket;
+    private final User user;
 
     public EndTournUC(EndTournOB outputBoundary, String currentUser, AccountRepo accounts, BracketRepo brackets,
                       int bracketId) {
         this.outputBoundary = outputBoundary;
-        this.currentUser = currentUser;
         this.accounts = accounts;
         this.brackets = brackets;
         this.bracketId = bracketId;
@@ -65,4 +62,11 @@ public class EndTournUC implements EndTournIB{
     }
 
 
+    public AccountRepo getAccounts() {
+        return accounts;
+    }
+
+    public BracketRepo getBrackets() {
+        return brackets;
+    }
 }
