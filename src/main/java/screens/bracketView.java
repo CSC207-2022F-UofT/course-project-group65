@@ -11,6 +11,7 @@ import screens.changePoints.ChangePointsPresenter;
 import screens.declareWinner.DeclareWinnerController;
 import screens.declareWinner.DeclareWinnerPresenter;
 import screens.endTourn.EndTournController;
+import screens.joinTeam.JoinTeamController;
 import screens.startTourn.StartTournController;
 import screens.startTourn.startErrors;
 import useCases.advanceTeam.AdvanceTeamGateway;
@@ -25,6 +26,7 @@ import useCases.declareWinner.DeclareWinnerGateway;
 import useCases.declareWinner.DeclareWinnerIB;
 import useCases.declareWinner.DeclareWinnerOB;
 import useCases.declareWinner.DeclareWinnerUC;
+import useCases.joinTeam.JoinTeamOD;
 import useCases.startTourn.StartTournOD;
 
 import javax.swing.*;
@@ -91,12 +93,16 @@ public class bracketView extends JFrame implements ActionListener {
     private EndTournController endTournController;
     private StartTournController startTournController;
 
-    public bracketView(NextScreenData nextScreenData, EndTournController endTournController, StartTournController startTournController) {
+    private JoinTeamController joinTeamController;
+
+    public bracketView(NextScreenData nextScreenData, EndTournController endTournController, StartTournController startTournController,
+                       JoinTeamController joinTeamController ) {
         super("Bracket View");
 //        Assign all controllers for this view
         this.nextScreenData = nextScreenData;
         this.endTournController = endTournController;
         this.startTournController = startTournController;
+        this.joinTeamController = joinTeamController;
 
 //        Default Text for New Bracket View
 //        Info Bar
@@ -284,18 +290,52 @@ public class bracketView extends JFrame implements ActionListener {
 //            System.out.println("Join Team 1 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
+            String team1Name = this.team1Name.getText();
+            try {
+                joinTeamController.joinTeam(team1Name);
+
+            }
+            catch (Exception exception) {
+                System.out.println( "Error: " + exception);
+                JOptionPane.showMessageDialog(this, exception.getMessage());
+            }
         } else if (e.getSource() == joinTeam2) {
 //            System.out.println("Join Team 2 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
+            String team2Name = this.team2Name.getText();
+            try {
+                joinTeamController.joinTeam(team2Name);
+            }
+            catch (Exception exception) {
+                System.out.println( "Error: " + exception);
+                JOptionPane.showMessageDialog(this, exception.getMessage());
+            }
         } else if (e.getSource() == joinTeam3) {
 //            System.out.println("Join Team 3 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
+            String team3Name = this.team3Name.getText();
+            try {
+                joinTeamController.joinTeam(team3Name);
+            }
+            catch (Exception exception) {
+                System.out.println( "Error: " + exception);
+                JOptionPane.showMessageDialog(this, exception.getMessage());
+            }
         } else if (e.getSource() == joinTeam4) {
 //            System.out.println("Join Team 4 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
+            String team4Name = this.team4Name.getText();
+            try {
+                joinTeamController.joinTeam(team4Name);
+
+            }
+            catch (Exception exception) {
+                System.out.println( "Error: " + exception);
+                JOptionPane.showMessageDialog(this, exception.getMessage());
+            }
         } else if (e.getSource() == assignGame1) {
 //            System.out.println("Assign Game 1 Button Clicked");
             //            TODO

@@ -4,12 +4,17 @@ import screens.NextScreenData;
 import screens.bracketView;
 import screens.endTourn.EndTournController;
 import screens.endTourn.EndTournPresenter;
+import screens.joinTeam.JoinTeamController;
+import screens.joinTeam.JoinTeamPresenter;
 import screens.startTourn.StartTournController;
 import screens.startTourn.StartTournPresenter;
 import useCases.createBracket.*;
 import useCases.endTourn.EndTournIB;
 import useCases.endTourn.EndTournOB;
 import useCases.endTourn.EndTournUC;
+import useCases.joinTeam.JoinTeamIB;
+import useCases.joinTeam.JoinTeamOB;
+import useCases.joinTeam.JoinTeamUC;
 import useCases.startTourn.StartTournIB;
 import useCases.startTourn.StartTournOB;
 import useCases.startTourn.StartTournUC;
@@ -108,13 +113,18 @@ public class enterBracketInfo extends JFrame implements ActionListener {
                     outputData.getBrackets(), outputData.getBracketID());
             StartTournController startTournController = new StartTournController(startTournIB);
 
+            JoinTeamOB joinTeamOB = new JoinTeamPresenter();
+            JoinTeamIB joinTeamIB = new JoinTeamUC(joinTeamOB, outputData.getUsername(), outputData.getBracketID(),
+                    outputData.getAccounts(), outputData.getBrackets());
+            JoinTeamController joinTeamController = new JoinTeamController(joinTeamIB);
+
             NextScreenData nextScreenData = new NextScreenData();
             nextScreenData.setBrackets(outputData.getBrackets());
             nextScreenData.setAccounts(outputData.getAccounts());
             nextScreenData.setCurrentUser(outputData.getUsername());
             nextScreenData.setCurrentBracketID(outputData.getBracketID());
 
-            bracketView view = new bracketView(nextScreenData, endTournController, startTournController);
+            bracketView view = new bracketView(nextScreenData, endTournController, startTournController, joinTeamController);
             view.setBracketName(outputData.getBracketName());
             view.setCurrentUser(outputData.getUsername());
             view.setCurrentTournament(outputData.getBracketID());
