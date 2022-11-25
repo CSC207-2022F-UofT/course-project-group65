@@ -13,6 +13,9 @@ import screens.declareWinner.DeclareWinnerPresenter;
 import screens.endTourn.EndTournController;
 import screens.startTourn.StartTournController;
 import screens.startTourn.startErrors;
+import screens.teamCreation.TeamCreationController;
+import screens.teamCreation.TeamCreationPresenter;
+import screens.teamCreation.UserInput;
 import useCases.advanceTeam.AdvanceTeamGateway;
 import useCases.advanceTeam.AdvanceTeamIB;
 import useCases.advanceTeam.AdvanceTeamOB;
@@ -26,6 +29,9 @@ import useCases.declareWinner.DeclareWinnerIB;
 import useCases.declareWinner.DeclareWinnerOB;
 import useCases.declareWinner.DeclareWinnerUC;
 import useCases.startTourn.StartTournOD;
+import useCases.teamCreation.teamCreationIB;
+import useCases.teamCreation.teamCreationOB;
+import useCases.teamCreation.teamCreationUC;
 
 import javax.swing.*;
 import java.awt.*;
@@ -132,6 +138,7 @@ public class bracketView extends JFrame implements ActionListener {
         joinTeam2.addActionListener(this);
         joinTeam3.addActionListener(this);
         joinTeam4.addActionListener(this);
+        createTeamBtn.addActionListener(this);
 //        Observer Assignments
         assignGame1.addActionListener(this);
         assignGame2.addActionListener(this);
@@ -343,6 +350,15 @@ public class bracketView extends JFrame implements ActionListener {
 //                System.out.println("Error: " + exception);
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
+        } else if (e.getSource() == createTeamBtn){
+            teamCreationOB presenter = new TeamCreationPresenter();
+            teamCreationIB interactor = new teamCreationUC(presenter,nextScreenData.getCurrentUser(),
+                    nextScreenData.getCurrentBracketID(),nextScreenData.getAccounts(),
+                    nextScreenData.getBrackets());
+            TeamCreationController controller = new TeamCreationController(interactor);
+            UserInput inputScreen = new UserInput(controller);
+            inputScreen.setVisible(true);
+
         }
     }
 }
