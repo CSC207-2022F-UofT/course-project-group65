@@ -1,7 +1,6 @@
 package useCases.startTourn;
 
 import entities.*;
-import useCases.endTourn.EndTournOB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,18 +10,16 @@ import java.util.Objects;
  * A use case for starting the tournament.
  */
 public class StartTournUC implements StartTournIB{
-    private StartTournOB outputBoundary;
-    private String currentUser;
-    private AccountRepo accounts;
-    private BracketRepo brackets;
-    private int bracketId;
-    private Bracket bracket;
-    private User user;
+    private final StartTournOB outputBoundary;
+    private final AccountRepo accounts;
+    private final BracketRepo brackets;
+    private final int bracketId;
+    private final Bracket bracket;
+    private final User user;
 
     public StartTournUC(StartTournOB outputBoundary, String currentUser, AccountRepo accounts, BracketRepo brackets,
                       int bracketId) {
         this.outputBoundary = outputBoundary;
-        this.currentUser = currentUser;
         this.accounts = accounts;
         this.brackets = brackets;
         this.bracketId = bracketId;
@@ -87,7 +84,7 @@ public class StartTournUC implements StartTournIB{
     /// start the tournament anyway. but for now I don't know how to implement that so I'm just leaving it.
     @Override
     public StartTournOD startTourn() {
-        ArrayList<String> errors = new ArrayList<String>();
+        ArrayList<String> errors = new ArrayList<>();
         String errorType1 = "USERROLE";
         String errorType2 = "NUMTEAMS";
         String errorType3 = "NOOBSERVER";
@@ -117,5 +114,15 @@ public class StartTournUC implements StartTournIB{
 
         StartTournOD outputData = new StartTournOD(errors);
         return this.outputBoundary.presentSuccess(outputData);
+    }
+
+
+
+    public AccountRepo getAccounts() {
+        return accounts;
+    }
+
+    public BracketRepo getBrackets() {
+        return brackets;
     }
 }

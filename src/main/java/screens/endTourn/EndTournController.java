@@ -1,11 +1,6 @@
 package screens.endTourn;
 
-import entities.AccountRepo;
-import entities.Bracket;
-import entities.BracketRepo;
-import entities.User;
 import useCases.endTourn.EndTournIB;
-import useCases.endTourn.EndTournID;
 import useCases.endTourn.EndTournOD;
 
 /**
