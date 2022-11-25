@@ -28,10 +28,10 @@ public class JoinTournamentInfo extends JFrame implements ActionListener {
         String invite = tfInvite.getText();
         try{
             JoinTournamentOD outData = controller.joinTournament(invite);
+            dispose();
         }
         catch (JoinTournamentFailed ex){
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-        dispose();
     }
 }
