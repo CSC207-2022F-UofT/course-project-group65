@@ -27,6 +27,7 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
     private JPanel viewTournament;
     private JButton btSubmit;
     private JLabel lbTournamentID;
+    private JTextField tournamentID;
     private JComboBox cbTournamentID;
     private ViewTournamentController controller;
 
@@ -44,9 +45,11 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        int tournamentID = (Integer) cbTournamentID.getSelectedItem();
+        //int tournamentID = (Integer) cbTournamentID.getSelectedItem();
+
         try {
-            ViewTournamentOD outData = controller.viewTournament(tournamentID);
+            int tournID = Integer.parseInt(tournamentID.getText().trim());
+            ViewTournamentOD outData = controller.viewTournament(tournID);
 
             EndTournOB endTournOB = new EndTournPresenter();
             EndTournIB endTournIB = new EndTournUC(endTournOB, outData.getUsername(), outData.getAccounts(),
@@ -79,6 +82,9 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
 
             dispose();
             view.setVisible(true);
+        }
+        catch (NumberFormatException nex){
+            JOptionPane.showMessageDialog(this, "Tournament ID is an integer.");
         }
         catch (ViewTournamentFailed ex){
             JOptionPane.showMessageDialog(this, ex.getMessage());
