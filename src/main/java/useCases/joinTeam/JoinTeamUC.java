@@ -27,9 +27,10 @@ public class JoinTeamUC implements JoinTeamIB {
     public boolean checkInTeam(){
         Bracket curBracket = brackets.getBracket(bracketID);
         List<Team> team_lst = curBracket.getTeams();
+        User user = accounts.getUser(userName);
         boolean condition = false;
         for(Team team : team_lst){
-            if(team.getTeamMembers().contains(userName)){
+            if(team.getTeamMembers().contains(user)){
                 condition = true;
             }
         }
@@ -89,16 +90,16 @@ public class JoinTeamUC implements JoinTeamIB {
         boolean teamSpace = checkTeamSpace(input);
         boolean inTeam = checkInTeam();
         if (!isPlayer){
-            return outputBoundary.FailView("Fail to join the team(Only player can join the team)");
+            return outputBoundary.FailView("Fail to join the team (Only player can join the team)");
         }
         if (!teamExistence){
-            return outputBoundary.FailView("Fail to join the team(The team name does not exist)");
+            return outputBoundary.FailView("Fail to join the team (The team name does not exist)");
         }
         if(!teamSpace){
-            return outputBoundary.FailView("Fail to join the team(The team is already full");
+            return outputBoundary.FailView("Fail to join the team (The team is already full");
         }
         if (inTeam){
-            return outputBoundary.FailView("Fail to join the team(You are already in a team)");
+            return outputBoundary.FailView("Fail to join the team (You are already in a team)");
         }
         User user = accounts.getUser(userName);
         String success = join(input);
