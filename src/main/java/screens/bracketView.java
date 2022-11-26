@@ -457,7 +457,7 @@ private JTextField observerGame1;
                     nextScreenData.getCurrentBracketID(),nextScreenData.getAccounts(),
                     nextScreenData.getBrackets());
             TeamCreationController controller = new TeamCreationController(interactor);
-            UserInput inputScreen = new UserInput(controller);
+            UserInput inputScreen = new UserInput(controller, this);
             inputScreen.setVisible(true);
 
         } else if (e.getSource() == returnOptions){

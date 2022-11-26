@@ -34,10 +34,12 @@ public class UserInput extends JFrame implements ActionListener{
     private JButton btnCreate;
     private JPanel inputPanel;
     private TeamCreationController teamCreationController;
+    public bracketView view;
 
-    public UserInput(TeamCreationController controller){
+    public UserInput(TeamCreationController controller, bracketView viewChange){
 
         this.teamCreationController = controller;
+        this.view = viewChange;
 
         this.setContentPane(inputPanel);
         this.setTitle("Create A Team");
@@ -77,27 +79,27 @@ public class UserInput extends JFrame implements ActionListener{
 
 //            bracketView view = new bracketView(nextScreenData,endTournController, startTournController, joinTeamController);
 
-//            ArrayList<String> teams = outputData.getTeams();
-//            ArrayList<ArrayList<String>> teamMembers = outputData.getTeamMembers();
-//            view.setTeam1Name(teams.get(0));
-//            String[] t1Players = new String[teamMembers.get(0).size()];
-//            t1Players = teamMembers.get(0).toArray(t1Players);
-//            view.setTeam1PlayerList(t1Players);
-//
-//            view.setTeam2Name(teams.get(1));
-//            String[] t2Players = new String[teamMembers.get(1).size()];
-//            t2Players = teamMembers.get(1).toArray(t2Players);
-//            view.setTeam2PlayerList(t2Players);
-//
-//            view.setTeam3Name(teams.get(2));
-//            String[] t3Players = new String[teamMembers.get(2).size()];
-//            t3Players = teamMembers.get(2).toArray(t3Players);
-//            view.setTeam1PlayerList(t3Players);
-//
-//            view.setTeam4Name(teams.get(3));
-//            String[] t4Players = new String[teamMembers.get(3).size()];
-//            t4Players = teamMembers.get(0).toArray(t4Players);
-//            view.setTeam1PlayerList(t4Players);
+            ArrayList<String> teams = outputData.getTeams();
+            ArrayList<ArrayList<String>> teamMembers = outputData.getTeamMembers();
+            view.setTeam1Name(teams.get(0));
+            String[] t1Players = new String[teamMembers.get(0).size()];
+            t1Players = teamMembers.get(0).toArray(t1Players);
+            view.setTeam1PlayerList(t1Players);
+
+            view.setTeam2Name(teams.get(1));
+            String[] t2Players = new String[teamMembers.get(1).size()];
+            t2Players = teamMembers.get(1).toArray(t2Players);
+            view.setTeam2PlayerList(t2Players);
+
+            view.setTeam3Name(teams.get(2));
+            String[] t3Players = new String[teamMembers.get(2).size()];
+            t3Players = teamMembers.get(2).toArray(t3Players);
+            view.setTeam1PlayerList(t3Players);
+
+            view.setTeam4Name(teams.get(3));
+            String[] t4Players = new String[teamMembers.get(3).size()];
+            t4Players = teamMembers.get(0).toArray(t4Players);
+            view.setTeam1PlayerList(t4Players);
 //
 //            this.dispose();
 //            view.setVisible(true);
