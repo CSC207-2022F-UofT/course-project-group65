@@ -393,7 +393,7 @@ private JTextField observerGame1;
                   nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
             AssignObserverController controller = new AssignObserverController(assignObserverIB);
 
-            controller.assignObserver(observerGame2.getText(), 1);
+            controller.assignObserver(observerGame1.getText(), 1);
         } else if (e.getSource() == assignGame2) {
             AssignObserverOB assignObserverOB = new AssignObserverPresenter();
             AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
@@ -407,7 +407,7 @@ private JTextField observerGame1;
                     nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
             AssignObserverController controller = new AssignObserverController(assignObserverIB);
 
-            controller.assignObserver(observerGame2.getText(), 3);
+            controller.assignObserver(observerGame3.getText(), 3);
         } else if (e.getSource() == startTournamentButton) {
 //            System.out.println("Start Tournament Button Clicked");
 
