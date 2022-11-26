@@ -110,5 +110,29 @@ public class DefaultBracket implements Bracket, Serializable {
         return observerInvite;
     }
 
+    @Override
+    public Game getGame(int gameID) {
+        return getGame(gameID, finalGame);
+    }
+
+    private Game getGame(int gameID, Game head) {
+        if (head == null) {
+            return null;
+        } else if (head.getGameID() == gameID) {
+            return head;
+        } else {
+            Game game = getGame(gameID, head.getPrevGame1());
+            if (game != null) {
+                return game;
+            }
+            return getGame(gameID, head.getPrevGame2());
+        }
+    }
+
+    @Override
+    public int getNumRounds() {
+        return finalGame.getGameRound();
+    }
+
 }
 

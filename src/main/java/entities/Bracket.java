@@ -46,4 +46,8 @@ public interface Bracket {
     void setObserverInvite();
 
     String getObserverInvite();
+
+    Game getGame(int gameID);
+
+    int getNumRounds();
 }

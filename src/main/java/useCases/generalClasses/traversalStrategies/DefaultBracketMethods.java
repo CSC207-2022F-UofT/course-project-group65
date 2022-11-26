@@ -1,33 +1,27 @@
 package useCases.generalClasses.traversalStrategies;
 
+import entities.Bracket;
 import entities.Game;
 
 import java.util.ArrayList;
 
-public class DefaultBracketMethods {
+public class DefaultBracketMethods implements BracketMethods{
+    private Bracket bracket;
 
-
-    // Find the game with the given gameID in the tree
-    public Game defaultFindGame(int gameID, Game head) {
-        if (head == null) {
-            return null;
-        } else if (head.getGameID() == gameID) {
-            return head;
-        } else {
-            Game game = defaultFindGame(gameID, head.getPrevGame1());
-            if (game != null) {
-                return game;
-            }
-            return defaultFindGame(gameID, head.getPrevGame2());
-        }
+    public DefaultBracketMethods(Bracket bracket){
+        this.bracket = bracket;
+    }
+    // Find all the games in the given round/tree level
+    @Override
+    public ArrayList<Game> getGamesInRound(int roundNum) {
+        return getGamesInRound(bracket.getFinalGame(), roundNum);
     }
 
-    // Find all the games in the given round/tree level
-    public ArrayList<Game> defaultLevelNodes(Game head, int roundNum) {
+    private ArrayList<Game> getGamesInRound(Game head, int roundNum) {
         ArrayList<Game> games = new ArrayList<>();
         if (head == null) {
             return games;
-        } else if (head.getPrevGame1() == null && head.getPrevGame2() == null) {
+        } else if (head.getPrevGame1() == null) {
             if (head.getGameRound() == roundNum) {
                 games.add(head);
             }
@@ -36,24 +30,9 @@ public class DefaultBracketMethods {
             if (head.getGameRound() == roundNum) {
                 games.add(head);
             }
-            games.addAll(defaultLevelNodes(head.getPrevGame1(), roundNum));
-            games.addAll(defaultLevelNodes(head.getPrevGame2(), roundNum));
+            games.addAll(getGamesInRound(head.getPrevGame1(), roundNum));
+            games.addAll(getGamesInRound(head.getPrevGame2(), roundNum));
             return games;
-        }
-    }
-
-    // Find the height of the tree
-    public int defaultFindHeight(Game head) {
-        if (head == null) {
-            return 0;
-        } else {
-            int leftHeight = defaultFindHeight(head.getPrevGame1());
-            int rightHeight = defaultFindHeight(head.getPrevGame2());
-            if (leftHeight > rightHeight) {
-                return leftHeight + 1;
-            } else {
-                return rightHeight + 1;
-            }
         }
     }
 }

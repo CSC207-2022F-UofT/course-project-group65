@@ -1,7 +1,6 @@
 package useCases.assignObserver;
 
 import entities.*;
-import useCases.generalClasses.traversalStrategies.TreeMethods;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +32,7 @@ public class AssignObserverUC implements AssignObserverIB {
             return outputBound.prepareFailView("You do not have permission to preform this action.");
         }
         User ref = findReferee(bracket, input.getAssignee());
-        Game game = findGame(new TreeMethods("Default"), input.getGameID(), bracket.getFinalGame());
+        Game game = bracket.getGame(input.getGameID());
         if (ref == null){
             return outputBound.prepareFailView("Assignee is not an Observer.");
         }
@@ -55,10 +54,6 @@ public class AssignObserverUC implements AssignObserverIB {
             }
         }
         return null;
-    }
-
-    private Game findGame(TreeMethods treeMethodAccess, int gameID, Game head) { //may change depending on if we refactor
-        return treeMethodAccess.findGame(gameID, head);
     }
 
     private boolean checkUserPermission(User user) {

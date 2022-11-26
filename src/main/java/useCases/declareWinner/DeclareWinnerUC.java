@@ -2,7 +2,9 @@ package useCases.declareWinner;
 
 import entities.*;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
-import useCases.generalClasses.traversalStrategies.TreeMethods;
+import useCases.generalClasses.traversalStrategies.BracketMethods;
+import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -12,7 +14,8 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
     public User user;
     public Game game;
     public DeclareWinnerOB outputBoundary;
-    public TreeMethods treeMethodAccess;
+    //    public BracketMethods treeMethodAccess;
+    public BracketMethods bracketMethods;
     public DeclareWinnerGateway gateway;
     private BracketRepo bracketRepo;
 
@@ -34,12 +37,13 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
         this.bracket = bracketRepo.getBracket(bracketID);
         this.user = accountRepo.getUser(username);
         String bracketType = "Default"; // This can be changed later to accommodate different types of brackets
-        this.treeMethodAccess = new TreeMethods(bracketType);
+//        this.treeMethodAccess = new BracketMethods(bracketType);
+        this.bracketMethods = new DefaultBracketMethods(bracket);
     }
 
-    private void findGame(int gameID, Game head) {
-        this.game = this.treeMethodAccess.findGame(gameID, head);
-    }
+//    private void findGame(int gameID, Game head) {
+//        this.game = this.treeMethodAccess.findGame(gameID, head);
+//    }
 
     private boolean checkUserPermission(User user) {
         PermissionChecker permissionChecker = new PermissionChecker();
@@ -79,7 +83,8 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
      */
 
     public DeclareWinnerOD setWinner(DeclareWinnerID inputData) {
-        findGame(inputData.getGameIDDW(), this.bracket.getFinalGame());
+//        findGame(inputData.getGameIDDW(), this.bracket.getFinalGame());
+        bracket.getGame(inputData.getGameIDDW());
 
         if (!checkUserPermission(this.user)) {
             return this.outputBoundary.presentError("You do not have permission to declare a winner for " +
