@@ -22,7 +22,7 @@ public class teamCreationUC implements teamCreationIB {
         this.accounts = accounts;
         this.brackets = brackets;
     }
-
+    // used to check whether the current user is a player
     public boolean checkPlayer(){
         Bracket curBracket = brackets.getBracket(bracketID);
         User creator = accounts.getUser(creatorName);
@@ -47,7 +47,7 @@ public class teamCreationUC implements teamCreationIB {
         Bracket curBracket = brackets.getBracket(bracketID);
         List<Team> teams = curBracket.getTeams();
         for(Team team: teams){
-            if(team.getTeamName().substring(0, 9).equals("BlankTeam")){
+            if(team.getTeamName().contains("BlankTeam")){
                 return team;
             }
         }
@@ -64,7 +64,12 @@ public class teamCreationUC implements teamCreationIB {
         return "Your team has been successfully created.";
 
     }
-
+    /**
+     * Creates the new team based on user input, outputs an error message if the team
+     * cannot be created.
+     * @param userInput the input data
+     * @return the output data
+     */
     @Override
     public teamCreationOD createNewTeam(teamCreationID userInput) {
         if (checkTeamNameExists(userInput)) {
