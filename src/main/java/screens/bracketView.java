@@ -330,11 +330,10 @@ private JTextField observerGame1;
 //            System.out.println("Join Team 1 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
-            //String team1Name = this.team1Name.getText();
+            String team1Name = this.team1Name.getText();
             try {
-                this.team1NameString = "test 1";
-                System.out.println(this.team1NameString);
-                JoinTeamOD outputData = joinTeamController.joinTeam(this.team1NameString);
+                joinTeamController.joinTeam(team1Name);
+                JoinTeamOD outputData = joinTeamController.joinTeam(team1Name);
                 ArrayList<String> names = outputData.getMembersNames();
                 setTeam1PlayerList(names.toArray(new String[0]));
             }
@@ -346,10 +345,12 @@ private JTextField observerGame1;
 //            System.out.println("Join Team 2 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
-            // String team2Name = this.team2Name.getText();
+            String team2Name = this.team2Name.getText();
             try {
-                // joinTeamController.joinTeam(team2Name);
-                joinTeamController.joinTeam("test 2");
+                joinTeamController.joinTeam(team2Name);
+                JoinTeamOD outputData = joinTeamController.joinTeam(team2Name);
+                ArrayList<String> names = outputData.getMembersNames();
+                setTeam2PlayerList(names.toArray(new String[0]));
             }
             catch (Exception exception) {
                 System.out.println( "Error: " + exception);
@@ -361,8 +362,10 @@ private JTextField observerGame1;
 //            Calls corresponding UC through controller
             String team3Name = this.team3Name.getText();
             try {
-                //joinTeamController.joinTeam(team3Name);
-                joinTeamController.joinTeam("test 3");
+                joinTeamController.joinTeam(team3Name);
+                JoinTeamOD outputData = joinTeamController.joinTeam(team3Name);
+                ArrayList<String> names = outputData.getMembersNames();
+                setTeam3PlayerList(names.toArray(new String[0]));
             }
             catch (Exception exception) {
                 System.out.println( "Error: " + exception);
@@ -372,10 +375,12 @@ private JTextField observerGame1;
 //            System.out.println("Join Team 4 Button Clicked");
             //            TODO
 //            Calls corresponding UC through controller
-            //String team4Name = this.team4Name.getText();
+            String team4Name = this.team4Name.getText();
             try {
-                //joinTeamController.joinTeam(team4Name);
-                joinTeamController.joinTeam("test 4");
+                joinTeamController.joinTeam(team4Name);
+                JoinTeamOD outputData = joinTeamController.joinTeam(team4Name);
+                ArrayList<String> names = outputData.getMembersNames();
+                setTeam4PlayerList(names.toArray(new String[0]));
 
             }
             catch (Exception exception) {
