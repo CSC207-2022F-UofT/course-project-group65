@@ -131,20 +131,7 @@ private String tournamentName;
     }
 
     public int getNumRounds() {
-        return getNumRounds(finalGame);
+        return finalGame.getGameRound();
     }
 
-    private int getNumRounds(Game head) {
-        if (head == null) {
-            return 0;
-        } else {
-            int leftHeight = getNumRounds(head.getPrevGame1());
-            int rightHeight = getNumRounds(head.getPrevGame2());
-            if (leftHeight > rightHeight) {
-                return leftHeight + 1;
-            } else {
-                return rightHeight + 1;
-            }
-        }
-    }
 }

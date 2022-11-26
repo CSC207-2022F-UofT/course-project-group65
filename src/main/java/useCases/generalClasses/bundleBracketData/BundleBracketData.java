@@ -1,0 +1,119 @@
+package useCases.generalClasses.bundleBracketData;
+
+import entities.Bracket;
+import entities.Game;
+import entities.Team;
+import entities.User;
+import useCases.generalClasses.traversalStrategies.BracketMethods;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
+public class BundleBracketData {
+    private LinkedHashMap<Integer, ArrayList<String>> gameToTeams;
+    private LinkedHashMap<Integer, ArrayList<Integer>> gameToScores;
+    private LinkedHashMap<Integer, String> gameToWinner;
+    private LinkedHashMap<String, ArrayList<String>> teamToPlayers;
+    private ArrayList<String> referees;
+    private LinkedHashMap<Integer, String> gameToReferee;
+    private LinkedHashMap<String, String> roleToInvite;
+
+    public void bundleBracket(Bracket bracket){
+        setGameToTeams(bracket);
+        setGameToScores(bracket);
+        setGameToWinner(bracket);
+        setTeamToPlayers(bracket);
+        setReferees(bracket);
+        setGameToReferee(bracket);
+        setRoleToInvite(bracket);
+    }
+
+    private void setGameToTeams(Bracket bracket){
+        ArrayList<String> teams = new ArrayList<>();
+        for(Game game: getGames(bracket)){
+            for(Team team: game.getTeams()) {
+                teams.add(team.getTeamName());
+            }
+            gameToTeams.put(game.getGameID(), teams);
+            teams.clear();
+        }
+    }
+
+    private void setGameToScores(Bracket bracket){
+        ArrayList<Integer> score = new ArrayList<>();
+        for(Game game: getGames(bracket)){
+            for(Team team: game.getTeams()) {
+                score.add(game.getTeamPoints(team));
+            }
+            gameToScores.put(game.getGameID(), score);
+            score.clear();
+        }
+    }
+
+    private void setGameToWinner(Bracket bracket){
+        for(Game game: getGames(bracket)){
+            gameToWinner.put(game.getGameID(), game.getWinner().getTeamName());
+        }
+    }
+
+    private void setTeamToPlayers(Bracket bracket){
+        ArrayList<String> members = new ArrayList<>();
+        for(Team team: bracket.getTeams()){
+            for(User member: team.getTeamMembers()){
+                members.add(member.getUsername());
+            }
+            teamToPlayers.put(team.getTeamName(), members);
+            members.clear();
+        }
+    }
+
+    private void setReferees(Bracket bracket){
+        for(User ref: bracket.getReferees()){
+            referees.add(ref.getUsername());
+        }
+    }
+
+    private void setGameToReferee(Bracket bracket){
+        for(Game game: getGames(bracket)){
+            gameToReferee.put(game.getGameID(), game.getObserver().getUsername());
+        }
+    }
+
+    private void setRoleToInvite(Bracket bracket){
+        roleToInvite.put("Player", bracket.getPlayerInvite());
+        roleToInvite.put("Observer", bracket.getObserverInvite());
+    }
+
+    private ArrayList<Game> getGames(Bracket bracket){
+        BracketMethods bm = new BracketMethods(bracket);
+        return bm.getAllGames();
+    }
+
+    public LinkedHashMap<Integer, ArrayList<String>> getGameToTeams() {
+        return gameToTeams;
+    }
+
+    public LinkedHashMap<Integer, ArrayList<Integer>> getGameToScores() {
+        return gameToScores;
+    }
+
+    public LinkedHashMap<Integer, String> getGameToWinner() {
+        return gameToWinner;
+    }
+
+    public LinkedHashMap<String, ArrayList<String>> getTeamToPlayers() {
+        return teamToPlayers;
+    }
+
+    public ArrayList<String> getReferees() {
+        return referees;
+    }
+
+    public LinkedHashMap<Integer, String> getGameToReferee() {
+        return gameToReferee;
+    }
+
+    public LinkedHashMap<String, String> getRoleToInvite() {
+        return roleToInvite;
+    }
+}
