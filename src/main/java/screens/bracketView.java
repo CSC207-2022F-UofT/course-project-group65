@@ -70,11 +70,14 @@ public class bracketView extends JFrame implements ActionListener {
     private JButton joinTeam4;
     private JLabel team4Name;
 //    Observer Assignments
-    private JComboBox<String> observerGame1;
+    //private JComboBox<String> observerGame1;
+    private JTextField observerGame1;
     private JButton assignGame1;
-    private JComboBox<String> observerGame2;
+    //private JComboBox<String> observerGame2;
+    private JTextField observerGame2;
     private JButton assignGame2;
-    private JComboBox<String> observerGame3;
+    //private JComboBox<String> observerGame3;
+    private JTextField observerGame3;
     private JButton assignGame3;
 //    Overseer Controls
     private JButton startTournamentButton;
@@ -205,15 +208,15 @@ public class bracketView extends JFrame implements ActionListener {
         this.team4List.setListData(team4List);
     }
 //    Observer Assignments
-    public void setObserverListGame1(String[] observers) {
-        this.observerGame1.setModel(new DefaultComboBoxModel<>(observers));
-    }
-    public void setObserverListGame2(String[] observers) {
-        this.observerGame2.setModel(new DefaultComboBoxModel<>(observers));
-    }
-    public void setObserverListGame3(String[] observers) {
-        this.observerGame3.setModel(new DefaultComboBoxModel<>(observers));
-    }
+//    public void setObserverListGame1(String[] observers) {
+//        this.observerGame1.setModel(new DefaultComboBoxModel<>(observers));
+//    }
+//    public void setObserverListGame2(String[] observers) {
+//        this.observerGame2.setModel(new DefaultComboBoxModel<>(observers));
+//    }
+//    public void setObserverListGame3(String[] observers) {
+//        this.observerGame3.setModel(new DefaultComboBoxModel<>(observers));
+//    }
 //    Invites
     public void setPlayerInvite(String invite) {
         this.playerInvite.setText("Player Invite: " + invite);
