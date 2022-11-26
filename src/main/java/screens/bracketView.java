@@ -8,6 +8,7 @@ import entities.BracketRepo;
 import screens.advanceTeam.AdvanceTeamController;
 import screens.advanceTeam.AdvanceTeamPresenter;
 import screens.assignObserver.AssignObserverController;
+import screens.assignObserver.AssignObserverFailed;
 import screens.assignObserver.AssignObserverPresenter;
 import screens.bracketOperations.DoBracketOperation;
 import screens.changePoints.ChangePointsController;
@@ -388,26 +389,41 @@ private JTextField observerGame1;
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
         } else if (e.getSource() == assignGame1) {
-            AssignObserverOB assignObserverOB = new AssignObserverPresenter();
-            AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
-                  nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
-            AssignObserverController controller = new AssignObserverController(assignObserverIB);
+            try {
+                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
+                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+                AssignObserverController controller = new AssignObserverController(assignObserverIB);
 
-            controller.assignObserver(observerGame1.getText(), 1);
+                controller.assignObserver(observerGame1.getText(), 1);
+            }
+            catch(RuntimeException rex ) {
+                JOptionPane.showMessageDialog(this, rex.getMessage());
+            }
         } else if (e.getSource() == assignGame2) {
-            AssignObserverOB assignObserverOB = new AssignObserverPresenter();
-            AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
-                    nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
-            AssignObserverController controller = new AssignObserverController(assignObserverIB);
+            try {
+                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
+                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+                AssignObserverController controller = new AssignObserverController(assignObserverIB);
 
-            controller.assignObserver(observerGame2.getText(), 2);
+                controller.assignObserver(observerGame2.getText(), 2);
+            }
+            catch(RuntimeException rex ) {
+                JOptionPane.showMessageDialog(this, rex.getMessage());
+            }
         } else if (e.getSource() == assignGame3) {
-            AssignObserverOB assignObserverOB = new AssignObserverPresenter();
-            AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
-                    nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
-            AssignObserverController controller = new AssignObserverController(assignObserverIB);
+            try {
+                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
+                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+                AssignObserverController controller = new AssignObserverController(assignObserverIB);
 
-            controller.assignObserver(observerGame3.getText(), 3);
+                controller.assignObserver(observerGame3.getText(), 3);
+            }
+            catch(RuntimeException rex ) {
+                JOptionPane.showMessageDialog(this, rex.getMessage());
+            }
         } else if (e.getSource() == startTournamentButton) {
 //            System.out.println("Start Tournament Button Clicked");
 
