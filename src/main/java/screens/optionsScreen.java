@@ -1,5 +1,6 @@
 package screens;
 
+import database.CreateAccount.CreateAccountFileWriter;
 import screens.createAccount.CreateAccountController;
 import screens.createAccount.CreateAccountPresenter;
 import screens.createBracket.CreateBracketController;
@@ -10,10 +11,10 @@ import screens.joinTournament.JoinTournamentInfo;
 import screens.joinTournament.JoinTournamentPresenter;
 import screens.logIn.LogInController;
 import screens.logIn.LogInPresenter;
-import screens.logIn.logInInfo;
 import screens.viewTournament.ViewTournamentController;
 import screens.viewTournament.ViewTournamentInfo;
 import screens.viewTournament.ViewTournamentPresenter;
+import useCases.CreateAccount.CreateAccountGateway;
 import useCases.CreateAccount.CreateAccountIB;
 import useCases.CreateAccount.CreateAccountOB;
 import useCases.CreateAccount.CreateAccountUC;
@@ -129,8 +130,9 @@ public class optionsScreen extends JFrame implements ActionListener {
             // Go back to home screen
 
             CreateAccountOB createAccountOB = new CreateAccountPresenter();
+            CreateAccountGateway createAccountGateway = new CreateAccountFileWriter("accounts.txt");
             CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, nextScreenData.getAccounts(),
-                    nextScreenData.getBrackets());
+                    nextScreenData.getBrackets(), createAccountGateway);
             CreateAccountController createAccountController = new CreateAccountController(createAccountIB);
 
             LogInOB logInOB = new LogInPresenter();

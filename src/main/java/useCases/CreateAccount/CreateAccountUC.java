@@ -10,12 +10,16 @@ public class CreateAccountUC implements CreateAccountIB {
 //    final UserFactory userFactory;
     final AccountRepo data;
     final BracketRepo bracketData;
+    private CreateAccountGateway gateway;
 
-    public CreateAccountUC(CreateAccountOB userCreateAccountOB, AccountRepo data, BracketRepo bracketData) {
-//        this.userFactory = userFactory;
+    public CreateAccountUC(CreateAccountOB userCreateAccountOB, AccountRepo data, BracketRepo bracketData,
+                           CreateAccountGateway gateway) {
         this.userCreateAccountOB = userCreateAccountOB;
         this.data = data;
         this.bracketData = bracketData;
+        this.gateway = gateway;
+
+//        this.userFactory = userFactory;
     }
 
 //    public CreateAccountUC(CreateAccountOB userCreateAccountOB, UserFactory userFactory, AccountRepo data, BracketRepo bracketData) {
@@ -41,6 +45,14 @@ public class CreateAccountUC implements CreateAccountIB {
                 new HashMap<Integer, String>(), 0, new ArrayList<Integer>());
 
         data.addUser(user);
+
+        CreateAccountDSID dataStoreID = new CreateAccountDSID(data);
+
+        try {
+            this.gateway.save(dataStoreID);
+        } catch (Exception e){
+            return userCreateAccountOB.prepareFailView("Error saving to database.");
+        }
 
         CreateAccountOD accountOD = new CreateAccountOD(user.getUsername(), user.getPassword());
         return userCreateAccountOB.prepareSuccessView(accountOD);

@@ -1,18 +1,17 @@
+import database.CreateAccount.CreateAccountFileWriter;
 import entities.*;
 import screens.createAccount.CreateAccountController;
 import screens.createAccount.CreateAccountPresenter;
-import screens.createBracket.CreateBracketPresenter;
 import screens.homeScreen;
 import screens.logIn.LogInController;
 import screens.logIn.LogInPresenter;
-import useCases.CreateAccount.CreateAccountIB;
-import useCases.CreateAccount.CreateAccountOB;
-import useCases.CreateAccount.CreateAccountUC;
+import useCases.CreateAccount.*;
 import useCases.LogIn.LogInIB;
 import useCases.LogIn.LogInOB;
 import useCases.LogIn.LogInUC;
-import useCases.createBracket.CreateBracketOB;
-import useCases.createBracket.CreateBracketUC;
+
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 
 public class TournamentSimulator {
     public static void main(String[] args) {
@@ -49,11 +48,23 @@ public class TournamentSimulator {
 
 //        UserFactory mainUserFactory = new DefaultUserFactory();
 
+        try{
+            FileInputStream fileInputStream
+                    = new FileInputStream("accounts.txt");
+            ObjectInputStream objectInputStream
+                    = new ObjectInputStream(fileInputStream);
+            mainAccountRepo = (AccountRepo) objectInputStream.readObject();
+            objectInputStream.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
         CreateAccountOB createAccountOB = new CreateAccountPresenter();
 //        CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, mainUserFactory,
 //                mainAccountRepo, mainBracketRepo);
+        CreateAccountGateway gateway = new CreateAccountFileWriter("accounts.txt");
         CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB,
-                mainAccountRepo, mainBracketRepo);
+                mainAccountRepo, mainBracketRepo, gateway);
         CreateAccountController createAccountController = new CreateAccountController(createAccountIB);
 
         LogInOB logInOB = new LogInPresenter();
