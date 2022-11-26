@@ -35,6 +35,9 @@ public class CreateBracketUC implements CreateBracketIB{
         BracketAssembler assembler = new BracketAssembler();
         assembler.assembleBracket(bracketType, creator, bracketName, tournamentID,
                 numTeams, maxTeamSize, winCondition);
+        creator.setCurrentTournament(bracketID);
+        creator.setBracketRole(bracketID, "Overseer");
+        creator.addTournament(bracketID);
         return assembler.getBracket();
     }
 

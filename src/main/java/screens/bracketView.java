@@ -7,6 +7,8 @@ import entities.AccountRepo;
 import entities.BracketRepo;
 import screens.advanceTeam.AdvanceTeamController;
 import screens.advanceTeam.AdvanceTeamPresenter;
+import screens.assignObserver.AssignObserverController;
+import screens.assignObserver.AssignObserverPresenter;
 import screens.bracketOperations.DoBracketOperation;
 import screens.changePoints.ChangePointsController;
 import screens.changePoints.ChangePointsPresenter;
@@ -36,6 +38,9 @@ import useCases.advanceTeam.AdvanceTeamGateway;
 import useCases.advanceTeam.AdvanceTeamIB;
 import useCases.advanceTeam.AdvanceTeamOB;
 import useCases.advanceTeam.AdvanceTeamUC;
+import useCases.assignObserver.AssignObserverIB;
+import useCases.assignObserver.AssignObserverOB;
+import useCases.assignObserver.AssignObserverUC;
 import useCases.changePoints.ChangePointsGateway;
 import useCases.changePoints.ChangePointsIB;
 import useCases.changePoints.ChangePointsOB;
@@ -97,11 +102,14 @@ public class bracketView extends JFrame implements ActionListener {
     private JButton joinTeam4;
     private JLabel team4Name;
 //    Observer Assignments
-    private JComboBox<String> observerGame1;
+    //private JComboBox<String> observerGame1;
+private JTextField observerGame1;
     private JButton assignGame1;
-    private JComboBox<String> observerGame2;
+    //private JComboBox<String> observerGame2;
     private JButton assignGame2;
-    private JComboBox<String> observerGame3;
+    //private JComboBox<String> observerGame3;
+    private JTextField observerGame2;
+    private JTextField observerGame3;
     private JButton assignGame3;
 //    Overseer Controls
     private JButton startTournamentButton;
@@ -243,15 +251,15 @@ public class bracketView extends JFrame implements ActionListener {
         this.team4List.setListData(team4List);
     }
 //    Observer Assignments
-    public void setObserverListGame1(String[] observers) {
-        this.observerGame1.setModel(new DefaultComboBoxModel<>(observers));
-    }
-    public void setObserverListGame2(String[] observers) {
-        this.observerGame2.setModel(new DefaultComboBoxModel<>(observers));
-    }
-    public void setObserverListGame3(String[] observers) {
-        this.observerGame3.setModel(new DefaultComboBoxModel<>(observers));
-    }
+//    public void setObserverListGame1(String[] observers) {
+//        this.observerGame1.setModel(new DefaultComboBoxModel<>(observers));
+//    }
+//    public void setObserverListGame2(String[] observers) {
+//        this.observerGame2.setModel(new DefaultComboBoxModel<>(observers));
+//    }
+//    public void setObserverListGame3(String[] observers) {
+//        this.observerGame3.setModel(new DefaultComboBoxModel<>(observers));
+//    }
 //    Invites
     public void setPlayerInvite(String invite) {
         this.playerInvite.setText("Player Invite: " + invite);
@@ -375,17 +383,26 @@ public class bracketView extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
         } else if (e.getSource() == assignGame1) {
-//            System.out.println("Assign Game 1 Button Clicked");
-            //            TODO
-//            Calls corresponding UC through controller
+            AssignObserverOB assignObserverOB = new AssignObserverPresenter();
+            AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+                  nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+            AssignObserverController controller = new AssignObserverController(assignObserverIB);
+
+            controller.assignObserver(observerGame2.getText(), 1);
         } else if (e.getSource() == assignGame2) {
-//            System.out.println("Assign Game 2 Button Clicked");
-            //            TODO
-//            Calls corresponding UC through controller
+            AssignObserverOB assignObserverOB = new AssignObserverPresenter();
+            AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+                    nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+            AssignObserverController controller = new AssignObserverController(assignObserverIB);
+
+            controller.assignObserver(observerGame2.getText(), 2);
         } else if (e.getSource() == assignGame3) {
-//            System.out.println("Assign Game 3 Button Clicked");
-            //            TODO
-//            Calls corresponding UC through controller
+            AssignObserverOB assignObserverOB = new AssignObserverPresenter();
+            AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+                    nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+            AssignObserverController controller = new AssignObserverController(assignObserverIB);
+
+            controller.assignObserver(observerGame2.getText(), 3);
         } else if (e.getSource() == startTournamentButton) {
 //            System.out.println("Start Tournament Button Clicked");
 
