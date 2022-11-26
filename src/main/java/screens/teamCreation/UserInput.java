@@ -42,7 +42,7 @@ public class UserInput extends JFrame implements ActionListener{
         this.setContentPane(inputPanel);
         this.setTitle("Create A Team");
         this.setSize(450,300);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
         btnCreate.addActionListener(this);
     }

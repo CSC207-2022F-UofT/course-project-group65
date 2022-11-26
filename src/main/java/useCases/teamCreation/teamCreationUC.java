@@ -64,6 +64,19 @@ public class teamCreationUC implements teamCreationIB {
         return "Your team has been successfully created.";
 
     }
+
+    public boolean inATeam(Bracket bracket){
+        User creator = accounts.getUser(creatorName);
+        ArrayList<Team> teams = bracket.getTeams();
+        for(Team team: teams){
+            if(team.getTeamMembers().contains(creator)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     /**
      * Creates the new team based on user input, outputs an error message if the team
      * cannot be created.
@@ -78,6 +91,8 @@ public class teamCreationUC implements teamCreationIB {
             return outputBoundary.prepareFailView("The bracket is full, please join an existing team.");
         } else if (!checkPlayer()){
             return outputBoundary.prepareFailView("Only players can create a new team.");
+        } else if (inATeam(brackets.getBracket(bracketID))){
+            return outputBoundary.prepareFailView("You are already in a team.");
         }
 
         String success = createTeam(userInput);

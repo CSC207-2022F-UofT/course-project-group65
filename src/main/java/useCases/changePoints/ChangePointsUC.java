@@ -62,6 +62,9 @@ public class ChangePointsUC implements ChangePointsIB{
 
     private boolean checkObserverAssigned(User user) {
         User assignedObserver = this.game.getObserver();
+        if (assignedObserver == null) {
+            return false;
+        }
         return user.getUsername().equals(assignedObserver.getUsername());
     }
 
