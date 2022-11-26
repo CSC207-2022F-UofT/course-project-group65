@@ -38,7 +38,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
         this.user = accountRepo.getUser(username);
         String bracketType = "Default"; // This can be changed later to accommodate different types of brackets
 //        this.treeMethodAccess = new BracketMethods(bracketType);
-        this.bracketMethods = new DefaultBracketMethods(bracket);
+        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
     }
 
 //    private void findGame(int gameID, Game head) {
