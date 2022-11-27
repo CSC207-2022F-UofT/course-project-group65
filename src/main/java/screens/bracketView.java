@@ -37,6 +37,7 @@ import useCases.advanceTeam.AdvanceTeamOB;
 import useCases.advanceTeam.AdvanceTeamUC;
 import useCases.assignObserver.AssignObserverIB;
 import useCases.assignObserver.AssignObserverOB;
+import useCases.assignObserver.AssignObserverOD;
 import useCases.assignObserver.AssignObserverUC;
 import useCases.changePoints.ChangePointsGateway;
 import useCases.changePoints.ChangePointsIB;
@@ -57,6 +58,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 
 public class bracketView extends JFrame implements ActionListener {
@@ -112,6 +115,23 @@ private JTextField observerGame1;
     private JLabel game1Winner;
     private JLabel game2Winner;
     private JLabel game3Winner;
+    private JTabbedPane mainTabbedPane;
+    private JPanel generalisedBracketView;
+    private JComboBox<Integer> selectRoundGBV;
+    private JComboBox<Integer> selectGameGBV;
+    private JButton bracketOperationsButtonGBV;
+    private JPanel generalisedTeamView;
+    private JPanel generalisedObserverView;
+    private JButton createTeamButtonGTV;
+    private JComboBox<Integer> selectGameGTV;
+    private JButton joinTeamButtonGTV;
+    private JComboBox<Integer> selectGameGOV;
+    private JButton selectGameButtonGOV;
+    private JComboBox<String> selectObserverGOV;
+    private JButton assignAsObserverButtonGOV;
+    private JComboBox<String> observerListGame1;
+    private JComboBox<String> observerListGame2;
+    private JComboBox<String> observerListGame3;
 
     private String team1NameString;
 
@@ -180,6 +200,10 @@ private JTextField observerGame1;
         playerInvite.setText("Player Invite: ");
         observerInvite.setText("Observer Invite: ");
 
+        this.mainTabbedPane.remove(generalisedBracketView);
+        this.mainTabbedPane.remove(generalisedTeamView);
+        this.mainTabbedPane.remove(generalisedObserverView);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(mainPanel);
         this.setPreferredSize(new Dimension(800, 600));
@@ -244,15 +268,21 @@ private JTextField observerGame1;
         this.team4List.setListData(team4List);
     }
 //    Observer Assignments
-//    public void setObserverListGame1(String[] observers) {
-//        this.observerGame1.setModel(new DefaultComboBoxModel<>(observers));
-//    }
-//    public void setObserverListGame2(String[] observers) {
-//        this.observerGame2.setModel(new DefaultComboBoxModel<>(observers));
-//    }
-//    public void setObserverListGame3(String[] observers) {
-//        this.observerGame3.setModel(new DefaultComboBoxModel<>(observers));
-//    }
+    public void setObserverListGame1(ArrayList<String> observers) {
+        for (String observer : observers) {
+            this.observerListGame1.addItem(observer);
+        }
+    }
+    public void setObserverListGame2(ArrayList<String> observers) {
+        for (String observer : observers) {
+            this.observerListGame2.addItem(observer);
+        }
+    }
+    public void setObserverListGame3(ArrayList<String> observers) {
+        for (String observer : observers) {
+            this.observerListGame3.addItem(observer);
+        }
+    }
 //    Invites
     public void setPlayerInvite(String invite) {
         this.playerInvite.setText("Player Invite: " + invite);
@@ -387,7 +417,8 @@ private JTextField observerGame1;
                         nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
                 AssignObserverController controller = new AssignObserverController(assignObserverIB);
 
-                controller.assignObserver(observerGame1.getText(), 1);
+                controller.assignObserver((String) observerListGame1.getSelectedItem(), 1);
+                //setObserverListGame1(new ArrayList<>(Collections.singletonList(output.getAssignee())));
             }
             catch(RuntimeException rex ) {
                 JOptionPane.showMessageDialog(this, rex.getMessage());
@@ -399,7 +430,8 @@ private JTextField observerGame1;
                         nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
                 AssignObserverController controller = new AssignObserverController(assignObserverIB);
 
-                controller.assignObserver(observerGame2.getText(), 2);
+                controller.assignObserver((String) observerListGame2.getSelectedItem(), 2);
+//                setObserverListGame2(new ArrayList<>(Collections.singletonList(output.getAssignee())));
             }
             catch(RuntimeException rex ) {
                 JOptionPane.showMessageDialog(this, rex.getMessage());
@@ -411,7 +443,8 @@ private JTextField observerGame1;
                         nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
                 AssignObserverController controller = new AssignObserverController(assignObserverIB);
 
-                controller.assignObserver(observerGame3.getText(), 3);
+                controller.assignObserver((String) observerListGame3.getSelectedItem(), 3);
+//                setObserverListGame2(new ArrayList<>(Collections.singletonList(output.getAssignee())));
             }
             catch(RuntimeException rex ) {
                 JOptionPane.showMessageDialog(this, rex.getMessage());

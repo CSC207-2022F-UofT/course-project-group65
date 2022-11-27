@@ -1,12 +1,14 @@
 package useCases.changePoints;
 
 import entities.*;
+import useCases.generalClasses.bundleBracketData.BundleBracketData;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
 import useCases.generalClasses.traversalStrategies.BracketMethods;
 import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 
 
 public class ChangePointsUC implements ChangePointsIB{
@@ -166,17 +168,12 @@ public class ChangePointsUC implements ChangePointsIB{
             return this.outputBoundary.presentError("There was an error saving the bracket.");
         }
 
-        Team otherTeam = null;
-        ArrayList<Team> teams = (ArrayList<Team>) this.game.getTeams();
-        for (Team team : teams) {
-            if (!team.getTeamName().equals(this.team.getTeamName())) {
-                otherTeam = team;
-            }
-        }
+        BundleBracketData bundleBracketData = new BundleBracketData();
+        bundleBracketData.bundleBracket(this.bracket);
+        ArrayList<String> teams = bundleBracketData.getGameToTeams().get(this.game.getGameID());
+        ArrayList<Integer> points = bundleBracketData.getGameToScores().get(this.game.getGameID());
 
-        assert otherTeam != null;
-        ChangePointsOD outputData = new ChangePointsOD(this.game.getGameID(), this.team.getTeamName(), otherTeam.getTeamName(),
-                changedPoints, this.game.getTeamPoints(otherTeam));
+        ChangePointsOD outputData = new ChangePointsOD(teams, points);
 
 //        ChangePointsOD outputData = new ChangePointsOD(this.game, this.team, this.game.getTeamPoints(this.team),
 //                this.bracket);

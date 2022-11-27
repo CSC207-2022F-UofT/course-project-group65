@@ -1,11 +1,14 @@
 package useCases.advanceTeam;
 import entities.*;
+import useCases.generalClasses.bundleBracketData.BundleBracketData;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
 import useCases.generalClasses.traversalStrategies.BracketMethods;
 import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class AdvanceTeamUC implements AdvanceTeamIB {
 
@@ -143,14 +146,20 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
         }
 
         ArrayList<Team> teams = advancedGame.getTeams();
-        ArrayList<String> teamNames = new ArrayList<>(Arrays.asList("", ""));
-        for (Team team : teams) {
-            if (team != null) {
-                teamNames.set(teams.indexOf(team), team.getTeamName());
-            }
-        }
 
-        AdvanceTeamOD outputData = new AdvanceTeamOD(advancedGame.getGameID(), teamNames);
+        BundleBracketData bundleBracketData = new BundleBracketData();
+        bundleBracketData.bundleBracket(this.bracket);
+        LinkedHashMap<Integer, ArrayList<String>> gameTeamMap =  bundleBracketData.getGameToTeams();
+        LinkedHashMap<Integer, ArrayList<Integer>> gameScoresMap = bundleBracketData.getGameToScores();
+
+//        ArrayList<String> teamNames = new ArrayList<>(Arrays.asList("", ""));
+//        for (Team team : teams) {
+//            if (team != null) {
+//                teamNames.set(teams.indexOf(team), team.getTeamName());
+//            }
+//        }
+
+        AdvanceTeamOD outputData = new AdvanceTeamOD(advancedGame.getGameID(), gameTeamMap, gameScoresMap);
         return this.outputBoundary.presentSuccess(outputData);
     }
 }

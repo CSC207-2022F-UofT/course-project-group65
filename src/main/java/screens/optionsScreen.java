@@ -34,6 +34,7 @@ import useCases.viewTournament.ViewTournamentUC;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class optionsScreen extends JFrame implements ActionListener {
     private JLabel lbHeader;
@@ -112,6 +113,11 @@ public class optionsScreen extends JFrame implements ActionListener {
                     nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
             ViewTournamentController viewTournamentController = new ViewTournamentController(viewTournamentIB);
             ViewTournamentInfo viewTournamentInfo = new ViewTournamentInfo(viewTournamentController);
+            // This is a violation of clean architecture, the fact that we are accessing a user here.
+            ArrayList<Integer> tournaments = (ArrayList<Integer>)
+                    nextScreenData.getAccounts().getUser(nextScreenData.getCurrentUser()).getAllTournaments();
+            viewTournamentInfo.setTournaments(tournaments);
+            System.out.println(tournaments);
             this.dispose();
             viewTournamentInfo.setVisible(true);
 

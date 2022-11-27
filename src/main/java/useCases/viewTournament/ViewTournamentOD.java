@@ -6,6 +6,7 @@ import useCases.generalClasses.bundleBracketData.BundleBracketData;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class ViewTournamentOD {
     String username;
@@ -20,8 +21,10 @@ public class ViewTournamentOD {
     LinkedHashMap<String, String> roleToInvite;
     int tournamentID;
     String tournamentName;
+    List<Integer> tournamentNames;
 
-    public ViewTournamentOD(String username, AccountRepo accounts, BracketRepo brackets, BundleBracketData bracketData){
+    public ViewTournamentOD(String username, AccountRepo accounts, BracketRepo brackets, BundleBracketData bracketData,
+                            List<Integer> currentTournaments){
         this.username = username;
         this.accounts = accounts;
         this.brackets = brackets;
@@ -34,6 +37,10 @@ public class ViewTournamentOD {
         roleToInvite = bracketData.getRoleToInvite();
         tournamentID = bracketData.getTournamentID();
         tournamentName = bracketData.getTournamentName();
+        tournamentNames = currentTournaments;
+    }
+    public ArrayList<Integer> getTournamentNames(){
+        return (ArrayList<Integer>) tournamentNames;
     }
 
     public String getUsername() {

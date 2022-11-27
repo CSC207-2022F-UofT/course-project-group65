@@ -44,7 +44,7 @@ public class ViewTournamentUC implements ViewTournamentIB {
         BundleBracketData bracketData = new BundleBracketData();
         bracketData.bundleBracket(bracketRepo.getBracket(tournamentID));
         ViewTournamentOD output = new ViewTournamentOD(currUser.getUsername(), accountRepo,
-                bracketRepo, bracketData);
+                bracketRepo, bracketData, currUser.getAllTournaments());
 
         return outputBound.prepareSuccessView(output);
     }

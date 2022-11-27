@@ -80,7 +80,7 @@ public class BundleBracketData {
             for(User member: team.getTeamMembers()){
                 members.add(member.getUsername());
             }
-            teamToPlayers.put(team.getTeamName(), members);
+            teamToPlayers.put(team.getTeamName(), new ArrayList<>(members));
             members.clear();
         }
     }

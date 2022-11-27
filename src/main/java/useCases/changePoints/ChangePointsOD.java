@@ -1,41 +1,58 @@
 package useCases.changePoints;
 import entities.*;
 
+import java.util.ArrayList;
+
 public class ChangePointsOD {
 
-    private int newPoints;
-    private int gameID;
-    private String changedTeamName;
-    private String otherTeamName;
-    private int otherTeamPoints;
+//    private int newPoints;
+//    private int gameID;
+//    private String changedTeamName;
+//    private String otherTeamName;
+//    private int otherTeamPoints;
+    private ArrayList<String> teams;
+    private ArrayList<Integer> points;
 
-    public ChangePointsOD(int gameID, String changedTeamName, String otherTeamName, int newPoints, int otherTeamPoints){
-        this.gameID = gameID;
-        this.changedTeamName = changedTeamName;
-        this.otherTeamName = otherTeamName;
-        this.newPoints = newPoints;
-        this.otherTeamPoints = otherTeamPoints;
+    public ChangePointsOD(ArrayList<String> teams, ArrayList<Integer> points) {
+        this.points = points;
+        this.teams = teams;
     }
 
-    public int getGameID() {
-        return this.gameID;
+    public ArrayList<String> getTeams() {
+        return teams;
     }
 
-    public String getChangedTeamName() {
-        return this.changedTeamName;
+    public ArrayList<Integer> getPoints() {
+        return points;
     }
 
-    public String getOtherTeamName() {
-        return this.otherTeamName;
+    public void setTeams(ArrayList<String> teams) {
+        this.teams = teams;
     }
 
-    public int getNewPoints() {
-        return this.newPoints;
+    public void setPoints(ArrayList<Integer> points) {
+        this.points = points;
     }
 
-    public int getOtherTeamPoints() {
-        return this.otherTeamPoints;
-    }
+//    public int getGameID() {
+//        return this.gameID;
+//    }
+//
+//    public String getChangedTeamName() {
+//        return this.changedTeamName;
+//    }
+//
+//    public String getOtherTeamName() {
+//        return this.otherTeamName;
+//    }
+//
+//    public int getNewPoints() {
+//        return this.newPoints;
+//    }
+//
+//    public int getOtherTeamPoints() {
+//        return this.otherTeamPoints;
+//    }
 
 
 

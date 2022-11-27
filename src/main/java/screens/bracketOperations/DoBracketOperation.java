@@ -91,80 +91,80 @@ public class DoBracketOperation extends JFrame implements ActionListener {
         this.teamsLabel.setText("[" + team1 + "] " + team1Score + " - " + team2Score + " [" + team2 + "]");
     }
 
-    public static void main(String[] args) {
-
+//    public static void main(String[] args) {
 //
-//        BracketRepo repo = new BracketRepo();
-//        DefaultBracket bracket = new DefaultBracket();
-//        DefaultGame game = new DefaultGame();
-//        DefaultGame game2 = new DefaultGame();
-//        game2.setGameID(1);
-//        DefaultGame game3 = new DefaultGame();
-//        game3.setGameID(2);
-//        bracket.setFinalGame(game);
-//        game.setPrevGame1(game2);
-//        game.setPrevGame2(game3);
-//        repo.addBracket(bracket);
-//        //game.setGameStatus(true);
-//        game2.setGameStatus(true);
-//        game3.setGameStatus(true);
-//        game.setGameRound(2);
-//        game2.setGameRound(1);
-//        game3.setGameRound(1);
+////
+////        BracketRepo repo = new BracketRepo();
+////        DefaultBracket bracket = new DefaultBracket();
+////        DefaultGame game = new DefaultGame();
+////        DefaultGame game2 = new DefaultGame();
+////        game2.setGameID(1);
+////        DefaultGame game3 = new DefaultGame();
+////        game3.setGameID(2);
+////        bracket.setFinalGame(game);
+////        game.setPrevGame1(game2);
+////        game.setPrevGame2(game3);
+////        repo.addBracket(bracket);
+////        //game.setGameStatus(true);
+////        game2.setGameStatus(true);
+////        game3.setGameStatus(true);
+////        game.setGameRound(2);
+////        game2.setGameRound(1);
+////        game3.setGameRound(1);
+////
+////        Team team1 = new DefaultTeam();
+////        Team team2 = new DefaultTeam();
+////        game2.setTeam(team1, bracket.getWinCondition());
+////        game3.setTeam(team2, 0);
+////        game2.setWinner(team1);
+////
+////
+////        AccountRepo repo1 = new AccountRepo();
+////        DefaultUser user2 = new DefaultUser();
+////        user2.setUsername("test");
+////        user2.setPassword("test2");
+////        user2.setBracketRole(bracket.getTournamentID(), "Overseer");
+////        repo1.addUser(user2);
+////
+////        AdvanceTeamID inputData = new AdvanceTeamID(1);
+////
+////        AdvanceTeamGateway userRepository = new AdvanceTeamFileWriter("UC Test.txt");
+////        AdvanceTeamOB outputBoundary = new AdvanceTeamPresenter(); // dummy class
+////        AdvanceTeamIB interactor = new AdvanceTeamUC(outputBoundary, userRepository, repo, repo1, bracket.getTournamentID(), user2.getUsername());
+////        AdvanceTeamController advanceTeamController1 = new AdvanceTeamController(interactor);
+////        advanceTeamController1.create(1);
+////
+////        System.out.println("Game 1: " + game.getGameStatus());
+////        System.out.println("Game 2: " + game2.getGameStatus());
+////        System.out.println("Game 3: " + game3.getGameStatus());
+////        System.out.println("Final:" + game.getPrevGame1().getGameID());
+////        game2.setWinner(team1);
+////        System.out.println(game3.getTeams());
 //
-//        Team team1 = new DefaultTeam();
-//        Team team2 = new DefaultTeam();
-//        game2.setTeam(team1, bracket.getWinCondition());
-//        game3.setTeam(team2, 0);
-//        game2.setWinner(team1);
 //
+////        AdvanceTeamController advanceTeamController1 = new AdvanceTeamController(new AdvanceTeamIB() {
+////            @Override
+////            public AdvanceTeamOD advanceWinner(AdvanceTeamID advanceTeamID) {
+////                return null;
+////            }
+////        });
+////        DeclareWinnerController declareWinnerController1 = new DeclareWinnerController(new DeclareWinnerIB() {
+////            @Override
+////            public DeclareWinnerOD setWinner(DeclareWinnerID declareWinnerID) {
+////                return null;
+////            }
+////        });
+////
+////
+////        ChangePointsController changePointsController1 = new ChangePointsController(new ChangePointsIB() {
+////            @Override
+////            public ChangePointsOD changePoints(ChangePointsID changePointsID) {
+////                return null;
+////            }
+////        });
 //
-//        AccountRepo repo1 = new AccountRepo();
-//        DefaultUser user2 = new DefaultUser();
-//        user2.setUsername("test");
-//        user2.setPassword("test2");
-//        user2.setBracketRole(bracket.getTournamentID(), "Overseer");
-//        repo1.addUser(user2);
-//
-//        AdvanceTeamID inputData = new AdvanceTeamID(1);
-//
-//        AdvanceTeamGateway userRepository = new AdvanceTeamFileWriter("UC Test.txt");
-//        AdvanceTeamOB outputBoundary = new AdvanceTeamPresenter(); // dummy class
-//        AdvanceTeamIB interactor = new AdvanceTeamUC(outputBoundary, userRepository, repo, repo1, bracket.getTournamentID(), user2.getUsername());
-//        AdvanceTeamController advanceTeamController1 = new AdvanceTeamController(interactor);
-//        advanceTeamController1.create(1);
-//
-//        System.out.println("Game 1: " + game.getGameStatus());
-//        System.out.println("Game 2: " + game2.getGameStatus());
-//        System.out.println("Game 3: " + game3.getGameStatus());
-//        System.out.println("Final:" + game.getPrevGame1().getGameID());
-//        game2.setWinner(team1);
-//        System.out.println(game3.getTeams());
-
-
-        AdvanceTeamController advanceTeamController1 = new AdvanceTeamController(new AdvanceTeamIB() {
-            @Override
-            public AdvanceTeamOD advanceWinner(AdvanceTeamID advanceTeamID) {
-                return null;
-            }
-        });
-        DeclareWinnerController declareWinnerController1 = new DeclareWinnerController(new DeclareWinnerIB() {
-            @Override
-            public DeclareWinnerOD setWinner(DeclareWinnerID declareWinnerID) {
-                return null;
-            }
-        });
-
-
-        ChangePointsController changePointsController1 = new ChangePointsController(new ChangePointsIB() {
-            @Override
-            public ChangePointsOD changePoints(ChangePointsID changePointsID) {
-                return null;
-            }
-        });
-
-//        DoBracketOperation doBracketOperation = new DoBracketOperation(advanceTeamController1, declareWinnerController1, changePointsController1);
-    }
+////        DoBracketOperation doBracketOperation = new DoBracketOperation(advanceTeamController1, declareWinnerController1, changePointsController1);
+//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -179,10 +179,18 @@ public class DoBracketOperation extends JFrame implements ActionListener {
         try {
             if (e.getSource() == advanceButton) {
                 AdvanceTeamOD outputAdvance = advanceTeamController.create(gameID);
-                if (outputAdvance.getAdvancedGame() == 1) {
-                    this.viewChange.setGame1Label(outputAdvance.getTeams().get(0),
-                            outputAdvance.getTeams().get(1), 0, 0);
+                int newlyAdvancedGame = outputAdvance.getAdvancedGame();
+                ArrayList<String> teams = outputAdvance.getGameToTeams().get(newlyAdvancedGame);
+                ArrayList<Integer> scores = outputAdvance.getGameToScores().get(newlyAdvancedGame);
+                if (teams.size() != 2) {
+                    this.viewChange.setGame1Label(teams.get(0), "", scores.get(0), 0);
+                } else {
+                    this.viewChange.setGame1Label(teams.get(0), teams.get(1), scores.get(0), scores.get(1));
                 }
+//                if (outputAdvance.getAdvancedGame() == 1) {
+//                    this.viewChange.setGame1Label(outputAdvance.getTeams().get(0),
+//                            outputAdvance.getTeams().get(1), 0, 0);
+                //}
             } else if (e.getSource() == declareButton) {
                 DeclareWinnerOD outputWinner = declareWinnerController.create(gameID);
                 System.out.println(outputWinner.getWinningTeamName());
@@ -201,21 +209,29 @@ public class DoBracketOperation extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Please select a team.");
                 }
                 ChangePointsOD outputData = changePointsController.create(gameID, points, teamName);
+                this.changeTeamsLabel(outputData.getTeams().get(0), outputData.getTeams().get(1),
+                        outputData.getPoints().get(0), outputData.getPoints().get(1));
                 if (this.gameID == 1) {
-                    this.changeTeamsLabel(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
-                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
-                    this.viewChange.setGame1Label(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
-                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
+                    this.viewChange.setGame1Label(outputData.getTeams().get(0), outputData.getTeams().get(1),
+                            outputData.getPoints().get(0), outputData.getPoints().get(1));
+//                    this.changeTeamsLabel(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
+//                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
+//                    this.viewChange.setGame1Label(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
+//                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
                 } else if (this.gameID == 2) {
-                    this.changeTeamsLabel(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
-                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
-                    this.viewChange.setGame2Label(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
-                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
+                    this.viewChange.setGame2Label(outputData.getTeams().get(0), outputData.getTeams().get(1),
+                            outputData.getPoints().get(0), outputData.getPoints().get(1));
+//                    this.changeTeamsLabel(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
+//                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
+//                    this.viewChange.setGame2Label(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
+//                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
                 } else if (this.gameID == 3) {
-                    this.changeTeamsLabel(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
-                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
-                    this.viewChange.setGame3Label(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
-                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
+                    this.viewChange.setGame3Label(outputData.getTeams().get(0), outputData.getTeams().get(1),
+                            outputData.getPoints().get(0), outputData.getPoints().get(1));
+//                    this.changeTeamsLabel(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
+//                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
+//                    this.viewChange.setGame3Label(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
+//                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
                 }
             }
 
