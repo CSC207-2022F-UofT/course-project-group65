@@ -531,16 +531,19 @@ private JTextField observerGame1;
             }
 
         } else if (e.getSource() == logOut) {
-            CreateAccountOB createAccountOB = new CreateAccountPresenter();
-            CreateAccountGateway createAccountGateway = new CreateAccountFileWriter("accounts.txt");
-            CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, nextScreenData.getAccounts(),
-                    nextScreenData.getBrackets(), createAccountGateway);
-            CreateAccountController createAccountController = new CreateAccountController(createAccountIB);
-
-            LogInOB logInOB = new LogInPresenter();
-            LogInIB logInIB = new LogInUC(logInOB, nextScreenData.getAccounts(),
+//            CreateAccountOB createAccountOB = new CreateAccountPresenter();
+//            CreateAccountGateway createAccountGateway = new CreateAccountFileWriter("accounts.txt");
+//            CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, nextScreenData.getAccounts(),
+//                    nextScreenData.getBrackets(), createAccountGateway);
+//            CreateAccountController createAccountController = new CreateAccountController(createAccountIB);
+            CreateAccountController createAccountController = new CreateAccountController(nextScreenData.getAccounts(),
                     nextScreenData.getBrackets());
-            LogInController logInController = new LogInController(logInIB);
+
+            //LogInOB logInOB = new LogInPresenter();
+            //LogInIB logInIB = new LogInUC(logInOB, nextScreenData.getAccounts(),
+//                    nextScreenData.getBrackets());
+            LogInController logInController = new LogInController(nextScreenData.getAccounts(),
+                    nextScreenData.getBrackets());
 
             homeScreen homeScreen = new homeScreen(createAccountController, logInController);
 

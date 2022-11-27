@@ -1,15 +1,18 @@
 package screens.createAccount;
 
 import entities.AccountRepo;
-import useCases.CreateAccount.CreateAccountIB;
-import useCases.CreateAccount.CreateAccountID;
-import useCases.CreateAccount.CreateAccountOD;
+import useCases.CreateAccount.*;
 
 public class CreateAccountController {
     private CreateAccountIB createAccountIB;
 
-    public CreateAccountController(CreateAccountIB createAccountIB) {
-        this.createAccountIB = createAccountIB;
+//    public CreateAccountController(CreateAccountIB createAccountIB) {
+//        this.createAccountIB = createAccountIB;
+//    }
+    public CreateAccountController(Object accountDatabase, Object bracketDatabase) {
+        //this.createAccountIB = createAccountIB;
+        CreateAccountOB createAccountOB = new CreateAccountPresenter();
+        this.createAccountIB = new CreateAccountUC(createAccountOB, accountDatabase, bracketDatabase);
     }
 
     public CreateAccountOD create(String username, String password) {
