@@ -56,9 +56,9 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
         //int tournamentID = (Integer) cbTournamentID.getSelectedItem();
 
-        if (tournamentIDs.getSelectedItem() == null){
-            JOptionPane.showMessageDialog(null, "Please select a tournament");
-        }
+//        if (tournamentIDs.getSelectedItem() == null){
+//            JOptionPane.showMessageDialog(null, "Please select a tournament");
+//        }
 
         try {
             int tournID = tournamentIDs.getItemAt(tournamentIDs.getSelectedIndex());
@@ -161,6 +161,9 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
 
             dispose();
             view.setVisible(true);
+        }
+        catch (NullPointerException e){
+            JOptionPane.showMessageDialog(this, "No tournament selected");
         }
         catch (NumberFormatException nex){
             JOptionPane.showMessageDialog(this, "Tournament ID is an integer.");
