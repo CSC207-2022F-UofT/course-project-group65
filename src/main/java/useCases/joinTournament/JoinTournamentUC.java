@@ -3,6 +3,7 @@ package useCases.joinTournament;
 import entities.AccountRepo;
 import entities.BracketRepo;
 import entities.User;
+import useCases.generalClasses.bundleBracketData.BundleBracketData;
 
 public class JoinTournamentUC implements JoinTournamentIB{
     final JoinTournamentOB outputBound;
@@ -50,17 +51,16 @@ public class JoinTournamentUC implements JoinTournamentIB{
             currUser.setCurrentTournament(tournamentID);
             currUser.addTournament(tournamentID);
             JoinTournamentOD output;
+            BundleBracketData bracketData = new BundleBracketData();
+            bracketData.bundleBracket(bracketRepo.getBracket(tournamentID));
             if (role.equals("PL")){
                 currUser.setBracketRole(tournamentID, "Player");
-                output = new JoinTournamentOD(currUser.getUsername(), accountRepo, bracketRepo,
-                        tournamentID, "Player");
             }
             else {
                 currUser.setBracketRole(tournamentID, "Observer");
                 bracketRepo.getBracket(tournamentID).addReferee(currUser);
-                output = new JoinTournamentOD(currUser.getUsername(), accountRepo, bracketRepo,
-                        tournamentID, "Observer");
             }
+            output = new JoinTournamentOD(currUser.getUsername(), accountRepo, bracketRepo, bracketData);
             return outputBound.prepareSuccessView(output);
         }
         catch (NumberFormatException nex){

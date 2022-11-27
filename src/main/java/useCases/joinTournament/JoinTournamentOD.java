@@ -2,60 +2,85 @@ package useCases.joinTournament;
 
 import entities.AccountRepo;
 import entities.BracketRepo;
+import useCases.generalClasses.bundleBracketData.BundleBracketData;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class JoinTournamentOD {
     String username;
     AccountRepo accounts;
     BracketRepo brackets;
+    LinkedHashMap<Integer, ArrayList<String>> gameToTeams;
+    LinkedHashMap<Integer, ArrayList<Integer>> gameToScores;
+    LinkedHashMap<Integer, String> gameToWinner;
+    LinkedHashMap<String, ArrayList<String>> teamToPlayers;
+    ArrayList<String> referees;
+    LinkedHashMap<Integer, String> gameToReferee;
+    LinkedHashMap<String, String> roleToInvite;
     int tournamentID;
-    String role;
+    String tournamentName;
 
-    public JoinTournamentOD(String username, AccountRepo accounts, BracketRepo brackets,
-                            int tournamentID, String role){
+    public JoinTournamentOD(String username, AccountRepo accounts, BracketRepo brackets, BundleBracketData bracketData){
         this.username = username;
         this.accounts = accounts;
         this.brackets = brackets;
-        this.tournamentID = tournamentID;
-        this.role = role;
+        gameToTeams = bracketData.getGameToTeams();
+        gameToScores = bracketData.getGameToScores();
+        gameToWinner = bracketData.getGameToWinner();
+        teamToPlayers = bracketData.getTeamToPlayers();
+        referees = bracketData.getReferees();
+        gameToReferee = bracketData.getGameToReferee();
+        roleToInvite = bracketData.getRoleToInvite();
+        tournamentID = bracketData.getTournamentID();
+        tournamentName = bracketData.getTournamentName();
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public AccountRepo getAccounts() {
         return accounts;
-    }
-
-    public void setAccounts(AccountRepo accounts) {
-        this.accounts = accounts;
     }
 
     public BracketRepo getBrackets() {
         return brackets;
     }
 
-    public void setBrackets(BracketRepo brackets) {
-        this.brackets = brackets;
+    public LinkedHashMap<Integer, ArrayList<String>> getGameToTeams() {
+        return gameToTeams;
+    }
+
+    public LinkedHashMap<Integer, ArrayList<Integer>> getGameToScores() {
+        return gameToScores;
+    }
+
+    public LinkedHashMap<Integer, String> getGameToWinner() {
+        return gameToWinner;
+    }
+
+    public LinkedHashMap<String, ArrayList<String>> getTeamToPlayers() {
+        return teamToPlayers;
+    }
+
+    public ArrayList<String> getReferees() {
+        return referees;
+    }
+
+    public LinkedHashMap<Integer, String> getGameToReferee() {
+        return gameToReferee;
+    }
+
+    public LinkedHashMap<String, String> getRoleToInvite() {
+        return roleToInvite;
     }
 
     public int getTournamentID() {
         return tournamentID;
     }
 
-    public void setTournamentID(int tournamentID) {
-        this.tournamentID = tournamentID;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public String getTournamentName() {
+        return tournamentName;
     }
 }

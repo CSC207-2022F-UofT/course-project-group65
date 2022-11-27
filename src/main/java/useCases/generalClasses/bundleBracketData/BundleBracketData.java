@@ -17,8 +17,10 @@ public class BundleBracketData {
     private ArrayList<String> referees;
     private LinkedHashMap<Integer, String> gameToReferee;
     private LinkedHashMap<String, String> roleToInvite;
+    int tournamentID;
+    String tournamentName;
 
-    public BundleBracketData(Bracket bracket){
+    public BundleBracketData(){
         this.gameToTeams = new LinkedHashMap<>();
         this.gameToScores = new LinkedHashMap<>();
         this.gameToWinner = new LinkedHashMap<>();
@@ -26,7 +28,9 @@ public class BundleBracketData {
         this.referees = new ArrayList<>();
         this.gameToReferee = new LinkedHashMap<>();
         this.roleToInvite = new LinkedHashMap<>();
+    }
 
+    public void bundleBracket(Bracket bracket){
         setGameToTeams(bracket);
         setGameToScores(bracket);
         setGameToWinner(bracket);
@@ -34,17 +38,9 @@ public class BundleBracketData {
         setReferees(bracket);
         setGameToReferee(bracket);
         setRoleToInvite(bracket);
+        tournamentID = bracket.getTournamentID();
+        tournamentName = bracket.getTournamentName();
     }
-
-//    public void bundleBracket(Bracket bracket){
-//        setGameToTeams(bracket);
-//        setGameToScores(bracket);
-//        setGameToWinner(bracket);
-//        setTeamToPlayers(bracket);
-//        setReferees(bracket);
-//        setGameToReferee(bracket);
-//        setRoleToInvite(bracket);
-//    }
 
     private void setGameToTeams(Bracket bracket){
         ArrayList<String> teams = new ArrayList<>();
@@ -141,5 +137,13 @@ public class BundleBracketData {
 
     public LinkedHashMap<String, String> getRoleToInvite() {
         return roleToInvite;
+    }
+
+    public int getTournamentID() {
+        return tournamentID;
+    }
+
+    public String getTournamentName() {
+        return tournamentName;
     }
 }
