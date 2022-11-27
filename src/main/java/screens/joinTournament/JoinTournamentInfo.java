@@ -1,13 +1,11 @@
 package screens.joinTournament;
 
-import entities.Bracket;
 import screens.NextScreenData;
 import screens.bracketView;
 import screens.endTourn.EndTournController;
 import screens.endTourn.EndTournPresenter;
 import screens.joinTeam.JoinTeamController;
 import screens.joinTeam.JoinTeamPresenter;
-import screens.optionsScreen2;
 import screens.startTourn.StartTournController;
 import screens.startTourn.StartTournPresenter;
 import useCases.endTourn.EndTournIB;
@@ -70,12 +68,11 @@ public class JoinTournamentInfo extends JFrame implements ActionListener {
             nextScreenData.setCurrentBracketID(outData.getTournamentID());
 
             bracketView view = new bracketView(nextScreenData, endTournController, startTournController, joinTeamController);
-            Bracket bracket = outData.getBrackets().getBracket(outData.getTournamentID());
-            view.setBracketName(bracket.getTournamentName());
+            view.setBracketName(outData.getTournamentName());
             view.setCurrentUser(outData.getUsername());
             view.setCurrentTournament(outData.getTournamentID());
-            view.setPlayerInvite(bracket.getPlayerInvite());
-            view.setObserverInvite(bracket.getObserverInvite());
+            view.setPlayerInvite(outData.getInvite("Player"));
+            view.setObserverInvite(outData.getInvite("Observer"));
 
             dispose();
             view.setVisible(true);

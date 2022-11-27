@@ -72,8 +72,8 @@ public class JoinTournamentOD {
         return gameToReferee;
     }
 
-    public LinkedHashMap<String, String> getRoleToInvite() {
-        return roleToInvite;
+    public String getInvite(String role) {
+        return roleToInvite.get(role);
     }
 
     public int getTournamentID() {
