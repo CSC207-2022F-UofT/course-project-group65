@@ -60,7 +60,7 @@ public class JoinTournamentUC implements JoinTournamentIB{
                 currUser.setBracketRole(tournamentID, "Observer");
                 bracketRepo.getBracket(tournamentID).addReferee(currUser);
             }
-            output = new JoinTournamentOD(currUser.getUsername(), bracketData);
+            output = new JoinTournamentOD(currUser.getUsername(), bracketData, bracketRepo, accountRepo); //Temp fix
             return outputBound.prepareSuccessView(output);
         }
         catch (NumberFormatException nex){
