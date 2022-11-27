@@ -114,7 +114,7 @@ public class ChangePointsUC implements ChangePointsIB{
 
     public ChangePointsOD changePoints(ChangePointsID inputData) {
 //        findGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
-        bracket.getGame(inputData.getGameIDCP());
+        this.game = bracket.getGame(inputData.getGameIDCP());
         findTeam(inputData);
         if (!this.bracket.getTournamentCondition()) {
             return this.outputBoundary.presentError("The tournament is not in progress. " +
@@ -158,13 +158,14 @@ public class ChangePointsUC implements ChangePointsIB{
 
         this.game.setTeam(this.team, changedPoints);
 
-//        ChangePointsDSID dsInputData = new ChangePointsDSID(this.bracketRepo);
-//
-//        try {
-//            this.gateway.save(dsInputData);
-//        } catch (Exception e) {
-//            return this.outputBoundary.presentError("There was an error saving the bracket.");
-//        }
+        ChangePointsDSID dsInputData = new ChangePointsDSID(this.bracketRepo);
+
+        try {
+            this.gateway.save(dsInputData);
+        } catch (Exception e) {
+            return this.outputBoundary.presentError("There was an error saving the bracket.");
+        }
+
         Team otherTeam = null;
         ArrayList<Team> teams = (ArrayList<Team>) this.game.getTeams();
         for (Team team : teams) {

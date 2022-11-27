@@ -84,7 +84,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
 
     public DeclareWinnerOD setWinner(DeclareWinnerID inputData) {
 //        findGame(inputData.getGameIDDW(), this.bracket.getFinalGame());
-        bracket.getGame(inputData.getGameIDDW());
+        this.game = bracket.getGame(inputData.getGameIDDW());
 
         if (!checkUserPermission(this.user)) {
             return this.outputBoundary.presentError("You do not have permission to declare a winner for " +
@@ -111,12 +111,12 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
             return this.outputBoundary.presentError("No team has won this game yet.");
         }
 
-//        DeclareWinnerDSID declareWinnerDSID = new DeclareWinnerDSID(this.bracketRepo);
-//        try {
-//            this.gateway.save(declareWinnerDSID);
-//        } catch (Exception e) {
-//            return this.outputBoundary.presentError("There was an error saving the bracket.");
-//        }
+        DeclareWinnerDSID declareWinnerDSID = new DeclareWinnerDSID(this.bracketRepo);
+        try {
+            this.gateway.save(declareWinnerDSID);
+        } catch (Exception e) {
+            return this.outputBoundary.presentError("There was an error saving the bracket.");
+        }
 
         Team winner = this.game.getWinner();
         DeclareWinnerOD outputData = new DeclareWinnerOD(this.game.getGameID(), winner.getTeamName());

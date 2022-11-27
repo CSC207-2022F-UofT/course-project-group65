@@ -55,8 +55,16 @@ public class TournamentSimulator {
                     = new ObjectInputStream(fileInputStream);
             mainAccountRepo = (AccountRepo) objectInputStream.readObject();
             objectInputStream.close();
+
+            FileInputStream fileInputStreamBracket
+                    = new FileInputStream("brackets.txt");
+            ObjectInputStream objectInputStreamBracket
+                    = new ObjectInputStream(fileInputStreamBracket);
+            mainBracketRepo = (BracketRepo) objectInputStreamBracket.readObject();
+            objectInputStreamBracket.close();
+
         } catch (Exception e) {
-            System.out.println("Error: " + e);
+            System.out.println("Persistence comes into effect after first run");
         }
 
         CreateAccountOB createAccountOB = new CreateAccountPresenter();

@@ -96,7 +96,7 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
      */
     public AdvanceTeamOD advanceWinner(AdvanceTeamID inputData) {
 //        findGame(inputData.getGameIDAT(), this.bracket.getFinalGame());
-        bracket.getGame(inputData.getGameIDAT());
+        this.game = bracket.getGame(inputData.getGameIDAT());
 //        if (this.game.getGameRound() > getTreeHeight(this.bracket.getFinalGame())) {
 //            return this.outputBoundary.presentError("This game is in the final round.");
 //        }
@@ -135,12 +135,12 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
         }
 
         // This is where we would save the bracket to the database, but we don't have a database. We save locally.
-//        AdvanceTeamDSID dsInputData = new AdvanceTeamDSID(this.bracketRepo);
-//        try {
-//            this.gateway.save(dsInputData);
-//        } catch (Exception e) {
-//            return this.outputBoundary.presentError("There was an error saving the information.");
-//        }
+        AdvanceTeamDSID dsInputData = new AdvanceTeamDSID(this.bracketRepo);
+        try {
+            this.gateway.save(dsInputData);
+        } catch (Exception e) {
+            return this.outputBoundary.presentError("There was an error saving the information.");
+        }
 
         ArrayList<Team> teams = advancedGame.getTeams();
         ArrayList<String> teamNames = new ArrayList<>(Arrays.asList("", ""));

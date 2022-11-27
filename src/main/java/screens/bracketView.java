@@ -271,21 +271,21 @@ private JTextField observerGame1;
         //        Advance Team
         AdvanceTeamOB advanceTeamOB = new AdvanceTeamPresenter();
 //        Next line is not implemented or used.
-        AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamFileWriter("");
+        AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamFileWriter("brackets.txt");
         AdvanceTeamIB advanceTeamIB = new AdvanceTeamUC(advanceTeamOB, advanceTeamGateway,
                 nextScreenData.getBrackets(), nextScreenData.getAccounts(),
                 nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
         AdvanceTeamController advanceTeamController = new AdvanceTeamController(advanceTeamIB);
         //       Declare Winner
         DeclareWinnerOB declareWinnerOB = new DeclareWinnerPresenter();
-        DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerFileWriter("");
+        DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerFileWriter("brackets.txt");
         DeclareWinnerIB declareWinnerIB = new DeclareWinnerUC(declareWinnerOB, declareWinnerGateway,
                 nextScreenData.getBrackets(), nextScreenData.getAccounts(),
                 nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
         DeclareWinnerController declareWinnerController = new DeclareWinnerController(declareWinnerIB);
         //      Change Points
         ChangePointsOB changePointsOB = new ChangePointsPresenter();
-        ChangePointsGateway changePointsGateway = new ChangePointsFileWriter("");
+        ChangePointsGateway changePointsGateway = new ChangePointsFileWriter("brackets.txt");
         ChangePointsIB changePointsIB = new ChangePointsUC(changePointsOB, changePointsGateway,
                  nextScreenData.getAccounts(),nextScreenData.getBrackets(),
                 nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
