@@ -299,27 +299,39 @@ private JTextField observerGame1;
 
 //        Controller Initiation
         //        Advance Team
-        AdvanceTeamOB advanceTeamOB = new AdvanceTeamPresenter();
+        // AdvanceTeamOB advanceTeamOB = new AdvanceTeamPresenter();
 //        Next line is not implemented or used.
-        AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamFileWriter("brackets.txt");
-        AdvanceTeamIB advanceTeamIB = new AdvanceTeamUC(advanceTeamOB, advanceTeamGateway,
-                nextScreenData.getBrackets(), nextScreenData.getAccounts(),
-                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-        AdvanceTeamController advanceTeamController = new AdvanceTeamController(advanceTeamIB);
+        //AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamFileWriter("brackets.txt");
+        //AdvanceTeamIB advanceTeamIB = new AdvanceTeamUC(advanceTeamOB, advanceTeamGateway,
+                //nextScreenData.getBrackets(), nextScreenData.getAccounts(),
+                //nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        //AdvanceTeamController advanceTeamController = new AdvanceTeamController(advanceTeamIB);
+        AdvanceTeamController advanceTeamController = new AdvanceTeamController(nextScreenData.getBrackets(),
+                nextScreenData.getAccounts(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+
+
         //       Declare Winner
-        DeclareWinnerOB declareWinnerOB = new DeclareWinnerPresenter();
-        DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerFileWriter("brackets.txt");
-        DeclareWinnerIB declareWinnerIB = new DeclareWinnerUC(declareWinnerOB, declareWinnerGateway,
-                nextScreenData.getBrackets(), nextScreenData.getAccounts(),
-                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-        DeclareWinnerController declareWinnerController = new DeclareWinnerController(declareWinnerIB);
+//        DeclareWinnerOB declareWinnerOB = new DeclareWinnerPresenter();
+//        DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerFileWriter("brackets.txt");
+//        DeclareWinnerIB declareWinnerIB = new DeclareWinnerUC(declareWinnerOB, declareWinnerGateway,
+//                nextScreenData.getBrackets(), nextScreenData.getAccounts(),
+//                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+//        DeclareWinnerController declareWinnerController = new DeclareWinnerController(declareWinnerIB);
+
+        DeclareWinnerController declareWinnerController = new DeclareWinnerController(nextScreenData.getBrackets(),
+                nextScreenData.getAccounts(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+
+
         //      Change Points
-        ChangePointsOB changePointsOB = new ChangePointsPresenter();
-        ChangePointsGateway changePointsGateway = new ChangePointsFileWriter("brackets.txt");
-        ChangePointsIB changePointsIB = new ChangePointsUC(changePointsOB, changePointsGateway,
-                 nextScreenData.getAccounts(),nextScreenData.getBrackets(),
-                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-        ChangePointsController changePointsController = new ChangePointsController(changePointsIB);
+//        ChangePointsOB changePointsOB = new ChangePointsPresenter();
+//        ChangePointsGateway changePointsGateway = new ChangePointsFileWriter("brackets.txt");
+//        ChangePointsIB changePointsIB = new ChangePointsUC(changePointsOB, changePointsGateway,
+//                 nextScreenData.getAccounts(),nextScreenData.getBrackets(),
+//                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+//        ChangePointsController changePointsController = new ChangePointsController(changePointsIB);
+
+        ChangePointsController changePointsController = new ChangePointsController(nextScreenData.getAccounts(),
+                nextScreenData.getBrackets(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
 
         if (e.getSource() == game1Button) {
 //            System.out.println("Game 1 Button Clicked");

@@ -18,6 +18,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
     public BracketMethods bracketMethods;
     public DeclareWinnerGateway gateway;
     private BracketRepo bracketRepo;
+    private AccountRepo accountRepo;
 
     /**
      * Construct a DeclareWinnerUC interactor instance with the given BracketRepo and AccountRepo.
@@ -29,16 +30,34 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
      * @param bracketID      The ID of the bracket the user is advancing the team in
      */
 
+//    public DeclareWinnerUC(DeclareWinnerOB outputBoundary, DeclareWinnerGateway gateway,
+//                              BracketRepo bracketRepo, AccountRepo accountRepo, int bracketID, String username) {
+//        this.outputBoundary = outputBoundary;
+//        this.gateway = gateway;
+//        this.bracketRepo = bracketRepo;
+//        this.bracket = bracketRepo.getBracket(bracketID);
+//        this.user = accountRepo.getUser(username);
+//        String bracketType = "Default"; // This can be changed later to accommodate different types of brackets
+////        this.treeMethodAccess = new BracketMethods(bracketType);
+//        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+//    }
+
     public DeclareWinnerUC(DeclareWinnerOB outputBoundary, DeclareWinnerGateway gateway,
-                              BracketRepo bracketRepo, AccountRepo accountRepo, int bracketID, String username) {
+                           Object bracketRepo, Object accountRepo, int bracketID, String username) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
-        this.bracketRepo = bracketRepo;
-        this.bracket = bracketRepo.getBracket(bracketID);
-        this.user = accountRepo.getUser(username);
+        try {
+            this.bracketRepo = (BracketRepo) bracketRepo;
+            this.accountRepo = (AccountRepo) accountRepo;
+        } catch (ClassCastException e) {
+            System.out.println("Error: " + e);
+        }
+//        this.bracketRepo = (BracketRepo) bracketRepo;
+//        this.accountRepo = (AccountRepo) accountRepo;
+        this.bracket = this.bracketRepo.getBracket(bracketID);
+        this.user = this.accountRepo.getUser(username);
         String bracketType = "Default"; // This can be changed later to accommodate different types of brackets
-//        this.treeMethodAccess = new BracketMethods(bracketType);
-        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+        this.gateway = gateway;
     }
 
 //    private void findGame(int gameID, Game head) {

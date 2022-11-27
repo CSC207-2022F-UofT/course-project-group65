@@ -20,7 +20,8 @@ public class ChangePointsUC implements ChangePointsIB{
 //    public BracketMethods treeMethodAccess;
     public BracketMethods bracketMethods;
     public ChangePointsOB outputBoundary;
-    private final BracketRepo bracketRepo;
+    private BracketRepo bracketRepo;
+    private AccountRepo accountRepo;
     public ChangePointsGateway gateway;
 
     /**
@@ -34,16 +35,34 @@ public class ChangePointsUC implements ChangePointsIB{
      * @param bracketID      The ID of the bracket the user is advancing the team in
      */
 
+//    public ChangePointsUC(ChangePointsOB outputBoundary, ChangePointsGateway gateway,
+//                          AccountRepo accountRepo, BracketRepo bracketRepo, int bracketID, String username) {
+//        this.outputBoundary = outputBoundary;
+//        this.gateway = gateway;
+//        this.bracketRepo = bracketRepo;
+//        this.bracket = this.bracketRepo.getBracket(bracketID);
+//        this.user = accountRepo.getUser(username);
+////        String bracketType = "Default"; // This can be changed later to accommodate different types of brackets
+////        this.treeMethodAccess = new BracketMethods(bracketType);
+//        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+//    }
+
     public ChangePointsUC(ChangePointsOB outputBoundary, ChangePointsGateway gateway,
-                          AccountRepo accountRepo, BracketRepo bracketRepo, int bracketID, String username) {
+                          Object accountRepo, Object bracketRepo, int bracketID, String username) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
-        this.bracketRepo = bracketRepo;
-        this.bracket = this.bracketRepo.getBracket(bracketID);
-        this.user = accountRepo.getUser(username);
-//        String bracketType = "Default"; // This can be changed later to accommodate different types of brackets
-//        this.treeMethodAccess = new BracketMethods(bracketType);
-        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+        try{
+            this.bracketRepo = (BracketRepo) bracketRepo;
+            this.bracket = this.bracketRepo.getBracket(bracketID);
+            this.accountRepo = (AccountRepo) accountRepo;
+            this.user = this.accountRepo.getUser(username);
+            this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+        } catch (Exception e){
+            System.out.println("Error in ChangePointsUC constructor");
+        }
+//        this.bracketRepo = (BracketRepo) bracketRepo;
+//        this.bracket = this.bracketRepo.getBracket(bracketID);
+//        this.user = (User) accountRepo;
     }
 
 //    private void findGame(int gameID, Game head) {

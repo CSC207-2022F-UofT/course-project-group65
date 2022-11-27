@@ -20,6 +20,7 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
     public AdvanceTeamOB outputBoundary;
     public AdvanceTeamGateway gateway;
     private final BracketRepo bracketRepo;
+    private final AccountRepo accountRepo;
 
     /**
      * Construct an AdvanceTeamUC interactor instance with the given BracketRepo and AccountRepo.
@@ -31,21 +32,46 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
      * @param bracketID      The ID of the bracket the user is advancing the team in
      */
 
+//    public AdvanceTeamUC(AdvanceTeamOB outputBoundary, AdvanceTeamGateway gateway,
+//                         BracketRepo bracketRepo, AccountRepo accountRepo, int bracketID, String username) {
+//        this.outputBoundary = outputBoundary;
+//        this.gateway = gateway;
+//        this.bracketRepo = bracketRepo;
+//        this.bracket = bracketRepo.getBracket(bracketID);
+//        this.user = accountRepo.getUser(username);
+//        String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
+////        this.treeMethodAccess = new BracketMethods(bracketType);
+//        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+//    }
+
     public AdvanceTeamUC(AdvanceTeamOB outputBoundary, AdvanceTeamGateway gateway,
-                         BracketRepo bracketRepo, AccountRepo accountRepo, int bracketID, String username) {
+                         Object bracketRepo, Object accountRepo, int bracketID, String username) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
-        this.bracketRepo = bracketRepo;
-        this.bracket = bracketRepo.getBracket(bracketID);
-        this.user = accountRepo.getUser(username);
+        try{
+            this.bracketRepo = (BracketRepo) bracketRepo;
+        } catch (ClassCastException e) {
+            throw new ClassCastException("bracketRepo must be of type BracketRepo");
+        }
+
+        try{
+            this.accountRepo = (AccountRepo) accountRepo;
+            this.user = this.accountRepo.getUser(username);
+        } catch (ClassCastException e) {
+            throw new ClassCastException("accountRepo must be of type AccountRepo");
+        }
+        this.bracket = this.bracketRepo.getBracket(bracketID);
+        //this.bracketRepo = bracketRepo;
+        //this.bracket = bracketRepo.getBracket(bracketID);
+        this.user = this.accountRepo.getUser(username);
         String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
 //        this.treeMethodAccess = new BracketMethods(bracketType);
         this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
-    }
 
 //    private void findGame(int gameID, Game head) {
 //        this.game = this.treeMethodAccess.findGame(gameID, head);
 //    }
+    }
 
     private boolean checkUserPermission(User user) {
         PermissionChecker permissionChecker = new PermissionChecker();

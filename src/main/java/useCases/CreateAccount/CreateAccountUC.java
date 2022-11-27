@@ -23,7 +23,8 @@ public class CreateAccountUC implements CreateAccountIB {
 ////        this.userFactory = userFactory;
 //    }
 
-    public CreateAccountUC(CreateAccountOB userCreateAccountOB, Object accountDatabase, Object bracketDatabase) {
+    public CreateAccountUC(CreateAccountOB userCreateAccountOB, Object accountDatabase, Object bracketDatabase,
+                           CreateAccountGateway gateway) {
         this.userCreateAccountOB = userCreateAccountOB;
 
 
@@ -37,7 +38,7 @@ public class CreateAccountUC implements CreateAccountIB {
         } else {
             this.bracketData = (BracketRepo) bracketDatabase;
         }
-        this.gateway = new CreateAccountFileWriter("accounts.txt");
+        this.gateway = gateway;
     }
 
 //    public CreateAccountUC(CreateAccountOB userCreateAccountOB, UserFactory userFactory, AccountRepo data, BracketRepo bracketData) {

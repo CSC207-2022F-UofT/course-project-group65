@@ -1,21 +1,26 @@
 package screens.changePoints;
 
-import useCases.changePoints.ChangePointsIB;
-import useCases.changePoints.ChangePointsID;
-import useCases.changePoints.ChangePointsOD;
+import database.ChangePoints.ChangePointsFileWriter;
+import useCases.changePoints.*;
 
 public class ChangePointsController {
 
     ChangePointsIB userInput; // This is actually a use case instance. But it is of type ChangePointsIB for CA purposes.
 
-    /**
-     * Construct a controller for the change points use case with the given input.
-     *
-     * @param userInput The ChangePointsIB to use
-     */
+//    /**
+//     * Construct a controller for the change points use case with the given input.
+//     *
+//     * @param userInput The ChangePointsIB to use
+//     */
 
-    public ChangePointsController(ChangePointsIB userInput) {
-        this.userInput = userInput;
+//    public ChangePointsController(ChangePointsIB userInput) {
+//        this.userInput = userInput;
+//    }
+
+    public ChangePointsController(Object accountRepo, Object bracketRepo, int bracketID, String username) {
+        ChangePointsOB outputBoundary = new ChangePointsPresenter();
+        ChangePointsGateway gateway = new ChangePointsFileWriter("brackets.txt");
+        this.userInput = new ChangePointsUC(outputBoundary, gateway, accountRepo, bracketRepo, bracketID, username);
     }
 
     // Prepare the output data for the view

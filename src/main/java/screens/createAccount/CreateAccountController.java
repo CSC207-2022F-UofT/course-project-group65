@@ -1,5 +1,6 @@
 package screens.createAccount;
 
+import database.CreateAccount.CreateAccountFileWriter;
 import entities.AccountRepo;
 import useCases.CreateAccount.*;
 
@@ -12,7 +13,9 @@ public class CreateAccountController {
     public CreateAccountController(Object accountDatabase, Object bracketDatabase) {
         //this.createAccountIB = createAccountIB;
         CreateAccountOB createAccountOB = new CreateAccountPresenter();
-        this.createAccountIB = new CreateAccountUC(createAccountOB, accountDatabase, bracketDatabase);
+        CreateAccountGateway gateway = new CreateAccountFileWriter("accounts.txt");
+        this.createAccountIB = new CreateAccountUC(createAccountOB, accountDatabase, bracketDatabase, gateway);
+
     }
 
     public CreateAccountOD create(String username, String password) {

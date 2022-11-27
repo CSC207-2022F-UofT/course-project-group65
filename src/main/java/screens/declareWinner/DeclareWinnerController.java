@@ -1,21 +1,27 @@
 package screens.declareWinner;
 
-import useCases.declareWinner.DeclareWinnerIB;
-import useCases.declareWinner.DeclareWinnerID;
-import useCases.declareWinner.DeclareWinnerOD;
+import database.DeclareWinner.DeclareWinnerFileWriter;
+import useCases.declareWinner.*;
 
 public class DeclareWinnerController {
 
     DeclareWinnerIB userInput; // This is actually a use case instance. But it is of type DeclareWinnerIB for CA purposes.
 
-    /**
-     * Construct a DeclareWinnerController instance with the given DeclareWinnerIB.
-     *
-     * @param userInput The DeclareWinnerIB to use
-     */
+//    /**
+//     * Construct a DeclareWinnerController instance with the given DeclareWinnerIB.
+//     *
+//     * @param userInput The DeclareWinnerIB to use
+//     */
 
-    public DeclareWinnerController(DeclareWinnerIB userInput) {
-        this.userInput = userInput;
+//    public DeclareWinnerController(DeclareWinnerIB userInput) {
+//        this.userInput = userInput;
+//    }
+
+    public DeclareWinnerController(Object bracketRepo, Object accountRepo, int bracketID, String username) {
+        // this.userInput = userInput;
+        DeclareWinnerOB outputBoundary = new DeclareWinnerPresenter();
+        DeclareWinnerGateway gateway = new DeclareWinnerFileWriter("brackets.txt");
+        this.userInput = new DeclareWinnerUC(outputBoundary, gateway, bracketRepo, accountRepo, bracketID, username);
     }
 
     // Prepare the output data for the view
