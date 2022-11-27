@@ -18,7 +18,15 @@ public class BundleBracketData {
     private LinkedHashMap<Integer, String> gameToReferee;
     private LinkedHashMap<String, String> roleToInvite;
 
-    public void bundleBracket(Bracket bracket){
+    public BundleBracketData(Bracket bracket){
+        this.gameToTeams = new LinkedHashMap<>();
+        this.gameToScores = new LinkedHashMap<>();
+        this.gameToWinner = new LinkedHashMap<>();
+        this.teamToPlayers = new LinkedHashMap<>();
+        this.referees = new ArrayList<>();
+        this.gameToReferee = new LinkedHashMap<>();
+        this.roleToInvite = new LinkedHashMap<>();
+
         setGameToTeams(bracket);
         setGameToScores(bracket);
         setGameToWinner(bracket);
@@ -28,13 +36,23 @@ public class BundleBracketData {
         setRoleToInvite(bracket);
     }
 
+//    public void bundleBracket(Bracket bracket){
+//        setGameToTeams(bracket);
+//        setGameToScores(bracket);
+//        setGameToWinner(bracket);
+//        setTeamToPlayers(bracket);
+//        setReferees(bracket);
+//        setGameToReferee(bracket);
+//        setRoleToInvite(bracket);
+//    }
+
     private void setGameToTeams(Bracket bracket){
         ArrayList<String> teams = new ArrayList<>();
         for(Game game: getGames(bracket)){
             for(Team team: game.getTeams()) {
                 teams.add(team.getTeamName());
             }
-            gameToTeams.put(game.getGameID(), teams);
+            gameToTeams.put(game.getGameID(), new ArrayList<>(teams));
             teams.clear();
         }
     }
@@ -45,14 +63,18 @@ public class BundleBracketData {
             for(Team team: game.getTeams()) {
                 score.add(game.getTeamPoints(team));
             }
-            gameToScores.put(game.getGameID(), score);
+            gameToScores.put(game.getGameID(), new ArrayList<>(score));
             score.clear();
         }
     }
 
     private void setGameToWinner(Bracket bracket){
         for(Game game: getGames(bracket)){
-            gameToWinner.put(game.getGameID(), game.getWinner().getTeamName());
+            if (game.getWinner() != null) {
+                gameToWinner.put(game.getGameID(), game.getWinner().getTeamName());
+            } else {
+                gameToWinner.put(game.getGameID(), null);
+            }
         }
     }
 
@@ -75,7 +97,11 @@ public class BundleBracketData {
 
     private void setGameToReferee(Bracket bracket){
         for(Game game: getGames(bracket)){
-            gameToReferee.put(game.getGameID(), game.getObserver().getUsername());
+            if (game.getObserver() != null) {
+                gameToReferee.put(game.getGameID(), game.getObserver().getUsername());
+            } else {
+                gameToReferee.put(game.getGameID(), null);
+            }
         }
     }
 
