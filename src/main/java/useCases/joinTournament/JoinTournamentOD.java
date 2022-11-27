@@ -1,7 +1,5 @@
 package useCases.joinTournament;
 
-import entities.AccountRepo;
-import entities.BracketRepo;
 import useCases.generalClasses.bundleBracketData.BundleBracketData;
 
 import java.util.ArrayList;
@@ -9,8 +7,6 @@ import java.util.LinkedHashMap;
 
 public class JoinTournamentOD {
     String username;
-    AccountRepo accounts;
-    BracketRepo brackets;
     LinkedHashMap<Integer, ArrayList<String>> gameToTeams;
     LinkedHashMap<Integer, ArrayList<Integer>> gameToScores;
     LinkedHashMap<Integer, String> gameToWinner;
@@ -21,10 +17,8 @@ public class JoinTournamentOD {
     int tournamentID;
     String tournamentName;
 
-    public JoinTournamentOD(String username, AccountRepo accounts, BracketRepo brackets, BundleBracketData bracketData){
+    public JoinTournamentOD(String username, BundleBracketData bracketData){
         this.username = username;
-        this.accounts = accounts;
-        this.brackets = brackets;
         gameToTeams = bracketData.getGameToTeams();
         gameToScores = bracketData.getGameToScores();
         gameToWinner = bracketData.getGameToWinner();
@@ -38,14 +32,6 @@ public class JoinTournamentOD {
 
     public String getUsername() {
         return username;
-    }
-
-    public AccountRepo getAccounts() {
-        return accounts;
-    }
-
-    public BracketRepo getBrackets() {
-        return brackets;
     }
 
     public LinkedHashMap<Integer, ArrayList<String>> getGameToTeams() {
