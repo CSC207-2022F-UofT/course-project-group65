@@ -10,7 +10,7 @@ public class TeamCreationController {
     public TeamCreationController(Object bracketRepo, Object accountRepo, int bracketID, String username) {
         teamCreationOB outputBoundary = new TeamCreationPresenter();
         teamCreationGateway gateway = new TeamCreationFileWriter("brackets.txt");
-        this.userInput = new teamCreationUC(outputBoundary, username, bracketID, accountRepo,
+        this.userInput = new teamCreationUC(outputBoundary, gateway, username, bracketID, accountRepo,
                 bracketRepo);
 
     }
