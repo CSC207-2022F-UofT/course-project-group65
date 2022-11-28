@@ -367,7 +367,6 @@ private JTextField observerGame1;
 //            Calls corresponding UC through controller
             String team1Name = this.team1Name.getText();
             try {
-                joinTeamController.joinTeam(team1Name);
                 JoinTeamOD outputData = joinTeamController.joinTeam(team1Name);
                 ArrayList<String> names = outputData.getMembersNames();
                 setTeam1PlayerList(names.toArray(new String[0]));
@@ -382,7 +381,6 @@ private JTextField observerGame1;
 //            Calls corresponding UC through controller
             String team2Name = this.team2Name.getText();
             try {
-                joinTeamController.joinTeam(team2Name);
                 JoinTeamOD outputData = joinTeamController.joinTeam(team2Name);
                 ArrayList<String> names = outputData.getMembersNames();
                 setTeam2PlayerList(names.toArray(new String[0]));
@@ -397,7 +395,6 @@ private JTextField observerGame1;
 //            Calls corresponding UC through controller
             String team3Name = this.team3Name.getText();
             try {
-                joinTeamController.joinTeam(team3Name);
                 JoinTeamOD outputData = joinTeamController.joinTeam(team3Name);
                 ArrayList<String> names = outputData.getMembersNames();
                 setTeam3PlayerList(names.toArray(new String[0]));
@@ -412,7 +409,6 @@ private JTextField observerGame1;
 //            Calls corresponding UC through controller
             String team4Name = this.team4Name.getText();
             try {
-                joinTeamController.joinTeam(team4Name);
                 JoinTeamOD outputData = joinTeamController.joinTeam(team4Name);
                 ArrayList<String> names = outputData.getMembersNames();
                 setTeam4PlayerList(names.toArray(new String[0]));
@@ -428,7 +424,6 @@ private JTextField observerGame1;
                 AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
                         nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
                 AssignObserverController controller = new AssignObserverController(assignObserverIB);
-
                 controller.assignObserver((String) observerListGame1.getSelectedItem(), 1);
                 //setObserverListGame1(new ArrayList<>(Collections.singletonList(output.getAssignee())));
             }
