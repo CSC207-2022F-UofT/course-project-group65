@@ -15,8 +15,10 @@ import java.io.ObjectInputStream;
 
 public class TournamentSimulator {
     public static void main(String[] args) {
-        Object accountDatabase = null;
-        Object bracketDatabase = null;
+//        Object accountDatabase = null;
+//        Object bracketDatabase = null;
+        Object accountDatabase = new AccountRepo();
+        Object bracketDatabase = new BracketRepo();
 
         try{
             FileInputStream fileInputStream
