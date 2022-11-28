@@ -1,19 +1,26 @@
 package useCases.advanceTeam;
 import entities.*;
+import useCases.generalClasses.bundleBracketData.BundleBracketData;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
-import useCases.generalClasses.traversalStrategies.TreeMethods;
+import useCases.generalClasses.traversalStrategies.BracketMethods;
+import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class AdvanceTeamUC implements AdvanceTeamIB {
 
     public Bracket bracket;
     public User user;
     public Game game;
-    public TreeMethods treeMethodAccess;
+//    public BracketMethods treeMethodAccess;
+    public BracketMethods bracketMethods;
     public AdvanceTeamOB outputBoundary;
     public AdvanceTeamGateway gateway;
     private final BracketRepo bracketRepo;
+    private final AccountRepo accountRepo;
 
     /**
      * Construct an AdvanceTeamUC interactor instance with the given BracketRepo and AccountRepo.
@@ -25,19 +32,45 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
      * @param bracketID      The ID of the bracket the user is advancing the team in
      */
 
+//    public AdvanceTeamUC(AdvanceTeamOB outputBoundary, AdvanceTeamGateway gateway,
+//                         BracketRepo bracketRepo, AccountRepo accountRepo, int bracketID, String username) {
+//        this.outputBoundary = outputBoundary;
+//        this.gateway = gateway;
+//        this.bracketRepo = bracketRepo;
+//        this.bracket = bracketRepo.getBracket(bracketID);
+//        this.user = accountRepo.getUser(username);
+//        String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
+////        this.treeMethodAccess = new BracketMethods(bracketType);
+//        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+//    }
+
     public AdvanceTeamUC(AdvanceTeamOB outputBoundary, AdvanceTeamGateway gateway,
-                         BracketRepo bracketRepo, AccountRepo accountRepo, int bracketID, String username) {
+                         Object bracketRepo, Object accountRepo, int bracketID, String username) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
-        this.bracketRepo = bracketRepo;
-        this.bracket = bracketRepo.getBracket(bracketID);
-        this.user = accountRepo.getUser(username);
-        String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
-        this.treeMethodAccess = new TreeMethods(bracketType);
-    }
+        try{
+            this.bracketRepo = (BracketRepo) bracketRepo;
+        } catch (ClassCastException e) {
+            throw new ClassCastException("bracketRepo must be of type BracketRepo");
+        }
 
-    private void findGame(int gameID, Game head) {
-        this.game = this.treeMethodAccess.findGame(gameID, head);
+        try{
+            this.accountRepo = (AccountRepo) accountRepo;
+            this.user = this.accountRepo.getUser(username);
+        } catch (ClassCastException e) {
+            throw new ClassCastException("accountRepo must be of type AccountRepo");
+        }
+        this.bracket = this.bracketRepo.getBracket(bracketID);
+        //this.bracketRepo = bracketRepo;
+        //this.bracket = bracketRepo.getBracket(bracketID);
+        this.user = this.accountRepo.getUser(username);
+        String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
+//        this.treeMethodAccess = new BracketMethods(bracketType);
+        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+
+//    private void findGame(int gameID, Game head) {
+//        this.game = this.treeMethodAccess.findGame(gameID, head);
+//    }
     }
 
     private boolean checkUserPermission(User user) {
@@ -48,6 +81,9 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
 
     private boolean checkObserverAssigned(User user) {
         User assignedObserver = this.game.getObserver();
+        if (assignedObserver == null) {
+            return false;
+        }
         return user.getUsername().equals(assignedObserver.getUsername());
     }
 
@@ -59,12 +95,13 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
         return game.getGameStatus();
     }
 
-    private int getTreeHeight(Game head){
-        return this.treeMethodAccess.findHeight(head);
-    }
+//    private int getTreeHeight(Game head){
+//        return this.treeMethodAccess.findHeight(head);
+//    }
 
     private ArrayList<Game> returnLevelGames(Game head, int roundNum){
-        return this.treeMethodAccess.levelNodes(head, roundNum);
+//        return this.treeMethodAccess.levelNodes(head, roundNum);
+        return this.bracketMethods.getGamesInRound(roundNum);
     }
 
     // This method is used to insert the winning team into the next game in the bracket
@@ -87,11 +124,13 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
      * @param inputData The input data to use
      */
     public AdvanceTeamOD advanceWinner(AdvanceTeamID inputData) {
-        findGame(inputData.getGameIDAT(), this.bracket.getFinalGame());
+//        findGame(inputData.getGameIDAT(), this.bracket.getFinalGame());
+        this.game = bracket.getGame(inputData.getGameIDAT());
 //        if (this.game.getGameRound() > getTreeHeight(this.bracket.getFinalGame())) {
 //            return this.outputBoundary.presentError("This game is in the final round.");
 //        }
-        if (this.game.getGameRound() >= this.bracket.getFinalGame().getGameRound()) {
+//        if (this.game.getGameRound() >= this.bracket.getFinalGame().getGameRound()) {
+        if (this.game.getGameRound() >= this.bracket.getNumRounds()) {
             return this.outputBoundary.presentError("This game is in the final round.");
         }
 
@@ -125,22 +164,28 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
         }
 
         // This is where we would save the bracket to the database, but we don't have a database. We save locally.
-//        AdvanceTeamDSID dsInputData = new AdvanceTeamDSID(this.bracketRepo);
-//        try {
-//            this.gateway.save(dsInputData);
-//        } catch (Exception e) {
-//            return this.outputBoundary.presentError("There was an error saving the information.");
-//        }
-
-        ArrayList<Team> teams = advancedGame.getTeams();
-        ArrayList<String> teamNames = new ArrayList<>(Arrays.asList("", ""));
-        for (Team team : teams) {
-            if (team != null) {
-                teamNames.set(teams.indexOf(team), team.getTeamName());
-            }
+        AdvanceTeamDSID dsInputData = new AdvanceTeamDSID(this.bracketRepo);
+        try {
+            this.gateway.save(dsInputData);
+        } catch (Exception e) {
+            return this.outputBoundary.presentError("There was an error saving the information.");
         }
 
-        AdvanceTeamOD outputData = new AdvanceTeamOD(advancedGame.getGameID(), teamNames);
+        ArrayList<Team> teams = advancedGame.getTeams();
+
+        BundleBracketData bundleBracketData = new BundleBracketData();
+        bundleBracketData.bundleBracket(this.bracket);
+        LinkedHashMap<Integer, ArrayList<String>> gameTeamMap =  bundleBracketData.getGameToTeams();
+        LinkedHashMap<Integer, ArrayList<Integer>> gameScoresMap = bundleBracketData.getGameToScores();
+
+//        ArrayList<String> teamNames = new ArrayList<>(Arrays.asList("", ""));
+//        for (Team team : teams) {
+//            if (team != null) {
+//                teamNames.set(teams.indexOf(team), team.getTeamName());
+//            }
+//        }
+
+        AdvanceTeamOD outputData = new AdvanceTeamOD(advancedGame.getGameID(), gameTeamMap, gameScoresMap);
         return this.outputBoundary.presentSuccess(outputData);
     }
 }

@@ -1,10 +1,14 @@
 package useCases.changePoints;
 
 import entities.*;
+import useCases.generalClasses.bundleBracketData.BundleBracketData;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
-import useCases.generalClasses.traversalStrategies.TreeMethods;
+import useCases.generalClasses.traversalStrategies.BracketMethods;
+import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 
 
 public class ChangePointsUC implements ChangePointsIB{
@@ -13,9 +17,11 @@ public class ChangePointsUC implements ChangePointsIB{
     public Team team;
     public User user;
     public Game game;
-    public TreeMethods treeMethodAccess;
+//    public BracketMethods treeMethodAccess;
+    public BracketMethods bracketMethods;
     public ChangePointsOB outputBoundary;
-    private final BracketRepo bracketRepo;
+    private BracketRepo bracketRepo;
+    private AccountRepo accountRepo;
     public ChangePointsGateway gateway;
 
     /**
@@ -29,20 +35,39 @@ public class ChangePointsUC implements ChangePointsIB{
      * @param bracketID      The ID of the bracket the user is advancing the team in
      */
 
+//    public ChangePointsUC(ChangePointsOB outputBoundary, ChangePointsGateway gateway,
+//                          AccountRepo accountRepo, BracketRepo bracketRepo, int bracketID, String username) {
+//        this.outputBoundary = outputBoundary;
+//        this.gateway = gateway;
+//        this.bracketRepo = bracketRepo;
+//        this.bracket = this.bracketRepo.getBracket(bracketID);
+//        this.user = accountRepo.getUser(username);
+////        String bracketType = "Default"; // This can be changed later to accommodate different types of brackets
+////        this.treeMethodAccess = new BracketMethods(bracketType);
+//        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+//    }
+
     public ChangePointsUC(ChangePointsOB outputBoundary, ChangePointsGateway gateway,
-                          AccountRepo accountRepo, BracketRepo bracketRepo, int bracketID, String username) {
+                          Object accountRepo, Object bracketRepo, int bracketID, String username) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
-        this.bracketRepo = bracketRepo;
-        this.bracket = this.bracketRepo.getBracket(bracketID);
-        this.user = accountRepo.getUser(username);
-        String bracketType = "Default"; // This can be changed later to accommodate different types of brackets
-        this.treeMethodAccess = new TreeMethods(bracketType);
+        try{
+            this.bracketRepo = (BracketRepo) bracketRepo;
+            this.bracket = this.bracketRepo.getBracket(bracketID);
+            this.accountRepo = (AccountRepo) accountRepo;
+            this.user = this.accountRepo.getUser(username);
+            this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+        } catch (Exception e){
+            System.out.println("Error in ChangePointsUC constructor");
+        }
+//        this.bracketRepo = (BracketRepo) bracketRepo;
+//        this.bracket = this.bracketRepo.getBracket(bracketID);
+//        this.user = (User) accountRepo;
     }
 
-    private void findGame(int gameID, Game head) {
-        this.game = this.treeMethodAccess.findGame(gameID, head);
-    }
+//    private void findGame(int gameID, Game head) {
+//        this.game = this.treeMethodAccess.findGame(gameID, head);
+//    }
 
     private void findTeam(ChangePointsID inputData) {
         ArrayList<Team> teams = this.game.getTeams();
@@ -62,6 +87,9 @@ public class ChangePointsUC implements ChangePointsIB{
 
     private boolean checkObserverAssigned(User user) {
         User assignedObserver = this.game.getObserver();
+        if (assignedObserver == null) {
+            return false;
+        }
         return user.getUsername().equals(assignedObserver.getUsername());
     }
 
@@ -73,16 +101,17 @@ public class ChangePointsUC implements ChangePointsIB{
         return game != null;
     }
 
-    public ArrayList<Game> returnLevelGames(Game head, int roundNum){
-        return this.treeMethodAccess.levelNodes(head, roundNum);
-    }
+//    public ArrayList<Game> returnLevelGames(Game head, int roundNum){
+//        return this.treeMethodAccess.levelNodes(head, roundNum);
+//    }
 
 
     // This method is used to check if the game is full and if the game is full, it will check if all the games
     // in the round are full
     private boolean checkAllGamesFull(Game game){
         int teamRound = game.getGameRound();
-        ArrayList<Game> games = returnLevelGames(this.bracket.getFinalGame(), teamRound);
+//        ArrayList<Game> games = returnLevelGames(this.bracket.getFinalGame(), teamRound);
+        ArrayList<Game> games = bracketMethods.getGamesInRound(teamRound);
         for (Game g: games){
             if (g.getNumTeams() < 2){
                 return false;
@@ -105,7 +134,8 @@ public class ChangePointsUC implements ChangePointsIB{
      */
 
     public ChangePointsOD changePoints(ChangePointsID inputData) {
-        findGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
+//        findGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
+        this.game = bracket.getGame(inputData.getGameIDCP());
         findTeam(inputData);
         if (!this.bracket.getTournamentCondition()) {
             return this.outputBoundary.presentError("The tournament is not in progress. " +
@@ -149,24 +179,20 @@ public class ChangePointsUC implements ChangePointsIB{
 
         this.game.setTeam(this.team, changedPoints);
 
-//        ChangePointsDSID dsInputData = new ChangePointsDSID(this.bracketRepo);
-//
-//        try {
-//            this.gateway.save(dsInputData);
-//        } catch (Exception e) {
-//            return this.outputBoundary.presentError("There was an error saving the bracket.");
-//        }
-        Team otherTeam = null;
-        ArrayList<Team> teams = (ArrayList<Team>) this.game.getTeams();
-        for (Team team : teams) {
-            if (!team.getTeamName().equals(this.team.getTeamName())) {
-                otherTeam = team;
-            }
+        ChangePointsDSID dsInputData = new ChangePointsDSID(this.bracketRepo);
+
+        try {
+            this.gateway.save(dsInputData);
+        } catch (Exception e) {
+            return this.outputBoundary.presentError("There was an error saving the bracket.");
         }
 
-        assert otherTeam != null;
-        ChangePointsOD outputData = new ChangePointsOD(this.game.getGameID(), this.team.getTeamName(), otherTeam.getTeamName(),
-                changedPoints, this.game.getTeamPoints(otherTeam));
+        BundleBracketData bundleBracketData = new BundleBracketData();
+        bundleBracketData.bundleBracket(this.bracket);
+        ArrayList<String> teams = bundleBracketData.getGameToTeams().get(this.game.getGameID());
+        ArrayList<Integer> points = bundleBracketData.getGameToScores().get(this.game.getGameID());
+
+        ChangePointsOD outputData = new ChangePointsOD(teams, points);
 
 //        ChangePointsOD outputData = new ChangePointsOD(this.game, this.team, this.game.getTeamPoints(this.team),
 //                this.bracket);

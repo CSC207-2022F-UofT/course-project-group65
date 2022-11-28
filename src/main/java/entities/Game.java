@@ -20,7 +20,7 @@ public interface Game{
 
     void setTeam(Team team, int points);
 
-    ArrayList getTeams();
+    ArrayList<Team> getTeams();
 
     int getTeamPoints(Team team);
 

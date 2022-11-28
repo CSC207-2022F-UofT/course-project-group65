@@ -3,6 +3,7 @@ package useCases.createBracket;
 import entities.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class CreateBracketUC implements CreateBracketIB{
@@ -20,6 +21,13 @@ public class CreateBracketUC implements CreateBracketIB{
         this.currentUser = currentUser;
         this.accounts = accounts;
         this.brackets = brackets;
+
+        ArrayList<Integer> ids = new ArrayList<>(this.brackets.getBrackets().keySet());
+        if (ids.size() == 0) {
+            this.bracketID = 0;
+        } else {
+            this.bracketID = Collections.max(ids);
+        }
     }
 
     public int generateBracketID() {
@@ -35,6 +43,9 @@ public class CreateBracketUC implements CreateBracketIB{
         BracketAssembler assembler = new BracketAssembler();
         assembler.assembleBracket(bracketType, creator, bracketName, tournamentID,
                 numTeams, maxTeamSize, winCondition);
+        creator.setCurrentTournament(bracketID);
+        creator.setBracketRole(bracketID, "Overseer");
+        creator.addTournament(bracketID);
         return assembler.getBracket();
     }
 

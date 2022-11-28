@@ -13,10 +13,29 @@ public class LogInUC implements LogInIB{
     final AccountRepo data;
     final BracketRepo bracketData;
 
-    public LogInUC(LogInOB userLogInOB, AccountRepo data, BracketRepo bracketData) {
+//    public LogInUC(LogInOB userLogInOB, AccountRepo data, BracketRepo bracketData) {
+//        this.userLogInOB = userLogInOB;
+//        this.data = data;
+//        this.bracketData = bracketData;
+//    }
+
+    public LogInUC(LogInOB userLogInOB, Object accountDatabase, Object bracketDatabase) {
         this.userLogInOB = userLogInOB;
-        this.data = data;
-        this.bracketData = bracketData;
+
+        if (accountDatabase == null || !accountDatabase.getClass().getName().equals("entities.AccountRepo")) {
+            this.data = new AccountRepo();
+        } else {
+            this.data = (AccountRepo) accountDatabase;
+        }
+
+        if (bracketDatabase == null || !bracketDatabase.getClass().getName().equals("entities.BracketRepo")) {
+            this.bracketData = new BracketRepo();
+        } else {
+            this.bracketData = (BracketRepo) bracketDatabase;
+        }
+
+//        this.data = data;
+//        this.bracketData = bracketData;
     }
 
     public boolean usernameExists(LogInID requestModel, AccountRepo data) {

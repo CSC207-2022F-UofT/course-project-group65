@@ -22,7 +22,7 @@ public class teamCreationUC implements teamCreationIB {
         this.accounts = accounts;
         this.brackets = brackets;
     }
-
+    // used to check whether the current user is a player
     public boolean checkPlayer(){
         Bracket curBracket = brackets.getBracket(bracketID);
         User creator = accounts.getUser(creatorName);
@@ -36,10 +36,10 @@ public class teamCreationUC implements teamCreationIB {
         List<Team> teams = curBracket.getTeams();
         for(Team team: teams){
             if(team.getTeamName().equals(teamName)){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     //find a blank team in the bracket, returns null if the bracket is full
@@ -47,7 +47,7 @@ public class teamCreationUC implements teamCreationIB {
         Bracket curBracket = brackets.getBracket(bracketID);
         List<Team> teams = curBracket.getTeams();
         for(Team team: teams){
-            if(team.getTeamName().substring(0, 9).equals("BlankTeam")){
+            if(team.getTeamName().contains("BlankTeam")){
                 return team;
             }
         }
@@ -65,6 +65,24 @@ public class teamCreationUC implements teamCreationIB {
 
     }
 
+    public boolean inATeam(Bracket bracket){
+        User creator = accounts.getUser(creatorName);
+        ArrayList<Team> teams = bracket.getTeams();
+        for(Team team: teams){
+            if(team.getTeamMembers().contains(creator)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * Creates the new team based on user input, outputs an error message if the team
+     * cannot be created.
+     * @param userInput the input data
+     * @return the output data
+     */
     @Override
     public teamCreationOD createNewTeam(teamCreationID userInput) {
         if (checkTeamNameExists(userInput)) {
@@ -73,6 +91,8 @@ public class teamCreationUC implements teamCreationIB {
             return outputBoundary.prepareFailView("The bracket is full, please join an existing team.");
         } else if (!checkPlayer()){
             return outputBoundary.prepareFailView("Only players can create a new team.");
+        } else if (inATeam(brackets.getBracket(bracketID))){
+            return outputBoundary.prepareFailView("You are already in a team.");
         }
 
         String success = createTeam(userInput);

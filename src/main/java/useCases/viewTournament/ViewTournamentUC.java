@@ -3,6 +3,7 @@ package useCases.viewTournament;
 import entities.AccountRepo;
 import entities.BracketRepo;
 import entities.User;
+import useCases.generalClasses.bundleBracketData.BundleBracketData;
 
 public class ViewTournamentUC implements ViewTournamentIB {
     final ViewTournamentOB outputBound;
@@ -40,8 +41,10 @@ public class ViewTournamentUC implements ViewTournamentIB {
         }
 
         String role = currUser.getBracketRole(tournamentID);
-        ViewTournamentOD output = new ViewTournamentOD(currUser.getUsername(), accountRepo,
-                bracketRepo, tournamentID, role);
+        BundleBracketData bracketData = new BundleBracketData();
+        bracketData.bundleBracket(bracketRepo.getBracket(tournamentID));
+        ViewTournamentOD output = new ViewTournamentOD(currUser.getUsername(), bracketData, currUser.getAllTournaments(),
+                bracketRepo, accountRepo); //Temp Fix
 
         return outputBound.prepareSuccessView(output);
     }

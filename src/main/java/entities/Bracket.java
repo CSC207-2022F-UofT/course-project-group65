@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface Bracket {
@@ -20,7 +21,7 @@ public interface Bracket {
 
     void addTeam(Team team);
 
-    List<Team> getTeams();
+    ArrayList<Team> getTeams();
 
     void setTeamSize(int teamSize);
 
@@ -28,7 +29,7 @@ public interface Bracket {
 
     void addReferee(User referee);
 
-    List<User> getReferees();
+    ArrayList<User> getReferees();
 
     void setWinCondition(int winCondition);
 
@@ -45,4 +46,8 @@ public interface Bracket {
     void setObserverInvite();
 
     String getObserverInvite();
+
+    Game getGame(int gameID);
+
+    int getNumRounds();
 }
