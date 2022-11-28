@@ -14,13 +14,13 @@ public class teamCreationUC implements teamCreationIB {
     private final AccountRepo accounts;
     private final BracketRepo brackets;
 
-    public teamCreationUC(teamCreationOB outputBoundary, String creatorName, int bracketID, AccountRepo accounts,
-                          BracketRepo brackets){
+    public teamCreationUC(teamCreationOB outputBoundary, String creatorName, int bracketID, Object accounts,
+                          Object brackets){
         this.outputBoundary = outputBoundary;
         this.creatorName = creatorName;
         this.bracketID = bracketID;
-        this.accounts = accounts;
-        this.brackets = brackets;
+        this.accounts = (AccountRepo) accounts;
+        this.brackets = (BracketRepo) brackets;
     }
     // used to check whether the current user is a player
     public boolean checkPlayer(){

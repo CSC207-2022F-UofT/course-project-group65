@@ -492,11 +492,8 @@ private JTextField observerGame1;
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
         } else if (e.getSource() == createTeamBtn){
-            teamCreationOB presenter = new TeamCreationPresenter();
-            teamCreationIB interactor = new teamCreationUC(presenter,nextScreenData.getCurrentUser(),
-                    nextScreenData.getCurrentBracketID(),nextScreenData.getAccounts(),
-                    nextScreenData.getBrackets());
-            TeamCreationController controller = new TeamCreationController(interactor);
+            TeamCreationController controller = new TeamCreationController(nextScreenData.getBrackets(),
+                    nextScreenData.getAccounts(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
             UserInput inputScreen = new UserInput(controller, this);
             inputScreen.setVisible(true);
 
