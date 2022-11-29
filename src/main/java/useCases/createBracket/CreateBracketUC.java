@@ -15,12 +15,20 @@ public class CreateBracketUC implements CreateBracketIB{
     private String currentUser;
     private AccountRepo accounts;
     private BracketRepo brackets;
+    private CreateBracketGateway gateway;
 
-    public CreateBracketUC(CreateBracketOB advanceTeamOB, String currentUser, AccountRepo accounts, BracketRepo brackets) {
+    public CreateBracketUC(CreateBracketOB advanceTeamOB, CreateBracketGateway gateway, String currentUser, Object accounts, Object brackets) {
         this.outputBoundary = advanceTeamOB;
+        this.gateway = gateway;
         this.currentUser = currentUser;
-        this.accounts = accounts;
-        this.brackets = brackets;
+        try{
+            this.accounts = (AccountRepo) accounts;
+            this.brackets = (BracketRepo) brackets;
+        } catch (Exception e){
+            System.out.println("Casting error");
+        }
+//        this.accounts = accounts;
+//        this.brackets = brackets;
 
         ArrayList<Integer> ids = new ArrayList<>(this.brackets.getBrackets().keySet());
         if (ids.size() == 0) {
@@ -78,6 +86,12 @@ public class CreateBracketUC implements CreateBracketIB{
             this.bracketID--;
             return this.outputBoundary.presentError("Please enter a name for your bracket.");
         } else {
+            CreateBracketDSID dsid = new CreateBracketDSID(this.brackets, this.accounts);
+            try {
+                this.gateway.save(dsid);
+            } catch (Exception e) {
+                return this.outputBoundary.presentError("Error saving to database");
+            }
             return this.outputBoundary.presentSuccess(outputData);
         }
     }

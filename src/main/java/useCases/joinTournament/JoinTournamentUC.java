@@ -10,6 +10,7 @@ public class JoinTournamentUC implements JoinTournamentIB{
     private final BracketRepo bracketRepo;
     private final AccountRepo accountRepo;
     private User currUser;
+    public JoinTournamentGateway gateway;
 
     /**
      * Construct a JoinTournamentUC interactor instance with the given BracketRepo and AccountRepo.
@@ -19,12 +20,17 @@ public class JoinTournamentUC implements JoinTournamentIB{
      * @param accountRepo The AccountRepo to use
      * @param currUser    The username of the user who is joining the tournament
      */
-    public JoinTournamentUC(JoinTournamentOB outputBound, BracketRepo bracketRepo,
-                            AccountRepo accountRepo, String currUser){
+    public JoinTournamentUC(JoinTournamentOB outputBound, JoinTournamentGateway gateway, Object bracketRepo,
+                            Object accountRepo, String currUser){
         this.outputBound = outputBound;
-        this.bracketRepo = bracketRepo;
-        this.accountRepo = accountRepo;
-        this.currUser = accountRepo.getUser(currUser);
+        try{
+            this.bracketRepo = (BracketRepo) bracketRepo;
+            this.accountRepo = (AccountRepo) accountRepo;
+            this.currUser = this.accountRepo.getUser(currUser);
+        } catch (ClassCastException e){
+            throw new ClassCastException("The given bracketRepo or accountRepo is not of type BracketRepo or AccountRepo");
+        }
+        this.gateway = gateway;
     }
 
     /**
@@ -52,7 +58,6 @@ public class JoinTournamentUC implements JoinTournamentIB{
             currUser.addTournament(tournamentID);
             JoinTournamentOD output;
             BundleBracketData bracketData = new BundleBracketData();
-            bracketData.bundleBracket(bracketRepo.getBracket(tournamentID));
             if (role.equals("PL")){
                 currUser.setBracketRole(tournamentID, "Player");
             }
@@ -60,6 +65,14 @@ public class JoinTournamentUC implements JoinTournamentIB{
                 currUser.setBracketRole(tournamentID, "Observer");
                 bracketRepo.getBracket(tournamentID).addReferee(currUser);
             }
+
+            JoinTournamentDSID dsInput = new JoinTournamentDSID(bracketRepo, accountRepo);
+            try{
+                this.gateway.save(dsInput);
+            } catch (Exception e){
+                return outputBound.prepareFailView("Error saving to database.");
+            }
+            bracketData.bundleBracket(bracketRepo.getBracket(tournamentID));
             output = new JoinTournamentOD(currUser.getUsername(), bracketData, bracketRepo, accountRepo); //Temp fix
             return outputBound.prepareSuccessView(output);
         }
