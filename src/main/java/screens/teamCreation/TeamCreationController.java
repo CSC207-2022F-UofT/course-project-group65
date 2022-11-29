@@ -1,15 +1,18 @@
 package screens.teamCreation;
 
-import useCases.teamCreation.teamCreationIB;
-import useCases.teamCreation.teamCreationID;
-import useCases.teamCreation.teamCreationOD;
+import database.TeamCreation.TeamCreationFileWriter;
+import useCases.teamCreation.*;
 
 
 public class TeamCreationController {
     final teamCreationIB userInput;
 
-    public TeamCreationController(teamCreationIB userInput) {
-        this.userInput = userInput;
+    public TeamCreationController(Object bracketRepo, Object accountRepo, int bracketID, String username) {
+        teamCreationOB outputBoundary = new TeamCreationPresenter();
+        teamCreationGateway gateway = new TeamCreationFileWriter("brackets.txt");
+        this.userInput = new teamCreationUC(outputBoundary, gateway, username, bracketID, accountRepo,
+                bracketRepo);
+
     }
 
     public teamCreationOD createNewTeam(String teamName) {

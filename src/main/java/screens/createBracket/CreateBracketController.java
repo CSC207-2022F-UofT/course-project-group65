@@ -1,10 +1,9 @@
 package screens.createBracket;
 
+import database.CreateBracket.CreateBracketFileWriter;
 import entities.AccountRepo;
 import entities.BracketRepo;
-import useCases.createBracket.CreateBracketIB;
-import useCases.createBracket.CreateBracketID;
-import useCases.createBracket.CreateBracketOD;
+import useCases.createBracket.*;
 
 public class CreateBracketController {
     /*
@@ -12,8 +11,15 @@ public class CreateBracketController {
      */
     private CreateBracketIB createBracketIB;
 
-    public CreateBracketController(CreateBracketIB userInput) {
-        this.createBracketIB = userInput;
+//    public CreateBracketController(CreateBracketIB userInput) {
+//        this.createBracketIB = userInput;
+//    }
+
+    public CreateBracketController(String currentUser, Object accounts, Object brackets) {
+        CreateBracketOB outputBoundary = new CreateBracketPresenter();
+        CreateBracketGateway gateway = new CreateBracketFileWriter("accounts.txt", "brackets.txt");
+        this.createBracketIB = new CreateBracketUC(outputBoundary, gateway, currentUser, accounts, brackets);
+//        this.createBracketIB = createBracketIB;
     }
 
     public CreateBracketOD create(String bracketType, String bracketName, int numTeams, int maxTeamSize, int winCondition) {

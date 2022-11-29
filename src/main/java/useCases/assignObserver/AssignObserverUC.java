@@ -4,6 +4,7 @@ import entities.*;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class AssignObserverUC implements AssignObserverIB {
     private final AssignObserverOB outputBound;
@@ -11,12 +12,18 @@ public class AssignObserverUC implements AssignObserverIB {
     private final AccountRepo accountRepo;
     private Bracket bracket;
     private User currUser;
+    public AssignObserverGateway gateway;
 
-    public AssignObserverUC(AssignObserverOB outputBound, BracketRepo bracketRepo, AccountRepo accountRepo, String currUser){
+    public AssignObserverUC(AssignObserverOB outputBound, AssignObserverGateway gateway, Object bracketRepo, Object accountRepo, String currUser){
         this.outputBound = outputBound;
-        this.bracketRepo = bracketRepo;
-        this.accountRepo = accountRepo;
-        this.currUser = accountRepo.getUser(currUser);
+        this.gateway = gateway;
+        try{
+            this.bracketRepo = (BracketRepo) bracketRepo;
+            this.accountRepo = (AccountRepo) accountRepo;
+            this.currUser = this.accountRepo.getUser(currUser);
+        } catch (ClassCastException e){
+            throw new ClassCastException("AssignObserverUC: Invalid repo type");
+        }
     }
 
     /**
@@ -43,6 +50,14 @@ public class AssignObserverUC implements AssignObserverIB {
             return outputBound.prepareFailView("Game already has an Observer.");
         }
         game.setObserver(ref);
+
+        AssignObserverDSID dsInput = new AssignObserverDSID(bracketRepo);
+        try{
+            gateway.save(dsInput);
+        } catch (Exception e){
+            return outputBound.prepareFailView("Error saving to database.");
+        }
+
         AssignObserverOD output = new AssignObserverOD(ref.getUsername(), game.getGameID(), game.getGameRound());
         return outputBound.prepareSuccessView(output);
     }
@@ -58,7 +73,7 @@ public class AssignObserverUC implements AssignObserverIB {
 
     private boolean checkUserPermission(User user) {
         PermissionChecker permissionChecker = new PermissionChecker();
-        ArrayList<String> permittedUsers = new ArrayList<>(Arrays.asList("Overseer"));
+        ArrayList<String> permittedUsers = new ArrayList<>(List.of("Overseer"));
         return permissionChecker.checkUserPermission(permittedUsers, user, this.bracket.getTournamentID());
     }
 }

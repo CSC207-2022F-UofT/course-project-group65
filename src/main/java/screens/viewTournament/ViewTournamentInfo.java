@@ -1,5 +1,6 @@
 package screens.viewTournament;
 
+import database.JoinTeam.JoinTeamFileWriter;
 import screens.NextScreenData;
 import screens.bracketView;
 import screens.endTourn.EndTournController;
@@ -12,6 +13,7 @@ import useCases.endTourn.EndTournIB;
 import useCases.endTourn.EndTournOB;
 import useCases.endTourn.EndTournUC;
 import useCases.generalClasses.bundleBracketData.BundleBracketData;
+import useCases.joinTeam.JoinTeamGateway;
 import useCases.joinTeam.JoinTeamIB;
 import useCases.joinTeam.JoinTeamOB;
 import useCases.joinTeam.JoinTeamUC;
@@ -74,10 +76,8 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
                     outData.getBrackets(), outData.getTournamentID());
             StartTournController startTournController = new StartTournController(startTournIB);
 
-            JoinTeamOB joinTeamOB = new JoinTeamPresenter();
-            JoinTeamIB joinTeamIB = new JoinTeamUC(joinTeamOB, outData.getUsername(), outData.getTournamentID(),
-                    outData.getAccounts(), outData.getBrackets());
-            JoinTeamController joinTeamController = new JoinTeamController(joinTeamIB);
+            JoinTeamController joinTeamController = new JoinTeamController(outData.getBrackets(),
+                    outData.getAccounts(), outData.getTournamentID(), outData.getUsername());
 
             NextScreenData nextScreenData = new NextScreenData();
             nextScreenData.setBrackets(outData.getBrackets());

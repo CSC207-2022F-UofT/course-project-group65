@@ -2,6 +2,7 @@ package useCases.joinTeam;
 import java.util.ArrayList;
 import java.util.List;
 import entities.*;
+import useCases.teamCreation.teamCreationDSID;
 
 /**
  * This is a use case for joining a team.
@@ -13,11 +14,14 @@ public class JoinTeamUC implements JoinTeamIB {
     private final AccountRepo accounts;
     private final BracketRepo brackets;
 
+    private final JoinTeamGateway gateway;
+
     private Team curTeam;
 
-    public JoinTeamUC(JoinTeamOB outputBoundary, String userName, int bracketID, AccountRepo accounts,
+    public JoinTeamUC(JoinTeamOB outputBoundary, JoinTeamGateway gateway, String userName, int bracketID, AccountRepo accounts,
                       BracketRepo brackets){
         this.outputBoundary = outputBoundary;
+        this.gateway = gateway;
         this.userName = userName;
         this.bracketID = bracketID;
         this.accounts = accounts;
@@ -103,6 +107,12 @@ public class JoinTeamUC implements JoinTeamIB {
             return outputBoundary.FailView("Fail to join the team (You are already in a team)");
         }
         String success = join(input);
+        JoinTeamDSID joinTeamDSID = new JoinTeamDSID(this.brackets);
+        try {
+            this.gateway.save(joinTeamDSID);
+        } catch (Exception e) {
+            return this.outputBoundary.FailView("There was an error saving the bracket.");
+        }
         Team team = findTeam(input);
         ArrayList<User> teamMembers = team.getTeamMembers();
         ArrayList<String> membersNames = new ArrayList<>();

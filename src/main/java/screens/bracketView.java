@@ -420,10 +420,12 @@ private JTextField observerGame1;
             }
         } else if (e.getSource() == assignGame1) {
             try {
-                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
-                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+//                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
+//                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+//                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+//                AssignObserverController controller = new AssignObserverController(assignObserverIB);
+                AssignObserverController controller = new AssignObserverController(nextScreenData.getBrackets(),
                         nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
-                AssignObserverController controller = new AssignObserverController(assignObserverIB);
                 controller.assignObserver((String) observerListGame1.getSelectedItem(), 1);
                 //setObserverListGame1(new ArrayList<>(Collections.singletonList(output.getAssignee())));
             }
@@ -432,11 +434,12 @@ private JTextField observerGame1;
             }
         } else if (e.getSource() == assignGame2) {
             try {
-                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
-                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+//                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
+//                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+//                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+//                AssignObserverController controller = new AssignObserverController(assignObserverIB);
+                AssignObserverController controller = new AssignObserverController(nextScreenData.getBrackets(),
                         nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
-                AssignObserverController controller = new AssignObserverController(assignObserverIB);
-
                 controller.assignObserver((String) observerListGame2.getSelectedItem(), 2);
 //                setObserverListGame2(new ArrayList<>(Collections.singletonList(output.getAssignee())));
             }
@@ -445,11 +448,12 @@ private JTextField observerGame1;
             }
         } else if (e.getSource() == assignGame3) {
             try {
-                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
-                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+//                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
+//                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+//                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+//                AssignObserverController controller = new AssignObserverController(assignObserverIB);
+                AssignObserverController controller = new AssignObserverController(nextScreenData.getBrackets(),
                         nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
-                AssignObserverController controller = new AssignObserverController(assignObserverIB);
-
                 controller.assignObserver((String) observerListGame3.getSelectedItem(), 3);
 //                setObserverListGame2(new ArrayList<>(Collections.singletonList(output.getAssignee())));
             }
@@ -492,11 +496,8 @@ private JTextField observerGame1;
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
         } else if (e.getSource() == createTeamBtn){
-            teamCreationOB presenter = new TeamCreationPresenter();
-            teamCreationIB interactor = new teamCreationUC(presenter,nextScreenData.getCurrentUser(),
-                    nextScreenData.getCurrentBracketID(),nextScreenData.getAccounts(),
-                    nextScreenData.getBrackets());
-            TeamCreationController controller = new TeamCreationController(interactor);
+            TeamCreationController controller = new TeamCreationController(nextScreenData.getBrackets(),
+                    nextScreenData.getAccounts(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
             UserInput inputScreen = new UserInput(controller, this);
             inputScreen.setVisible(true);
 

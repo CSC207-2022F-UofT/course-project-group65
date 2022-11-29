@@ -8,19 +8,23 @@ import entities.*;
 
 public class teamCreationUC implements teamCreationIB {
     private final teamCreationOB outputBoundary;
+
+    private final teamCreationGateway gateway;
     private final String creatorName;
 
     private final int bracketID;
     private final AccountRepo accounts;
     private final BracketRepo brackets;
 
-    public teamCreationUC(teamCreationOB outputBoundary, String creatorName, int bracketID, AccountRepo accounts,
-                          BracketRepo brackets){
+    public teamCreationUC(teamCreationOB outputBoundary, teamCreationGateway gateway,
+                          String creatorName, int bracketID, Object accounts,
+                          Object brackets){
         this.outputBoundary = outputBoundary;
         this.creatorName = creatorName;
         this.bracketID = bracketID;
-        this.accounts = accounts;
-        this.brackets = brackets;
+        this.accounts = (AccountRepo) accounts;
+        this.brackets = (BracketRepo) brackets;
+        this.gateway = gateway;
     }
     // used to check whether the current user is a player
     public boolean checkPlayer(){
@@ -108,6 +112,12 @@ public class teamCreationUC implements teamCreationIB {
             teamMembers.add(members);
         }
 
+        teamCreationDSID teamCreationDSID = new teamCreationDSID(this.brackets);
+        try {
+            this.gateway.save(teamCreationDSID);
+        } catch (Exception e) {
+            return this.outputBoundary.prepareFailView("There was an error saving the bracket.");
+        }
 
         teamCreationOD outputData = new teamCreationOD(teamMembers, teams, success, creatorName,
                 bracketID, accounts, brackets);

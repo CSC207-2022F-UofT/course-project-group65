@@ -1,8 +1,10 @@
 package screens.joinTeam;
 
-import useCases.joinTeam.JoinTeamIB;
-import useCases.joinTeam.JoinTeamID;
-import useCases.joinTeam.JoinTeamOD;
+import database.JoinTeam.JoinTeamFileWriter;
+
+import entities.AccountRepo;
+import entities.BracketRepo;
+import useCases.joinTeam.*;
 
 /**
  * A class for the Controller of the join team use case.
@@ -10,8 +12,10 @@ import useCases.joinTeam.JoinTeamOD;
 public class JoinTeamController {
     final JoinTeamIB input;
 
-    public JoinTeamController(JoinTeamIB input){
-        this.input = input;
+    public JoinTeamController(BracketRepo bracketRepo, AccountRepo accountRepo, int bracketID, String username ){
+        JoinTeamOB outputBoundary = new JoinTeamPresenter();
+        JoinTeamGateway gateway = new JoinTeamFileWriter("brackets.txt");
+        this.input = new JoinTeamUC(outputBoundary, gateway, username, bracketID, accountRepo,bracketRepo);
     }
 
     public JoinTeamOD joinTeam(String teamName){

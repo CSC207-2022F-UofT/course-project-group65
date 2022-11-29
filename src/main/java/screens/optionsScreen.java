@@ -92,10 +92,12 @@ public class optionsScreen extends JFrame implements ActionListener {
         if (e.getSource() == btCreateBracket) {
             // Create a new bracket
 
-            CreateBracketOB createBracketOB = new CreateBracketPresenter();
-            CreateBracketIB interactor = new CreateBracketUC(createBracketOB, nextScreenData.getCurrentUser(),
+//            CreateBracketOB createBracketOB = new CreateBracketPresenter();
+//            CreateBracketIB interactor = new CreateBracketUC(createBracketOB, nextScreenData.getCurrentUser(),
+//                    nextScreenData.getAccounts(), nextScreenData.getBrackets());
+//            CreateBracketController createBracketCon = new CreateBracketController(interactor);
+            CreateBracketController createBracketCon = new CreateBracketController(nextScreenData.getCurrentUser(),
                     nextScreenData.getAccounts(), nextScreenData.getBrackets());
-            CreateBracketController createBracketCon = new CreateBracketController(interactor);
 
 
 
@@ -108,10 +110,13 @@ public class optionsScreen extends JFrame implements ActionListener {
         } else if (e.getSource() == btJoinExisting) {
             // Join an Existing Bracket
             System.out.println("Join Existing Bracket");
-            ViewTournamentOB viewTournamentOB = new ViewTournamentPresenter();
-            ViewTournamentIB viewTournamentIB = new ViewTournamentUC(viewTournamentOB, nextScreenData.getBrackets(),
+//            ViewTournamentOB viewTournamentOB = new ViewTournamentPresenter();
+//            ViewTournamentIB viewTournamentIB = new ViewTournamentUC(viewTournamentOB, nextScreenData.getBrackets(),
+//                    nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+//            ViewTournamentController viewTournamentController = new ViewTournamentController(viewTournamentIB);
+
+            ViewTournamentController viewTournamentController = new ViewTournamentController(nextScreenData.getBrackets(),
                     nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
-            ViewTournamentController viewTournamentController = new ViewTournamentController(viewTournamentIB);
             ViewTournamentInfo viewTournamentInfo = new ViewTournamentInfo(viewTournamentController);
             // This is a violation of clean architecture, the fact that we are accessing a user here.
             ArrayList<Integer> tournaments = (ArrayList<Integer>)
@@ -124,10 +129,13 @@ public class optionsScreen extends JFrame implements ActionListener {
         } else if (e.getSource() == btJoinNew) {
             // Join a new bracket
             System.out.println("Join New Bracket");
-            JoinTournamentOB joinTournamentOB = new JoinTournamentPresenter();
-            JoinTournamentIB joinTournamentIB = new JoinTournamentUC(joinTournamentOB, nextScreenData.getBrackets(),
-                    nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
-            JoinTournamentController joinTournamentController = new JoinTournamentController(joinTournamentIB);
+//            JoinTournamentOB joinTournamentOB = new JoinTournamentPresenter();
+//            JoinTournamentIB joinTournamentIB = new JoinTournamentUC(joinTournamentOB, nextScreenData.getBrackets(),
+//                    nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+//            JoinTournamentController joinTournamentController = new JoinTournamentController(joinTournamentIB);
+            JoinTournamentController joinTournamentController = new JoinTournamentController(
+                    nextScreenData.getBrackets(), nextScreenData.getAccounts(),
+                    nextScreenData.getCurrentUser());
             JoinTournamentInfo joinTournamentInfo = new JoinTournamentInfo(joinTournamentController);
             this.dispose();
             joinTournamentInfo.setVisible(true);
