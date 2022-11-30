@@ -3,7 +3,7 @@ package screens.joinTournament;
 import database.JoinTeam.JoinTeamFileWriter;
 import screens.ExtendedView;
 import screens.NextScreenData;
-import screens.bracketView;
+//import screens.bracketView;
 import screens.endTourn.EndTournController;
 import screens.endTourn.EndTournPresenter;
 import screens.joinTeam.JoinTeamController;

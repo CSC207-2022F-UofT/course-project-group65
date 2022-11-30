@@ -3,7 +3,7 @@ package screens.teamCreation;
 
 import screens.ExtendedView;
 import screens.NextScreenData;
-import screens.bracketView;
+//import screens.bracketView;
 import screens.endTourn.EndTournController;
 import screens.endTourn.EndTournPresenter;
 import screens.startTourn.StartTournController;
@@ -30,23 +30,23 @@ public class UserInput extends JFrame implements ActionListener{
     private JButton btnCreate;
     private JPanel inputPanel;
     private TeamCreationController teamCreationController;
-    public bracketView view;
+//    public bracketView view;
     private NextScreenData nextScreenData;
     public ExtendedView extendedView;
 
-    public UserInput(TeamCreationController controller, bracketView viewChange, NextScreenData nextScreenData) {
-
-        this.teamCreationController = controller;
-        this.view = viewChange;
-        this.nextScreenData = nextScreenData;
-
-        this.setContentPane(inputPanel);
-        this.setTitle("Create A Team");
-        this.setSize(450,300);
-//        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setVisible(true);
-        btnCreate.addActionListener(this);
-    }
+//    public UserInput(TeamCreationController controller, bracketView viewChange, NextScreenData nextScreenData) {
+//
+//        this.teamCreationController = controller;
+//        this.view = viewChange;
+//        this.nextScreenData = nextScreenData;
+//
+//        this.setContentPane(inputPanel);
+//        this.setTitle("Create A Team");
+//        this.setSize(450,300);
+////        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        this.setVisible(true);
+//        btnCreate.addActionListener(this);
+//    }
 
     public UserInput(TeamCreationController controller, ExtendedView viewChange, NextScreenData nextScreenData) {
 

@@ -1,9 +1,10 @@
 package screens.bracketOperations;
 
 import screens.ExtendedView;
+import screens.NextScreenData;
 import screens.advanceTeam.AdvanceTeamController;
 import screens.advanceTeam.AdvanceTeamFailed;
-import screens.bracketView;
+//import screens.bracketView;
 import screens.changePoints.ChangePointsController;
 import screens.changePoints.ChangePointsFailed;
 import screens.declareWinner.DeclareWinnerController;
@@ -43,46 +44,48 @@ public class DoBracketOperation extends JFrame implements ActionListener {
     public int gameID;
     private ExtendedView extendedView;
 
-    private bracketView viewChange;
+//    private bracketView viewChange;
+    private NextScreenData nextScreenData;
+
+//    public DoBracketOperation(AdvanceTeamController advanceTeamController,
+//                              DeclareWinnerController declareWinnerController,
+//                              ChangePointsController changePointsController, bracketView viewChange) {
+//        super("Bracket Operations");
+//        this.advanceTeamController = advanceTeamController;
+//        this.declareWinnerController = declareWinnerController;
+//        this.changePointsController = changePointsController;
+//        this.viewChange = viewChange;
+//
+//        gameNumLabel.setText("Game Number: 0");
+//        teamsLabel.setText("Teams: ");
+//        advanceTeamLabel.setText("Advance Winning Team");
+//        chngPtsLabel.setText("Change Points for Team");
+//        declareButton.setText("Declare Winner");
+//        declareWInnerLabel.setText("Declare the Winner");
+//
+//        advanceButton.addActionListener(this);
+//        changePointsButton.addActionListener(this);
+//        declareButton.addActionListener(this);
+//        changePtsTF.addActionListener(this);
+//
+//
+////        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        this.setContentPane(bracketOpWindow);
+//        this.setPreferredSize(new Dimension(650, 300));
+//        this.pack();
+//        this.setVisible(true);
+//
+//    }
 
     public DoBracketOperation(AdvanceTeamController advanceTeamController,
                               DeclareWinnerController declareWinnerController,
-                              ChangePointsController changePointsController, bracketView viewChange) {
-        super("Bracket Operations");
-        this.advanceTeamController = advanceTeamController;
-        this.declareWinnerController = declareWinnerController;
-        this.changePointsController = changePointsController;
-        this.viewChange = viewChange;
-
-        gameNumLabel.setText("Game Number: 0");
-        teamsLabel.setText("Teams: ");
-        advanceTeamLabel.setText("Advance Winning Team");
-        chngPtsLabel.setText("Change Points for Team");
-        declareButton.setText("Declare Winner");
-        declareWInnerLabel.setText("Declare the Winner");
-
-        advanceButton.addActionListener(this);
-        changePointsButton.addActionListener(this);
-        declareButton.addActionListener(this);
-        changePtsTF.addActionListener(this);
-
-
-//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setContentPane(bracketOpWindow);
-        this.setPreferredSize(new Dimension(650, 300));
-        this.pack();
-        this.setVisible(true);
-
-    }
-
-    public DoBracketOperation(AdvanceTeamController advanceTeamController,
-                              DeclareWinnerController declareWinnerController,
-                              ChangePointsController changePointsController, ExtendedView viewChange) {
+                              ChangePointsController changePointsController, ExtendedView viewChange, NextScreenData nextScreenData) {
         super("Bracket Operations");
         this.advanceTeamController = advanceTeamController;
         this.declareWinnerController = declareWinnerController;
         this.changePointsController = changePointsController;
         this.extendedView = viewChange;
+        this.nextScreenData = nextScreenData;
 
         gameNumLabel.setText("Game Number: 0");
         teamsLabel.setText("Teams: ");
@@ -211,28 +214,15 @@ public class DoBracketOperation extends JFrame implements ActionListener {
         try {
             if (e.getSource() == advanceButton) {
                 AdvanceTeamOD outputAdvance = advanceTeamController.create(gameID);
-//                int newlyAdvancedGame = outputAdvance.getAdvancedGame();
-//                ArrayList<String> teams = outputAdvance.getGameToTeams().get(newlyAdvancedGame);
-//                ArrayList<Integer> scores = outputAdvance.getGameToScores().get(newlyAdvancedGame);
-//                if (teams.size() != 2) {
-//                    this.viewChange.setGame1Label(teams.get(0), "", scores.get(0), 0);
-//                } else {
-//                    this.viewChange.setGame1Label(teams.get(0), teams.get(1), scores.get(0), scores.get(1));
-//                }
-//                if (outputAdvance.getAdvancedGame() == 1) {
-//                    this.viewChange.setGame1Label(outputAdvance.getTeams().get(0),
-//                            outputAdvance.getTeams().get(1), 0, 0);
-                //}
+                nextScreenData.bundleData();
+                this.extendedView.setGames(nextScreenData.getGameToTeams(), nextScreenData.getGameToScores(),
+                        nextScreenData.getGameToWinner(), nextScreenData.getTeamToPlayers());
             } else if (e.getSource() == declareButton) {
                 DeclareWinnerOD outputWinner = declareWinnerController.create(gameID);
                 System.out.println(outputWinner.getWinningTeamName());
-//                if (this.gameID == 1) {
-//                    this.viewChange.setGame1Winner(outputWinner.getWinningTeamName());
-//                } else if (this.gameID == 2) {
-//                    this.viewChange.setGame2Winner(outputWinner.getWinningTeamName());
-//                } else if (this.gameID == 3) {
-//                    this.viewChange.setGame3Winner(outputWinner.getWinningTeamName());
-//                }
+                nextScreenData.bundleData();
+                this.extendedView.setGames(nextScreenData.getGameToTeams(), nextScreenData.getGameToScores(),
+                        nextScreenData.getGameToWinner(), nextScreenData.getTeamToPlayers());
             } else if (e.getSource() == changePointsButton){
 
                 int points = Integer.parseInt(changePtsTF.getText().trim());
@@ -241,32 +231,13 @@ public class DoBracketOperation extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(null, "Please select a team.");
                 }
                 ChangePointsOD outputData = changePointsController.create(gameID, points, teamName);
-//                this.changeTeamsLabel(outputData.getTeams().get(0), outputData.getTeams().get(1),
-//                        outputData.getPoints().get(0), outputData.getPoints().get(1));
-//                if (this.gameID == 1) {
-//                    this.viewChange.setGame1Label(outputData.getTeams().get(0), outputData.getTeams().get(1),
-//                            outputData.getPoints().get(0), outputData.getPoints().get(1));
-////                    this.changeTeamsLabel(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
-////                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
-////                    this.viewChange.setGame1Label(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
-////                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
-//                } else if (this.gameID == 2) {
-//                    this.viewChange.setGame2Label(outputData.getTeams().get(0), outputData.getTeams().get(1),
-//                            outputData.getPoints().get(0), outputData.getPoints().get(1));
-////                    this.changeTeamsLabel(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
-////                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
-////                    this.viewChange.setGame2Label(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
-////                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
-//                } else if (this.gameID == 3) {
-//                    this.viewChange.setGame3Label(outputData.getTeams().get(0), outputData.getTeams().get(1),
-//                            outputData.getPoints().get(0), outputData.getPoints().get(1));
-////                    this.changeTeamsLabel(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
-////                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
-////                    this.viewChange.setGame3Label(outputData.getChangedTeamName(), outputData.getOtherTeamName(),
-////                            outputData.getNewPoints(), outputData.getOtherTeamPoints());
-//                }
+                nextScreenData.bundleData();
+                this.extendedView.setGames(nextScreenData.getGameToTeams(), nextScreenData.getGameToScores(),
+                        nextScreenData.getGameToWinner(), nextScreenData.getTeamToPlayers());
             }
-
+//            nextScreenData.bundleData();
+//            extendedView.setTeams(nextScreenData.getTeamToPlayers());
+//            extendedView.setReferees(nextScreenData.getGameToReferee(), nextScreenData.getReferees());
 
         } catch (NumberFormatException ex){
             JOptionPane.showMessageDialog(null, "Please enter a valid integer.");

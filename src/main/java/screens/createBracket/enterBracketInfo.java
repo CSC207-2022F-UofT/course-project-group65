@@ -2,7 +2,7 @@ package screens.createBracket;
 
 import screens.ExtendedView;
 import screens.NextScreenData;
-import screens.bracketView;
+//import screens.bracketView;
 import screens.endTourn.EndTournController;
 import screens.endTourn.EndTournPresenter;
 import screens.joinTeam.JoinTeamController;
@@ -120,6 +120,11 @@ public class enterBracketInfo extends JFrame implements ActionListener {
                     outputData.getBracketID(), outputData.getUsername());
 
             ExtendedView view = new ExtendedView(nextScreenData, endTournController, startTournController, joinTeamController);
+//            view.setGames(nextScreenData.getGameToTeams(), nextScreenData.getGameToScores(),
+//                    nextScreenData.getGameToWinner(), nextScreenData.getTeamToPlayers());
+//            view.setTeams(nextScreenData.getTeamToPlayers());
+//            view.setReferees(nextScreenData.getGameToReferee(), nextScreenData.getReferees());
+
 //            bracketView view = new bracketView(nextScreenData, endTournController, startTournController, joinTeamController);
 //            view.setBracketName(outputData.getBracketName());
 //            view.setCurrentUser(outputData.getUsername());
