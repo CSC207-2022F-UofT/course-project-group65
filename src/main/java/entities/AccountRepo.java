@@ -15,6 +15,7 @@ public class AccountRepo implements Serializable {
     public User getUser(String username) {return users.get(username); }
 
     public ArrayList<String> getAllUsernames() { return new ArrayList<String>(users.keySet()); }
+    public AccountRepo getAccountRepo() { return this; }
 
     public ArrayList<String> getAllPasswords() {
         ArrayList<String> passwords = new ArrayList<>();
@@ -23,4 +24,5 @@ public class AccountRepo implements Serializable {
         }
         return passwords;
     }
+
 }

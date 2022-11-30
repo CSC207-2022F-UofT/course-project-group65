@@ -1,6 +1,7 @@
 package useCases.createBracket;
 
 import entities.*;
+import useCases.generalClasses.InformationRecord;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,16 +18,18 @@ public class CreateBracketUC implements CreateBracketIB{
     private BracketRepo brackets;
     private CreateBracketGateway gateway;
 
-    public CreateBracketUC(CreateBracketOB advanceTeamOB, CreateBracketGateway gateway, String currentUser, Object accounts, Object brackets) {
+    public CreateBracketUC(CreateBracketOB advanceTeamOB, CreateBracketGateway gateway, String currentUser, InformationRecord informationRecord) {
         this.outputBoundary = advanceTeamOB;
         this.gateway = gateway;
         this.currentUser = currentUser;
-        try{
-            this.accounts = (AccountRepo) accounts;
-            this.brackets = (BracketRepo) brackets;
-        } catch (Exception e){
-            System.out.println("Casting error");
-        }
+        this.accounts = informationRecord.getAccountData();
+        this.brackets = informationRecord.getBracketData();
+//        try{
+//            this.accounts = (AccountRepo) accounts;
+//            this.brackets = (BracketRepo) brackets;
+//        } catch (Exception e){
+//            System.out.println("Casting error");
+//        }
 //        this.accounts = accounts;
 //        this.brackets = brackets;
 

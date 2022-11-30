@@ -2,6 +2,7 @@ package screens.declareWinner;
 
 import database.DeclareWinner.DeclareWinnerFileWriter;
 import useCases.declareWinner.*;
+import useCases.generalClasses.InformationRecord;
 
 public class DeclareWinnerController {
 
@@ -17,11 +18,11 @@ public class DeclareWinnerController {
 //        this.userInput = userInput;
 //    }
 
-    public DeclareWinnerController(Object bracketRepo, Object accountRepo, int bracketID, String username) {
+    public DeclareWinnerController(InformationRecord informationRecord, int bracketID, String username) {
         // this.userInput = userInput;
         DeclareWinnerOB outputBoundary = new DeclareWinnerPresenter();
         DeclareWinnerGateway gateway = new DeclareWinnerFileWriter("brackets.txt");
-        this.userInput = new DeclareWinnerUC(outputBoundary, gateway, bracketRepo, accountRepo, bracketID, username);
+        this.userInput = new DeclareWinnerUC(outputBoundary, gateway, informationRecord, bracketID, username);
     }
 
     // Prepare the output data for the view

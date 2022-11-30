@@ -4,6 +4,7 @@ import database.CreateBracket.CreateBracketFileWriter;
 import entities.AccountRepo;
 import entities.BracketRepo;
 import useCases.createBracket.*;
+import useCases.generalClasses.InformationRecord;
 
 public class CreateBracketController {
     /*
@@ -15,10 +16,10 @@ public class CreateBracketController {
 //        this.createBracketIB = userInput;
 //    }
 
-    public CreateBracketController(String currentUser, Object accounts, Object brackets) {
+    public CreateBracketController(String currentUser, InformationRecord informationRecord) {
         CreateBracketOB outputBoundary = new CreateBracketPresenter();
         CreateBracketGateway gateway = new CreateBracketFileWriter("accounts.txt", "brackets.txt");
-        this.createBracketIB = new CreateBracketUC(outputBoundary, gateway, currentUser, accounts, brackets);
+        this.createBracketIB = new CreateBracketUC(outputBoundary, gateway, currentUser, informationRecord);
 //        this.createBracketIB = createBracketIB;
     }
 

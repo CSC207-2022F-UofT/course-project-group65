@@ -1,6 +1,7 @@
 package useCases.changePoints;
 
 import entities.*;
+import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.bundleBracketData.BundleBracketData;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
 import useCases.generalClasses.traversalStrategies.BracketMethods;
@@ -27,8 +28,8 @@ public class ChangePointsUC implements ChangePointsIB{
     /**
      * Construct a ChangePointsUC interactor instance with the given BracketRepo and AccountRepo.
      *
-     * @param bracketRepo    The BracketRepo to use
-     * @param accountRepo    The AccountRepo to use
+//     * @param bracketRepo    The BracketRepo to use
+//     * @param accountRepo    The AccountRepo to use
      * @param gateway        The gateway to use
      * @param outputBoundary The output boundary to use
      * @param username         The ID of the user who is advancing the team
@@ -48,18 +49,23 @@ public class ChangePointsUC implements ChangePointsIB{
 //    }
 
     public ChangePointsUC(ChangePointsOB outputBoundary, ChangePointsGateway gateway,
-                          Object accountRepo, Object bracketRepo, int bracketID, String username) {
+                          InformationRecord informationRecord, int bracketID, String username) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
-        try{
-            this.bracketRepo = (BracketRepo) bracketRepo;
-            this.bracket = this.bracketRepo.getBracket(bracketID);
-            this.accountRepo = (AccountRepo) accountRepo;
-            this.user = this.accountRepo.getUser(username);
-            this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
-        } catch (Exception e){
-            System.out.println("Error in ChangePointsUC constructor");
-        }
+        this.accountRepo = informationRecord.getAccountData();
+        this.bracketRepo = informationRecord.getBracketData();
+        this.bracket = this.bracketRepo.getBracket(bracketID);
+        this.user = this.accountRepo.getUser(username);
+        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+//        try{
+//            this.bracketRepo = (BracketRepo) bracketRepo;
+//            this.bracket = this.bracketRepo.getBracket(bracketID);
+//            this.accountRepo = (AccountRepo) accountRepo;
+//            this.user = this.accountRepo.getUser(username);
+//            this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+//        } catch (Exception e){
+//            System.out.println("Error in ChangePointsUC constructor");
+//        }
 //        this.bracketRepo = (BracketRepo) bracketRepo;
 //        this.bracket = this.bracketRepo.getBracket(bracketID);
 //        this.user = (User) accountRepo;

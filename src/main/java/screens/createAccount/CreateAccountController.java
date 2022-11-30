@@ -3,6 +3,7 @@ package screens.createAccount;
 import database.CreateAccount.CreateAccountFileWriter;
 import entities.AccountRepo;
 import useCases.CreateAccount.*;
+import useCases.generalClasses.InformationRecord;
 
 public class CreateAccountController {
     private CreateAccountIB createAccountIB;
@@ -10,11 +11,11 @@ public class CreateAccountController {
 //    public CreateAccountController(CreateAccountIB createAccountIB) {
 //        this.createAccountIB = createAccountIB;
 //    }
-    public CreateAccountController(Object accountDatabase, Object bracketDatabase) {
+    public CreateAccountController(InformationRecord informationRecord) {
         //this.createAccountIB = createAccountIB;
         CreateAccountOB createAccountOB = new CreateAccountPresenter();
         CreateAccountGateway gateway = new CreateAccountFileWriter("accounts.txt");
-        this.createAccountIB = new CreateAccountUC(createAccountOB, accountDatabase, bracketDatabase, gateway);
+        this.createAccountIB = new CreateAccountUC(createAccountOB, informationRecord, gateway);
 
     }
 

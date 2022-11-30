@@ -2,14 +2,15 @@ package screens.assignObserver;
 
 import database.AssignObserver.AssignObserverFileWriter;
 import useCases.assignObserver.*;
+import useCases.generalClasses.InformationRecord;
 
 public class AssignObserverController {
     private final AssignObserverIB assignObsIB;
 
-    public AssignObserverController(Object bracketRepo, Object accountRepo, String currUser) {
+    public AssignObserverController(InformationRecord informationRecord, String currUser) {
         AssignObserverOB outputBound = new AssignObserverPresenter();
         AssignObserverGateway gateway = new AssignObserverFileWriter("brackets.txt");
-        this.assignObsIB = new AssignObserverUC(outputBound, gateway, bracketRepo, accountRepo, currUser);
+        this.assignObsIB = new AssignObserverUC(outputBound, gateway, informationRecord, currUser);
     }
 
     public AssignObserverOD assignObserver(String assignee, int gameID){

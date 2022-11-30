@@ -97,12 +97,9 @@ public class optionsScreen extends JFrame implements ActionListener {
 //                    nextScreenData.getAccounts(), nextScreenData.getBrackets());
 //            CreateBracketController createBracketCon = new CreateBracketController(interactor);
             CreateBracketController createBracketCon = new CreateBracketController(nextScreenData.getCurrentUser(),
-                    nextScreenData.getAccounts(), nextScreenData.getBrackets());
-
-
-
+                    nextScreenData.getInformationRecord());
 //            enterBracketInfo enterBracketInfo = new enterBracketInfo(this.createBracketController);
-            enterBracketInfo enterBracketInfo = new enterBracketInfo(createBracketCon);
+            enterBracketInfo enterBracketInfo = new enterBracketInfo(createBracketCon, nextScreenData);
             this.dispose();
             enterBracketInfo.setCurrentUser(nextScreenData.getCurrentUser());
             enterBracketInfo.setVisible(true);
@@ -115,12 +112,9 @@ public class optionsScreen extends JFrame implements ActionListener {
 //                    nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
 //            ViewTournamentController viewTournamentController = new ViewTournamentController(viewTournamentIB);
 
-            ViewTournamentController viewTournamentController = new ViewTournamentController(nextScreenData.getBrackets(),
-                    nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
-            ViewTournamentInfo viewTournamentInfo = new ViewTournamentInfo(viewTournamentController);
-            // This is a violation of clean architecture, the fact that we are accessing a user here.
-            ArrayList<Integer> tournaments = (ArrayList<Integer>)
-                    nextScreenData.getAccounts().getUser(nextScreenData.getCurrentUser()).getAllTournaments();
+            ViewTournamentController viewTournamentController = new ViewTournamentController(nextScreenData.getInformationRecord(), nextScreenData.getCurrentUser());
+            ViewTournamentInfo viewTournamentInfo = new ViewTournamentInfo(viewTournamentController, nextScreenData);
+            ArrayList<Integer> tournaments = nextScreenData.getUsersTournaments(nextScreenData.getCurrentUser());
             viewTournamentInfo.setTournaments(tournaments);
             System.out.println(tournaments);
             this.dispose();
@@ -134,9 +128,8 @@ public class optionsScreen extends JFrame implements ActionListener {
 //                    nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
 //            JoinTournamentController joinTournamentController = new JoinTournamentController(joinTournamentIB);
             JoinTournamentController joinTournamentController = new JoinTournamentController(
-                    nextScreenData.getBrackets(), nextScreenData.getAccounts(),
-                    nextScreenData.getCurrentUser());
-            JoinTournamentInfo joinTournamentInfo = new JoinTournamentInfo(joinTournamentController);
+                    nextScreenData.getInformationRecord(), nextScreenData.getCurrentUser());
+            JoinTournamentInfo joinTournamentInfo = new JoinTournamentInfo(joinTournamentController, nextScreenData);
             this.dispose();
             joinTournamentInfo.setVisible(true);
 
@@ -148,16 +141,14 @@ public class optionsScreen extends JFrame implements ActionListener {
 //            CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, nextScreenData.getAccounts(),
 //                    nextScreenData.getBrackets(), createAccountGateway);
 //            CreateAccountController createAccountController = new CreateAccountController(createAccountIB);
-            CreateAccountController createAccountController = new CreateAccountController(nextScreenData.getAccounts(),
-                    nextScreenData.getBrackets());
+            CreateAccountController createAccountController = new CreateAccountController(nextScreenData.getInformationRecord());
 
 //            LogInOB logInOB = new LogInPresenter();
 //            LogInIB logInIB = new LogInUC(logInOB, nextScreenData.getAccounts(),
 //                    nextScreenData.getBrackets());
-            LogInController logInController = new LogInController(nextScreenData.getAccounts(),
-                    nextScreenData.getBrackets());
+            LogInController logInController = new LogInController(nextScreenData.getInformationRecord());
 
-            homeScreen homeScreen = new homeScreen(createAccountController, logInController);
+            homeScreen homeScreen = new homeScreen(createAccountController, logInController, nextScreenData);
 
 //            homeScreen homeScreen = new homeScreen(this.createAccountController, this.logInController);
             this.dispose();

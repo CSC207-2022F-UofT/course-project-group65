@@ -3,6 +3,7 @@ package useCases.viewTournament;
 import entities.AccountRepo;
 import entities.BracketRepo;
 import entities.User;
+import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.bundleBracketData.BundleBracketData;
 
 public class ViewTournamentUC implements ViewTournamentIB {
@@ -16,21 +17,21 @@ public class ViewTournamentUC implements ViewTournamentIB {
      * Construct a ViewTournamentUC interactor instance with the given BracketRepo and AccountRepo.
      *
      * @param outputBound The output boundary to use
-     * @param bracketRepo The BracketRepo to use
-     * @param accountRepo The AccountRepo to use
      * @param currUser    The username of the user who is joining the tournament
      */
-    public ViewTournamentUC(ViewTournamentOB outputBound, ViewTournamentGateway gateway, Object bracketRepo,
-                            Object accountRepo, String currUser){
+    public ViewTournamentUC(ViewTournamentOB outputBound, ViewTournamentGateway gateway, InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;
         this.gateway = gateway;
-        try{
-            this.bracketRepo = (BracketRepo) bracketRepo;
-            this.accountRepo = (AccountRepo) accountRepo;
-            this.currUser = this.accountRepo.getUser(currUser);
-        } catch (ClassCastException e) {
-            throw new ClassCastException("bracketRepo must be of type BracketRepo");
-        }
+//        try{
+//            this.bracketRepo = (BracketRepo) bracketRepo;
+//            this.accountRepo = (AccountRepo) accountRepo;
+//            this.currUser = this.accountRepo.getUser(currUser);
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException("bracketRepo must be of type BracketRepo");
+//        }
+        this.bracketRepo = informationRecord.getBracketData();
+        this.accountRepo = informationRecord.getAccountData();
+        this.currUser = this.accountRepo.getUser(currUser);
 //        this.bracketRepo =bracketRepo;
 //        this.accountRepo = accountRepo;
 //        this.currUser = accountRepo.getUser(currUser);

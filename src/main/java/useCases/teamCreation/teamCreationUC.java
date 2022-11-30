@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entities.*;
-
+import useCases.generalClasses.InformationRecord;
 
 
 public class teamCreationUC implements teamCreationIB {
@@ -17,13 +17,14 @@ public class teamCreationUC implements teamCreationIB {
     private final BracketRepo brackets;
 
     public teamCreationUC(teamCreationOB outputBoundary, teamCreationGateway gateway,
-                          String creatorName, int bracketID, Object accounts,
-                          Object brackets){
+                          String creatorName, int bracketID, InformationRecord informationRecord) {
         this.outputBoundary = outputBoundary;
         this.creatorName = creatorName;
         this.bracketID = bracketID;
-        this.accounts = (AccountRepo) accounts;
-        this.brackets = (BracketRepo) brackets;
+        this.brackets = informationRecord.getBracketData();
+        this.accounts = informationRecord.getAccountData();
+//        this.accounts = (AccountRepo) accounts;
+//        this.brackets = (BracketRepo) brackets;
         this.gateway = gateway;
     }
     // used to check whether the current user is a player

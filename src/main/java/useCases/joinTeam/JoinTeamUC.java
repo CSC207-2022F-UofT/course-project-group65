@@ -2,6 +2,7 @@ package useCases.joinTeam;
 import java.util.ArrayList;
 import java.util.List;
 import entities.*;
+import useCases.generalClasses.InformationRecord;
 import useCases.teamCreation.teamCreationDSID;
 
 /**
@@ -18,14 +19,13 @@ public class JoinTeamUC implements JoinTeamIB {
 
     private Team curTeam;
 
-    public JoinTeamUC(JoinTeamOB outputBoundary, JoinTeamGateway gateway, String userName, int bracketID, AccountRepo accounts,
-                      BracketRepo brackets){
+    public JoinTeamUC(JoinTeamOB outputBoundary, JoinTeamGateway gateway, String userName, int bracketID, InformationRecord informationRecord) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
         this.userName = userName;
         this.bracketID = bracketID;
-        this.accounts = accounts;
-        this.brackets = brackets;
+        this.accounts = informationRecord.getAccountData();
+        this.brackets = informationRecord.getBracketData();
     }
 
     /** Check whether the user is already in a team */

@@ -1,6 +1,7 @@
 package useCases.endTourn;
 
 import entities.*;
+import useCases.generalClasses.InformationRecord;
 
 import java.util.Objects;
 
@@ -16,11 +17,11 @@ public class EndTournUC implements EndTournIB{
     private final Bracket bracket;
     private final User user;
 
-    public EndTournUC(EndTournOB outputBoundary, String currentUser, AccountRepo accounts, BracketRepo brackets,
+    public EndTournUC(EndTournOB outputBoundary, String currentUser, InformationRecord informationRecord,
                       int bracketId) {
         this.outputBoundary = outputBoundary;
-        this.accounts = accounts;
-        this.brackets = brackets;
+        this.accounts = informationRecord.getAccountData();
+        this.brackets = informationRecord.getBracketData();
         this.bracketId = bracketId;
         this.bracket = brackets.getBracket(bracketId);
         this.user = accounts.getUser(currentUser);

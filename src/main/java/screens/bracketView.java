@@ -306,8 +306,8 @@ private JTextField observerGame1;
                 //nextScreenData.getBrackets(), nextScreenData.getAccounts(),
                 //nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
         //AdvanceTeamController advanceTeamController = new AdvanceTeamController(advanceTeamIB);
-        AdvanceTeamController advanceTeamController = new AdvanceTeamController(nextScreenData.getBrackets(),
-                nextScreenData.getAccounts(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        AdvanceTeamController advanceTeamController = new AdvanceTeamController(nextScreenData.getInformationRecord(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
 
 
         //       Declare Winner
@@ -318,8 +318,9 @@ private JTextField observerGame1;
 //                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
 //        DeclareWinnerController declareWinnerController = new DeclareWinnerController(declareWinnerIB);
 
-        DeclareWinnerController declareWinnerController = new DeclareWinnerController(nextScreenData.getBrackets(),
-                nextScreenData.getAccounts(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        DeclareWinnerController declareWinnerController = new DeclareWinnerController(
+                nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID(),
+                nextScreenData.getCurrentUser());
 
 
         //      Change Points
@@ -330,8 +331,8 @@ private JTextField observerGame1;
 //                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
 //        ChangePointsController changePointsController = new ChangePointsController(changePointsIB);
 
-        ChangePointsController changePointsController = new ChangePointsController(nextScreenData.getAccounts(),
-                nextScreenData.getBrackets(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        ChangePointsController changePointsController = new ChangePointsController(nextScreenData.getInformationRecord(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
 
         if (e.getSource() == game1Button) {
 //            System.out.println("Game 1 Button Clicked");
@@ -424,8 +425,8 @@ private JTextField observerGame1;
 //                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
 //                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
 //                AssignObserverController controller = new AssignObserverController(assignObserverIB);
-                AssignObserverController controller = new AssignObserverController(nextScreenData.getBrackets(),
-                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+                AssignObserverController controller = new AssignObserverController(nextScreenData.getInformationRecord(),
+                        nextScreenData.getCurrentUser());
                 controller.assignObserver((String) observerListGame1.getSelectedItem(), 1);
                 //setObserverListGame1(new ArrayList<>(Collections.singletonList(output.getAssignee())));
             }
@@ -438,8 +439,8 @@ private JTextField observerGame1;
 //                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
 //                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
 //                AssignObserverController controller = new AssignObserverController(assignObserverIB);
-                AssignObserverController controller = new AssignObserverController(nextScreenData.getBrackets(),
-                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+                AssignObserverController controller = new AssignObserverController(nextScreenData.getInformationRecord(),
+                        nextScreenData.getCurrentUser());
                 controller.assignObserver((String) observerListGame2.getSelectedItem(), 2);
 //                setObserverListGame2(new ArrayList<>(Collections.singletonList(output.getAssignee())));
             }
@@ -452,8 +453,8 @@ private JTextField observerGame1;
 //                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
 //                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
 //                AssignObserverController controller = new AssignObserverController(assignObserverIB);
-                AssignObserverController controller = new AssignObserverController(nextScreenData.getBrackets(),
-                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+                AssignObserverController controller = new AssignObserverController(nextScreenData.getInformationRecord(),
+                        nextScreenData.getCurrentUser());
                 controller.assignObserver((String) observerListGame3.getSelectedItem(), 3);
 //                setObserverListGame2(new ArrayList<>(Collections.singletonList(output.getAssignee())));
             }
@@ -496,15 +497,14 @@ private JTextField observerGame1;
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
         } else if (e.getSource() == createTeamBtn){
-            TeamCreationController controller = new TeamCreationController(nextScreenData.getBrackets(),
-                    nextScreenData.getAccounts(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-            UserInput inputScreen = new UserInput(controller, this);
+            TeamCreationController controller = new TeamCreationController(nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+            UserInput inputScreen = new UserInput(controller, this, this.nextScreenData);
             inputScreen.setVisible(true);
 
         } else if (e.getSource() == returnOptions){
             try {
                 String username = nextScreenData.getCurrentUser();
-                String password = nextScreenData.getAccounts().getUser(username).getPassword();
+                String password = nextScreenData.getUserPassword(username);
 //                LogInOD outputData = logInController.login(username, password);
 
                 // String currentUser = outputData.getUsername();
@@ -544,16 +544,14 @@ private JTextField observerGame1;
 //            CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, nextScreenData.getAccounts(),
 //                    nextScreenData.getBrackets(), createAccountGateway);
 //            CreateAccountController createAccountController = new CreateAccountController(createAccountIB);
-            CreateAccountController createAccountController = new CreateAccountController(nextScreenData.getAccounts(),
-                    nextScreenData.getBrackets());
+            CreateAccountController createAccountController = new CreateAccountController(nextScreenData.getInformationRecord());
 
             //LogInOB logInOB = new LogInPresenter();
             //LogInIB logInIB = new LogInUC(logInOB, nextScreenData.getAccounts(),
 //                    nextScreenData.getBrackets());
-            LogInController logInController = new LogInController(nextScreenData.getAccounts(),
-                    nextScreenData.getBrackets());
+            LogInController logInController = new LogInController(nextScreenData.getInformationRecord());
 
-            homeScreen homeScreen = new homeScreen(createAccountController, logInController);
+            homeScreen homeScreen = new homeScreen(createAccountController, logInController, nextScreenData);
 
 //            homeScreen homeScreen = new homeScreen(this.createAccountController, this.logInController);
             this.dispose();

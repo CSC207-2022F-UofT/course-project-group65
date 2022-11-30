@@ -1,11 +1,28 @@
 package screens;
 
+import screens.advanceTeam.AdvanceTeamController;
+import screens.assignObserver.AssignObserverController;
+import screens.bracketOperations.DoBracketOperation;
+import screens.changePoints.ChangePointsController;
+import screens.createAccount.CreateAccountController;
+import screens.declareWinner.DeclareWinnerController;
+import screens.endTourn.EndTournController;
+import screens.joinTeam.JoinTeamController;
+import screens.logIn.LogInController;
+import screens.startTourn.StartTournController;
+import screens.startTourn.startErrors;
+import screens.teamCreation.TeamCreationController;
+import screens.teamCreation.UserInput;
+import useCases.joinTeam.JoinTeamOD;
+import useCases.startTourn.StartTournOD;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 import java.util.Vector;
 
 public class ExtendedView extends JFrame implements ActionListener, IBracketView{
@@ -36,23 +53,39 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
     private JLabel lblTournamentID;
     private JButton btnOptions;
     private JButton btnLogOut;
+    public NextScreenData nextScreenData;
+    private EndTournController endTournController;
+    private JoinTeamController joinTeamController;
+    private StartTournController startTournController;
 
-    public static void main(String[] args){
-        ExtendedView a = new ExtendedView();
-        a.createUIComponents();
-    }
+//    public static void main(String[] args){
+//        ExtendedView a = new ExtendedView();
+//        a.createUIComponents();
+//    }
 
-    public ExtendedView() {
+    public ExtendedView(NextScreenData nsdata, EndTournController endTournController, StartTournController startTournController,
+                        JoinTeamController joinTeamController) {
         super ("Tournament View");
         //Tabbed Pane
-        lblCurrUser.setText("Logged In: " + currUser);
-        lblTournamentName.setText("Bracket Name: " + tournamentName);
-        lblTournamentID.setText("ID: " + tournamentID);
+        this.nextScreenData = nsdata;
+        this.endTournController = endTournController;
+        this.startTournController = startTournController;
+        this.joinTeamController = joinTeamController;
+        lblCurrUser.setText("Logged In: " + nextScreenData.getCurrentUser());
+        lblTournamentName.setText("Bracket Name: " + nextScreenData.getTournamentName());
+        lblTournamentID.setText("ID: " + nextScreenData.getTournamentID());
         btnOptions.addActionListener(this);
         btnLogOut.addActionListener(this);
 
 
+        nextScreenData.bundleData();
         //Bracket View
+        LinkedHashMap<Integer, ArrayList<String>> gameToTeams = nextScreenData.getGameToTeams();
+        LinkedHashMap<Integer, ArrayList<Integer>> gameToScore = nextScreenData.getGameToScores();
+        LinkedHashMap<Integer, String> gameToWinner = nextScreenData.getGameToWinner();
+        LinkedHashMap<String, ArrayList<String>> teamToPlayers = nextScreenData.getTeamToPlayers();
+        ArrayList<String> referees = nextScreenData.getReferees();
+        LinkedHashMap<Integer, String> gameToReferee = nextScreenData.getGameToReferee();
         int currGame = gameToTeams.size();
         int index = 0;
         int numTeams = teamToPlayers.size();
@@ -95,7 +128,7 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         cmbJoinTeam.addActionListener(this);
 
         //Observer View
-        for(int gameID: gameToReferee.keySet){
+        for(int gameID: gameToReferee.keySet()){
             cmbSelectGame.addItem(gameID);
         }
         for(String ref: referees){
@@ -108,8 +141,8 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         //Overseer View
         btnStart.addActionListener(this);
         btnEnd.addActionListener(this);
-        lblPLInv.setText("Player" + playerInvite);
-        lblOBInv.setText("Observer" + observerInvite);
+        lblPLInv.setText("Player" + nextScreenData.getRoleToInvite().get("Player"));
+        lblOBInv.setText("Observer" + nextScreenData.getRoleToInvite().get("Observer"));
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(mainPanel);
@@ -120,99 +153,92 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        AdvanceTeamController advanceTeamController = new AdvanceTeamController(nextScreenData.getBrackets(),
-//                nextScreenData.getAccounts(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-//        DeclareWinnerController declareWinnerController = new DeclareWinnerController(nextScreenData.getBrackets(),
-//                nextScreenData.getAccounts(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-//        ChangePointsController changePointsController = new ChangePointsController(nextScreenData.getAccounts(),
-//                nextScreenData.getBrackets(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        AdvanceTeamController advanceTeamController = new AdvanceTeamController(nextScreenData.getInformationRecord(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        DeclareWinnerController declareWinnerController = new DeclareWinnerController(
+                nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID(),
+                nextScreenData.getCurrentUser());
+        ChangePointsController changePointsController = new ChangePointsController(nextScreenData.getInformationRecord(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
 //
-//        if(e.getSource() == btnOptions){
-//            nextScreenData.setCurrentUser(nextScreenData.getCurrentUser());
-//            optionsScreen optionsScreen = new optionsScreen(nextScreenData);
-//            this.dispose();
-//            optionsScreen.setVisible(true);
-//        }
-//        else if(e.getSource() == btnLogOut){
-//            CreateAccountController createAccountController = new CreateAccountController(nextScreenData.getAccounts(),
-//                    nextScreenData.getBrackets());
-//            LogInController logInController = new LogInController(nextScreenData.getAccounts(),
-//                    nextScreenData.getBrackets());
-//            homeScreen homeScreen = new homeScreen(createAccountController, logInController);
-//            this.dispose();
-//            homeScreen.setVisible(true);
-//        }
-//        else if(e.getSource() == btnCreateTeam){
-//            teamCreationOB presenter = new TeamCreationPresenter();
-//            teamCreationIB interactor = new teamCreationUC(presenter,nextScreenData.getCurrentUser(),
-//                    nextScreenData.getCurrentBracketID(),nextScreenData.getAccounts(),
-//                    nextScreenData.getBrackets());
-//            TeamCreationController controller = new TeamCreationController(interactor);
-//            UserInput inputScreen = new UserInput(controller, this);
-//            inputScreen.setVisible(true);
-//        }
-//        else if(e.getSource() == btnJoinTeam){
-//            String teamName = (String)cmbJoinTeam.getSelectedItem();
-//            try {
-//                JoinTeamOD outputData = joinTeamController.joinTeam(teamName);
-//                ArrayList<String> names = outputData.getMembersNames();
-//            }
-//            catch (Exception exception) {
-//                System.out.println( "Error: " + exception);
-//                JOptionPane.showMessageDialog(this, exception.getMessage());
-//            }
-//        }
-//        else if(e.getSource() == btnAssignObserver){
-//            try {
-//                int gameID = (Integer) cmbSelectGame.getSelectedItem();
-//                String assignee = (String) cmbAssignObserver.getSelectedItem();
-//                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
-//                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
-//                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
-//                AssignObserverController controller = new AssignObserverController(assignObserverIB);
-//                controller.assignObserver(assignee, gameID);
-//            }
-//            catch(RuntimeException rex ) {
-//                JOptionPane.showMessageDialog(this, rex.getMessage());
-//            }
-//        }
-//        else if(e.getSource() == btnStart){
-//            StartTournOD startData = startTournController.startTourn();
-//            ArrayList<String> startErrors = startData.getErrors();
-//            screens.startTourn.startErrors errorView = new startErrors(this.startTournController);
-//            for (String error : startErrors) {
-//                if (Objects.equals(error, "USERROLE")) {
-//                    errorView.setWarning1("You do not have permission to start the tournament.");
-//                } else if (Objects.equals(error, "NUMTEAMS")) {
-//                    errorView.setWarning2("There are not enough teams in the tournament.");
-//                } else if (Objects.equals(error, "NOOBSERVER")) {
-//                    errorView.setWarning3("There is at least one game that does not have an observer assigned.");
-//                } else if (Objects.equals(error, "TEAMNOTFULL")) {
-//                    errorView.setWarning4("There is at least one team that is not full.");
-//                }
-//            }
-//            errorView.setVisible(true);
-//        }
-//        else if(e.getSource() == btnEnd){
-//            try {
-//                endTournController.endTourn();
-//                JOptionPane.showMessageDialog(this, "Tournament Ended");
-//            }
-//            catch (Exception exception) {
-//                JOptionPane.showMessageDialog(this, exception.getMessage());
-//            }
-//        }
-//        for(int i=0; i<btnBracketGame.size(); i++){
-//            if (e.getSource() == btnBracketGame.get(i)){
-//                DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
-//                        declareWinnerController, changePointsController, this);
-//                doBracketOperations.setGameForOperation(1);
-//                doBracketOperations.setGameNumLabel("Game 1");
-//                doBracketOperations.setTeamsLabel(lblBracketGameScores.get(i).getText());
-//                doBracketOperations.setVisible(true);
-//                break;
-//            }
-//        }
+        if(e.getSource() == btnOptions){
+            nextScreenData.setCurrentUser(nextScreenData.getCurrentUser());
+            optionsScreen optionsScreen = new optionsScreen(nextScreenData);
+            this.dispose();
+            optionsScreen.setVisible(true);
+        }
+        else if(e.getSource() == btnLogOut){
+            CreateAccountController createAccountController = new CreateAccountController(nextScreenData.getInformationRecord());
+            LogInController logInController = new LogInController(nextScreenData.getInformationRecord());
+            homeScreen homeScreen = new homeScreen(createAccountController, logInController, nextScreenData);
+            this.dispose();
+            homeScreen.setVisible(true);
+        }
+        else if(e.getSource() == btnCreateTeam){
+            TeamCreationController controller = new TeamCreationController(nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+            UserInput inputScreen = new UserInput(controller, this, this.nextScreenData);
+            inputScreen.setVisible(true);
+        }
+        else if(e.getSource() == btnJoinTeam){
+            String teamName = (String)cmbJoinTeam.getSelectedItem();
+            try {
+                JoinTeamOD outputData = joinTeamController.joinTeam(teamName);
+                ArrayList<String> names = outputData.getMembersNames();
+            }
+            catch (Exception exception) {
+                System.out.println( "Error: " + exception);
+                JOptionPane.showMessageDialog(this, exception.getMessage());
+            }
+        }
+        else if(e.getSource() == btnAssignObserver){
+            try {
+                int gameID = (Integer) cmbSelectGame.getSelectedItem();
+                String assignee = (String) cmbAssignObserver.getSelectedItem();
+                AssignObserverController controller = new AssignObserverController(nextScreenData.getInformationRecord(),
+                        nextScreenData.getCurrentUser());
+                controller.assignObserver(assignee, gameID);
+            }
+            catch(RuntimeException rex ) {
+                JOptionPane.showMessageDialog(this, rex.getMessage());
+            }
+        }
+        else if(e.getSource() == btnStart){
+            StartTournOD startData = startTournController.startTourn();
+            ArrayList<String> startErrors = startData.getErrors();
+            screens.startTourn.startErrors errorView = new startErrors(this.startTournController);
+            for (String error : startErrors) {
+                if (Objects.equals(error, "USERROLE")) {
+                    errorView.setWarning1("You do not have permission to start the tournament.");
+                } else if (Objects.equals(error, "NUMTEAMS")) {
+                    errorView.setWarning2("There are not enough teams in the tournament.");
+                } else if (Objects.equals(error, "NOOBSERVER")) {
+                    errorView.setWarning3("There is at least one game that does not have an observer assigned.");
+                } else if (Objects.equals(error, "TEAMNOTFULL")) {
+                    errorView.setWarning4("There is at least one team that is not full.");
+                }
+            }
+            errorView.setVisible(true);
+        }
+        else if(e.getSource() == btnEnd){
+            try {
+                endTournController.endTourn();
+                JOptionPane.showMessageDialog(this, "Tournament Ended");
+            }
+            catch (Exception exception) {
+                JOptionPane.showMessageDialog(this, exception.getMessage());
+            }
+        }
+        for(int i=0; i<btnBracketGame.size(); i++){
+            if (e.getSource() == btnBracketGame.get(i)){
+                DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
+                        declareWinnerController, changePointsController, this);
+                doBracketOperations.setGameForOperation(1);
+                doBracketOperations.setGameNumLabel("Game 1");
+                doBracketOperations.setTeamsLabel(lblBracketGameScores.get(i).getText());
+                doBracketOperations.setVisible(true);
+                break;
+            }
+        }
     }
 
     private void createUIComponents() {

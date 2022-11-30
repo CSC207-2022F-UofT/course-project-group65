@@ -1,6 +1,7 @@
 package screens.advanceTeam;
 import database.AdvanceTeam.AdvanceTeamFileWriter;
 import useCases.advanceTeam.*;
+import useCases.generalClasses.InformationRecord;
 
 public class AdvanceTeamController {
 
@@ -16,11 +17,11 @@ public class AdvanceTeamController {
 //        this.userInput = userInput;
 //    }
 
-    public AdvanceTeamController(Object bracketDatabase, Object accountDatabase, int bracketID, String username) {
+    public AdvanceTeamController(InformationRecord informationRecord, int bracketID, String username) {
         //this.userInput = userInput;
         AdvanceTeamOB outputBoundary = new AdvanceTeamPresenter();
         AdvanceTeamGateway gateway = new AdvanceTeamFileWriter("brackets.txt");
-        this.userInput = new AdvanceTeamUC(outputBoundary, gateway, bracketDatabase, accountDatabase, bracketID, username);
+        this.userInput = new AdvanceTeamUC(outputBoundary, gateway, informationRecord, bracketID, username);
     }
     // Prepare the output data for the view
     public AdvanceTeamOD create(int gameID){

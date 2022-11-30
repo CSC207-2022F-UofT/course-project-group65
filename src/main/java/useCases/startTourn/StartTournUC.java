@@ -1,6 +1,7 @@
 package useCases.startTourn;
 
 import entities.*;
+import useCases.generalClasses.InformationRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +18,11 @@ public class StartTournUC implements StartTournIB{
     private final Bracket bracket;
     private final User user;
 
-    public StartTournUC(StartTournOB outputBoundary, String currentUser, AccountRepo accounts, BracketRepo brackets,
+    public StartTournUC(StartTournOB outputBoundary, String currentUser, InformationRecord informationRecord,
                       int bracketId) {
         this.outputBoundary = outputBoundary;
-        this.accounts = accounts;
-        this.brackets = brackets;
+        this.accounts = informationRecord.getAccountData();
+        this.brackets = informationRecord.getBracketData();
         this.bracketId = bracketId;
         this.bracket = brackets.getBracket(bracketId);
         this.user = accounts.getUser(currentUser);

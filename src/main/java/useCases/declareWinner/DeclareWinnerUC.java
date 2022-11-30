@@ -1,6 +1,7 @@
 package useCases.declareWinner;
 
 import entities.*;
+import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
 import useCases.generalClasses.traversalStrategies.BracketMethods;
 import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
@@ -23,7 +24,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
     /**
      * Construct a DeclareWinnerUC interactor instance with the given BracketRepo and AccountRepo.
      *
-     * @param bracketRepo    The BracketRepo to use
+//     * @param bracketRepo    The BracketRepo to use
      * @param gateway        The gateway to use
      * @param outputBoundary The output boundary to use
      * @param username         The ID of the user who is advancing the team
@@ -43,15 +44,17 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
 //    }
 
     public DeclareWinnerUC(DeclareWinnerOB outputBoundary, DeclareWinnerGateway gateway,
-                           Object bracketRepo, Object accountRepo, int bracketID, String username) {
+                           InformationRecord informationRecord, int bracketID, String username) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
-        try {
-            this.bracketRepo = (BracketRepo) bracketRepo;
-            this.accountRepo = (AccountRepo) accountRepo;
-        } catch (ClassCastException e) {
-            System.out.println("Error: " + e);
-        }
+        this.bracketRepo = informationRecord.getBracketData();
+        this.accountRepo = informationRecord.getAccountData();
+//        try {
+//            this.bracketRepo = (BracketRepo) bracketRepo;
+//            this.accountRepo = (AccountRepo) accountRepo;
+//        } catch (ClassCastException e) {
+//            System.out.println("Error: " + e);
+//        }
 //        this.bracketRepo = (BracketRepo) bracketRepo;
 //        this.accountRepo = (AccountRepo) accountRepo;
         this.bracket = this.bracketRepo.getBracket(bracketID);

@@ -4,6 +4,7 @@ import database.JoinTeam.JoinTeamFileWriter;
 
 import entities.AccountRepo;
 import entities.BracketRepo;
+import useCases.generalClasses.InformationRecord;
 import useCases.joinTeam.*;
 
 /**
@@ -12,10 +13,10 @@ import useCases.joinTeam.*;
 public class JoinTeamController {
     final JoinTeamIB input;
 
-    public JoinTeamController(BracketRepo bracketRepo, AccountRepo accountRepo, int bracketID, String username ){
+    public JoinTeamController(InformationRecord informationRecord, int bracketID, String username ){
         JoinTeamOB outputBoundary = new JoinTeamPresenter();
         JoinTeamGateway gateway = new JoinTeamFileWriter("brackets.txt");
-        this.input = new JoinTeamUC(outputBoundary, gateway, username, bracketID, accountRepo,bracketRepo);
+        this.input = new JoinTeamUC(outputBoundary, gateway, username, bracketID, informationRecord);
     }
 
     public JoinTeamOD joinTeam(String teamName){

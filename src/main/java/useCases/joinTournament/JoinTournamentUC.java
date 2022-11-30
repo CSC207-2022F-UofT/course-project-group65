@@ -3,6 +3,7 @@ package useCases.joinTournament;
 import entities.AccountRepo;
 import entities.BracketRepo;
 import entities.User;
+import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.bundleBracketData.BundleBracketData;
 
 public class JoinTournamentUC implements JoinTournamentIB{
@@ -16,20 +17,23 @@ public class JoinTournamentUC implements JoinTournamentIB{
      * Construct a JoinTournamentUC interactor instance with the given BracketRepo and AccountRepo.
      *
      * @param outputBound The output boundary to use
-     * @param bracketRepo The BracketRepo to use
-     * @param accountRepo The AccountRepo to use
+//     * @param bracketRepo The BracketRepo to use
+//     * @param accountRepo The AccountRepo to use
      * @param currUser    The username of the user who is joining the tournament
      */
-    public JoinTournamentUC(JoinTournamentOB outputBound, JoinTournamentGateway gateway, Object bracketRepo,
-                            Object accountRepo, String currUser){
+    public JoinTournamentUC(JoinTournamentOB outputBound, JoinTournamentGateway gateway,
+                            InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;
-        try{
-            this.bracketRepo = (BracketRepo) bracketRepo;
-            this.accountRepo = (AccountRepo) accountRepo;
-            this.currUser = this.accountRepo.getUser(currUser);
-        } catch (ClassCastException e){
-            throw new ClassCastException("The given bracketRepo or accountRepo is not of type BracketRepo or AccountRepo");
-        }
+//        try{
+//            this.bracketRepo = (BracketRepo) bracketRepo;
+//            this.accountRepo = (AccountRepo) accountRepo;
+//            this.currUser = this.accountRepo.getUser(currUser);
+//        } catch (ClassCastException e){
+//            throw new ClassCastException("The given bracketRepo or accountRepo is not of type BracketRepo or AccountRepo");
+//        }
+        this.bracketRepo = informationRecord.getBracketData();
+        this.accountRepo = informationRecord.getAccountData();
+        this.currUser = this.accountRepo.getUser(currUser);
         this.gateway = gateway;
     }
 

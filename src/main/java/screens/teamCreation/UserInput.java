@@ -1,6 +1,7 @@
 package screens.teamCreation;
 
 
+import screens.ExtendedView;
 import screens.NextScreenData;
 import screens.bracketView;
 import screens.endTourn.EndTournController;
@@ -30,11 +31,14 @@ public class UserInput extends JFrame implements ActionListener{
     private JPanel inputPanel;
     private TeamCreationController teamCreationController;
     public bracketView view;
+    private NextScreenData nextScreenData;
+    public ExtendedView extendedView;
 
-    public UserInput(TeamCreationController controller, bracketView viewChange){
+    public UserInput(TeamCreationController controller, bracketView viewChange, NextScreenData nextScreenData) {
 
         this.teamCreationController = controller;
         this.view = viewChange;
+        this.nextScreenData = nextScreenData;
 
         this.setContentPane(inputPanel);
         this.setTitle("Create A Team");
@@ -43,6 +47,21 @@ public class UserInput extends JFrame implements ActionListener{
         this.setVisible(true);
         btnCreate.addActionListener(this);
     }
+
+    public UserInput(TeamCreationController controller, ExtendedView viewChange, NextScreenData nextScreenData) {
+
+        this.teamCreationController = controller;
+        this.extendedView = viewChange;
+        this.nextScreenData = nextScreenData;
+
+        this.setContentPane(inputPanel);
+        this.setTitle("Create A Team");
+        this.setSize(450,300);
+//        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setVisible(true);
+        btnCreate.addActionListener(this);
+    }
+
     public void actionPerformed(ActionEvent evt) {
 //        System.out.println("Click " + evt.getActionCommand());
 
@@ -52,18 +71,18 @@ public class UserInput extends JFrame implements ActionListener{
             }
             teamCreationOD outputData = teamCreationController.createNewTeam(tfTeamName.getText());
             EndTournOB endTournOB = new EndTournPresenter();
-            EndTournIB endTournIB = new EndTournUC(endTournOB, outputData.getUsername(), outputData.getAccounts(),
-                    outputData.getBrackets(), outputData.getBracketID());
+            EndTournIB endTournIB = new EndTournUC(endTournOB, outputData.getUsername(), nextScreenData.getInformationRecord(),
+                    outputData.getBracketID());
             EndTournController endTournController = new EndTournController(endTournIB);
 
             StartTournOB startTournOB = new StartTournPresenter();
-            StartTournIB startTournIB = new StartTournUC(startTournOB, outputData.getUsername(), outputData.getAccounts(),
-                    outputData.getBrackets(), outputData.getBracketID());
+            StartTournIB startTournIB = new StartTournUC(startTournOB, outputData.getUsername(),
+                    nextScreenData.getInformationRecord(), outputData.getBracketID());
             StartTournController startTournController = new StartTournController(startTournIB);
 
-            NextScreenData nextScreenData = new NextScreenData();
-            nextScreenData.setBrackets(outputData.getBrackets());
-            nextScreenData.setAccounts(outputData.getAccounts());
+//            NextScreenData nextScreenData = new NextScreenData();
+//            nextScreenData.setBrackets(outputData.getBrackets());
+//            nextScreenData.setAccounts(outputData.getAccounts());
             nextScreenData.setCurrentUser(outputData.getUsername());
             nextScreenData.setCurrentBracketID(outputData.getBracketID());
 

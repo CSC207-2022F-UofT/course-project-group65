@@ -1,6 +1,7 @@
 package useCases.assignObserver;
 
 import entities.*;
+import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,16 +15,19 @@ public class AssignObserverUC implements AssignObserverIB {
     private User currUser;
     public AssignObserverGateway gateway;
 
-    public AssignObserverUC(AssignObserverOB outputBound, AssignObserverGateway gateway, Object bracketRepo, Object accountRepo, String currUser){
+    public AssignObserverUC(AssignObserverOB outputBound, AssignObserverGateway gateway, InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;
         this.gateway = gateway;
-        try{
-            this.bracketRepo = (BracketRepo) bracketRepo;
-            this.accountRepo = (AccountRepo) accountRepo;
-            this.currUser = this.accountRepo.getUser(currUser);
-        } catch (ClassCastException e){
-            throw new ClassCastException("AssignObserverUC: Invalid repo type");
-        }
+        this.bracketRepo = informationRecord.getBracketData();
+        this.accountRepo = informationRecord.getAccountData();
+        this.currUser = accountRepo.getUser(currUser);
+//        try{
+//            this.bracketRepo = (BracketRepo) bracketRepo;
+//            this.accountRepo = (AccountRepo) accountRepo;
+//            this.currUser = this.accountRepo.getUser(currUser);
+//        } catch (ClassCastException e){
+//            throw new ClassCastException("AssignObserverUC: Invalid repo type");
+//        }
     }
 
     /**

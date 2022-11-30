@@ -2,6 +2,7 @@ package screens.changePoints;
 
 import database.ChangePoints.ChangePointsFileWriter;
 import useCases.changePoints.*;
+import useCases.generalClasses.InformationRecord;
 
 public class ChangePointsController {
 
@@ -17,10 +18,10 @@ public class ChangePointsController {
 //        this.userInput = userInput;
 //    }
 
-    public ChangePointsController(Object accountRepo, Object bracketRepo, int bracketID, String username) {
+    public ChangePointsController(InformationRecord informationRecord, int bracketID, String username) {
         ChangePointsOB outputBoundary = new ChangePointsPresenter();
         ChangePointsGateway gateway = new ChangePointsFileWriter("brackets.txt");
-        this.userInput = new ChangePointsUC(outputBoundary, gateway, accountRepo, bracketRepo, bracketID, username);
+        this.userInput = new ChangePointsUC(outputBoundary, gateway, informationRecord, bracketID, username);
     }
 
     // Prepare the output data for the view
