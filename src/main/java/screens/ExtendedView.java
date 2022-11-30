@@ -23,7 +23,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
-import java.util.Vector;
 
 public class ExtendedView extends JFrame implements ActionListener, IBracketView{
 
@@ -66,8 +65,16 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
     public ExtendedView(NextScreenData nsdata, EndTournController endTournController, StartTournController startTournController,
                         JoinTeamController joinTeamController) {
         super ("Tournament View");
-        //Tabbed Pane
         this.nextScreenData = nsdata;
+        nextScreenData.bundleData();
+        LinkedHashMap<Integer, ArrayList<String>> gameToTeams = nextScreenData.getGameToTeams();
+        LinkedHashMap<Integer, ArrayList<Integer>> gameToScore = nextScreenData.getGameToScores();
+        LinkedHashMap<Integer, String> gameToWinner = nextScreenData.getGameToWinner();
+        LinkedHashMap<String, ArrayList<String>> teamToPlayers = nextScreenData.getTeamToPlayers();
+        ArrayList<String> referees = nextScreenData.getReferees();
+        LinkedHashMap<Integer, String> gameToReferee = nextScreenData.getGameToReferee();
+
+        //Tabbed Pane
         this.endTournController = endTournController;
         this.startTournController = startTournController;
         this.joinTeamController = joinTeamController;
@@ -77,20 +84,12 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         btnOptions.addActionListener(this);
         btnLogOut.addActionListener(this);
 
-
-        nextScreenData.bundleData();
         //Bracket View
-        LinkedHashMap<Integer, ArrayList<String>> gameToTeams = nextScreenData.getGameToTeams();
-        LinkedHashMap<Integer, ArrayList<Integer>> gameToScore = nextScreenData.getGameToScores();
-        LinkedHashMap<Integer, String> gameToWinner = nextScreenData.getGameToWinner();
-        LinkedHashMap<String, ArrayList<String>> teamToPlayers = nextScreenData.getTeamToPlayers();
-        ArrayList<String> referees = nextScreenData.getReferees();
-        LinkedHashMap<Integer, String> gameToReferee = nextScreenData.getGameToReferee();
         int currGame = gameToTeams.size();
         int index = 0;
         int numTeams = teamToPlayers.size();
         int rounds = ((Double)(Math.log(numTeams)/Math.log(2))).intValue();
-        String text;
+        String text = "";
         ArrayList<String> teams;
 
         pnlBracket.setLayout(new GridBagLayout());
@@ -98,13 +97,20 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(5,5,5,5);
 
-        for(int i=rounds; i>0; i--){
+        for(int i=1; i<=rounds; i++){
             gbc.gridx = i;
             for(int j= ((Double)(numTeams/Math.pow(2, rounds-i+1))).intValue();
-                j<= rounds; j+= Math.pow(2, i)){
+                j<= Math.pow(2, rounds); j+= Math.pow(2, i)){
                 teams = gameToTeams.get(currGame);
-                text = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - ["
-                        + gameToScore.get(currGame).get(1) + "] " + teams.get(1);
+                switch (teams.size()){
+                    case 0: text = " [] - [] ";
+                        break;
+                    case 1: text = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - [] ";
+                        break;
+                    case 2: text = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - ["
+                            + gameToScore.get(currGame).get(1) + "] " + teams.get(1);
+                        break;
+                }
                 lblBracketGameScores.add(new JLabel());
                 lblBracketGameScores.get(index).setText(text);
                 gbc.gridy = j;
@@ -143,6 +149,15 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         btnEnd.addActionListener(this);
         lblPLInv.setText("Player" + nextScreenData.getRoleToInvite().get("Player"));
         lblOBInv.setText("Observer" + nextScreenData.getRoleToInvite().get("Observer"));
+
+        lblCurrUser.setVisible(true);
+        lblTournamentName.setVisible(true);
+        lblTournamentID.setVisible(true);
+        lblAssignObserver.setVisible(true);
+        lblSelectGame.setVisible(true);
+        lblTeamList.setVisible(true);
+        lblOBInv.setVisible(true);
+        lblPLInv.setVisible(true);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setContentPane(mainPanel);
