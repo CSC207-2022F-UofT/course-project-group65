@@ -81,73 +81,73 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         btnLogOut.addActionListener(this);
 
         //Bracket View
-        setGames(gameToTeams, gameToScore, gameToWinner, teamToPlayers);
-//        int currGame = gameToTeams.size();
-//        int index = 0;
-//        int numTeams = teamToPlayers.size();
-//        int rounds = ((Double)(Math.log(numTeams)/Math.log(2))).intValue();
-//        String scoreText = "";
-//        String winnerText;
-//        ArrayList<String> teams;
-//
-//        pnlBracket.setLayout(new GridBagLayout());
-//        GridBagConstraints gbc = new GridBagConstraints();
-//        gbc.fill = GridBagConstraints.HORIZONTAL;
-//        gbc.insets = new Insets(5,5,5,5);
-//
-//        for(int i=1; i<=rounds; i++){
-//            gbc.gridx = i;
-//            for(int j= ((Double)(numTeams/Math.pow(2, rounds-i))).intValue();
-//                j<= Math.pow(2, rounds + 1); j+= Math.pow(2, i + 1)){
-//                gbc.gridy = j - 1;
-//                pnlBracket.add(new JLabel(""), gbc);
-//                teams = gameToTeams.get(currGame);
-//                switch (teams.size()){
-//                    case 0: scoreText = " [] - [] ";
-//                        break;
-//                    case 1: scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - [] ";
-//                        break;
-//                    case 2: scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - ["
-//                            + gameToScore.get(currGame).get(1) + "] " + teams.get(1);
-//                        break;
-//                }
-//                lblBracketGameScores.add(new JLabel(scoreText));
-//                gbc.gridy = j;
-//                pnlBracket.add(lblBracketGameScores.get(index), gbc);
-//                if(gameToWinner.containsKey(currGame) && !(gameToWinner.get(currGame) == null)){
-//                    winnerText = "Winner: " + gameToWinner.get(currGame);
-//                }
-//                else {
-//                    winnerText = "";
-//                }
-//                lblBracketGameWinner.add(new JLabel(winnerText));
-//                gbc.gridy = j + 1;
-//                pnlBracket.add(lblBracketGameWinner.get(index), gbc);
-//                btnBracketGame.add(new JButton("Game " + currGame));
-//                btnBracketGame.get(index).addActionListener(this);
-//                gbc.gridy = j + 2;
-//                pnlBracket.add(btnBracketGame.get(index), gbc);
-//                currGame --;
-//                index ++;
-//            }
-//        }
+        //setGames(gameToTeams, gameToScore, gameToWinner, teamToPlayers);
+        int currGame = gameToTeams.size();
+        int index = 0;
+        int numTeams = teamToPlayers.size();
+        int rounds = ((Double)(Math.log(numTeams)/Math.log(2))).intValue();
+        String scoreText = "";
+        String winnerText;
+        ArrayList<String> teams;
+
+        pnlBracket.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(5,5,5,5);
+
+        for(int i=1; i<=rounds; i++){
+            gbc.gridx = i;
+            for(int j= ((Double)(numTeams/Math.pow(2, rounds-i))).intValue();
+                j<= Math.pow(2, rounds + 1); j+= Math.pow(2, i + 1)){
+                gbc.gridy = j - 1;
+                pnlBracket.add(new JLabel(""), gbc);
+                teams = gameToTeams.get(currGame);
+                switch (teams.size()){
+                    case 0: scoreText = " [] - [] ";
+                        break;
+                    case 1: scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - [] ";
+                        break;
+                    case 2: scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - ["
+                            + gameToScore.get(currGame).get(1) + "] " + teams.get(1);
+                        break;
+                }
+                lblBracketGameScores.add(new JLabel(scoreText));
+                gbc.gridy = j;
+                pnlBracket.add(lblBracketGameScores.get(index), gbc);
+                if(gameToWinner.containsKey(currGame) && !(gameToWinner.get(currGame) == null)){
+                    winnerText = "Winner: " + gameToWinner.get(currGame);
+                }
+                else {
+                    winnerText = "";
+                }
+                lblBracketGameWinner.add(new JLabel(winnerText));
+                gbc.gridy = j + 1;
+                pnlBracket.add(lblBracketGameWinner.get(index), gbc);
+                btnBracketGame.add(new JButton("Game " + currGame));
+                btnBracketGame.get(index).addActionListener(this);
+                gbc.gridy = j + 2;
+                pnlBracket.add(btnBracketGame.get(index), gbc);
+                currGame --;
+                index ++;
+            }
+        }
 
         //Teams View
         btnCreateTeam.addActionListener(this);
         btnJoinTeam.addActionListener(this);
-        setTeams(teamToPlayers);
-//        for(String team: teamToPlayers.keySet()){
-//            cmbJoinTeam.addItem(team);
-//        }
+        //setTeams(teamToPlayers);
+        for(String team: teamToPlayers.keySet()){
+            cmbJoinTeam.addItem(team);
+        }
         cmbJoinTeam.addActionListener(this);
 
         //Observer View
-//        for(int gameID: gameToReferee.keySet()){
-//            cmbSelectGame.addItem(gameID);
-//        }
-//        for(String ref: referees){
-//            cmbAssignObserver.addItem(ref);
-//        }
+        for(int gameID: gameToReferee.keySet()){
+            cmbSelectGame.addItem(gameID);
+        }
+        for(String ref: referees){
+            cmbAssignObserver.addItem(ref);
+        }
 //        cmbSelectGame.setEditable(true);
 //        cmbAssignObserver.setEditable(true);
 //        cmbJoinTeam.setEditable(true);
