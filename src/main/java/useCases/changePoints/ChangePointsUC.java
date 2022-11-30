@@ -4,8 +4,8 @@ import entities.*;
 import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.bundleBracketData.BundleBracketData;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
-import useCases.generalClasses.traversalStrategies.BracketMethods;
-import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
+//import useCases.generalClasses.traversalStrategies.BracketMethods;
+//import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ public class ChangePointsUC implements ChangePointsIB{
     public User user;
     public Game game;
 //    public BracketMethods treeMethodAccess;
-    public BracketMethods bracketMethods;
+//    public BracketMethods bracketMethods;
     public ChangePointsOB outputBoundary;
     private BracketRepo bracketRepo;
     private AccountRepo accountRepo;
@@ -56,7 +56,7 @@ public class ChangePointsUC implements ChangePointsIB{
         this.bracketRepo = informationRecord.getBracketData();
         this.bracket = this.bracketRepo.getBracket(bracketID);
         this.user = this.accountRepo.getUser(username);
-        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+//        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
 //        try{
 //            this.bracketRepo = (BracketRepo) bracketRepo;
 //            this.bracket = this.bracketRepo.getBracket(bracketID);
@@ -117,7 +117,7 @@ public class ChangePointsUC implements ChangePointsIB{
     private boolean checkAllGamesFull(Game game){
         int teamRound = game.getGameRound();
 //        ArrayList<Game> games = returnLevelGames(this.bracket.getFinalGame(), teamRound);
-        ArrayList<Game> games = bracketMethods.getGamesInRound(teamRound);
+        ArrayList<Game> games = bracket.getGamesInRound(teamRound);
         for (Game g: games){
             if (g.getNumTeams() < 2){
                 return false;

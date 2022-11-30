@@ -3,8 +3,8 @@ import entities.*;
 import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.bundleBracketData.BundleBracketData;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
-import useCases.generalClasses.traversalStrategies.BracketMethods;
-import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
+//import useCases.generalClasses.traversalStrategies.BracketMethods;
+//import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
     public User user;
     public Game game;
 //    public BracketMethods treeMethodAccess;
-    public BracketMethods bracketMethods;
+//    public BracketMethods bracketMethods;
     public AdvanceTeamOB outputBoundary;
     public AdvanceTeamGateway gateway;
     private final BracketRepo bracketRepo;
@@ -70,7 +70,7 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
         this.user = this.accountRepo.getUser(username);
         String bracketType = "Default"; // This can be changed later to accomodate different types of brackets
 //        this.treeMethodAccess = new BracketMethods(bracketType);
-        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+//        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
 
 //    private void findGame(int gameID, Game head) {
 //        this.game = this.treeMethodAccess.findGame(gameID, head);
@@ -105,7 +105,7 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
 
     private ArrayList<Game> returnLevelGames(Game head, int roundNum){
 //        return this.treeMethodAccess.levelNodes(head, roundNum);
-        return this.bracketMethods.getGamesInRound(roundNum);
+        return bracket.getGamesInRound(roundNum);
     }
 
     // This method is used to insert the winning team into the next game in the bracket

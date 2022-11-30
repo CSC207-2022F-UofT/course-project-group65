@@ -3,8 +3,8 @@ package useCases.declareWinner;
 import entities.*;
 import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
-import useCases.generalClasses.traversalStrategies.BracketMethods;
-import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
+//import useCases.generalClasses.traversalStrategies.BracketMethods;
+//import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +16,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
     public Game game;
     public DeclareWinnerOB outputBoundary;
     //    public BracketMethods treeMethodAccess;
-    public BracketMethods bracketMethods;
+//    public BracketMethods bracketMethods;
     public DeclareWinnerGateway gateway;
     private BracketRepo bracketRepo;
     private AccountRepo accountRepo;

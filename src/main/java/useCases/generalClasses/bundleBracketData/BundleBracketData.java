@@ -4,7 +4,7 @@ import entities.Bracket;
 import entities.Game;
 import entities.Team;
 import entities.User;
-import useCases.generalClasses.traversalStrategies.BracketMethods;
+//import useCases.generalClasses.traversalStrategies.BracketMethods;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -107,8 +107,7 @@ public class BundleBracketData {
     }
 
     private ArrayList<Game> getGames(Bracket bracket){
-        BracketMethods bm = new BracketMethods(bracket);
-        return bm.getAllGames();
+        return bracket.getAllGames();
     }
 
     public LinkedHashMap<Integer, ArrayList<String>> getGameToTeams() {
