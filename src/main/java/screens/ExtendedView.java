@@ -33,6 +33,7 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
     private JPanel pnlObserver;
     private JPanel pnlOverseer;
     private ArrayList<JLabel> lblBracketGameScores = new ArrayList<>();
+    private ArrayList<JLabel> lblBracketGameWinner = new ArrayList<>();
     private ArrayList<JButton> btnBracketGame = new ArrayList<>();
     private JLabel lblTeamList;
     private JComboBox<String> cmbJoinTeam;
@@ -56,11 +57,6 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
     private EndTournController endTournController;
     private JoinTeamController joinTeamController;
     private StartTournController startTournController;
-
-//    public static void main(String[] args){
-//        ExtendedView a = new ExtendedView();
-//        a.createUIComponents();
-//    }
 
     public ExtendedView(NextScreenData nsdata, EndTournController endTournController, StartTournController startTournController,
                         JoinTeamController joinTeamController) {
@@ -89,7 +85,8 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         int index = 0;
         int numTeams = teamToPlayers.size();
         int rounds = ((Double)(Math.log(numTeams)/Math.log(2))).intValue();
-        String text = "";
+        String scoreText = "";
+        String winnerText;
         ArrayList<String> teams;
 
         pnlBracket.setLayout(new GridBagLayout());
@@ -99,26 +96,35 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
 
         for(int i=1; i<=rounds; i++){
             gbc.gridx = i;
-            for(int j= ((Double)(numTeams/Math.pow(2, rounds-i+1))).intValue();
-                j<= Math.pow(2, rounds); j+= Math.pow(2, i)){
+            for(int j= ((Double)(numTeams/Math.pow(2, rounds-i))).intValue();
+                j<= Math.pow(2, rounds + 1); j+= Math.pow(2, i + 1)){
+                gbc.gridy = j - 1;
+                pnlBracket.add(new JLabel(""), gbc);
                 teams = gameToTeams.get(currGame);
                 switch (teams.size()){
-                    case 0: text = " [] - [] ";
+                    case 0: scoreText = " [] - [] ";
                         break;
-                    case 1: text = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - [] ";
+                    case 1: scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - [] ";
                         break;
-                    case 2: text = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - ["
+                    case 2: scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - ["
                             + gameToScore.get(currGame).get(1) + "] " + teams.get(1);
                         break;
                 }
-                lblBracketGameScores.add(new JLabel());
-                lblBracketGameScores.get(index).setText(text);
+                lblBracketGameScores.add(new JLabel(scoreText));
                 gbc.gridy = j;
                 pnlBracket.add(lblBracketGameScores.get(index), gbc);
-                btnBracketGame.add(new JButton());
+                if(gameToWinner.containsKey(currGame) && !(gameToWinner.get(currGame) == null)){
+                    winnerText = "Winner: " + gameToWinner.get(currGame);
+                }
+                else {
+                    winnerText = "";
+                }
+                lblBracketGameWinner.add(new JLabel(winnerText));
+                gbc.gridy = j + 1;
+                pnlBracket.add(lblBracketGameWinner.get(index), gbc);
+                btnBracketGame.add(new JButton("Game " + currGame));
                 btnBracketGame.get(index).addActionListener(this);
-                btnBracketGame.get(index).setText("Game " + currGame);
-                gbc.gridy = (j + 1);
+                gbc.gridy = j + 2;
                 pnlBracket.add(btnBracketGame.get(index), gbc);
                 currGame --;
                 index ++;
