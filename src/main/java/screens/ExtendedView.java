@@ -147,8 +147,8 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         //Overseer View
         btnStart.addActionListener(this);
         btnEnd.addActionListener(this);
-        lblPLInv.setText("Player" + nextScreenData.getRoleToInvite().get("Player"));
-        lblOBInv.setText("Observer" + nextScreenData.getRoleToInvite().get("Observer"));
+        lblPLInv.setText("Player: " + nextScreenData.getRoleToInvite().get("Player"));
+        lblOBInv.setText("Observer: " + nextScreenData.getRoleToInvite().get("Observer"));
 
         lblCurrUser.setVisible(true);
         lblTournamentName.setVisible(true);
@@ -247,7 +247,7 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
             if (e.getSource() == btnBracketGame.get(i)){
                 DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
                         declareWinnerController, changePointsController, this);
-                doBracketOperations.setGameForOperation(1);
+                doBracketOperations.setGameForOperation(btnBracketGame.size()-i);
                 doBracketOperations.setGameNumLabel("Game 1");
                 doBracketOperations.setTeamsLabel(lblBracketGameScores.get(i).getText());
                 doBracketOperations.setVisible(true);
