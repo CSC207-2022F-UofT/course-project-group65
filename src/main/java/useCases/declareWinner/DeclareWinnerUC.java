@@ -1,6 +1,9 @@
 package useCases.declareWinner;
 
 import entities.*;
+import entities.game_finder_strategy.GameFinder;
+import entities.game_finder_strategy.GeneralisedGameFinder;
+import entities.game_finder_strategy.TreeGameFinder;
 import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
 //import useCases.generalClasses.traversalStrategies.BracketMethods;
@@ -107,6 +110,14 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
     public DeclareWinnerOD setWinner(DeclareWinnerID inputData) {
 //        findGame(inputData.getGameIDDW(), this.bracket.getFinalGame());
         this.game = bracket.getGame(inputData.getGameIDDW());
+
+//        if (bracket instanceof DefaultBracket){
+//            GameFinder<DefaultBracket> gameFinder = new TreeGameFinder<>();
+//            this.game = gameFinder.getGame(inputData.getGameIDDW(), this.bracket.getFinalGame());
+//        } else {
+//            GameFinder<Bracket> gameFinder = new GeneralisedGameFinder<>();
+//            this.game = gameFinder.getGame(inputData.getGameIDDW(), this.bracket.getFinalGame());
+//        }
 
         if (!checkUserPermission(this.user)) {
             return this.outputBoundary.presentError("You do not have permission to declare a winner for " +

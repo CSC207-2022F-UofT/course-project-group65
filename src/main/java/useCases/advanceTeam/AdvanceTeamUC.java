@@ -1,5 +1,11 @@
 package useCases.advanceTeam;
 import entities.*;
+import entities.game_finder_strategy.GameFinder;
+import entities.game_finder_strategy.GeneralisedGameFinder;
+import entities.game_finder_strategy.TreeGameFinder;
+import entities.round_games_strategy.GeneralisedRoundGames;
+import entities.round_games_strategy.RoundGames;
+import entities.round_games_strategy.TreeRoundGames;
 import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.bundleBracketData.BundleBracketData;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
@@ -8,7 +14,6 @@ import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 public class AdvanceTeamUC implements AdvanceTeamIB {
@@ -105,6 +110,13 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
 
     private ArrayList<Game> returnLevelGames(Game head, int roundNum){
 //        return this.treeMethodAccess.levelNodes(head, roundNum);
+//        if (bracket instanceof DefaultBracket){
+//            RoundGames<DefaultBracket> roundGames = new TreeRoundGames<>();
+//            return roundGames.getGamesInRound(head, roundNum);
+//        } else {
+//            RoundGames<Bracket> roundGames = new GeneralisedRoundGames<>();
+//            return roundGames.getGamesInRound(head, roundNum);
+//        }
         return bracket.getGamesInRound(roundNum);
     }
 
@@ -129,7 +141,15 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
      */
     public AdvanceTeamOD advanceWinner(AdvanceTeamID inputData) {
 //        findGame(inputData.getGameIDAT(), this.bracket.getFinalGame());
+//        if (bracket instanceof DefaultBracket){
+//            GameFinder<DefaultBracket> gameFinder = new TreeGameFinder<>();
+//            this.game = gameFinder.getGame(inputData.getGameIDAT(), this.bracket.getFinalGame());
+//        } else {
+//            GameFinder<Bracket> gameFinder = new GeneralisedGameFinder<>();
+//            this.game = gameFinder.getGame(inputData.getGameIDAT(), this.bracket.getFinalGame());
+//        }
         this.game = bracket.getGame(inputData.getGameIDAT());
+
 //        if (this.game.getGameRound() > getTreeHeight(this.bracket.getFinalGame())) {
 //            return this.outputBoundary.presentError("This game is in the final round.");
 //        }

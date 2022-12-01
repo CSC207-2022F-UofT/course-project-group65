@@ -1,10 +1,12 @@
 package useCases.assignObserver;
 
 import entities.*;
+import entities.game_finder_strategy.GameFinder;
+import entities.game_finder_strategy.GeneralisedGameFinder;
+import entities.game_finder_strategy.TreeGameFinder;
 import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AssignObserverUC implements AssignObserverIB {
@@ -44,6 +46,15 @@ public class AssignObserverUC implements AssignObserverIB {
         }
         User ref = findReferee(bracket, input.getAssignee());
         Game game = bracket.getGame(input.getGameID());
+//        Game game;
+//        if (bracket instanceof DefaultBracket){
+//            GameFinder<DefaultBracket> gameFinder = new TreeGameFinder<>();
+//            game = gameFinder.getGame(input.getGameID(), this.bracket.getFinalGame());
+//        } else {
+//            GameFinder<Bracket> gameFinder = new GeneralisedGameFinder<>();
+//            game = gameFinder.getGame(input.getGameID(), this.bracket.getFinalGame());
+//        }
+
         if (ref == null){
             return outputBound.prepareFailView("Assignee is not an Observer.");
         }

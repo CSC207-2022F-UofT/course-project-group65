@@ -1,6 +1,12 @@
 package useCases.changePoints;
 
 import entities.*;
+import entities.game_finder_strategy.GameFinder;
+import entities.game_finder_strategy.GeneralisedGameFinder;
+import entities.game_finder_strategy.TreeGameFinder;
+import entities.round_games_strategy.GeneralisedRoundGames;
+import entities.round_games_strategy.RoundGames;
+import entities.round_games_strategy.TreeRoundGames;
 import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.bundleBracketData.BundleBracketData;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
@@ -9,7 +15,6 @@ import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 
 
 public class ChangePointsUC implements ChangePointsIB{
@@ -118,6 +123,14 @@ public class ChangePointsUC implements ChangePointsIB{
         int teamRound = game.getGameRound();
 //        ArrayList<Game> games = returnLevelGames(this.bracket.getFinalGame(), teamRound);
         ArrayList<Game> games = bracket.getGamesInRound(teamRound);
+//        ArrayList<Game> games;
+//        if (bracket instanceof DefaultBracket){
+//            RoundGames<DefaultBracket> roundGames = new TreeRoundGames<>();
+//            games = roundGames.getGamesInRound(bracket.getFinalGame(), teamRound);
+//        } else {
+//            RoundGames<Bracket> roundGames = new GeneralisedRoundGames<>();
+//            games = roundGames.getGamesInRound(bracket.getFinalGame(), teamRound);
+//        }
         for (Game g: games){
             if (g.getNumTeams() < 2){
                 return false;
@@ -142,6 +155,15 @@ public class ChangePointsUC implements ChangePointsIB{
     public ChangePointsOD changePoints(ChangePointsID inputData) {
 //        findGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
         this.game = bracket.getGame(inputData.getGameIDCP());
+
+//        if (bracket instanceof DefaultBracket){
+//            GameFinder<DefaultBracket> gameFinder = new TreeGameFinder<>();
+//            this.game = gameFinder.getGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
+//        } else {
+//            GameFinder<Bracket> gameFinder = new GeneralisedGameFinder<>();
+//            this.game = gameFinder.getGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
+//        }
+
         findTeam(inputData);
         if (!this.bracket.getTournamentCondition()) {
             return this.outputBoundary.presentError("The tournament is not in progress. " +
