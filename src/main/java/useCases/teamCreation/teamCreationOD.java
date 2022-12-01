@@ -3,6 +3,9 @@ import entities .*;
 
 import java.util.ArrayList;
 
+/**
+ * The output data in teamCreation use case
+ */
 public class teamCreationOD {
     private String success;
     private ArrayList<ArrayList<String>> teamMembers;

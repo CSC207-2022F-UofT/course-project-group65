@@ -1,5 +1,8 @@
 package useCases.teamCreation;
 
+/**
+ * the input data in teamCreation use case
+ */
 public class teamCreationID {
     private String teamName;
 
