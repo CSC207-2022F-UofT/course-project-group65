@@ -96,6 +96,7 @@ public class enterBracketInfo extends JFrame implements ActionListener {
 
             CreateBracketOD outputData = createBracketController.create(bracketType, bracketName, numTeams, teamSizes,
                     winCondition);
+            //System.out.println(outputData);
 //            System.out.println(outputData.getBracketID());
 
 //            Will need to add controller initialization here when we have the controllers as

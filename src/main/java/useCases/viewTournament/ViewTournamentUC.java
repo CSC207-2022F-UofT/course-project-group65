@@ -10,6 +10,7 @@ public class ViewTournamentUC implements ViewTournamentIB {
     private final BracketRepo bracketRepo;
     private final AccountRepo accountRepo;
     private User currUser;
+    public ViewTournamentGateway gateway;
 
     /**
      * Construct a ViewTournamentUC interactor instance with the given BracketRepo and AccountRepo.
@@ -19,12 +20,20 @@ public class ViewTournamentUC implements ViewTournamentIB {
      * @param accountRepo The AccountRepo to use
      * @param currUser    The username of the user who is joining the tournament
      */
-    public ViewTournamentUC(ViewTournamentOB outputBound, BracketRepo bracketRepo,
-                            AccountRepo accountRepo, String currUser){
+    public ViewTournamentUC(ViewTournamentOB outputBound, ViewTournamentGateway gateway, Object bracketRepo,
+                            Object accountRepo, String currUser){
         this.outputBound = outputBound;
-        this.bracketRepo =bracketRepo;
-        this.accountRepo = accountRepo;
-        this.currUser = accountRepo.getUser(currUser);
+        this.gateway = gateway;
+        try{
+            this.bracketRepo = (BracketRepo) bracketRepo;
+            this.accountRepo = (AccountRepo) accountRepo;
+            this.currUser = this.accountRepo.getUser(currUser);
+        } catch (ClassCastException e) {
+            throw new ClassCastException("bracketRepo must be of type BracketRepo");
+        }
+//        this.bracketRepo =bracketRepo;
+//        this.accountRepo = accountRepo;
+//        this.currUser = accountRepo.getUser(currUser);
     }
 
     /**
@@ -43,6 +52,14 @@ public class ViewTournamentUC implements ViewTournamentIB {
         String role = currUser.getBracketRole(tournamentID);
         BundleBracketData bracketData = new BundleBracketData();
         bracketData.bundleBracket(bracketRepo.getBracket(tournamentID));
+
+        ViewTournamentDSID dsid = new ViewTournamentDSID(this.bracketRepo);
+        try {
+            this.gateway.save(dsid);
+        } catch (Exception e) {
+            return outputBound.prepareFailView("Error saving data");
+        }
+
         ViewTournamentOD output = new ViewTournamentOD(currUser.getUsername(), bracketData, currUser.getAllTournaments(),
                 bracketRepo, accountRepo); //Temp Fix
 
