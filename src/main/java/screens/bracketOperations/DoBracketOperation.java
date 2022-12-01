@@ -215,14 +215,14 @@ public class DoBracketOperation extends JFrame implements ActionListener {
             if (e.getSource() == advanceButton) {
                 AdvanceTeamOD outputAdvance = advanceTeamController.create(gameID);
                 nextScreenData.bundleData();
-                this.extendedView.setGames(nextScreenData.getGameToTeams(), nextScreenData.getGameToScores(),
-                        nextScreenData.getGameToWinner(), nextScreenData.getTeamToPlayers());
+                int advGameID = outputAdvance.getAdvancedGame();
+                this.extendedView.updateGameScore(advGameID, outputAdvance.getGameToTeams().get(advGameID),
+                        outputAdvance.getGameToScores().get(advGameID));
             } else if (e.getSource() == declareButton) {
                 DeclareWinnerOD outputWinner = declareWinnerController.create(gameID);
                 System.out.println(outputWinner.getWinningTeamName());
                 nextScreenData.bundleData();
-                this.extendedView.setGames(nextScreenData.getGameToTeams(), nextScreenData.getGameToScores(),
-                        nextScreenData.getGameToWinner(), nextScreenData.getTeamToPlayers());
+                this.extendedView.updateWinner(gameID, outputWinner.getWinningTeamName());
             } else if (e.getSource() == changePointsButton){
 
                 int points = Integer.parseInt(changePtsTF.getText().trim());
@@ -232,8 +232,7 @@ public class DoBracketOperation extends JFrame implements ActionListener {
                 }
                 ChangePointsOD outputData = changePointsController.create(gameID, points, teamName);
                 nextScreenData.bundleData();
-                this.extendedView.setGames(nextScreenData.getGameToTeams(), nextScreenData.getGameToScores(),
-                        nextScreenData.getGameToWinner(), nextScreenData.getTeamToPlayers());
+                this.extendedView.updateGameScore(gameID, outputData.getTeams(), outputData.getPoints());
             }
 //            nextScreenData.bundleData();
 //            extendedView.setTeams(nextScreenData.getTeamToPlayers());
