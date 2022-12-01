@@ -9,7 +9,11 @@ import java.io.ObjectOutputStream;
 
 public class JoinTeamFileWriter implements JoinTeamGateway {
     private final String filename;
-
+    /**
+     * Construct a new JoinTeamFileWriter that will write to the given file.
+     *
+     * @param filename The file to write to.
+     */
     public JoinTeamFileWriter(String filename) {
         this.filename = filename;
     }
