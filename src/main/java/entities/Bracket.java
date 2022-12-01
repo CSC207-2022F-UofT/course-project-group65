@@ -1,9 +1,10 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public abstract class Bracket {
+public abstract class Bracket implements Serializable {
 /*
     * This abstract class represents a bracket in a tournament.
  */
