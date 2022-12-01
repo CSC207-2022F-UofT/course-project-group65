@@ -89,6 +89,9 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         String winnerText;
         ArrayList<String> teams;
 
+        JComponent ui = new JPanel(new BorderLayout(10, 10));
+        ui.add(new JScrollPane(mainPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS));
+//        pnlBracket.add(new JScrollPane(pnlBracket));
         pnlBracket.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -167,8 +170,8 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         lblPLInv.setVisible(true);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setContentPane(mainPanel);
-        setPreferredSize(new Dimension(800, 600));
+        setContentPane(ui);
+        setPreferredSize(new Dimension(1200, 800));
         pack();
         setVisible(true);
     }

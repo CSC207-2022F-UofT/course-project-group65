@@ -232,6 +232,10 @@ public class DoBracketOperation extends JFrame implements ActionListener {
                 }
                 ChangePointsOD outputData = changePointsController.create(gameID, points, teamName);
                 nextScreenData.bundleData();
+
+                changeTeamsLabel(outputData.getTeams().get(0), outputData.getTeams().get(1), outputData.getPoints().get(0), outputData.getPoints().get(1));
+                //changeTeamsLabel(outputData.getTeam1Name(), outputData.getTeam2Name(), outputData.getTeam1Score(), outputData.getTeam2Score());
+
                 this.extendedView.updateGameScore(gameID, outputData.getTeams(), outputData.getPoints());
             }
 //            nextScreenData.bundleData();
