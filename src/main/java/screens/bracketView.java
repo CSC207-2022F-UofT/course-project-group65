@@ -468,9 +468,11 @@ private JTextField observerGame1;
             StartTournOD startData = startTournController.startTourn();
             ArrayList<String> startErrors = startData.getErrors();
             startErrors errorView = new startErrors(this.startTournController);
+            boolean condition = true;
             for (String error : startErrors) {
                 if (Objects.equals(error, "USERROLE")) {
-                    errorView.setWarning1("You do not have permission to start the tournament.");
+                    condition = false;
+                    JOptionPane.showMessageDialog(this, "You do not have permission to start the tournament.");
                 } else if (Objects.equals(error, "NUMTEAMS")) {
                     errorView.setWarning2("There are not enough teams in the tournament.");
                 } else if (Objects.equals(error, "NOOBSERVER")) {
@@ -479,7 +481,9 @@ private JTextField observerGame1;
                     errorView.setWarning4("There is at least one team that is not full.");
                 }
             }
-            errorView.setVisible(true);
+            if (condition) {
+            errorView.setVisible(true);}
+
         } else if (e.getSource() == declareWinnerEndTournamentButton) {
 //            System.out.println("Declare Winner End Tournament Button Clicked");
             //            TODO

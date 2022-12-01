@@ -15,6 +15,7 @@ public class EndTournUC implements EndTournIB{
     private final int bracketId;
     private final Bracket bracket;
     private final User user;
+//    private EndTournGateway gateway;
 
     public EndTournUC(EndTournOB outputBoundary, String currentUser, AccountRepo accounts, BracketRepo brackets,
                       int bracketId) {

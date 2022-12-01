@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class startErrors extends JFrame implements ActionListener {
     private JButton startBtn;
     private JButton cancelBtn;
-    private JLabel warning1;
+
     private JLabel warning2;
     private JLabel warning3;
     private JLabel warning4;
@@ -31,9 +31,6 @@ public class startErrors extends JFrame implements ActionListener {
         this.pack();
     }
 
-    public void setWarning1(String warning) {
-        warning1.setText(warning);
-    }
 
     public void setWarning2(String warning) {
         warning2.setText(warning);

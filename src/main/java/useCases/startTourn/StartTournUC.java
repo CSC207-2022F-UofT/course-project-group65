@@ -79,9 +79,7 @@ public class StartTournUC implements StartTournIB{
 //        System.out.println(bracket.getTournamentCondition());
     }
 
-    // TODO: implement the check part after finishing front end.
-    /// TODO: after returning the error message to the user, we want to know whether the user still wants to
-    /// start the tournament anyway. but for now I don't know how to implement that so I'm just leaving it.
+
     @Override
     public StartTournOD startTourn() {
         ArrayList<String> errors = new ArrayList<>();
@@ -92,7 +90,7 @@ public class StartTournUC implements StartTournIB{
 
         if (!checkUserRole()) {
             errors.add(errorType1);
-//            return this.outputBoundary.presentError("You do not have permission to start the tournament.");
+            return this.outputBoundary.presentError("You do not have permission to start the tournament.");
         }
 
         if (checkNumTeams()) {
