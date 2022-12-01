@@ -26,14 +26,21 @@ public class teamCreationUC implements teamCreationIB {
         this.brackets = (BracketRepo) brackets;
         this.gateway = gateway;
     }
-    // used to check whether the current user is a player
+
+    /**
+     * Checks if the creator is a player
+     * @return a boolean that indicates whether the current user is a player
+     */
     public boolean checkPlayer(){
         Bracket curBracket = brackets.getBracket(bracketID);
         User creator = accounts.getUser(creatorName);
         return creator.getBracketRole(curBracket.getTournamentID()).equals("Player");
     }
 
-    //used to check if a team with the same teamName exists in the bracket
+    /**
+     * @param userInput input data
+     * @return a boolean that check whether the current user is a player
+     */
     public boolean checkTeamNameExists(teamCreationID userInput){
         String teamName = userInput.getTeamName();
         Bracket curBracket = brackets.getBracket(bracketID);
@@ -46,7 +53,10 @@ public class teamCreationUC implements teamCreationIB {
         return false;
     }
 
-    //find a blank team in the bracket, returns null if the bracket is full
+    /**
+     * find a blank team in the bracket
+     * @return a blank team in the bracket, returns null if the bracket is full
+     */
     public Team findBlankTeam(){
         Bracket curBracket = brackets.getBracket(bracketID);
         List<Team> teams = curBracket.getTeams();
@@ -58,7 +68,11 @@ public class teamCreationUC implements teamCreationIB {
         return null;
     }
 
-    // creates the team and returns a string that indicates whether the team has been successfully created
+    /**
+     * creates the team based on user input
+     * @param userInput input data from user
+     * @return a string that indicates whether the team has been successfully created
+     */
     public String createTeam(teamCreationID userInput){
         String teamName = userInput.getTeamName();
         User creator = accounts.getUser(creatorName);
@@ -69,6 +83,10 @@ public class teamCreationUC implements teamCreationIB {
 
     }
 
+    /**
+     * Checks if the creator is in a team
+     * @return a boolean that indicates whether the current user is in a team
+     */
     public boolean inATeam(Bracket bracket){
         User creator = accounts.getUser(creatorName);
         ArrayList<Team> teams = bracket.getTeams();
