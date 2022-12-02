@@ -29,6 +29,9 @@ public class InformationRecord {
     public BracketRepo getBracketData() {
         return bracketData;
     }
+    public int getMaxTeamSize(int bracketID){
+        return this.bracketData.getBracket(bracketID).getTeamSize();
+    }
 
     public void setAccountData(AccountRepo accountData) {
         this.accountData = accountData;

@@ -87,6 +87,10 @@ public class NextScreenData {
         return this.informationRecord.getUserTournaments(this.currentUser);
     }
 
+    public int getMaxTeamSize(int bracketID) {
+        return this.informationRecord.getMaxTeamSize(bracketID);
+    }
+
     public void setCurrentBracketID(int bracketID) {
         this.currentBracketID = bracketID;
     }

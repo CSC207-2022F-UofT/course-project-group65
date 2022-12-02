@@ -181,11 +181,11 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
         Game advancedGame = insertTeam(winningTeam, this.game);
 
         // Advances the observer refereeing the winning team to the next round.
-        try {
-            advancedGame.setObserver(winningObserver);
-        } catch (NullPointerException e) {
-            return this.outputBoundary.presentError("Next game does not exist.");
-        }
+//        try {
+//            advancedGame.setObserver(winningObserver);
+//        } catch (NullPointerException e) {
+//            return this.outputBoundary.presentError("Next game does not exist.");
+//        }
 
         // This is where we would save the bracket to the database, but we don't have a database. We save locally.
         AdvanceTeamDSID dsInputData = new AdvanceTeamDSID(this.bracketRepo);

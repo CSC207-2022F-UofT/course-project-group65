@@ -20,15 +20,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Objects;
+import java.util.*;
 
 public class ExtendedView extends JFrame implements ActionListener, IBracketView{
 
     private JTabbedPane mainTabbedPane;
     private JPanel mainPanel;
+    private JScrollPane pnlBracketScrollPane;
     private JPanel pnlBracket;
     private JPanel pnlTeams;
     private JPanel pnlObserver;
@@ -54,7 +52,11 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
     private JLabel lblTournamentID;
     private JButton btnOptions;
     private JButton btnLogOut;
+    private JScrollPane teamMembers;
+    private JScrollPane observerAssignments;
     public NextScreenData nextScreenData;
+    private String[][] teamMemberData;
+    private String[][] observerData;
     private EndTournController endTournController;
     private JoinTeamController joinTeamController;
     private StartTournController startTournController;
@@ -90,9 +92,54 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         String winnerText;
         ArrayList<String> teams;
 
-        JComponent ui = new JPanel(new BorderLayout(10, 10));
-        ui.add(new JScrollPane(mainPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS));
+        //JComponent ui = new JPanel(new BorderLayout(5, 5));
+        //ui.add(new JScrollPane(mainPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS));
 //        pnlBracket.add(new JScrollPane(pnlBracket));
+
+
+        // Team members added to team view
+        String[] column = {"Team Name", "Team Members"};
+        this.teamMemberData = new String[teamToPlayers.size()][nextScreenData.getMaxTeamSize(nextScreenData.getCurrentBracketID())];
+        int index1 = 0;
+        for (String team : teamToPlayers.keySet()) {
+            teamMemberData[index1][0] = team;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < teamToPlayers.get(team).size(); i++) {
+                if (i == teamToPlayers.get(team).size() - 1) {
+                    sb.append(teamToPlayers.get(team).get(i));
+                } else {
+                    sb.append(teamToPlayers.get(team).get(i)).append(", ");
+                }
+            }
+            teamMemberData[index1][1] = String.valueOf(sb);
+            index1++;
+        }
+
+        JTable teamMemberTable = new JTable(teamMemberData, column);
+        teamMembers.add(teamMemberTable);
+        teamMembers.getViewport().add(teamMemberTable);
+        teamMembers.setVisible(true);
+        teamMemberTable.setVisible(true);
+
+        // Observer Assignments
+        String[] obsColumn = {"Game", "Observer"};
+        this.observerData = new String[gameToReferee.size()][2];
+        int index2 = 0;
+        for (Integer game : gameToReferee.keySet()) {
+            observerData[index2][0] = String.valueOf(game);
+            if (gameToReferee.get(game) != null) {
+                observerData[index2][1] = gameToReferee.get(game);
+            } else {
+                observerData[index2][1] = "No Observer Assigned";
+            }
+            index2++;
+        }
+        JTable observerTable = new JTable(observerData, obsColumn);
+        observerAssignments.add(observerTable);
+        observerAssignments.getViewport().add(observerTable);
+        observerAssignments.setVisible(true);
+        observerTable.setVisible(true);
+
         pnlBracket.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -171,7 +218,7 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         lblPLInv.setVisible(true);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setContentPane(ui);
+        setContentPane(mainPanel);
         setPreferredSize(new Dimension(1200, 800));
         pack();
         setVisible(true);
@@ -227,12 +274,47 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         }
     }
 
-    public void addPlayer(String name, String team){
+    public void updateTeamMembers(HashMap<String, ArrayList<String>> teamToPlayers){
+        String[] column = {"Team Name", "Team Members"};
+        this.teamMemberData = new String[teamToPlayers.size()][nextScreenData.getMaxTeamSize(nextScreenData.getCurrentBracketID())];
+        int index1 = 0;
+        for (String team : teamToPlayers.keySet()) {
+            teamMemberData[index1][0] = team;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < teamToPlayers.get(team).size(); i++) {
+                if (i == teamToPlayers.get(team).size() - 1) {
+                    sb.append(teamToPlayers.get(team).get(i));
+                } else {
+                    sb.append(teamToPlayers.get(team).get(i)).append(", ");
+                }
+            }
+            teamMemberData[index1][1] = String.valueOf(sb);
+            index1++;
+        }
 
+        JTable teamMemberTable = new JTable(teamMemberData, column);
+        teamMembers.add(teamMemberTable);
+        teamMembers.getViewport().add(teamMemberTable);
+        teamMemberTable.setVisible(true);
     }
 
-    public void addReferee(){
-
+    public void updateObserverAssignments(LinkedHashMap<Integer, String> gameToReferee){
+        String[] obsColumn = {"Game", "Observer"};
+        this.observerData = new String[gameToReferee.size()][2];
+        int index2 = 0;
+        for (Integer game : gameToReferee.keySet()) {
+            observerData[index2][0] = String.valueOf(game);
+            if (gameToReferee.get(game) != null) {
+                observerData[index2][1] = gameToReferee.get(game);
+            } else {
+                observerData[index2][1] = "No Observer Assigned";
+            }
+            index2++;
+        }
+        JTable observerTable = new JTable(observerData, obsColumn);
+        observerAssignments.add(observerTable);
+        observerAssignments.getViewport().add(observerTable);
+        observerTable.setVisible(true);
     }
 
 
@@ -277,6 +359,8 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
             try {
                 JoinTeamOD outputData = joinTeamController.joinTeam(teamName);
                 ArrayList<String> names = outputData.getMembersNames();
+                nextScreenData.bundleData();
+                updateTeamMembers(nextScreenData.getTeamToPlayers());
             }
             catch (Exception exception) {
                 System.out.println( "Error: " + exception);
@@ -291,6 +375,7 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
                         nextScreenData.getCurrentUser());
                 controller.assignObserver(assignee, gameID);
                 this.nextScreenData.bundleData();
+                updateObserverAssignments(nextScreenData.getGameToReferee());
             }
             catch(RuntimeException rex ) {
                 JOptionPane.showMessageDialog(this, rex.getMessage());
@@ -336,7 +421,7 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         repaint();
     }
 
-    private void createUIComponents() {
-        pnlBracket = new JPanel();
-    }
+//    private void createUIComponents() {
+//        pnlBracket = new JPanel();
+//    }
 }
