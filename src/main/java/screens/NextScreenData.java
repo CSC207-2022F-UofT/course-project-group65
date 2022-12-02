@@ -13,7 +13,7 @@ public class NextScreenData {
     private int currentBracketID;
 //    private AccountRepo accounts;
 //    private BracketRepo brackets;
-    private final BundleBracketData bundleBracketData;
+    private BundleBracketData bundleBracketData;
     private final InformationRecord informationRecord;
 
     public NextScreenData(InformationRecord informationRecord) {
@@ -31,6 +31,7 @@ public class NextScreenData {
     }
 
     public void bundleData(){
+        this.bundleBracketData = new BundleBracketData();
         this.bundleBracketData.bundleBracket(this.informationRecord.getBracket(this.currentBracketID));
     }
 
