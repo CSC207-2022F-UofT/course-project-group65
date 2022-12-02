@@ -17,15 +17,17 @@ public class StartTournUC implements StartTournIB{
     private final int bracketId;
     private final Bracket bracket;
     private final User user;
+    private final StartTournGateway gateway;
 
     public StartTournUC(StartTournOB outputBoundary, String currentUser, InformationRecord informationRecord,
-                      int bracketId) {
+                      int bracketId, StartTournGateway gateway) {
         this.outputBoundary = outputBoundary;
         this.accounts = informationRecord.getAccountData();
         this.brackets = informationRecord.getBracketData();
         this.bracketId = bracketId;
         this.bracket = brackets.getBracket(bracketId);
         this.user = accounts.getUser(currentUser);
+        this.gateway = gateway;
 
     }
 
@@ -112,7 +114,13 @@ public class StartTournUC implements StartTournIB{
         }
 
 //        inputData.getBracket().setTournamentCondition(true);
+        StartTournDSID dataStoreID = new StartTournDSID(this.brackets);
 
+        try {
+            this.gateway.save(dataStoreID);
+        } catch (Exception e){
+            return this.outputBoundary.presentError("Error saving to database.");
+        }
         StartTournOD outputData = new StartTournOD(errors);
         return this.outputBoundary.presentSuccess(outputData);
     }

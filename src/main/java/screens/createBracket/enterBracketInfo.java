@@ -102,13 +102,13 @@ public class enterBracketInfo extends JFrame implements ActionListener {
 //            parameters to the view constructor
 
 //            Overseer Controls controllers
-            EndTournOB endTournOB = new EndTournPresenter();
-            EndTournIB endTournIB = new EndTournUC(endTournOB, outputData.getUsername(), nextScreenData.getInformationRecord(), outputData.getBracketID());
-            EndTournController endTournController = new EndTournController(endTournIB);
+//            EndTournOB endTournOB = new EndTournPresenter();
+//            EndTournIB endTournIB = new EndTournUC(endTournOB, outputData.getUsername(), nextScreenData.getInformationRecord(), outputData.getBracketID());
+            EndTournController endTournController = new EndTournController(outputData.getUsername(), nextScreenData.getInformationRecord(), outputData.getBracketID());
 
-            StartTournOB startTournOB = new StartTournPresenter();
-            StartTournIB startTournIB = new StartTournUC(startTournOB, outputData.getUsername(), nextScreenData.getInformationRecord(), outputData.getBracketID());
-            StartTournController startTournController = new StartTournController(startTournIB);
+//            StartTournOB startTournOB = new StartTournPresenter();
+//            StartTournIB startTournIB = new StartTournUC(startTournOB, outputData.getUsername(), nextScreenData.getInformationRecord(), outputData.getBracketID());
+            StartTournController startTournController = new StartTournController(outputData.getUsername(), nextScreenData.getInformationRecord(), outputData.getBracketID());
 
             //NextScreenData nextScreenData = new NextScreenData();
             //nextScreenData.setBrackets(outputData.getBrackets());

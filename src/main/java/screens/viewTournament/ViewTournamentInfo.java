@@ -69,13 +69,15 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
             int tournID = tournamentIDs.getItemAt(tournamentIDs.getSelectedIndex());
             ViewTournamentOD outData = controller.viewTournament(tournID);
 
-            EndTournOB endTournOB = new EndTournPresenter();
-            EndTournIB endTournIB = new EndTournUC(endTournOB, outData.getUsername(), nextScreenData.getInformationRecord(), outData.getTournamentID());
-            EndTournController endTournController = new EndTournController(endTournIB);
+//            EndTournOB endTournOB = new EndTournPresenter();
+//            EndTournIB endTournIB = new EndTournUC(endTournOB, outData.getUsername(), nextScreenData.getInformationRecord(), outData.getTournamentID());
+            EndTournController endTournController = new EndTournController(outData.getUsername(), nextScreenData.getInformationRecord(), outData.getTournamentID());
 
-            StartTournOB startTournOB = new StartTournPresenter();
-            StartTournIB startTournIB = new StartTournUC(startTournOB, outData.getUsername(), nextScreenData.getInformationRecord(), outData.getTournamentID());
-            StartTournController startTournController = new StartTournController(startTournIB);
+
+//            StartTournOB startTournOB = new StartTournPresenter();
+//            StartTournIB startTournIB = new StartTournUC(startTournOB, outData.getUsername(), nextScreenData.getInformationRecord(), outData.getTournamentID());
+            StartTournController startTournController = new StartTournController(outData.getUsername(), nextScreenData.getInformationRecord(), outData.getTournamentID());
+
 
             JoinTeamController joinTeamController = new JoinTeamController(nextScreenData.getInformationRecord(), outData.getTournamentID(), outData.getUsername());
 

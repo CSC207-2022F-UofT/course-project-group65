@@ -6,7 +6,7 @@ package useCases.endTourn;
 
 public interface EndTournOB {
 
-    public EndTournOD presentSuccess(EndTournOD outputData);
+     EndTournOD presentSuccess(EndTournOD outputData);
 
-    public EndTournOD presentError(String errorMessage);
+     EndTournOD presentError(String errorMessage);
 }

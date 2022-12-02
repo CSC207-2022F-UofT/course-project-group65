@@ -16,15 +16,17 @@ public class EndTournUC implements EndTournIB{
     private final int bracketId;
     private final Bracket bracket;
     private final User user;
+    private final EndTournGateway gateway;
 
     public EndTournUC(EndTournOB outputBoundary, String currentUser, InformationRecord informationRecord,
-                      int bracketId) {
+                      int bracketId, EndTournGateway gateway) {
         this.outputBoundary = outputBoundary;
         this.accounts = informationRecord.getAccountData();
         this.brackets = informationRecord.getBracketData();
         this.bracketId = bracketId;
         this.bracket = brackets.getBracket(bracketId);
         this.user = accounts.getUser(currentUser);
+        this.gateway = gateway;
 
     }
 
@@ -58,6 +60,13 @@ public class EndTournUC implements EndTournIB{
         }
 
         this.bracket.setTournamentCondition(false);
+        EndTournDSID dataStoreID = new EndTournDSID(this.brackets);
+
+        try {
+            this.gateway.save(dataStoreID);
+        } catch (Exception e){
+            return this.outputBoundary.presentError("Error saving to database.");
+        }
         EndTournOD outputData = new EndTournOD();
         return this.outputBoundary.presentSuccess(outputData);
     }
