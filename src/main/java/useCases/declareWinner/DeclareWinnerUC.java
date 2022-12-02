@@ -1,9 +1,13 @@
 package useCases.declareWinner;
 
 import entities.*;
+import entities.game_finder_strategy.GameFinder;
+import entities.game_finder_strategy.GeneralisedGameFinder;
+import entities.game_finder_strategy.TreeGameFinder;
+import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
-import useCases.generalClasses.traversalStrategies.BracketMethods;
-import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
+//import useCases.generalClasses.traversalStrategies.BracketMethods;
+//import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +19,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
     public Game game;
     public DeclareWinnerOB outputBoundary;
     //    public BracketMethods treeMethodAccess;
-    public BracketMethods bracketMethods;
+//    public BracketMethods bracketMethods;
     public DeclareWinnerGateway gateway;
     private BracketRepo bracketRepo;
     private AccountRepo accountRepo;
@@ -23,7 +27,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
     /**
      * Construct a DeclareWinnerUC interactor instance with the given BracketRepo and AccountRepo.
      *
-     * @param bracketRepo    The BracketRepo to use
+//     * @param bracketRepo    The BracketRepo to use
      * @param gateway        The gateway to use
      * @param outputBoundary The output boundary to use
      * @param username         The ID of the user who is advancing the team
@@ -43,15 +47,17 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
 //    }
 
     public DeclareWinnerUC(DeclareWinnerOB outputBoundary, DeclareWinnerGateway gateway,
-                           Object bracketRepo, Object accountRepo, int bracketID, String username) {
+                           InformationRecord informationRecord, int bracketID, String username) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
-        try {
-            this.bracketRepo = (BracketRepo) bracketRepo;
-            this.accountRepo = (AccountRepo) accountRepo;
-        } catch (ClassCastException e) {
-            System.out.println("Error: " + e);
-        }
+        this.bracketRepo = informationRecord.getBracketData();
+        this.accountRepo = informationRecord.getAccountData();
+//        try {
+//            this.bracketRepo = (BracketRepo) bracketRepo;
+//            this.accountRepo = (AccountRepo) accountRepo;
+//        } catch (ClassCastException e) {
+//            System.out.println("Error: " + e);
+//        }
 //        this.bracketRepo = (BracketRepo) bracketRepo;
 //        this.accountRepo = (AccountRepo) accountRepo;
         this.bracket = this.bracketRepo.getBracket(bracketID);
@@ -104,6 +110,14 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
     public DeclareWinnerOD setWinner(DeclareWinnerID inputData) {
 //        findGame(inputData.getGameIDDW(), this.bracket.getFinalGame());
         this.game = bracket.getGame(inputData.getGameIDDW());
+
+//        if (bracket instanceof DefaultBracket){
+//            GameFinder<DefaultBracket> gameFinder = new TreeGameFinder<>();
+//            this.game = gameFinder.getGame(inputData.getGameIDDW(), this.bracket.getFinalGame());
+//        } else {
+//            GameFinder<Bracket> gameFinder = new GeneralisedGameFinder<>();
+//            this.game = gameFinder.getGame(inputData.getGameIDDW(), this.bracket.getFinalGame());
+//        }
 
         if (!checkUserPermission(this.user)) {
             return this.outputBoundary.presentError("You do not have permission to declare a winner for " +

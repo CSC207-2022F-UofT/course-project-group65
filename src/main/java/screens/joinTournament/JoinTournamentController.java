@@ -1,14 +1,16 @@
 package screens.joinTournament;
 
-import useCases.joinTournament.JoinTournamentIB;
-import useCases.joinTournament.JoinTournamentID;
-import useCases.joinTournament.JoinTournamentOD;
+import database.JoinTournament.JoinTournamentFileWriter;
+import useCases.generalClasses.InformationRecord;
+import useCases.joinTournament.*;
 
 public class JoinTournamentController {
     final private JoinTournamentIB joinTourIB;
 
-    public JoinTournamentController(JoinTournamentIB joinTourIB) {
-        this.joinTourIB = joinTourIB;
+    public JoinTournamentController(InformationRecord informationRecord, String currUser){
+        JoinTournamentOB outputBound = new JoinTournamentPresenter();
+        JoinTournamentGateway gateway = new JoinTournamentFileWriter("accounts.txt", "brackets.txt");
+        this.joinTourIB = new JoinTournamentUC(outputBound, gateway, informationRecord, currUser);
     }
 
     public JoinTournamentOD joinTournament(String invite){

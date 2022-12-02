@@ -1,35 +1,63 @@
 package useCases.teamCreation;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import entities.*;
+import useCases.generalClasses.InformationRecord;
+import useCases.generalClasses.bundleBracketData.BundleBracketData;
 
-
-
+/**
+ * This is the interactor class for teamCreation.
+ * This class is responsible for creating a new team in the bracketbased on the user input and
+ * saving the updated bracket back to the bracket repository.
+ */
 public class teamCreationUC implements teamCreationIB {
+    /** The response model for teamCreationUC **/
     private final teamCreationOB outputBoundary;
+    /** The gateway for teamCreationUC to access database **/
+    private final teamCreationGateway gateway;
+    /** The username of the creator that creates the team **/
     private final String creatorName;
-
+    /** The ID of the bracket that the team should be created in **/
     private final int bracketID;
+    /** The account repository */
     private final AccountRepo accounts;
+    /** The bracket repository */
     private final BracketRepo brackets;
+    private String oldTeam;
 
-    public teamCreationUC(teamCreationOB outputBoundary, String creatorName, int bracketID, AccountRepo accounts,
-                          BracketRepo brackets){
+    /**
+     * Creates a new teamCreationUC object.
+     * @param outputBoundary The output boundary used for updating the view
+     * @param gateway The gateway to access the database to store info
+     * @param creatorName The username of the user that is creating the team
+     * @param informationRecord The information record containing the account and bracket repositories
+     */
+    public teamCreationUC(teamCreationOB outputBoundary, teamCreationGateway gateway,
+                          String creatorName, int bracketID, InformationRecord informationRecord) {
         this.outputBoundary = outputBoundary;
         this.creatorName = creatorName;
         this.bracketID = bracketID;
-        this.accounts = accounts;
-        this.brackets = brackets;
+        this.brackets = informationRecord.getBracketData();
+        this.accounts = informationRecord.getAccountData();
+        this.gateway = gateway;
     }
-    // used to check whether the current user is a player
+    /**
+     * Checks if the creator is a player
+     * @return a boolean that indicates whether the current user is a player
+     */
     public boolean checkPlayer(){
         Bracket curBracket = brackets.getBracket(bracketID);
         User creator = accounts.getUser(creatorName);
         return creator.getBracketRole(curBracket.getTournamentID()).equals("Player");
     }
 
-    //used to check if a team with the same teamName exists in the bracket
+    /**
+     * Checks if the team name already exists
+     * @param userInput input data
+     * @return a boolean that indicates whether the teamName already exists
+     */
     public boolean checkTeamNameExists(teamCreationID userInput){
         String teamName = userInput.getTeamName();
         Bracket curBracket = brackets.getBracket(bracketID);
@@ -42,7 +70,10 @@ public class teamCreationUC implements teamCreationIB {
         return false;
     }
 
-    //find a blank team in the bracket, returns null if the bracket is full
+    /**
+     * find a blank team in the bracket
+     * @return a blank team in the bracket, returns null if the bracket is full
+     */
     public Team findBlankTeam(){
         Bracket curBracket = brackets.getBracket(bracketID);
         List<Team> teams = curBracket.getTeams();
@@ -54,17 +85,23 @@ public class teamCreationUC implements teamCreationIB {
         return null;
     }
 
-    // creates the team and returns a string that indicates whether the team has been successfully created
-    public String createTeam(teamCreationID userInput){
+    /**
+     * creates the team based on user input by updating the currrent bracket
+     * @param userInput input data from user
+     */
+    public void createTeam(teamCreationID userInput){
         String teamName = userInput.getTeamName();
         User creator = accounts.getUser(creatorName);
         Team newTeam = findBlankTeam();
+        oldTeam = newTeam.getTeamName();
         newTeam.setTeamName(teamName);
         newTeam.addTeamMember(creator);
-        return "Your team has been successfully created.";
 
     }
-
+    /**
+     * Checks if the creator is in a team
+     * @return a boolean that indicates whether the current user is in a team
+     */
     public boolean inATeam(Bracket bracket){
         User creator = accounts.getUser(creatorName);
         ArrayList<Team> teams = bracket.getTeams();
@@ -95,22 +132,24 @@ public class teamCreationUC implements teamCreationIB {
             return outputBoundary.prepareFailView("You are already in a team.");
         }
 
-        String success = createTeam(userInput);
+        createTeam(userInput);
         Bracket curBracket = brackets.getBracket(bracketID);
-        ArrayList<String> teams = new ArrayList<>();
-        ArrayList<ArrayList<String>> teamMembers = new ArrayList<>();
-        for (Team team : curBracket.getTeams()) {
-            teams.add(team.getTeamName());
-            ArrayList<String> members = new ArrayList<>();
-            for(User member : team.getTeamMembers()){
-                members.add(member.getUsername());
-            }
-            teamMembers.add(members);
+
+        BundleBracketData data = new BundleBracketData();
+        data.bundleBracket(curBracket);
+        LinkedHashMap<Integer, ArrayList<String>> gameToTeams = data.getGameToTeams();
+        LinkedHashMap<String, ArrayList<String>> teamToPlayers = data.getTeamToPlayers();
+
+        teamCreationDSID teamCreationDSID = new teamCreationDSID(this.brackets);
+        try {
+            this.gateway.save(teamCreationDSID);
+        } catch (Exception e) {
+            return this.outputBoundary.prepareFailView("There was an error saving the bracket.");
         }
 
-
-        teamCreationOD outputData = new teamCreationOD(teamMembers, teams, success, creatorName,
-                bracketID, accounts, brackets);
+        teamCreationOD outputData = new teamCreationOD(creatorName, userInput.getTeamName(), oldTeam,
+                gameToTeams, teamToPlayers);
         return outputBoundary.prepareSuccessView(outputData);
     }
+
 }

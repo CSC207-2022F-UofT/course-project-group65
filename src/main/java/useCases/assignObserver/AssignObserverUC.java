@@ -1,9 +1,14 @@
 package useCases.assignObserver;
 
 import entities.*;
+import entities.game_finder_strategy.GameFinder;
+import entities.game_finder_strategy.GeneralisedGameFinder;
+import entities.game_finder_strategy.TreeGameFinder;
+import useCases.generalClasses.InformationRecord;
+import useCases.generalClasses.bundleBracketData.BundleBracketData;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class AssignObserverUC implements AssignObserverIB {
     private final AssignObserverOB outputBound;
@@ -11,12 +16,21 @@ public class AssignObserverUC implements AssignObserverIB {
     private final AccountRepo accountRepo;
     private Bracket bracket;
     private User currUser;
+    public AssignObserverGateway gateway;
 
-    public AssignObserverUC(AssignObserverOB outputBound, BracketRepo bracketRepo, AccountRepo accountRepo, String currUser){
+    public AssignObserverUC(AssignObserverOB outputBound, AssignObserverGateway gateway, InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;
-        this.bracketRepo = bracketRepo;
-        this.accountRepo = accountRepo;
+        this.gateway = gateway;
+        this.bracketRepo = informationRecord.getBracketData();
+        this.accountRepo = informationRecord.getAccountData();
         this.currUser = accountRepo.getUser(currUser);
+//        try{
+//            this.bracketRepo = (BracketRepo) bracketRepo;
+//            this.accountRepo = (AccountRepo) accountRepo;
+//            this.currUser = this.accountRepo.getUser(currUser);
+//        } catch (ClassCastException e){
+//            throw new ClassCastException("AssignObserverUC: Invalid repo type");
+//        }
     }
 
     /**
@@ -33,6 +47,15 @@ public class AssignObserverUC implements AssignObserverIB {
         }
         User ref = findReferee(bracket, input.getAssignee());
         Game game = bracket.getGame(input.getGameID());
+//        Game game;
+//        if (bracket instanceof DefaultBracket){
+//            GameFinder<DefaultBracket> gameFinder = new TreeGameFinder<>();
+//            game = gameFinder.getGame(input.getGameID(), this.bracket.getFinalGame());
+//        } else {
+//            GameFinder<Bracket> gameFinder = new GeneralisedGameFinder<>();
+//            game = gameFinder.getGame(input.getGameID(), this.bracket.getFinalGame());
+//        }
+
         if (ref == null){
             return outputBound.prepareFailView("Assignee is not an Observer.");
         }
@@ -43,7 +66,18 @@ public class AssignObserverUC implements AssignObserverIB {
             return outputBound.prepareFailView("Game already has an Observer.");
         }
         game.setObserver(ref);
-        AssignObserverOD output = new AssignObserverOD(ref.getUsername(), game.getGameID(), game.getGameRound());
+
+        AssignObserverDSID dsInput = new AssignObserverDSID(bracketRepo);
+        try{
+            gateway.save(dsInput);
+        } catch (Exception e){
+            return outputBound.prepareFailView("Error saving to database.");
+        }
+
+        BundleBracketData bundleBracketData = new BundleBracketData();
+        bundleBracketData.bundleBracket(bracket);
+
+        AssignObserverOD output = new AssignObserverOD(ref.getUsername(), game.getGameID(), game.getGameRound(), bundleBracketData.getGameToReferee());
         return outputBound.prepareSuccessView(output);
     }
 
@@ -58,7 +92,7 @@ public class AssignObserverUC implements AssignObserverIB {
 
     private boolean checkUserPermission(User user) {
         PermissionChecker permissionChecker = new PermissionChecker();
-        ArrayList<String> permittedUsers = new ArrayList<>(Arrays.asList("Overseer"));
+        ArrayList<String> permittedUsers = new ArrayList<>(List.of("Overseer"));
         return permissionChecker.checkUserPermission(permittedUsers, user, this.bracket.getTournamentID());
     }
 }

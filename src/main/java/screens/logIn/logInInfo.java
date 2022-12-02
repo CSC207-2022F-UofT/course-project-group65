@@ -28,8 +28,9 @@ public class logInInfo extends JFrame implements ActionListener{
 
     private CreateAccountController createAccountController;
     private LogInController logInController;
+    private NextScreenData nextScreenData;
 
-    public logInInfo(LogInController logInController, CreateAccountController createAccountController) {
+    public logInInfo(LogInController logInController, CreateAccountController createAccountController, NextScreenData nextScreenData) {
         setContentPane(logIn);
         setTitle("Log In");
         setSize(450, 300);
@@ -38,6 +39,7 @@ public class logInInfo extends JFrame implements ActionListener{
 
         this.logInController = logInController;
         this.createAccountController = createAccountController;
+        this.nextScreenData = nextScreenData;
 
         btSubmit.addActionListener(this);
         backButton.addActionListener(this);
@@ -45,7 +47,7 @@ public class logInInfo extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
-            homeScreen homeScreen = new homeScreen(this.createAccountController, this.logInController);
+            homeScreen homeScreen = new homeScreen(this.createAccountController, this.logInController, this.nextScreenData);
             this.dispose();
             homeScreen.setVisible(true);
         }
@@ -58,13 +60,13 @@ public class logInInfo extends JFrame implements ActionListener{
                 JOptionPane.showMessageDialog(this, "Welcome " + outputData.getUsername());
 
                 String currentUser = outputData.getUsername();
-                AccountRepo currentAccounts = outputData.getAccountRepo();
-                BracketRepo currentBrackets = outputData.getBracketRepo();
+//                AccountRepo currentAccounts = outputData.getAccountRepo();
+//                BracketRepo currentBrackets = outputData.getBracketRepo();
 
-                NextScreenData nextScreenData = new NextScreenData();
+//                NextScreenData nextScreenData = new NextScreenData();
                 nextScreenData.setCurrentUser(currentUser);
-                nextScreenData.setAccounts(currentAccounts);
-                nextScreenData.setBrackets(currentBrackets);
+//                nextScreenData.setAccounts(currentAccounts);
+//                nextScreenData.setBrackets(currentBrackets);
 
 //                CreateBracketOB createBracketOB = new CreateBracketPresenter();
 //                CreateBracketIB interactor = new CreateBracketUC(createBracketOB, currentUser,

@@ -295,268 +295,267 @@ private JTextField observerGame1;
 //    Action Listeners for all Buttons (Controllers are connected here)
     @Override
     public void actionPerformed(ActionEvent e) {
-//        System.out.println("Click " + e.getActionCommand());
-
-//        Controller Initiation
-        //        Advance Team
-        // AdvanceTeamOB advanceTeamOB = new AdvanceTeamPresenter();
-//        Next line is not implemented or used.
-        //AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamFileWriter("brackets.txt");
-        //AdvanceTeamIB advanceTeamIB = new AdvanceTeamUC(advanceTeamOB, advanceTeamGateway,
-                //nextScreenData.getBrackets(), nextScreenData.getAccounts(),
-                //nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-        //AdvanceTeamController advanceTeamController = new AdvanceTeamController(advanceTeamIB);
-        AdvanceTeamController advanceTeamController = new AdvanceTeamController(nextScreenData.getBrackets(),
-                nextScreenData.getAccounts(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-
-
-        //       Declare Winner
-//        DeclareWinnerOB declareWinnerOB = new DeclareWinnerPresenter();
-//        DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerFileWriter("brackets.txt");
-//        DeclareWinnerIB declareWinnerIB = new DeclareWinnerUC(declareWinnerOB, declareWinnerGateway,
-//                nextScreenData.getBrackets(), nextScreenData.getAccounts(),
-//                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-//        DeclareWinnerController declareWinnerController = new DeclareWinnerController(declareWinnerIB);
-
-        DeclareWinnerController declareWinnerController = new DeclareWinnerController(nextScreenData.getBrackets(),
-                nextScreenData.getAccounts(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-
-
-        //      Change Points
-//        ChangePointsOB changePointsOB = new ChangePointsPresenter();
-//        ChangePointsGateway changePointsGateway = new ChangePointsFileWriter("brackets.txt");
-//        ChangePointsIB changePointsIB = new ChangePointsUC(changePointsOB, changePointsGateway,
-//                 nextScreenData.getAccounts(),nextScreenData.getBrackets(),
-//                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-//        ChangePointsController changePointsController = new ChangePointsController(changePointsIB);
-
-        ChangePointsController changePointsController = new ChangePointsController(nextScreenData.getAccounts(),
-                nextScreenData.getBrackets(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-
-        if (e.getSource() == game1Button) {
-//            System.out.println("Game 1 Button Clicked");
-//            Create new screen for game 1
-//            In that screen have buttons linked to change points and advance teams
-//            TODO
-            DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
-                    declareWinnerController, changePointsController, this);
-            doBracketOperations.setGameForOperation(1);
-            doBracketOperations.setGameNumLabel("Game 1");
-            doBracketOperations.setTeamsLabel(game1Label.getText());
-            doBracketOperations.setVisible(true);
-        } else if (e.getSource() == game2Button) {
-//            System.out.println("Game 2 Button Clicked");
-            DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
-                    declareWinnerController, changePointsController, this);
-            doBracketOperations.setGameForOperation(2);
-            doBracketOperations.setGameNumLabel("Game 2");
-            doBracketOperations.setTeamsLabel(game2Label.getText());
-            doBracketOperations.setVisible(true);
-
-        } else if (e.getSource() == game3Button) {
-//            System.out.println("Game 3 Button Clicked");
-            DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
-                    declareWinnerController, changePointsController, this);
-            doBracketOperations.setGameForOperation(3);
-            doBracketOperations.setGameNumLabel("Game 3");
-            doBracketOperations.setTeamsLabel(game3Label.getText());
-            doBracketOperations.setVisible(true);
-        } else if (e.getSource() == joinTeam1) {
-//            System.out.println("Join Team 1 Button Clicked");
-            //            TODO
-//            Calls corresponding UC through controller
-            String team1Name = this.team1Name.getText();
-            try {
-                JoinTeamOD outputData = joinTeamController.joinTeam(team1Name);
-                ArrayList<String> names = outputData.getMembersNames();
-                setTeam1PlayerList(names.toArray(new String[0]));
-            }
-            catch (Exception exception) {
-                System.out.println( "Error: " + exception);
-                JOptionPane.showMessageDialog(this, exception.getMessage());
-            }
-        } else if (e.getSource() == joinTeam2) {
-//            System.out.println("Join Team 2 Button Clicked");
-            //            TODO
-//            Calls corresponding UC through controller
-            String team2Name = this.team2Name.getText();
-            try {
-                JoinTeamOD outputData = joinTeamController.joinTeam(team2Name);
-                ArrayList<String> names = outputData.getMembersNames();
-                setTeam2PlayerList(names.toArray(new String[0]));
-            }
-            catch (Exception exception) {
-                System.out.println( "Error: " + exception);
-                JOptionPane.showMessageDialog(this, exception.getMessage());
-            }
-        } else if (e.getSource() == joinTeam3) {
-//            System.out.println("Join Team 3 Button Clicked");
-            //            TODO
-//            Calls corresponding UC through controller
-            String team3Name = this.team3Name.getText();
-            try {
-                JoinTeamOD outputData = joinTeamController.joinTeam(team3Name);
-                ArrayList<String> names = outputData.getMembersNames();
-                setTeam3PlayerList(names.toArray(new String[0]));
-            }
-            catch (Exception exception) {
-                System.out.println( "Error: " + exception);
-                JOptionPane.showMessageDialog(this, exception.getMessage());
-            }
-        } else if (e.getSource() == joinTeam4) {
-//            System.out.println("Join Team 4 Button Clicked");
-            //            TODO
-//            Calls corresponding UC through controller
-            String team4Name = this.team4Name.getText();
-            try {
-                JoinTeamOD outputData = joinTeamController.joinTeam(team4Name);
-                ArrayList<String> names = outputData.getMembersNames();
-                setTeam4PlayerList(names.toArray(new String[0]));
-
-            }
-            catch (Exception exception) {
-                System.out.println( "Error: " + exception);
-                JOptionPane.showMessageDialog(this, exception.getMessage());
-            }
-        } else if (e.getSource() == assignGame1) {
-            try {
-                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
-                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
-                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
-                AssignObserverController controller = new AssignObserverController(assignObserverIB);
-                controller.assignObserver((String) observerListGame1.getSelectedItem(), 1);
-                //setObserverListGame1(new ArrayList<>(Collections.singletonList(output.getAssignee())));
-            }
-            catch(RuntimeException rex ) {
-                JOptionPane.showMessageDialog(this, rex.getMessage());
-            }
-        } else if (e.getSource() == assignGame2) {
-            try {
-                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
-                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
-                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
-                AssignObserverController controller = new AssignObserverController(assignObserverIB);
-
-                controller.assignObserver((String) observerListGame2.getSelectedItem(), 2);
-//                setObserverListGame2(new ArrayList<>(Collections.singletonList(output.getAssignee())));
-            }
-            catch(RuntimeException rex ) {
-                JOptionPane.showMessageDialog(this, rex.getMessage());
-            }
-        } else if (e.getSource() == assignGame3) {
-            try {
-                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
-                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
-                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
-                AssignObserverController controller = new AssignObserverController(assignObserverIB);
-
-                controller.assignObserver((String) observerListGame3.getSelectedItem(), 3);
-//                setObserverListGame2(new ArrayList<>(Collections.singletonList(output.getAssignee())));
-            }
-            catch(RuntimeException rex ) {
-                JOptionPane.showMessageDialog(this, rex.getMessage());
-            }
-        } else if (e.getSource() == startTournamentButton) {
-//            System.out.println("Start Tournament Button Clicked");
-
-            //            TODO
-//            Calls corresponding UC through controller
-            StartTournOD startData = startTournController.startTourn();
-            ArrayList<String> startErrors = startData.getErrors();
-            startErrors errorView = new startErrors(this.startTournController);
-            for (String error : startErrors) {
-                if (Objects.equals(error, "USERROLE")) {
-                    errorView.setWarning1("You do not have permission to start the tournament.");
-                } else if (Objects.equals(error, "NUMTEAMS")) {
-                    errorView.setWarning2("There are not enough teams in the tournament.");
-                } else if (Objects.equals(error, "NOOBSERVER")) {
-                    errorView.setWarning3("There is at least one game that does not have an observer assigned.");
-                } else if (Objects.equals(error, "TEAMNOTFULL")) {
-                    errorView.setWarning4("There is at least one team that is not full.");
-                }
-            }
-            errorView.setVisible(true);
-        } else if (e.getSource() == declareWinnerEndTournamentButton) {
-//            System.out.println("Declare Winner End Tournament Button Clicked");
-            //            TODO
-//            Calls corresponding UC through controller
-            // End Tournament below
-            // for now I assumed I have all the infos about the inputs for ID.
+////        System.out.println("Click " + e.getActionCommand());
 //
-            try {
-                endTournController.endTourn();
-                JOptionPane.showMessageDialog(this, "Tournament Ended");
-            }
-            catch (Exception exception) {
-//                System.out.println("Error: " + exception);
-                JOptionPane.showMessageDialog(this, exception.getMessage());
-            }
-        } else if (e.getSource() == createTeamBtn){
-            teamCreationOB presenter = new TeamCreationPresenter();
-            teamCreationIB interactor = new teamCreationUC(presenter,nextScreenData.getCurrentUser(),
-                    nextScreenData.getCurrentBracketID(),nextScreenData.getAccounts(),
-                    nextScreenData.getBrackets());
-            TeamCreationController controller = new TeamCreationController(interactor);
-            UserInput inputScreen = new UserInput(controller, this);
-            inputScreen.setVisible(true);
-
-        } else if (e.getSource() == returnOptions){
-            try {
-                String username = nextScreenData.getCurrentUser();
-                String password = nextScreenData.getAccounts().getUser(username).getPassword();
-//                LogInOD outputData = logInController.login(username, password);
-
-                // String currentUser = outputData.getUsername();
-//                AccountRepo currentAccounts = outputData.getAccountRepo();
-//                BracketRepo currentBrackets = outputData.getBracketRepo();
-
-//                NextScreenData nextScreenData = new NextScreenData();
-                nextScreenData.setCurrentUser(username);
-//                nextScreenData.setAccounts(currentAccounts);
-//                nextScreenData.setBrackets(currentBrackets);
-
-//                CreateAccountOB createAccountOB = new CreateAccountPresenter();
-//                CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, mainUserFactory,
-//                        mainAccountRepo, mainBracketRepo);
-//                CreateAccountController createAccountController = new CreateAccountController(createAccountIB);
+////        Controller Initiation
+//        //        Advance Team
+//        // AdvanceTeamOB advanceTeamOB = new AdvanceTeamPresenter();
+////        Next line is not implemented or used.
+//        //AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamFileWriter("brackets.txt");
+//        //AdvanceTeamIB advanceTeamIB = new AdvanceTeamUC(advanceTeamOB, advanceTeamGateway,
+//                //nextScreenData.getBrackets(), nextScreenData.getAccounts(),
+//                //nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+//        //AdvanceTeamController advanceTeamController = new AdvanceTeamController(advanceTeamIB);
+//        AdvanceTeamController advanceTeamController = new AdvanceTeamController(nextScreenData.getInformationRecord(),
+//                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
 //
-//                LogInOB logInOB = new LogInPresenter();
-//                LogInIB logInIB = new LogInUC(logInOB, mainAccountRepo, mainBracketRepo);
-//                LogInController logInController = new LogInController(logInIB);
-
-//                CreateBracketOB createBracketOB = new CreateBracketPresenter();
-//                CreateBracketIB interactor = new CreateBracketUC(createBracketOB, username,
-//                        nextScreenData.getAccounts(), nextScreenData.getBrackets());
-//                CreateBracketController createBracketCon = new CreateBracketController(interactor);
-
-                optionsScreen optionsScreen = new optionsScreen(nextScreenData);
-                this.dispose();
-                optionsScreen.setVisible(true);
-
-            } catch (Exception exception) {
-                JOptionPane.showMessageDialog(this, exception.getMessage());
-            }
-
-        } else if (e.getSource() == logOut) {
-//            CreateAccountOB createAccountOB = new CreateAccountPresenter();
-//            CreateAccountGateway createAccountGateway = new CreateAccountFileWriter("accounts.txt");
-//            CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, nextScreenData.getAccounts(),
-//                    nextScreenData.getBrackets(), createAccountGateway);
-//            CreateAccountController createAccountController = new CreateAccountController(createAccountIB);
-            CreateAccountController createAccountController = new CreateAccountController(nextScreenData.getAccounts(),
-                    nextScreenData.getBrackets());
-
-            //LogInOB logInOB = new LogInPresenter();
-            //LogInIB logInIB = new LogInUC(logInOB, nextScreenData.getAccounts(),
-//                    nextScreenData.getBrackets());
-            LogInController logInController = new LogInController(nextScreenData.getAccounts(),
-                    nextScreenData.getBrackets());
-
-            homeScreen homeScreen = new homeScreen(createAccountController, logInController);
-
-//            homeScreen homeScreen = new homeScreen(this.createAccountController, this.logInController);
-            this.dispose();
-            homeScreen.setVisible(true);
-        }
+//
+//        //       Declare Winner
+////        DeclareWinnerOB declareWinnerOB = new DeclareWinnerPresenter();
+////        DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerFileWriter("brackets.txt");
+////        DeclareWinnerIB declareWinnerIB = new DeclareWinnerUC(declareWinnerOB, declareWinnerGateway,
+////                nextScreenData.getBrackets(), nextScreenData.getAccounts(),
+////                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+////        DeclareWinnerController declareWinnerController = new DeclareWinnerController(declareWinnerIB);
+//
+//        DeclareWinnerController declareWinnerController = new DeclareWinnerController(
+//                nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID(),
+//                nextScreenData.getCurrentUser());
+//
+//
+//        //      Change Points
+////        ChangePointsOB changePointsOB = new ChangePointsPresenter();
+////        ChangePointsGateway changePointsGateway = new ChangePointsFileWriter("brackets.txt");
+////        ChangePointsIB changePointsIB = new ChangePointsUC(changePointsOB, changePointsGateway,
+////                 nextScreenData.getAccounts(),nextScreenData.getBrackets(),
+////                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+////        ChangePointsController changePointsController = new ChangePointsController(changePointsIB);
+//
+//        ChangePointsController changePointsController = new ChangePointsController(nextScreenData.getInformationRecord(),
+//                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+//
+//        if (e.getSource() == game1Button) {
+////            System.out.println("Game 1 Button Clicked");
+////            Create new screen for game 1
+////            In that screen have buttons linked to change points and advance teams
+////            TODO
+//            DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
+//                    declareWinnerController, changePointsController, this);
+//            doBracketOperations.setGameForOperation(1);
+//            doBracketOperations.setGameNumLabel("Game 1");
+//            doBracketOperations.setTeamsLabel(game1Label.getText());
+//            doBracketOperations.setVisible(true);
+//        } else if (e.getSource() == game2Button) {
+////            System.out.println("Game 2 Button Clicked");
+//            DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
+//                    declareWinnerController, changePointsController, this);
+//            doBracketOperations.setGameForOperation(2);
+//            doBracketOperations.setGameNumLabel("Game 2");
+//            doBracketOperations.setTeamsLabel(game2Label.getText());
+//            doBracketOperations.setVisible(true);
+//
+//        } else if (e.getSource() == game3Button) {
+////            System.out.println("Game 3 Button Clicked");
+//            DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
+//                    declareWinnerController, changePointsController, this);
+//            doBracketOperations.setGameForOperation(3);
+//            doBracketOperations.setGameNumLabel("Game 3");
+//            doBracketOperations.setTeamsLabel(game3Label.getText());
+//            doBracketOperations.setVisible(true);
+//        } else if (e.getSource() == joinTeam1) {
+////            System.out.println("Join Team 1 Button Clicked");
+//            //            TODO
+////            Calls corresponding UC through controller
+//            String team1Name = this.team1Name.getText();
+//            try {
+//                JoinTeamOD outputData = joinTeamController.joinTeam(team1Name);
+//                ArrayList<String> names = outputData.getMembersNames();
+//                setTeam1PlayerList(names.toArray(new String[0]));
+//            }
+//            catch (Exception exception) {
+//                System.out.println( "Error: " + exception);
+//                JOptionPane.showMessageDialog(this, exception.getMessage());
+//            }
+//        } else if (e.getSource() == joinTeam2) {
+////            System.out.println("Join Team 2 Button Clicked");
+//            //            TODO
+////            Calls corresponding UC through controller
+//            String team2Name = this.team2Name.getText();
+//            try {
+//                JoinTeamOD outputData = joinTeamController.joinTeam(team2Name);
+//                ArrayList<String> names = outputData.getMembersNames();
+//                setTeam2PlayerList(names.toArray(new String[0]));
+//            }
+//            catch (Exception exception) {
+//                System.out.println( "Error: " + exception);
+//                JOptionPane.showMessageDialog(this, exception.getMessage());
+//            }
+//        } else if (e.getSource() == joinTeam3) {
+////            System.out.println("Join Team 3 Button Clicked");
+//            //            TODO
+////            Calls corresponding UC through controller
+//            String team3Name = this.team3Name.getText();
+//            try {
+//                JoinTeamOD outputData = joinTeamController.joinTeam(team3Name);
+//                ArrayList<String> names = outputData.getMembersNames();
+//                setTeam3PlayerList(names.toArray(new String[0]));
+//            }
+//            catch (Exception exception) {
+//                System.out.println( "Error: " + exception);
+//                JOptionPane.showMessageDialog(this, exception.getMessage());
+//            }
+//        } else if (e.getSource() == joinTeam4) {
+////            System.out.println("Join Team 4 Button Clicked");
+//            //            TODO
+////            Calls corresponding UC through controller
+//            String team4Name = this.team4Name.getText();
+//            try {
+//                JoinTeamOD outputData = joinTeamController.joinTeam(team4Name);
+//                ArrayList<String> names = outputData.getMembersNames();
+//                setTeam4PlayerList(names.toArray(new String[0]));
+//
+//            }
+//            catch (Exception exception) {
+//                System.out.println( "Error: " + exception);
+//                JOptionPane.showMessageDialog(this, exception.getMessage());
+//            }
+//        } else if (e.getSource() == assignGame1) {
+//            try {
+////                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
+////                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+////                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+////                AssignObserverController controller = new AssignObserverController(assignObserverIB);
+//                AssignObserverController controller = new AssignObserverController(nextScreenData.getInformationRecord(),
+//                        nextScreenData.getCurrentUser());
+//                controller.assignObserver((String) observerListGame1.getSelectedItem(), 1);
+//                //setObserverListGame1(new ArrayList<>(Collections.singletonList(output.getAssignee())));
+//            }
+//            catch(RuntimeException rex ) {
+//                JOptionPane.showMessageDialog(this, rex.getMessage());
+//            }
+//        } else if (e.getSource() == assignGame2) {
+//            try {
+////                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
+////                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+////                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+////                AssignObserverController controller = new AssignObserverController(assignObserverIB);
+//                AssignObserverController controller = new AssignObserverController(nextScreenData.getInformationRecord(),
+//                        nextScreenData.getCurrentUser());
+//                controller.assignObserver((String) observerListGame2.getSelectedItem(), 2);
+////                setObserverListGame2(new ArrayList<>(Collections.singletonList(output.getAssignee())));
+//            }
+//            catch(RuntimeException rex ) {
+//                JOptionPane.showMessageDialog(this, rex.getMessage());
+//            }
+//        } else if (e.getSource() == assignGame3) {
+//            try {
+////                AssignObserverOB assignObserverOB = new AssignObserverPresenter();
+////                AssignObserverIB assignObserverIB = new AssignObserverUC(assignObserverOB, nextScreenData.getBrackets(),
+////                        nextScreenData.getAccounts(), nextScreenData.getCurrentUser());
+////                AssignObserverController controller = new AssignObserverController(assignObserverIB);
+//                AssignObserverController controller = new AssignObserverController(nextScreenData.getInformationRecord(),
+//                        nextScreenData.getCurrentUser());
+//                controller.assignObserver((String) observerListGame3.getSelectedItem(), 3);
+////                setObserverListGame2(new ArrayList<>(Collections.singletonList(output.getAssignee())));
+//            }
+//            catch(RuntimeException rex ) {
+//                JOptionPane.showMessageDialog(this, rex.getMessage());
+//            }
+//        } else if (e.getSource() == startTournamentButton) {
+////            System.out.println("Start Tournament Button Clicked");
+//
+//            //            TODO
+////            Calls corresponding UC through controller
+//            StartTournOD startData = startTournController.startTourn();
+//            ArrayList<String> startErrors = startData.getErrors();
+//            startErrors errorView = new startErrors(this.startTournController);
+//            for (String error : startErrors) {
+//                if (Objects.equals(error, "USERROLE")) {
+//                    errorView.setWarning1("You do not have permission to start the tournament.");
+//                } else if (Objects.equals(error, "NUMTEAMS")) {
+//                    errorView.setWarning2("There are not enough teams in the tournament.");
+//                } else if (Objects.equals(error, "NOOBSERVER")) {
+//                    errorView.setWarning3("There is at least one game that does not have an observer assigned.");
+//                } else if (Objects.equals(error, "TEAMNOTFULL")) {
+//                    errorView.setWarning4("There is at least one team that is not full.");
+//                }
+//            }
+//            errorView.setVisible(true);
+//        } else if (e.getSource() == declareWinnerEndTournamentButton) {
+////            System.out.println("Declare Winner End Tournament Button Clicked");
+//            //            TODO
+////            Calls corresponding UC through controller
+//            // End Tournament below
+//            // for now I assumed I have all the infos about the inputs for ID.
+////
+//            try {
+//                endTournController.endTourn();
+//                JOptionPane.showMessageDialog(this, "Tournament Ended");
+//            }
+//            catch (Exception exception) {
+////                System.out.println("Error: " + exception);
+//                JOptionPane.showMessageDialog(this, exception.getMessage());
+//            }
+//        } else if (e.getSource() == createTeamBtn){
+//            TeamCreationController controller = new TeamCreationController(nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+//            UserInput inputScreen = new UserInput(controller, this, this.nextScreenData);
+//            inputScreen.setVisible(true);
+//
+//        } else if (e.getSource() == returnOptions){
+//            try {
+//                String username = nextScreenData.getCurrentUser();
+//                String password = nextScreenData.getUserPassword(username);
+////                LogInOD outputData = logInController.login(username, password);
+//
+//                // String currentUser = outputData.getUsername();
+////                AccountRepo currentAccounts = outputData.getAccountRepo();
+////                BracketRepo currentBrackets = outputData.getBracketRepo();
+//
+////                NextScreenData nextScreenData = new NextScreenData();
+//                nextScreenData.setCurrentUser(username);
+////                nextScreenData.setAccounts(currentAccounts);
+////                nextScreenData.setBrackets(currentBrackets);
+//
+////                CreateAccountOB createAccountOB = new CreateAccountPresenter();
+////                CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, mainUserFactory,
+////                        mainAccountRepo, mainBracketRepo);
+////                CreateAccountController createAccountController = new CreateAccountController(createAccountIB);
+////
+////                LogInOB logInOB = new LogInPresenter();
+////                LogInIB logInIB = new LogInUC(logInOB, mainAccountRepo, mainBracketRepo);
+////                LogInController logInController = new LogInController(logInIB);
+//
+////                CreateBracketOB createBracketOB = new CreateBracketPresenter();
+////                CreateBracketIB interactor = new CreateBracketUC(createBracketOB, username,
+////                        nextScreenData.getAccounts(), nextScreenData.getBrackets());
+////                CreateBracketController createBracketCon = new CreateBracketController(interactor);
+//
+//                optionsScreen optionsScreen = new optionsScreen(nextScreenData);
+//                this.dispose();
+//                optionsScreen.setVisible(true);
+//
+//            } catch (Exception exception) {
+//                JOptionPane.showMessageDialog(this, exception.getMessage());
+//            }
+//
+//        } else if (e.getSource() == logOut) {
+////            CreateAccountOB createAccountOB = new CreateAccountPresenter();
+////            CreateAccountGateway createAccountGateway = new CreateAccountFileWriter("accounts.txt");
+////            CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, nextScreenData.getAccounts(),
+////                    nextScreenData.getBrackets(), createAccountGateway);
+////            CreateAccountController createAccountController = new CreateAccountController(createAccountIB);
+//            CreateAccountController createAccountController = new CreateAccountController(nextScreenData.getInformationRecord());
+//
+//            //LogInOB logInOB = new LogInPresenter();
+//            //LogInIB logInIB = new LogInUC(logInOB, nextScreenData.getAccounts(),
+////                    nextScreenData.getBrackets());
+//            LogInController logInController = new LogInController(nextScreenData.getInformationRecord());
+//
+//            homeScreen homeScreen = new homeScreen(createAccountController, logInController, nextScreenData);
+//
+////            homeScreen homeScreen = new homeScreen(this.createAccountController, this.logInController);
+//            this.dispose();
+//            homeScreen.setVisible(true);
+//        }
     }
 }

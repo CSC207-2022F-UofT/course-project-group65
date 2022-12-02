@@ -1,79 +1,59 @@
 package useCases.teamCreation;
-import entities .*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
+/**
+ * This class represents the response model for the CreateBracket use case.
+ * This data is used in updating/creating the view after the bracket has been
+ * successfully created.
+ */
 public class teamCreationOD {
-    private String success;
-    private ArrayList<ArrayList<String>> teamMembers;
-    private ArrayList<String> teams;
-    private String username;
-    private int bracketID;
-    private AccountRepo accounts;
-    private BracketRepo brackets;
-
-    public teamCreationOD(ArrayList<ArrayList<String>> teamMembers, ArrayList<String> teams, String success,
-                          String username, int bracketID, AccountRepo accounts, BracketRepo brackets){
-        this.success = success;
-        this.teamMembers = teamMembers;
-        this.teams = teams;
+    /** The name of the user created the new team */
+    private final String username;
+    /** The name of the new team */
+    private final String newTeam;
+    /** The name of the old team */
+    private final String oldTeam;
+    /** The hasmap that maps game to teams*/
+    private final LinkedHashMap<Integer, ArrayList<String>> gameToTeams;
+    /** The hasmap that maps team to players*/
+    private final LinkedHashMap<String, ArrayList<String>> teamToPlayers;
+    /**
+     * Creates a new teamCreationOD object.
+     * @param username The name of the user who created the team
+     * @param newTeam The updated team name
+     * @param oldTeam The old team name
+     * @param gameToTeams The hashmap that contains all the games mapped to teams
+     * @param teamToPlayers The hashmap that contains all the teams mapped to players
+     */
+    public teamCreationOD(String username, String newTeam, String oldTeam,
+                          LinkedHashMap<Integer, ArrayList<String>> gameToTeams,
+                          LinkedHashMap<String, ArrayList<String>> teamToPlayers){
         this.username = username;
-        this.bracketID = bracketID;
-        this.accounts = accounts;
-        this.brackets = brackets;
-
+        this.newTeam = newTeam;
+        this.oldTeam = oldTeam;
+        this.gameToTeams =  gameToTeams;
+        this.teamToPlayers = teamToPlayers;
     }
-
-    public String getSuccess(){
-        return this.success;
-    }
-
-    public void setSuccess(String success){
-        this.success = success;
-    }
-
-    public ArrayList<String> getTeams() {
-        return teams;
-    }
-
-    public void setTeams(ArrayList<String> teams){
-        this.teams = teams;
-    }
-
-    public ArrayList<ArrayList<String>> getTeamMembers() {
-        return teamMembers;
-    }
-
-    public void setTeamMembers(ArrayList<ArrayList<String>> teamMembers){
-        this.teamMembers = teamMembers;
-    }
-
+    /** getter methods **/
     public String getUsername(){
         return username;
     }
 
-    public void setUsername(String username){
-        this.username = username;
+    public String getNewTeam() {
+        return newTeam;
     }
 
-    public int getBracketID(){
-        return bracketID;
+    public String getOldTeam() {
+        return oldTeam;
     }
 
-    public void setBracketID(int bracketID){
-        this.bracketID = bracketID;
-    }
-    public AccountRepo getAccounts(){
-        return accounts;
-    }
-    public void setAccounts(AccountRepo accounts){
-        this.accounts =  accounts;
-    }
-    public BracketRepo getBrackets(){
-        return brackets;
+    public LinkedHashMap<Integer, ArrayList<String>> getGameToTeams(){
+        return gameToTeams;
     }
 
-    public void setBrackets(BracketRepo brackets){
-        this.brackets = brackets;
+    public LinkedHashMap<String, ArrayList<String>> getTeamToPlayers(){
+        return teamToPlayers;
     }
 }

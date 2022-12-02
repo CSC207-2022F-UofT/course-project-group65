@@ -3,6 +3,7 @@ package screens.logIn;
 import entities.AccountRepo;
 import entities.BracketRepo;
 import useCases.LogIn.*;
+import useCases.generalClasses.InformationRecord;
 
 public class LogInController {
     private final LogInIB logInIB;
@@ -11,9 +12,9 @@ public class LogInController {
 //        this.logInIB = logInIB;
 //    }
 
-    public LogInController(Object accountDatabase, Object bracketDatabase) {
+    public LogInController(InformationRecord informationRecord) {
         LogInOB logInOB = new LogInPresenter();
-        this.logInIB = new LogInUC(logInOB, accountDatabase, bracketDatabase);
+        this.logInIB = new LogInUC(logInOB, informationRecord);
     }
 
     public LogInOD login(String username, String password) {

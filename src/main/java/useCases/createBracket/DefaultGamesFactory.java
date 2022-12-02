@@ -1,18 +1,35 @@
 package useCases.createBracket;
 
 import entities.DefaultGame;
-import entities.DefaultTeam;
 import entities.Game;
 import entities.Team;
 
 import java.util.*;
 
+/**
+ * This class represents the default games factory. This class is used to create
+ * a default game which simply keeps track of the teams that are playing in the game, the points
+ * of each team, and the winner.
+ * This class is part of the factory design pattern, and used in the builder design pattern giving the class
+ * much flexibility, allowing us to create games of arbitrary sizes.
+ * Note: In our program, the games are the main structure of the actual bracket itself, and are represented
+ * in the form of a tree (where the root of the tree/head game represents the final game).
+ * When first created all the games that will be used in the tournament are created
+ * and default teams are assigned to the leaves (starting games) of the tree. These values are updated
+ * as new teams are created, new users join, and as the tournament progresses.
+ * This means the default teams have to be created before the games are created.
+ */
 public class DefaultGamesFactory implements GamesFactory {
-    /*
-     * This is a factory for creating a game.
-     */
 
-    public void insertValue(Game root, int id, int rounds) {
+    /**
+     * A helper method for the getGames method.
+     * This method is used to create and insert a new game into the tree/bracket.
+     * @param root - the root of the tree/bracket (head game, final round of the bracket)
+     * @param id - the unique ID of the game (each game in the bracket has a unique ID)
+     *           (Note: this is not the same as the unique ID of the bracket, as games in different brackets
+     *           may have the same ID. As long as with in the same bracket, the IDs are unique).
+     */
+    public void insertValue(Game root, int id) {
         Queue<Game> queue = new LinkedList<>();
         queue.add(root);
         root.setGameID(1);
@@ -39,10 +56,15 @@ public class DefaultGamesFactory implements GamesFactory {
         }
     }
 
+    /** A helper method for the getGames method.
+     * This method is used to update the round parameter in each game, so
+     * that it refers to the correct round of the bracket the game is in.
+     * The round a game is in is analogous to the height of the game in the tree/bracket.
+     * @param root - the root of the tree/bracket (head game, final round of the bracket)
+     * @param rounds - the total number of rounds in the bracket, equivalent to the height of the tree
+     */
     public void setRounds(Game root, int rounds){
-        if (root == null)
-            return;
-        else if (root.getPrevGame1() == null && root.getPrevGame2() == null)
+        if (root.getPrevGame1() == null && root.getPrevGame2() == null)
             root.setGameRound(rounds);
         else {
             root.setGameRound(rounds);
@@ -51,10 +73,14 @@ public class DefaultGamesFactory implements GamesFactory {
         }
     }
 
+    /** A helper method for the getGames method.
+     * This method is used to put the default teams into the starting games of the bracket.
+     * (This is the first round of the bracket, which are the leaves of the tree).
+     * @param root - the root of the tree/bracket (head game, final round of the bracket)
+     * @param teams - the list of teams in the bracket
+     */
     public void setTeams(Game root, List<Team> teams){
-        if (root == null)
-            return;
-        else if (root.getPrevGame1() == null && root.getPrevGame2() == null) {
+        if (root.getPrevGame1() == null && root.getPrevGame2() == null) {
             root.setTeam(teams.get(1), 0);
             root.setTeam(teams.get(0), 0);
             root.setNumTeams(2);
@@ -67,294 +93,26 @@ public class DefaultGamesFactory implements GamesFactory {
         }
     }
 
+    /**
+     * This is the main method which creates all the games in the bracket based on the number of teams.
+     * It also correctly assigns all the teams to the starting games of the bracket, and updates the round
+     * parameter in each game, so we can identify all the games in a specific round of the bracket.
+     * @param numTeams - the number of teams in the bracket
+     * @param teams - the list of teams in the bracket
+     * @return - the head game of the bracket (the final game of the bracket)
+     */
     public DefaultGame getGames(int numTeams, List<Team> teams)
     {
         DefaultGame root = new DefaultGame();
         int rounds = (int) (Math.log(numTeams) / Math.log(2));
         int numGames = (int) (Math.pow(2, rounds) - 1);
         for (int i = 1; i < numGames; i++) {
-            insertValue(root, i, rounds);
+            insertValue(root, i);
         }
         setRounds(root, rounds);
         List<Team> clonedTeams = new ArrayList<>(teams);
         setTeams(root, clonedTeams);
         return root;
-    }
-
-//    public DefaultGame getGames(int numTeams, List<Team> teams) {
-//        if (numTeams == 2) {
-//            DefaultGame headGame = new DefaultGame();
-//
-//            headGame.setGameRound(1);
-//            headGame.setGameID(1);
-//
-//            headGame.setTeam(teams.get(0), 0);
-//            headGame.setTeam(teams.get(1), 0);
-//            headGame.setNumTeams(2);
-//            return headGame;
-//
-//        } else if (numTeams == 4) {
-//            DefaultGame headGame = new DefaultGame();
-//            DefaultGame leftGame = new DefaultGame();
-//            DefaultGame rightGame = new DefaultGame();
-//            headGame.setPrevGame1(leftGame);
-//            headGame.setPrevGame2(rightGame);
-//
-//            headGame.setGameRound(2);
-//            headGame.setGameID(1);
-//
-//            leftGame.setGameRound(1);
-//            leftGame.setGameID(2);
-//            rightGame.setGameRound(1);
-//            rightGame.setGameID(3);
-//
-//            leftGame.setTeam(teams.get(0), 0);
-//            leftGame.setTeam(teams.get(1), 0);
-//            leftGame.setNumTeams(2);
-//
-//            rightGame.setTeam(teams.get(2), 0);
-//            rightGame.setTeam(teams.get(3), 0);
-//            rightGame.setNumTeams(2);
-//            return headGame;
-//
-//        } else if (numTeams == 8) {
-//            DefaultGame headGame = new DefaultGame();
-//            DefaultGame leftGame = new DefaultGame();
-//            DefaultGame rightGame = new DefaultGame();
-//            headGame.setPrevGame1(leftGame);
-//            headGame.setPrevGame2(rightGame);
-//            DefaultGame leftLeftGame = new DefaultGame();
-//            DefaultGame leftRightGame = new DefaultGame();
-//            DefaultGame rightLeftGame = new DefaultGame();
-//            DefaultGame rightRightGame = new DefaultGame();
-//            leftGame.setPrevGame1(leftLeftGame);
-//            leftGame.setPrevGame2(leftRightGame);
-//            rightGame.setPrevGame1(rightLeftGame);
-//            rightGame.setPrevGame2(rightRightGame);
-//
-//            headGame.setGameRound(3);
-//            headGame.setGameID(1);
-//
-//            leftGame.setGameRound(2);
-//            leftGame.setGameID(2);
-//            rightGame.setGameRound(2);
-//            rightGame.setGameID(3);
-//
-//            leftLeftGame.setGameRound(1);
-//            leftLeftGame.setGameID(4);
-//            leftRightGame.setGameRound(1);
-//            leftRightGame.setGameID(5);
-//            rightLeftGame.setGameRound(1);
-//            rightLeftGame.setGameID(6);
-//            rightRightGame.setGameRound(1);
-//            rightRightGame.setGameID(7);
-//
-//            leftLeftGame.setTeam(teams.get(0), 0);
-//            leftLeftGame.setTeam(teams.get(1), 0);
-//            leftLeftGame.setNumTeams(2);
-//            leftRightGame.setTeam(teams.get(2), 0);
-//            leftRightGame.setTeam(teams.get(3), 0);
-//            leftRightGame.setNumTeams(2);
-//            rightLeftGame.setTeam(teams.get(4), 0);
-//            rightLeftGame.setTeam(teams.get(5), 0);
-//            rightLeftGame.setNumTeams(2);
-//            rightRightGame.setTeam(teams.get(6), 0);
-//            rightRightGame.setTeam(teams.get(7), 0);
-//            rightRightGame.setNumTeams(2);
-//            return headGame;
-//
-//        } else if (numTeams == 16) {
-//            DefaultGame headGame = new DefaultGame();
-//            DefaultGame leftGame = new DefaultGame();
-//            DefaultGame rightGame = new DefaultGame();
-//            headGame.setPrevGame1(leftGame);
-//            headGame.setPrevGame2(rightGame);
-//            DefaultGame leftLeftGame = new DefaultGame();
-//            DefaultGame leftRightGame = new DefaultGame();
-//            DefaultGame rightLeftGame = new DefaultGame();
-//            DefaultGame rightRightGame = new DefaultGame();
-//            leftGame.setPrevGame1(leftLeftGame);
-//            leftGame.setPrevGame2(leftRightGame);
-//            rightGame.setPrevGame1(rightLeftGame);
-//            rightGame.setPrevGame2(rightRightGame);
-//            DefaultGame leftLeftLeftGame = new DefaultGame();
-//            DefaultGame leftLeftRightGame = new DefaultGame();
-//            DefaultGame leftRightLeftGame = new DefaultGame();
-//            DefaultGame leftRightRightGame = new DefaultGame();
-//            DefaultGame rightLeftLeftGame = new DefaultGame();
-//            DefaultGame rightLeftRightGame = new DefaultGame();
-//            DefaultGame rightRightLeftGame = new DefaultGame();
-//            DefaultGame rightRightRightGame = new DefaultGame();
-//            leftLeftGame.setPrevGame1(leftLeftLeftGame);
-//            leftLeftGame.setPrevGame2(leftLeftRightGame);
-//            leftRightGame.setPrevGame1(leftRightLeftGame);
-//            leftRightGame.setPrevGame2(leftRightRightGame);
-//            rightLeftGame.setPrevGame1(rightLeftLeftGame);
-//            rightLeftGame.setPrevGame2(rightLeftRightGame);
-//            rightRightGame.setPrevGame1(rightRightLeftGame);
-//            rightRightGame.setPrevGame2(rightRightRightGame);
-//
-//            headGame.setGameRound(4);
-//            headGame.setGameID(1);
-//
-//            leftGame.setGameRound(3);
-//            leftGame.setGameID(2);
-//            rightGame.setGameRound(3);
-//            rightGame.setGameID(3);
-//
-//            leftLeftGame.setGameRound(2);
-//            leftLeftGame.setGameID(4);
-//            leftRightGame.setGameRound(2);
-//            leftRightGame.setGameID(5);
-//            rightLeftGame.setGameRound(2);
-//            rightLeftGame.setGameID(6);
-//            rightRightGame.setGameRound(2);
-//            rightRightGame.setGameID(7);
-//
-//            leftLeftLeftGame.setGameRound(1);
-//            leftLeftLeftGame.setGameID(8);
-//            leftLeftRightGame.setGameRound(1);
-//            leftLeftRightGame.setGameID(9);
-//            leftRightLeftGame.setGameRound(1);
-//            leftRightLeftGame.setGameID(10);
-//            leftRightRightGame.setGameRound(1);
-//            leftRightRightGame.setGameID(11);
-//            rightLeftLeftGame.setGameRound(1);
-//            rightLeftLeftGame.setGameID(12);
-//            rightLeftRightGame.setGameRound(1);
-//            rightLeftRightGame.setGameID(13);
-//            rightRightLeftGame.setGameRound(1);
-//            rightRightLeftGame.setGameID(14);
-//            rightRightRightGame.setGameRound(1);
-//            rightRightRightGame.setGameID(15);
-//
-//            leftLeftLeftGame.setTeam(teams.get(0), 0);
-//            leftLeftLeftGame.setTeam(teams.get(1), 0);
-//            leftLeftLeftGame.setNumTeams(2);
-//            leftLeftRightGame.setTeam(teams.get(2), 0);
-//            leftLeftRightGame.setTeam(teams.get(3), 0);
-//            leftLeftRightGame.setNumTeams(2);
-//            leftRightLeftGame.setTeam(teams.get(4), 0);
-//            leftRightLeftGame.setTeam(teams.get(5), 0);
-//            leftRightLeftGame.setNumTeams(2);
-//            leftRightRightGame.setTeam(teams.get(6), 0);
-//            leftRightRightGame.setTeam(teams.get(7), 0);
-//            leftRightRightGame.setNumTeams(2);
-//            rightLeftLeftGame.setTeam(teams.get(8), 0);
-//            rightLeftLeftGame.setTeam(teams.get(9), 0);
-//            rightLeftLeftGame.setNumTeams(2);
-//            rightLeftRightGame.setTeam(teams.get(10), 0);
-//            rightLeftRightGame.setTeam(teams.get(11), 0);
-//            rightLeftRightGame.setNumTeams(2);
-//            rightRightLeftGame.setTeam(teams.get(12), 0);
-//            rightRightLeftGame.setTeam(teams.get(13), 0);
-//            rightRightLeftGame.setNumTeams(2);
-//            rightRightRightGame.setTeam(teams.get(14), 0);
-//            rightRightRightGame.setTeam(teams.get(15), 0);
-//            rightRightRightGame.setNumTeams(2);
-//            return headGame;
-//        }
-//        return null;
-//    }
-
-//    public static void main(String[] args) {
-//        ArrayList<Team> teams = new ArrayList<Team>();
-//        for (int i = 0; i < 2; i++) {
-//            Team team = new DefaultTeam();
-////            team.setTeamName("Team " + i);
-//            teams.add(team);
-//        }
-//
-//        HashMap<String, Integer> games = new HashMap<String, Integer>();
-//        for (int i = 0; i <= 1; i++) {
-//            games.put(teams.get(i).getTeamName(), i);
-//        }
-//        System.out.println(games);
-//
-//        HashMap<Team, Integer> games2 = new HashMap<Team, Integer>();
-//        for (int i = 0; i <= 1; i++) {
-//            games2.put(teams.get(i), i);
-//        }
-//        System.out.println(games2);
-//
-//        ArrayList<Team> teams2 = new ArrayList<Team>();
-//        DefaultTeamFactory teamFactory = new DefaultTeamFactory();
-//        for (int i = 0; i < 4; i++) {
-//            Team team = teamFactory.getTeam("Default");
-//            teams2.add(team);
-//        }
-//
-//        DefaultGamesFactory factory = new DefaultGamesFactory();
-//        DefaultGame headGame = factory.getGames(4, teams2);
-//
-//        System.out.println(headGame.getGameID());
-//        System.out.println(headGame.getPrevGame1().getGameID());
-//        System.out.println(headGame.getPrevGame2().getGameID());
-//
-//        System.out.println("\n");
-//        System.out.print(headGame.getGameRound());
-//        System.out.println("\n");
-//        System.out.print(headGame.getPrevGame1().getGameRound());
-//        System.out.println("\n");
-//        System.out.print(headGame.getPrevGame2().getGameRound());
-//        System.out.println("\n");
-//
-//        for (Team team : teams2) {
-//            System.out.println(team.getTeamName());
-//        }
-
-    public static void main(String[] args) {
-//        Testing tree access
-        ArrayList<Team> teams = new ArrayList<Team>();
-        DefaultTeamFactory teamFactory = new DefaultTeamFactory();
-        for (int i = 0; i < 4; i++) {
-            Team team = teamFactory.getTeam("Default");
-            teams.add(team);
-        }
-
-        System.out.println("From List");
-        for (Team team : teams) {
-            System.out.println(team.getTeamName());
-        }
-
-        System.out.println("\n");
-
-        DefaultGamesFactory factory = new DefaultGamesFactory();
-        DefaultGame headGame = factory.getGames(4, teams);
-
-        ArrayList<Team> t = headGame.getPrevGame1().getTeams();
-        ArrayList<Team> t2 = headGame.getPrevGame2().getTeams();
-
-
-        Team a = t.get(0);
-        Team b = t.get(1);
-        Team c = t2.get(0);
-        Team d = t2.get(1);
-
-        System.out.println("From Tree");
-        System.out.println(a.getTeamName());
-        System.out.println(b.getTeamName());
-        System.out.println(c.getTeamName());
-        System.out.println(d.getTeamName());
-        System.out.println("\n");
-
-        a.setTeamName("HELLO");
-        b.setTeamName("WORLD");
-        c.setTeamName("IT'S");
-        d.setTeamName("ME");
-
-        System.out.println("From Tree");
-        System.out.println(a.getTeamName());
-        System.out.println(b.getTeamName());
-        System.out.println(c.getTeamName());
-        System.out.println(d.getTeamName());
-        System.out.println("\n");
-
-        System.out.println("From List");
-        for (Team team : teams) {
-            System.out.println(team.getTeamName());
-        }
-
     }
 }
 

@@ -2,6 +2,9 @@ package useCases.joinTeam;
 import java.util.ArrayList;
 import java.util.List;
 import entities.*;
+import useCases.generalClasses.InformationRecord;
+import useCases.generalClasses.bundleBracketData.BundleBracketData;
+import useCases.teamCreation.teamCreationDSID;
 
 /**
  * This is a use case for joining a team.
@@ -13,15 +16,17 @@ public class JoinTeamUC implements JoinTeamIB {
     private final AccountRepo accounts;
     private final BracketRepo brackets;
 
+    private final JoinTeamGateway gateway;
+
     private Team curTeam;
 
-    public JoinTeamUC(JoinTeamOB outputBoundary, String userName, int bracketID, AccountRepo accounts,
-                      BracketRepo brackets){
+    public JoinTeamUC(JoinTeamOB outputBoundary, JoinTeamGateway gateway, String userName, int bracketID, InformationRecord informationRecord) {
         this.outputBoundary = outputBoundary;
+        this.gateway = gateway;
         this.userName = userName;
         this.bracketID = bracketID;
-        this.accounts = accounts;
-        this.brackets = brackets;
+        this.accounts = informationRecord.getAccountData();
+        this.brackets = informationRecord.getBracketData();
     }
 
     /** Check whether the user is already in a team */
@@ -103,13 +108,23 @@ public class JoinTeamUC implements JoinTeamIB {
             return outputBoundary.FailView("Fail to join the team (You are already in a team)");
         }
         String success = join(input);
+        JoinTeamDSID joinTeamDSID = new JoinTeamDSID(this.brackets);
+        try {
+            this.gateway.save(joinTeamDSID);
+        } catch (Exception e) {
+            return this.outputBoundary.FailView("There was an error saving the bracket.");
+        }
         Team team = findTeam(input);
         ArrayList<User> teamMembers = team.getTeamMembers();
         ArrayList<String> membersNames = new ArrayList<>();
         for (User member : teamMembers){
             membersNames.add(member.getUsername());
         }
-        JoinTeamOD outputData = new JoinTeamOD(success, membersNames);
+
+        BundleBracketData bundleBracketData = new BundleBracketData();
+        bundleBracketData.bundleBracket(this.brackets.getBracket(bracketID));
+
+        JoinTeamOD outputData = new JoinTeamOD(success, membersNames, bundleBracketData.getTeamToPlayers());
         return outputBoundary.SuccessView(outputData);
     }
 }

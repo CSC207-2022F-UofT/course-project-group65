@@ -17,6 +17,9 @@ public class BracketRepo implements Serializable {
     public Bracket getBracket(int bracketID) {
         return brackets.get(bracketID);
     }
+    public BracketRepo getBracketRepo() {
+        return this;
+    }
 
     public HashMap<Integer, Bracket> getBrackets() {
         return brackets;

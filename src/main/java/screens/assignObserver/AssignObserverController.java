@@ -1,14 +1,16 @@
 package screens.assignObserver;
 
-import useCases.assignObserver.AssignObserverIB;
-import useCases.assignObserver.AssignObserverID;
-import useCases.assignObserver.AssignObserverOD;
+import database.AssignObserver.AssignObserverFileWriter;
+import useCases.assignObserver.*;
+import useCases.generalClasses.InformationRecord;
 
 public class AssignObserverController {
     private final AssignObserverIB assignObsIB;
 
-    public AssignObserverController(AssignObserverIB assignObsIB) {
-        this.assignObsIB = assignObsIB;
+    public AssignObserverController(InformationRecord informationRecord, String currUser) {
+        AssignObserverOB outputBound = new AssignObserverPresenter();
+        AssignObserverGateway gateway = new AssignObserverFileWriter("brackets.txt");
+        this.assignObsIB = new AssignObserverUC(outputBound, gateway, informationRecord, currUser);
     }
 
     public AssignObserverOD assignObserver(String assignee, int gameID){

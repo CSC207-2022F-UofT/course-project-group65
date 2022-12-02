@@ -1,14 +1,20 @@
 package useCases.changePoints;
 
 import entities.*;
+import entities.game_finder_strategy.GameFinder;
+import entities.game_finder_strategy.GeneralisedGameFinder;
+import entities.game_finder_strategy.TreeGameFinder;
+import entities.round_games_strategy.GeneralisedRoundGames;
+import entities.round_games_strategy.RoundGames;
+import entities.round_games_strategy.TreeRoundGames;
+import useCases.generalClasses.InformationRecord;
 import useCases.generalClasses.bundleBracketData.BundleBracketData;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
-import useCases.generalClasses.traversalStrategies.BracketMethods;
-import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
+//import useCases.generalClasses.traversalStrategies.BracketMethods;
+//import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedHashMap;
 
 
 public class ChangePointsUC implements ChangePointsIB{
@@ -18,7 +24,7 @@ public class ChangePointsUC implements ChangePointsIB{
     public User user;
     public Game game;
 //    public BracketMethods treeMethodAccess;
-    public BracketMethods bracketMethods;
+//    public BracketMethods bracketMethods;
     public ChangePointsOB outputBoundary;
     private BracketRepo bracketRepo;
     private AccountRepo accountRepo;
@@ -27,8 +33,8 @@ public class ChangePointsUC implements ChangePointsIB{
     /**
      * Construct a ChangePointsUC interactor instance with the given BracketRepo and AccountRepo.
      *
-     * @param bracketRepo    The BracketRepo to use
-     * @param accountRepo    The AccountRepo to use
+//     * @param bracketRepo    The BracketRepo to use
+//     * @param accountRepo    The AccountRepo to use
      * @param gateway        The gateway to use
      * @param outputBoundary The output boundary to use
      * @param username         The ID of the user who is advancing the team
@@ -48,18 +54,23 @@ public class ChangePointsUC implements ChangePointsIB{
 //    }
 
     public ChangePointsUC(ChangePointsOB outputBoundary, ChangePointsGateway gateway,
-                          Object accountRepo, Object bracketRepo, int bracketID, String username) {
+                          InformationRecord informationRecord, int bracketID, String username) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
-        try{
-            this.bracketRepo = (BracketRepo) bracketRepo;
-            this.bracket = this.bracketRepo.getBracket(bracketID);
-            this.accountRepo = (AccountRepo) accountRepo;
-            this.user = this.accountRepo.getUser(username);
-            this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
-        } catch (Exception e){
-            System.out.println("Error in ChangePointsUC constructor");
-        }
+        this.accountRepo = informationRecord.getAccountData();
+        this.bracketRepo = informationRecord.getBracketData();
+        this.bracket = this.bracketRepo.getBracket(bracketID);
+        this.user = this.accountRepo.getUser(username);
+//        this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+//        try{
+//            this.bracketRepo = (BracketRepo) bracketRepo;
+//            this.bracket = this.bracketRepo.getBracket(bracketID);
+//            this.accountRepo = (AccountRepo) accountRepo;
+//            this.user = this.accountRepo.getUser(username);
+//            this.bracketMethods = new DefaultBracketMethods((DefaultBracket) bracket); //possibly changing
+//        } catch (Exception e){
+//            System.out.println("Error in ChangePointsUC constructor");
+//        }
 //        this.bracketRepo = (BracketRepo) bracketRepo;
 //        this.bracket = this.bracketRepo.getBracket(bracketID);
 //        this.user = (User) accountRepo;
@@ -111,7 +122,15 @@ public class ChangePointsUC implements ChangePointsIB{
     private boolean checkAllGamesFull(Game game){
         int teamRound = game.getGameRound();
 //        ArrayList<Game> games = returnLevelGames(this.bracket.getFinalGame(), teamRound);
-        ArrayList<Game> games = bracketMethods.getGamesInRound(teamRound);
+        ArrayList<Game> games = bracket.getGamesInRound(teamRound);
+//        ArrayList<Game> games;
+//        if (bracket instanceof DefaultBracket){
+//            RoundGames<DefaultBracket> roundGames = new TreeRoundGames<>();
+//            games = roundGames.getGamesInRound(bracket.getFinalGame(), teamRound);
+//        } else {
+//            RoundGames<Bracket> roundGames = new GeneralisedRoundGames<>();
+//            games = roundGames.getGamesInRound(bracket.getFinalGame(), teamRound);
+//        }
         for (Game g: games){
             if (g.getNumTeams() < 2){
                 return false;
@@ -136,6 +155,15 @@ public class ChangePointsUC implements ChangePointsIB{
     public ChangePointsOD changePoints(ChangePointsID inputData) {
 //        findGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
         this.game = bracket.getGame(inputData.getGameIDCP());
+
+//        if (bracket instanceof DefaultBracket){
+//            GameFinder<DefaultBracket> gameFinder = new TreeGameFinder<>();
+//            this.game = gameFinder.getGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
+//        } else {
+//            GameFinder<Bracket> gameFinder = new GeneralisedGameFinder<>();
+//            this.game = gameFinder.getGame(inputData.getGameIDCP(), this.bracket.getFinalGame());
+//        }
+
         findTeam(inputData);
         if (!this.bracket.getTournamentCondition()) {
             return this.outputBoundary.presentError("The tournament is not in progress. " +

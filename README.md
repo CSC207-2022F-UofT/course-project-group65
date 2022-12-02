@@ -1,39 +1,40 @@
-# Project Template
+# Tournament Bracket Manager
+### Principally, this program has two uses: 
+1.  __A user may create a new tournament__; this user has the responsibility of running
+    the tournament. Once they have created and launched the tournament, they may invite other
+    players/teams to the tournament, assign them different roles with varying access and
+    privileges. This user running the tournament can assign points to each match and run the
+    tournament and advance the rounds at their convenience. Once the user wishes to conclude
+    the tournament, they may choose to do so.
 
-This is a template repository for CSC 207 projects. 
-This repository contains starter code for a gradle project.
-It also contains workflow documents that give instructions on how to manage your Github repository and how to use Github Projects for efficient collaboration.
 
-## Checklist For Your Project
-- [ ] Verify the correct settings for your project repository
-- [ ] Set up Github Projects
-- [ ] Create the implementation plan using issues and Github Projects
-- [ ] Create deveopment branches for your features
-- [ ] Use pull requests to merge finished features into main branch
-- [ ] Conduct code reviews
+2. __A user may wish to join a pre-existing tournament via an invite link__ from the creator of the
+tournament - and the invite link establishes their access level to the bracket and their privileges
+in tournament. Should they join in a playing capacity, they can join a team in the tournament or
+create their own and advance through the tournament. If they join in an officiating role, they
+help run the tournament by advancing rounds of the tournament and dealing with updates to
+the game.
 
-**If your team has trouble with any of these steps, please ask on Piazza. For example, with how GitHub Classroom works, your team *may* not have permissions to do some of the first few steps, in which case we'll post alternative instructions as needed.**
+## Features Implemented
 
-## Workflow Documents
+* Logging in and creating an account
+* Create and starting a tournament
+* Joining a tournament and being assigned a role
+* Creating/joining a team
+* Adding/removing points to a team
+* Declaring a winner of a game
+* Advancing a team to the next round
+* Ending the tournament
 
-* Github Workflow: Please refer to the workflow that was introduced in the first lab. You should follow this when working on your code. The following document provides additional details too.
 
-* [Project Planning and Development Guide](project_plan_dev.md): This document helps you to understand how to create and maintain a project plan for your class project. **This document helps you to complete the Implementation Plan Milestone.**
+## Running the Project
+To run the program, do not use Main.java. Run the program through the TournamentSimulator.java file. As well, please make sure to change the build settings from Gradle to IntelliJ IDEA to use the program. This piazza post details how we do it: https://piazza.com/class/l5v1b8gfz6b60m/post/473
 
-## Gradle Project
-Import this project into your Intellij editor. It should automatically recognise this as a gradle repository.
-The starter code was built using SDK version 11.0.1. Ensure that you are using this version for this project. (You can, of course, change the SDK version as per your requirement if your team has all agreed to use a different version)
 
-You have been provided with two starter files for demonstration: HelloWorld and HelloWorldTest.
+Go to file -> settings -> build, execution, development -> build tools -> gradle. Change the build and run to IntelliJ Idea like so:
 
-You will find HelloWorld in `src/main/java/tutorial` directory. Right click on the HelloWorld file and click on `Run HelloWorld.main()`.
-This should run the program and print on your console.
 
-You will find HelloWorldTest in `src/test/java/tutorial` directory. Right click on the HelloWorldTest file and click on `Run HelloWorldTest`.
-All tests should pass. Your team can remove this sample of how testing works once you start adding your project code to the repo.
+## Going Above and Beyond
 
-Moving forward, we expect you to maintain this project structure. You *should* use Gradle as the build environment, but it is fine if your team prefers to use something else -- just remove the gradle files and push your preferred project setup. Assuming you stick with Gradle, your source code should go into `src/main/java` (you can keep creating more subdirectories as per your project requirement). Every source class can auto-generate a test file for you. For example, open HelloWorld.java file and click on the `HelloWorld` variable as shown in the image below. You should see an option `Generate` and on clicking this your should see an option `Test`. Clicking on this will generate a JUnit test file for `HelloWorld` class. This was used to generate the `HelloWorldTest`.
 
-![image](https://user-images.githubusercontent.com/5333020/196066655-d3c97bf4-fdbd-46b0-b6ae-aeb8dbcf351d.png)
-
-You can create another simple class and try generating a test for this class.
+## Future Developments

@@ -1,7 +1,8 @@
 package screens.endTourn;
 
-import useCases.endTourn.EndTournIB;
-import useCases.endTourn.EndTournOD;
+import database.EndTourn.EndTournFileWriter;
+import useCases.endTourn.*;
+import useCases.generalClasses.InformationRecord;
 
 /**
  * A class for the Controller of the end tournament use case.
@@ -9,8 +10,10 @@ import useCases.endTourn.EndTournOD;
 public class EndTournController {
     final EndTournIB userInput;
 
-    public EndTournController(EndTournIB userInput) {
-        this.userInput = userInput;
+    public EndTournController(String username, InformationRecord informationRecord, int bracketId) {
+        EndTournOB endTournOB = new EndTournPresenter();
+        EndTournGateway gateway = new EndTournFileWriter("brackets.txt");
+        userInput = new EndTournUC(endTournOB, username, informationRecord, bracketId, gateway);
     }
 
     //

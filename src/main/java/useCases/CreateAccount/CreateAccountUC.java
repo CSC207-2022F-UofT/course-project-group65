@@ -2,6 +2,7 @@ package useCases.CreateAccount;
 
 import database.CreateAccount.CreateAccountFileWriter;
 import entities.*;
+import useCases.generalClasses.InformationRecord;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,21 +24,22 @@ public class CreateAccountUC implements CreateAccountIB {
 ////        this.userFactory = userFactory;
 //    }
 
-    public CreateAccountUC(CreateAccountOB userCreateAccountOB, Object accountDatabase, Object bracketDatabase,
-                           CreateAccountGateway gateway) {
+    public CreateAccountUC(CreateAccountOB userCreateAccountOB, InformationRecord informationRecord, CreateAccountGateway gateway) {
         this.userCreateAccountOB = userCreateAccountOB;
+        this.bracketData = informationRecord.getBracketData();
+        this.data = informationRecord.getAccountData();
 
 
-        if (accountDatabase == null || !accountDatabase.getClass().getName().equals("entities.AccountRepo")) {
-            this.data = new AccountRepo();
-        } else {
-            this.data = (AccountRepo) accountDatabase;
-        }
-        if (bracketDatabase == null || !bracketDatabase.getClass().getName().equals("entities.BracketRepo")) {
-            this.bracketData = new BracketRepo();
-        } else {
-            this.bracketData = (BracketRepo) bracketDatabase;
-        }
+//        if (accountDatabase == null || !accountDatabase.getClass().getName().equals("entities.AccountRepo")) {
+//            this.data = new AccountRepo();
+//        } else {
+//            this.data = (AccountRepo) accountDatabase;
+//        }
+//        if (bracketDatabase == null || !bracketDatabase.getClass().getName().equals("entities.BracketRepo")) {
+//            this.bracketData = new BracketRepo();
+//        } else {
+//            this.bracketData = (BracketRepo) bracketDatabase;
+//        }
         this.gateway = gateway;
     }
 

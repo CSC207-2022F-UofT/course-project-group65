@@ -1,5 +1,6 @@
 import database.CreateAccount.CreateAccountFileWriter;
 import entities.*;
+import screens.NextScreenData;
 import screens.createAccount.CreateAccountController;
 import screens.createAccount.CreateAccountPresenter;
 import screens.homeScreen;
@@ -9,6 +10,7 @@ import useCases.CreateAccount.*;
 import useCases.LogIn.LogInIB;
 import useCases.LogIn.LogInOB;
 import useCases.LogIn.LogInUC;
+import useCases.generalClasses.InformationRecord;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
@@ -39,20 +41,23 @@ public class TournamentSimulator {
             System.out.println("Persistence comes into effect after first run");
         }
 
+        InformationRecord informationRecord = new InformationRecord(accountDatabase, bracketDatabase);
+        NextScreenData nextScreenData = new NextScreenData(informationRecord);
+
         // CreateAccountOB createAccountOB = new CreateAccountPresenter();
 //        CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, mainUserFactory,
 //                mainAccountRepo, mainBracketRepo);
         // CreateAccountGateway gateway = new CreateAccountFileWriter("accounts.txt");
 //        CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB,
 //                accountDatabase, bracketDatabase);
-        CreateAccountController createAccountController = new CreateAccountController(accountDatabase, bracketDatabase);
+        CreateAccountController createAccountController = new CreateAccountController(informationRecord);
 
-        LogInController logInController = new LogInController(accountDatabase, bracketDatabase);
+        LogInController logInController = new LogInController(informationRecord);
         //LogInOB logInOB = new LogInPresenter();
         //LogInIB logInIB = new LogInUC(logInOB, accountDatabase, bracketDatabase);
         //LogInController logInController = new LogInController(logInIB);
 
-        homeScreen homeScreen = new homeScreen(createAccountController, logInController);
+        homeScreen homeScreen = new homeScreen(createAccountController, logInController, nextScreenData);
         homeScreen.setVisible(true);
 
     }
