@@ -3,6 +3,7 @@ package screens.teamCreation;
 
 import screens.ExtendedView;
 import screens.NextScreenData;
+
 import useCases.teamCreation.teamCreationOD;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UserInput extends JFrame implements ActionListener{
-
+    private JLabel TeamName;
     private JTextField tfTeamName;
     private JButton btnCreate;
     private JPanel inputPanel;
