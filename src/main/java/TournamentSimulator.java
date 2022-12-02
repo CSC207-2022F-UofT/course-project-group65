@@ -1,8 +1,8 @@
 import entities.*;
 import screens.NextScreenData;
-import screens.createAccount.CreateAccountController;
-import screens.homeScreen;
-import screens.logIn.LogInController;
+import screens.create_account.CreateAccountController;
+import frameworks_and_drivers.homeScreen;
+import screens.log_in.LogInController;
 import use_cases.general_classes.InformationRecord;
 
 import java.io.FileInputStream;
