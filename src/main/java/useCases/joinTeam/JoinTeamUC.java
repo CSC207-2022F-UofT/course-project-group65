@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import entities.*;
 import useCases.generalClasses.InformationRecord;
+import useCases.generalClasses.bundleBracketData.BundleBracketData;
 import useCases.teamCreation.teamCreationDSID;
 
 /**
@@ -119,7 +120,11 @@ public class JoinTeamUC implements JoinTeamIB {
         for (User member : teamMembers){
             membersNames.add(member.getUsername());
         }
-        JoinTeamOD outputData = new JoinTeamOD(success, membersNames);
+
+        BundleBracketData bundleBracketData = new BundleBracketData();
+        bundleBracketData.bundleBracket(this.brackets.getBracket(bracketID));
+
+        JoinTeamOD outputData = new JoinTeamOD(success, membersNames, bundleBracketData.getTeamToPlayers());
         return outputBoundary.SuccessView(outputData);
     }
 }
