@@ -5,71 +5,79 @@ import entities.BracketRepo;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents the output data for the CreateBracket use case.
+ * This data is used in updating/creating the view after the bracket has been
+ * successfully created.
+ */
 public class CreateBracketOD {
-    /*
-    The output data class for the create bracket output boundary.
+    /** The name of the user who create the bracket */
+    private final String username;
+    /** The account repository */
+    private final AccountRepo accounts;
+    /** The bracket repository */
+    private final BracketRepo brackets;
+    /** The ID of the bracket that was created */
+    private final int bracketID;
+    /** The list of default team names for the teams created in the bracket */
+    private final ArrayList<String> teams;
+
+    /**
+     * Creates a new CreateBracketOD object.
+     * @param username The name of the user who created the bracket
+     * @param accounts The account repository
+     * @param brackets The bracket repository
+     * @param bracketID The ID of the bracket that was created
+     * @param teams The list of default team names for the teams created in the bracket
      */
-    private String username;
-    private AccountRepo accounts;
-    private BracketRepo brackets;
-    private String bracketType;
-
-    private int bracketID;
-
-    private ArrayList<String> teams;
-
-    private String bracketName;
-    private String playerInvite;
-    private String observerInvite;
-
-
-    public CreateBracketOD(String username, AccountRepo accounts, BracketRepo brackets, String bracketType,
-                           int bracketID, ArrayList<String> teams, String bracketName,
-                           String playerInvite, String observerInvite){
+    public CreateBracketOD(String username, AccountRepo accounts, BracketRepo brackets,
+                           int bracketID, ArrayList<String> teams){
         this.username = username;
         this.accounts = accounts;
         this.brackets = brackets;
-        this.bracketType = bracketType;
         this.bracketID = bracketID;
         this.teams = teams;
-        this.bracketName = bracketName;
-        this.playerInvite = playerInvite;
-        this.observerInvite = observerInvite;
+
     }
 
+    /**
+     * Returns the name of the user who created the bracket.
+     * @return The name of the user who created the bracket
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * Returns the account repository.
+     * @return The account repository
+     */
     public AccountRepo getAccounts() {
         return accounts;
     }
 
+    /**
+     * Returns the bracket repository.
+     * @return The bracket repository
+     */
     public BracketRepo getBrackets() {
         return brackets;
     }
 
-    public String getBracketType() {
-        return bracketType;
-    }
-
+    /**
+     * Returns the ID of the bracket that was created.
+     * @return The ID of the bracket that was created
+     */
     public int getBracketID() {
         return bracketID;
     }
 
+    /**
+     * Returns the list of default team names for the teams created in the bracket.
+     * @return The list of default team names for the teams created in the bracket
+     */
     public ArrayList<String> getTeams() {
         return teams;
     }
 
-    public String getBracketName() {
-        return bracketName;
-    }
-
-    public String getPlayerInvite() {
-        return playerInvite;
-    }
-
-    public String getObserverInvite() {
-        return observerInvite;
-    }
 }

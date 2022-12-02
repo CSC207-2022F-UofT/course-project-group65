@@ -1,8 +1,6 @@
 package screens.createBracket;
 
 import database.CreateBracket.CreateBracketFileWriter;
-import entities.AccountRepo;
-import entities.BracketRepo;
 import useCases.createBracket.*;
 import useCases.generalClasses.InformationRecord;
 
@@ -10,7 +8,7 @@ public class CreateBracketController {
     /*
     A class for the Controller of the create bracket use case.
      */
-    private CreateBracketIB createBracketIB;
+    private final CreateBracketIB createBracketIB;
 
 //    public CreateBracketController(CreateBracketIB userInput) {
 //        this.createBracketIB = userInput;

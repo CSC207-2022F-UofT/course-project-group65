@@ -9,7 +9,7 @@ public class DefaultBracketBuilder implements BracketBuilder {
     /*
      * This is a class for creating a default bracket.
      */
-    private DefaultBracket bracket;
+    private final DefaultBracket bracket;
 
     public DefaultBracketBuilder() {
         this.bracket = new DefaultBracket();
