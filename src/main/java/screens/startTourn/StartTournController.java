@@ -1,7 +1,9 @@
 package screens.startTourn;
 
-import useCases.startTourn.StartTournIB;
-import useCases.startTourn.StartTournOD;
+
+import database.StartTourn.StartTournFilerWriter;
+import useCases.generalClasses.InformationRecord;
+import useCases.startTourn.*;
 
 /**
  * A class for the Controller of the start tournament use case.
@@ -9,8 +11,10 @@ import useCases.startTourn.StartTournOD;
 public class StartTournController {
     final StartTournIB userInput;
 
-    public StartTournController(StartTournIB userInput) {
-        this.userInput = userInput;
+    public StartTournController(String username, InformationRecord informationRecord, int bracketId) {
+        StartTournOB startTournOB = new StartTournPresenter();
+        StartTournGateway gateway = new StartTournFilerWriter("brackets.txt");
+        userInput = new StartTournUC(startTournOB, username, informationRecord, bracketId, gateway);
     }
 
     public StartTournOD startTourn() {

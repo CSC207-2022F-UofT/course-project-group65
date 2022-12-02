@@ -70,19 +70,20 @@ public class UserInput extends JFrame implements ActionListener{
                 throw new Exception("Please enter a team name");
             }
             teamCreationOD outputData = teamCreationController.createNewTeam(tfTeamName.getText());
-            EndTournOB endTournOB = new EndTournPresenter();
+//            EndTournOB endTournOB = new EndTournPresenter();
 //            EndTournIB endTournIB = new EndTournUC(endTournOB, outputData.getUsername(), nextScreenData.getInformationRecord(),
 //                    outputData.getBracketID());
-            EndTournIB endTournIB = new EndTournUC(endTournOB, outputData.getUsername(), nextScreenData.getInformationRecord(),
-                    nextScreenData.getCurrentBracketID());
-            EndTournController endTournController = new EndTournController(endTournIB);
+//            EndTournIB endTournIB = new EndTournUC(endTournOB, outputData.getUsername(), nextScreenData.getInformationRecord(),
+//                    nextScreenData.getCurrentBracketID());
+            EndTournController endTournController = new EndTournController(outputData.getUsername(), nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID());
 
-            StartTournOB startTournOB = new StartTournPresenter();
+
+//            StartTournOB startTournOB = new StartTournPresenter();
 //            StartTournIB startTournIB = new StartTournUC(startTournOB, outputData.getUsername(),
 //                    nextScreenData.getInformationRecord(), outputData.getBracketID());
-            StartTournIB startTournIB = new StartTournUC(startTournOB, outputData.getUsername(),
-                    nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID());
-            StartTournController startTournController = new StartTournController(startTournIB);
+//            StartTournIB startTournIB = new StartTournUC(startTournOB, outputData.getUsername(),
+//                    nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID());
+            StartTournController startTournController = new StartTournController(outputData.getUsername(), nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID());
 
 //            NextScreenData nextScreenData = new NextScreenData();
 //            nextScreenData.setBrackets(outputData.getBrackets());
