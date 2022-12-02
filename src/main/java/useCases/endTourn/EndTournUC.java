@@ -30,16 +30,28 @@ public class EndTournUC implements EndTournIB{
 
     }
 
+    /**
+     * Checks if the user is an Overseer.
+     * @return true if and only if the user is an Overseer.
+     */
     public boolean checkUserRole() {
         return (Objects.equals(this.user.getBracketRole(this.bracketId), "Overseer"));
     }
 
-    // Calculating the total # of rounds in the tournament using log base 2.
+
+    /**
+     * Checks if the final game has ended.
+     * @return true if and only if the final game has ended.
+     */
     public boolean checkGame() {
         Game finalGame = this.bracket.getFinalGame();
         return (finalGame.getNumTeams() < 2);
     }
 
+    /**
+     * Checks if there is a final winner.
+     * @return true if and only if there is a final winner.
+     */
     public boolean checkFinalWinner() {
         return (bracket.getFinalGame().getWinner() != null);
     }
