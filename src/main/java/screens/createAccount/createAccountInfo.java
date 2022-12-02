@@ -3,7 +3,7 @@ package screens.createAccount;
 import screens.NextScreenData;
 import screens.homeScreen;
 import screens.logIn.LogInController;
-import useCases.CreateAccount.*;
+import use_cases.create_account.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

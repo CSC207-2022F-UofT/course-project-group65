@@ -1,7 +1,7 @@
 package screens.teamCreation;
 
-import useCases.teamCreation.teamCreationOB;
-import useCases.teamCreation.teamCreationOD;
+import use_cases.team_creation.teamCreationOB;
+import use_cases.team_creation.teamCreationOD;
 /**
  * The presenter class for teamCreation.
  */

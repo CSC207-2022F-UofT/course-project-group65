@@ -1,7 +1,7 @@
 package screens.logIn;
 
-import useCases.LogIn.LogInOB;
-import useCases.LogIn.LogInOD;
+import use_cases.log_in.LogInOB;
+import use_cases.log_in.LogInOD;
 
 public class LogInPresenter implements LogInOB {
     @Override

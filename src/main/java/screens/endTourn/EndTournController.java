@@ -1,8 +1,8 @@
 package screens.endTourn;
 
 import database.EndTourn.EndTournFileWriter;
-import useCases.endTourn.*;
-import useCases.generalClasses.InformationRecord;
+import use_cases.end_tournament.*;
+import use_cases.general_classes.InformationRecord;
 
 /**
  * A class for the Controller of the end tournament use case.

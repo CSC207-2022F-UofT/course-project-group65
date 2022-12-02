@@ -1,7 +1,7 @@
 package database.TeamCreation;
 
-import useCases.teamCreation.teamCreationDSID;
-import useCases.teamCreation.teamCreationGateway;
+import use_cases.team_creation.teamCreationDSID;
+import use_cases.team_creation.teamCreationGateway;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;

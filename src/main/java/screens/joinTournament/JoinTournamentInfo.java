@@ -1,33 +1,16 @@
 package screens.joinTournament;
 
-import database.JoinTeam.JoinTeamFileWriter;
 import screens.ExtendedView;
 import screens.NextScreenData;
 //import screens.bracketView;
 import screens.endTourn.EndTournController;
-import screens.endTourn.EndTournPresenter;
 import screens.joinTeam.JoinTeamController;
-import screens.joinTeam.JoinTeamPresenter;
 import screens.startTourn.StartTournController;
-import screens.startTourn.StartTournPresenter;
-import useCases.endTourn.EndTournIB;
-import useCases.endTourn.EndTournOB;
-import useCases.endTourn.EndTournUC;
-import useCases.generalClasses.bundleBracketData.BundleBracketData;
-import useCases.joinTeam.JoinTeamGateway;
-import useCases.joinTeam.JoinTeamIB;
-import useCases.joinTeam.JoinTeamOB;
-import useCases.joinTeam.JoinTeamUC;
-import useCases.joinTournament.JoinTournamentOD;
-import useCases.startTourn.StartTournIB;
-import useCases.startTourn.StartTournOB;
-import useCases.startTourn.StartTournUC;
+import use_cases.join_tournament.JoinTournamentOD;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 public class JoinTournamentInfo extends JFrame implements ActionListener {
     private JPanel joinTournament;

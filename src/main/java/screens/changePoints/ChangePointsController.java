@@ -1,8 +1,8 @@
 package screens.changePoints;
 
 import database.ChangePoints.ChangePointsFileWriter;
-import useCases.changePoints.*;
-import useCases.generalClasses.InformationRecord;
+import use_cases.change_points.*;
+import use_cases.general_classes.InformationRecord;
 
 public class ChangePointsController {
 

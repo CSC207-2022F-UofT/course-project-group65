@@ -1,7 +1,7 @@
 package screens.joinTournament;
 
-import useCases.joinTournament.JoinTournamentOB;
-import useCases.joinTournament.JoinTournamentOD;
+import use_cases.join_tournament.JoinTournamentOB;
+import use_cases.join_tournament.JoinTournamentOD;
 
 public class JoinTournamentPresenter implements JoinTournamentOB {
     @Override

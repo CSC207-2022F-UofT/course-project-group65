@@ -1,7 +1,7 @@
 package database.EndTourn;
 
-import useCases.endTourn.EndTournDSID;
-import useCases.endTourn.EndTournGateway;
+import use_cases.end_tournament.EndTournDSID;
+import use_cases.end_tournament.EndTournGateway;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

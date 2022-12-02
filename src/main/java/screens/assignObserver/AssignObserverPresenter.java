@@ -1,7 +1,7 @@
 package screens.assignObserver;
 
-import useCases.assignObserver.AssignObserverOB;
-import useCases.assignObserver.AssignObserverOD;
+import use_cases.assign_observer.AssignObserverOB;
+import use_cases.assign_observer.AssignObserverOD;
 
 public class AssignObserverPresenter implements AssignObserverOB {
     @Override

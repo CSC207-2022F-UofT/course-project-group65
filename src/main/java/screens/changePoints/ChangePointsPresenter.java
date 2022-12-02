@@ -1,5 +1,5 @@
 package screens.changePoints;
-import useCases.changePoints.*;
+import use_cases.change_points.*;
 
 public class ChangePointsPresenter implements ChangePointsOB {
 

@@ -1,35 +1,13 @@
 package screens;
 
-import database.CreateAccount.CreateAccountFileWriter;
 import screens.createAccount.CreateAccountController;
-import screens.createAccount.CreateAccountPresenter;
 import screens.createBracket.CreateBracketController;
-import screens.createBracket.CreateBracketPresenter;
 import screens.createBracket.enterBracketInfo;
 import screens.joinTournament.JoinTournamentController;
 import screens.joinTournament.JoinTournamentInfo;
-import screens.joinTournament.JoinTournamentPresenter;
 import screens.logIn.LogInController;
-import screens.logIn.LogInPresenter;
 import screens.viewTournament.ViewTournamentController;
 import screens.viewTournament.ViewTournamentInfo;
-import screens.viewTournament.ViewTournamentPresenter;
-import useCases.CreateAccount.CreateAccountGateway;
-import useCases.CreateAccount.CreateAccountIB;
-import useCases.CreateAccount.CreateAccountOB;
-import useCases.CreateAccount.CreateAccountUC;
-import useCases.LogIn.LogInIB;
-import useCases.LogIn.LogInOB;
-import useCases.LogIn.LogInUC;
-import useCases.createBracket.CreateBracketIB;
-import useCases.createBracket.CreateBracketOB;
-import useCases.createBracket.CreateBracketUC;
-import useCases.joinTournament.JoinTournamentIB;
-import useCases.joinTournament.JoinTournamentOB;
-import useCases.joinTournament.JoinTournamentUC;
-import useCases.viewTournament.ViewTournamentIB;
-import useCases.viewTournament.ViewTournamentOB;
-import useCases.viewTournament.ViewTournamentUC;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

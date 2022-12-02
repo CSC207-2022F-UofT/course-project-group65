@@ -1,7 +1,7 @@
 package database.StartTourn;
 
-import useCases.startTourn.StartTournDSID;
-import useCases.startTourn.StartTournGateway;
+import use_cases.start_tournament.StartTournDSID;
+import use_cases.start_tournament.StartTournGateway;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

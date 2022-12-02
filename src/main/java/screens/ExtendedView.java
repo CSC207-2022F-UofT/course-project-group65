@@ -13,9 +13,9 @@ import screens.startTourn.StartTournController;
 import screens.startTourn.startErrors;
 import screens.teamCreation.TeamCreationController;
 import screens.teamCreation.UserInput;
-import useCases.assignObserver.AssignObserverOD;
-import useCases.joinTeam.JoinTeamOD;
-import useCases.startTourn.StartTournOD;
+import use_cases.assign_observer.AssignObserverOD;
+import use_cases.join_team.JoinTeamOD;
+import use_cases.start_tournament.StartTournOD;
 
 import javax.swing.*;
 import java.awt.*;

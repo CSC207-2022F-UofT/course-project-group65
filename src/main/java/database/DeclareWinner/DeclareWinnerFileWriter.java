@@ -1,7 +1,7 @@
 package database.DeclareWinner;
 
-import useCases.declareWinner.DeclareWinnerDSID;
-import useCases.declareWinner.DeclareWinnerGateway;
+import use_cases.declare_winner.DeclareWinnerDSID;
+import use_cases.declare_winner.DeclareWinnerGateway;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;

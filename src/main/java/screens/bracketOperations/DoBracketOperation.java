@@ -9,19 +9,14 @@ import screens.changePoints.ChangePointsController;
 import screens.changePoints.ChangePointsFailed;
 import screens.declareWinner.DeclareWinnerController;
 import screens.declareWinner.DeclareWinnerFailed;
-import useCases.advanceTeam.*;
-import useCases.changePoints.ChangePointsIB;
-import useCases.changePoints.ChangePointsID;
-import useCases.changePoints.ChangePointsOD;
-import useCases.declareWinner.DeclareWinnerIB;
-import useCases.declareWinner.DeclareWinnerID;
-import useCases.declareWinner.DeclareWinnerOD;
+import use_cases.advance_team.*;
+import use_cases.change_points.ChangePointsOD;
+import use_cases.declare_winner.DeclareWinnerOD;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class DoBracketOperation extends JFrame implements ActionListener {
     private JLabel title;

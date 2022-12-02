@@ -1,8 +1,8 @@
 package screens.createBracket;
 
 import database.CreateBracket.CreateBracketFileWriter;
-import useCases.createBracket.*;
-import useCases.generalClasses.InformationRecord;
+import use_cases.create_bracket.*;
+import use_cases.general_classes.InformationRecord;
 
 public class CreateBracketController {
     /*

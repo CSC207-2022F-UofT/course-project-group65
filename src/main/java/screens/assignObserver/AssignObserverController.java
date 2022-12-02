@@ -1,8 +1,8 @@
 package screens.assignObserver;
 
 import database.AssignObserver.AssignObserverFileWriter;
-import useCases.assignObserver.*;
-import useCases.generalClasses.InformationRecord;
+import use_cases.assign_observer.*;
+import use_cases.general_classes.InformationRecord;
 
 public class AssignObserverController {
     private final AssignObserverIB assignObsIB;

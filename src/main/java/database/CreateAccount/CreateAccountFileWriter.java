@@ -1,7 +1,7 @@
 package database.CreateAccount;
 
-import useCases.CreateAccount.CreateAccountDSID;
-import useCases.CreateAccount.CreateAccountGateway;
+import use_cases.create_account.CreateAccountDSID;
+import use_cases.create_account.CreateAccountGateway;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

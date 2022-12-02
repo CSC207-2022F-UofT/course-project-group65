@@ -1,9 +1,7 @@
 package screens;
 
-import entities.AccountRepo;
-import entities.BracketRepo;
-import useCases.generalClasses.InformationRecord;
-import useCases.generalClasses.bundleBracketData.BundleBracketData;
+import use_cases.general_classes.InformationRecord;
+import use_cases.general_classes.bundleBracketData.BundleBracketData;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

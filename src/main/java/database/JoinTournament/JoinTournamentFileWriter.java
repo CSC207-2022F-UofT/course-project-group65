@@ -1,7 +1,7 @@
 package database.JoinTournament;
 
-import useCases.joinTournament.JoinTournamentDSID;
-import useCases.joinTournament.JoinTournamentGateway;
+import use_cases.join_tournament.JoinTournamentDSID;
+import use_cases.join_tournament.JoinTournamentGateway;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;

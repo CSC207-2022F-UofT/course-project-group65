@@ -1,8 +1,8 @@
 package screens.joinTeam;
 
 
-import useCases.joinTeam.JoinTeamOB;
-import useCases.joinTeam.JoinTeamOD;
+import use_cases.join_team.JoinTeamOB;
+import use_cases.join_team.JoinTeamOD;
 
 /**
  * A class for the Presenter of the join team use case.

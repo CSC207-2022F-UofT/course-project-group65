@@ -1,7 +1,7 @@
 package database.ChangePoints;
 
-import useCases.changePoints.ChangePointsDSID;
-import useCases.changePoints.ChangePointsGateway;
+import use_cases.change_points.ChangePointsDSID;
+import use_cases.change_points.ChangePointsGateway;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;

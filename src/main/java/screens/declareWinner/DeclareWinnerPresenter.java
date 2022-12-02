@@ -1,5 +1,5 @@
 package screens.declareWinner;
-import useCases.declareWinner.*;
+import use_cases.declare_winner.*;
 
 public class DeclareWinnerPresenter implements DeclareWinnerOB {
 

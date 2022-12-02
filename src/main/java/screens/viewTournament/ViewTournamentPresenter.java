@@ -1,7 +1,7 @@
 package screens.viewTournament;
 
-import useCases.viewTournament.ViewTournamentOB;
-import useCases.viewTournament.ViewTournamentOD;
+import use_cases.view_tournament.ViewTournamentOB;
+import use_cases.view_tournament.ViewTournamentOD;
 
 public class ViewTournamentPresenter implements ViewTournamentOB {
     @Override

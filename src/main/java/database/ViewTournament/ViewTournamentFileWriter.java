@@ -1,9 +1,8 @@
 package database.ViewTournament;
 
-import useCases.viewTournament.ViewTournamentDSID;
-import useCases.viewTournament.ViewTournamentGateway;
+import use_cases.view_tournament.ViewTournamentDSID;
+import use_cases.view_tournament.ViewTournamentGateway;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;

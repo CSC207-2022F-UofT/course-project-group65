@@ -2,8 +2,8 @@ package screens.startTourn;
 
 
 import database.StartTourn.StartTournFilerWriter;
-import useCases.generalClasses.InformationRecord;
-import useCases.startTourn.*;
+import use_cases.general_classes.InformationRecord;
+import use_cases.start_tournament.*;
 
 /**
  * A class for the Controller of the start tournament use case.

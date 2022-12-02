@@ -1,9 +1,8 @@
 package screens.createAccount;
 
 import database.CreateAccount.CreateAccountFileWriter;
-import entities.AccountRepo;
-import useCases.CreateAccount.*;
-import useCases.generalClasses.InformationRecord;
+import use_cases.create_account.*;
+import use_cases.general_classes.InformationRecord;
 
 public class CreateAccountController {
     private CreateAccountIB createAccountIB;

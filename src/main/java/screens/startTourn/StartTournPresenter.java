@@ -1,7 +1,7 @@
 package screens.startTourn;
 
-import useCases.startTourn.StartTournOB;
-import useCases.startTourn.StartTournOD;
+import use_cases.start_tournament.StartTournOB;
+import use_cases.start_tournament.StartTournOD;
 
 /**
  * A class for the Presenter of the start tournament use case.

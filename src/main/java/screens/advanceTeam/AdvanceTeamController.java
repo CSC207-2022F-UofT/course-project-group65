@@ -1,7 +1,7 @@
 package screens.advanceTeam;
 import database.AdvanceTeam.AdvanceTeamFileWriter;
-import useCases.advanceTeam.*;
-import useCases.generalClasses.InformationRecord;
+import use_cases.advance_team.*;
+import use_cases.general_classes.InformationRecord;
 
 public class AdvanceTeamController {
 

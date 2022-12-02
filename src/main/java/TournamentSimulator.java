@@ -1,16 +1,9 @@
-import database.CreateAccount.CreateAccountFileWriter;
 import entities.*;
 import screens.NextScreenData;
 import screens.createAccount.CreateAccountController;
-import screens.createAccount.CreateAccountPresenter;
 import screens.homeScreen;
 import screens.logIn.LogInController;
-import screens.logIn.LogInPresenter;
-import useCases.CreateAccount.*;
-import useCases.LogIn.LogInIB;
-import useCases.LogIn.LogInOB;
-import useCases.LogIn.LogInUC;
-import useCases.generalClasses.InformationRecord;
+import use_cases.general_classes.InformationRecord;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;

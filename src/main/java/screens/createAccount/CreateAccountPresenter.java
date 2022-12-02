@@ -1,8 +1,8 @@
 package screens.createAccount;
 
 
-import useCases.CreateAccount.CreateAccountOB;
-import useCases.CreateAccount.CreateAccountOD;
+import use_cases.create_account.CreateAccountOB;
+import use_cases.create_account.CreateAccountOD;
 
 public class CreateAccountPresenter implements CreateAccountOB {
 

@@ -1,7 +1,7 @@
 package database.JoinTeam;
 
-import useCases.joinTeam.JoinTeamDSID;
-import useCases.joinTeam.JoinTeamGateway;
+import use_cases.join_team.JoinTeamDSID;
+import use_cases.join_team.JoinTeamGateway;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -1,8 +1,8 @@
 package screens.joinTournament;
 
 import database.JoinTournament.JoinTournamentFileWriter;
-import useCases.generalClasses.InformationRecord;
-import useCases.joinTournament.*;
+import use_cases.general_classes.InformationRecord;
+import use_cases.join_tournament.*;
 
 public class JoinTournamentController {
     final private JoinTournamentIB joinTourIB;

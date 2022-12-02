@@ -1,7 +1,7 @@
 package screens.endTourn;
 
-import useCases.endTourn.EndTournOB;
-import useCases.endTourn.EndTournOD;
+import use_cases.end_tournament.EndTournOB;
+import use_cases.end_tournament.EndTournOD;
 
 /**
  * A class for the Presenter of the end tournament use case.

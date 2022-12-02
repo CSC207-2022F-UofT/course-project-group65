@@ -4,7 +4,7 @@ package screens.teamCreation;
 import screens.ExtendedView;
 import screens.NextScreenData;
 
-import useCases.teamCreation.teamCreationOD;
+import use_cases.team_creation.teamCreationOD;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

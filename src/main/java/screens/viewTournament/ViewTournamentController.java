@@ -1,8 +1,8 @@
 package screens.viewTournament;
 
 import database.ViewTournament.ViewTournamentFileWriter;
-import useCases.generalClasses.InformationRecord;
-import useCases.viewTournament.*;
+import use_cases.general_classes.InformationRecord;
+import use_cases.view_tournament.*;
 
 public class ViewTournamentController {
     final private ViewTournamentIB viewTourIB;

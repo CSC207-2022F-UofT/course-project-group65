@@ -2,10 +2,8 @@ package screens.joinTeam;
 
 import database.JoinTeam.JoinTeamFileWriter;
 
-import entities.AccountRepo;
-import entities.BracketRepo;
-import useCases.generalClasses.InformationRecord;
-import useCases.joinTeam.*;
+import use_cases.general_classes.InformationRecord;
+import use_cases.join_team.*;
 
 /**
  * A class for the Controller of the join team use case.

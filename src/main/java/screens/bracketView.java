@@ -1,66 +1,14 @@
 package screens;
 
-import database.AdvanceTeam.AdvanceTeamFileWriter;
-import database.ChangePoints.ChangePointsFileWriter;
-import database.CreateAccount.CreateAccountFileWriter;
-import database.DeclareWinner.DeclareWinnerFileWriter;
-import screens.advanceTeam.AdvanceTeamController;
-import screens.advanceTeam.AdvanceTeamPresenter;
-import screens.assignObserver.AssignObserverController;
-import screens.assignObserver.AssignObserverPresenter;
-import screens.bracketOperations.DoBracketOperation;
-import screens.changePoints.ChangePointsController;
-import screens.changePoints.ChangePointsPresenter;
-import screens.createAccount.CreateAccountController;
-import screens.createAccount.CreateAccountPresenter;
-import screens.declareWinner.DeclareWinnerController;
-import screens.declareWinner.DeclareWinnerPresenter;
 import screens.endTourn.EndTournController;
 import screens.joinTeam.JoinTeamController;
-import screens.logIn.LogInController;
-import screens.logIn.LogInPresenter;
 import screens.startTourn.StartTournController;
-import screens.startTourn.startErrors;
-import screens.teamCreation.TeamCreationController;
-import screens.teamCreation.TeamCreationPresenter;
-import screens.teamCreation.UserInput;
-import useCases.CreateAccount.CreateAccountGateway;
-import useCases.CreateAccount.CreateAccountIB;
-import useCases.CreateAccount.CreateAccountOB;
-import useCases.CreateAccount.CreateAccountUC;
-import useCases.LogIn.LogInIB;
-import useCases.LogIn.LogInOB;
-import useCases.LogIn.LogInUC;
-import useCases.advanceTeam.AdvanceTeamGateway;
-import useCases.advanceTeam.AdvanceTeamIB;
-import useCases.advanceTeam.AdvanceTeamOB;
-import useCases.advanceTeam.AdvanceTeamUC;
-import useCases.assignObserver.AssignObserverIB;
-import useCases.assignObserver.AssignObserverOB;
-import useCases.assignObserver.AssignObserverOD;
-import useCases.assignObserver.AssignObserverUC;
-import useCases.changePoints.ChangePointsGateway;
-import useCases.changePoints.ChangePointsIB;
-import useCases.changePoints.ChangePointsOB;
-import useCases.changePoints.ChangePointsUC;
-import useCases.declareWinner.DeclareWinnerGateway;
-import useCases.declareWinner.DeclareWinnerIB;
-import useCases.declareWinner.DeclareWinnerOB;
-import useCases.declareWinner.DeclareWinnerUC;
-import useCases.joinTeam.JoinTeamOD;
-import useCases.startTourn.StartTournOD;
-import useCases.teamCreation.teamCreationIB;
-import useCases.teamCreation.teamCreationOB;
-import useCases.teamCreation.teamCreationUC;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Objects;
 
 public class bracketView extends JFrame implements ActionListener {
 //    The main panel for the bracket view screen

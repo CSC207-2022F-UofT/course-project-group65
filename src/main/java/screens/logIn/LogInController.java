@@ -1,9 +1,7 @@
 package screens.logIn;
 
-import entities.AccountRepo;
-import entities.BracketRepo;
-import useCases.LogIn.*;
-import useCases.generalClasses.InformationRecord;
+import use_cases.log_in.*;
+import use_cases.general_classes.InformationRecord;
 
 public class LogInController {
     private final LogInIB logInIB;

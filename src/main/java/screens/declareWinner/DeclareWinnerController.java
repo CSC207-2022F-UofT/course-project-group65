@@ -1,8 +1,8 @@
 package screens.declareWinner;
 
 import database.DeclareWinner.DeclareWinnerFileWriter;
-import useCases.declareWinner.*;
-import useCases.generalClasses.InformationRecord;
+import use_cases.declare_winner.*;
+import use_cases.general_classes.InformationRecord;
 
 public class DeclareWinnerController {
 

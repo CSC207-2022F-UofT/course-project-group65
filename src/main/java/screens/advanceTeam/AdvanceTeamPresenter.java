@@ -1,6 +1,6 @@
 package screens.advanceTeam;
-import useCases.advanceTeam.AdvanceTeamOD;
-import useCases.advanceTeam.AdvanceTeamOB;
+import use_cases.advance_team.AdvanceTeamOD;
+import use_cases.advance_team.AdvanceTeamOB;
 
 public class AdvanceTeamPresenter implements AdvanceTeamOB {
 

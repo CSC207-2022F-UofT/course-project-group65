@@ -1,7 +1,7 @@
 package database.CreateBracket;
 
-import useCases.createBracket.CreateBracketDSID;
-import useCases.createBracket.CreateBracketGateway;
+import use_cases.create_bracket.CreateBracketDSID;
+import use_cases.create_bracket.CreateBracketGateway;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

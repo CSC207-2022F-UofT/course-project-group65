@@ -1,7 +1,7 @@
 package database.AssignObserver;
 
-import useCases.assignObserver.AssignObserverDSID;
-import useCases.assignObserver.AssignObserverGateway;
+import use_cases.assign_observer.AssignObserverDSID;
+import use_cases.assign_observer.AssignObserverGateway;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;

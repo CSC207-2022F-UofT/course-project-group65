@@ -1,7 +1,7 @@
 package screens.createBracket;
 
-import useCases.createBracket.CreateBracketOB;
-import useCases.createBracket.CreateBracketOD;
+import use_cases.create_bracket.CreateBracketOB;
+import use_cases.create_bracket.CreateBracketOD;
 
 public class CreateBracketPresenter implements CreateBracketOB {
     /*

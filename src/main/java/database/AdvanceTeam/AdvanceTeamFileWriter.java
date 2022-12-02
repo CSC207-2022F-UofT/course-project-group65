@@ -1,5 +1,5 @@
 package database.AdvanceTeam;
-import useCases.advanceTeam.*;
+import use_cases.advance_team.*;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

@@ -1,8 +1,8 @@
 package screens.teamCreation;
 
 import database.TeamCreation.TeamCreationFileWriter;
-import useCases.generalClasses.InformationRecord;
-import useCases.teamCreation.*;
+import use_cases.general_classes.InformationRecord;
+import use_cases.team_creation.*;
 
 /**
  * The class for the controller of teamCreation
