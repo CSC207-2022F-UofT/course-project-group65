@@ -4,7 +4,7 @@ package useCases.teamCreation;
 import entities.*;
 
 public class teamCreationDSID {
-    private BracketRepo updatedBracketRepo;
+    private final BracketRepo updatedBracketRepo;
 
     public teamCreationDSID(BracketRepo updatedBracketRepo) {
         this.updatedBracketRepo = updatedBracketRepo;
@@ -14,7 +14,4 @@ public class teamCreationDSID {
         return this.updatedBracketRepo;
     }
 
-    public void setUpdatedBracketRepoDSID(BracketRepo updatedBracketRepo) {
-        this.updatedBracketRepo = updatedBracketRepo;
-    }
 }
