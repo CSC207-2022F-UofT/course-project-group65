@@ -1,6 +1,7 @@
 package useCases.joinTeam;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 /**
  The output data class for the join team use case.
@@ -11,10 +12,16 @@ public class JoinTeamOD {
 
     private ArrayList<String> membersNames;
     // Used to update the corresponding team members list in the bracketView screen
+    private LinkedHashMap<String, ArrayList<String>> teamToPlayers;
 
-    public JoinTeamOD(String success, ArrayList<String> membersNames){
+    public JoinTeamOD(String success, ArrayList<String> membersNames, LinkedHashMap<String, ArrayList<String>> teamToPlayers){
         this.success = success;
         this.membersNames = membersNames;
+        this.teamToPlayers = teamToPlayers;
+    }
+
+    public LinkedHashMap<String, ArrayList<String>> getTeamToPlayers() {
+        return teamToPlayers;
     }
 
     public String getSuccess(){

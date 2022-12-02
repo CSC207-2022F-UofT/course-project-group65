@@ -13,6 +13,7 @@ import screens.startTourn.StartTournController;
 import screens.startTourn.startErrors;
 import screens.teamCreation.TeamCreationController;
 import screens.teamCreation.UserInput;
+import useCases.assignObserver.AssignObserverOD;
 import useCases.joinTeam.JoinTeamOD;
 import useCases.startTourn.StartTournOD;
 
@@ -198,6 +199,7 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         for(String ref: referees){
             cmbAssignObserver.addItem(ref);
         }
+        System.out.println("Referees: " + referees);
         cmbSelectGame.addActionListener(this);
         cmbAssignObserver.addActionListener(this);
         btnAssignObserver.addActionListener(this);
@@ -246,6 +248,14 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         int index = lblBracketGameScores.size() - gameID;
         lblBracketGameWinner.get(index).setText("Winner: " + winner);
     }
+
+//    public void addObserver(LinkedHashMap<Integer, String> gameToReferee){
+//        cmbAssignObserver.removeAllItems();
+//        ArrayList<String> referees = new ArrayList<>(gameToReferee.values());
+//        for(String ref: referees){
+//            cmbAssignObserver.addItem(ref);
+//        }
+//    }
 
     public void replaceTeam(String newTeam, String oldTeam, LinkedHashMap<Integer, ArrayList<String>> gameToTeams){
         for(int i=0; i<cmbJoinTeam.getItemCount(); i++){
@@ -358,9 +368,9 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
             String teamName = (String)cmbJoinTeam.getSelectedItem();
             try {
                 JoinTeamOD outputData = joinTeamController.joinTeam(teamName);
-                ArrayList<String> names = outputData.getMembersNames();
-                nextScreenData.bundleData();
-                updateTeamMembers(nextScreenData.getTeamToPlayers());
+//                ArrayList<String> names = outputData.getMembersNames();
+//                nextScreenData.bundleData();
+                updateTeamMembers(outputData.getTeamToPlayers());
             }
             catch (Exception exception) {
                 System.out.println( "Error: " + exception);
@@ -373,9 +383,10 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
                 String assignee = (String) cmbAssignObserver.getSelectedItem();
                 AssignObserverController controller = new AssignObserverController(nextScreenData.getInformationRecord(),
                         nextScreenData.getCurrentUser());
-                controller.assignObserver(assignee, gameID);
-                this.nextScreenData.bundleData();
-                updateObserverAssignments(nextScreenData.getGameToReferee());
+                AssignObserverOD output = controller.assignObserver(assignee, gameID);
+//                this.nextScreenData.bundleData();
+                updateObserverAssignments(output.getGameToReferee());
+//                addObserver(output.getGameToReferee());
             }
             catch(RuntimeException rex ) {
                 JOptionPane.showMessageDialog(this, rex.getMessage());
