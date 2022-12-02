@@ -13,16 +13,27 @@ import useCases.generalClasses.bundleBracketData.BundleBracketData;
  * saving the updated bracket back to the bracket repository.
  */
 public class teamCreationUC implements teamCreationIB {
+    /** The response model for teamCreationUC **/
     private final teamCreationOB outputBoundary;
-
+    /** The gateway for teamCreationUC to access database **/
     private final teamCreationGateway gateway;
+    /** The username of the creator that creates the team **/
     private final String creatorName;
-
+    /** The ID of the bracket that the team should be created in **/
     private final int bracketID;
+    /** The account repository */
     private final AccountRepo accounts;
+    /** The bracket repository */
     private final BracketRepo brackets;
     private String oldTeam;
 
+    /**
+     * Creates a new teamCreationUC object.
+     * @param outputBoundary The output boundary used for updating the view
+     * @param gateway The gateway to access the database to store info
+     * @param creatorName The username of the user that is creating the team
+     * @param informationRecord The information record containing the account and bracket repositories
+     */
     public teamCreationUC(teamCreationOB outputBoundary, teamCreationGateway gateway,
                           String creatorName, int bracketID, InformationRecord informationRecord) {
         this.outputBoundary = outputBoundary;
@@ -30,8 +41,6 @@ public class teamCreationUC implements teamCreationIB {
         this.bracketID = bracketID;
         this.brackets = informationRecord.getBracketData();
         this.accounts = informationRecord.getAccountData();
-//        this.accounts = (AccountRepo) accounts;
-//        this.brackets = (BracketRepo) brackets;
         this.gateway = gateway;
     }
     /**
@@ -77,18 +86,16 @@ public class teamCreationUC implements teamCreationIB {
     }
 
     /**
-     * creates the team based on user input
+     * creates the team based on user input by updating the currrent bracket
      * @param userInput input data from user
-     * @return a string that indicates whether the team has been successfully created
      */
-    public String createTeam(teamCreationID userInput){
+    public void createTeam(teamCreationID userInput){
         String teamName = userInput.getTeamName();
         User creator = accounts.getUser(creatorName);
         Team newTeam = findBlankTeam();
         oldTeam = newTeam.getTeamName();
         newTeam.setTeamName(teamName);
         newTeam.addTeamMember(creator);
-        return "Your team has been successfully created.";
 
     }
     /**
@@ -125,7 +132,7 @@ public class teamCreationUC implements teamCreationIB {
             return outputBoundary.prepareFailView("You are already in a team.");
         }
 
-        String success = createTeam(userInput);
+        createTeam(userInput);
         Bracket curBracket = brackets.getBracket(bracketID);
 
         BundleBracketData data = new BundleBracketData();

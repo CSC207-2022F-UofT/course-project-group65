@@ -5,6 +5,7 @@ import entities.game_finder_strategy.GameFinder;
 import entities.game_finder_strategy.GeneralisedGameFinder;
 import entities.game_finder_strategy.TreeGameFinder;
 import useCases.generalClasses.InformationRecord;
+import useCases.generalClasses.bundleBracketData.BundleBracketData;
 import useCases.generalClasses.permRestrictionStrategies.PermissionChecker;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,10 @@ public class AssignObserverUC implements AssignObserverIB {
             return outputBound.prepareFailView("Error saving to database.");
         }
 
-        AssignObserverOD output = new AssignObserverOD(ref.getUsername(), game.getGameID(), game.getGameRound());
+        BundleBracketData bundleBracketData = new BundleBracketData();
+        bundleBracketData.bundleBracket(bracket);
+
+        AssignObserverOD output = new AssignObserverOD(ref.getUsername(), game.getGameID(), game.getGameRound(), bundleBracketData.getGameToReferee());
         return outputBound.prepareSuccessView(output);
     }
 
