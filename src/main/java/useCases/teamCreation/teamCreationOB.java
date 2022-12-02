@@ -10,7 +10,7 @@ public interface teamCreationOB {
      */
     teamCreationOD prepareSuccessView(teamCreationOD teamData);
     /**
-     * Prepares the success view if the team was successfully created
+     * Prepares the fail view if the team was not successfully created
      * @param error - error message that indicates why the team cannot be created
      * @return output data
      */
