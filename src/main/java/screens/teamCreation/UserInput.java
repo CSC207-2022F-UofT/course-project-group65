@@ -91,8 +91,8 @@ public class UserInput extends JFrame implements ActionListener{
             nextScreenData.setCurrentUser(outputData.getUsername());
 //            nextScreenData.setCurrentBracketID(outputData.getBracketID());
             nextScreenData.bundleData();
-            extendedView.replaceTeam(outputData.getNewTeam(), outputData.getOldTeam(), nextScreenData.getGameToTeams());
-            extendedView.updateTeamMembers(nextScreenData.getTeamToPlayers());
+            extendedView.replaceTeam(outputData.getNewTeam(), outputData.getOldTeam(), outputData.getGameToTeams());
+            extendedView.updateTeamMembers(outputData.getTeamToPlayers());
 
 //            bracketView view = new bracketView(nextScreenData,endTournController, startTournController, joinTeamController);
 
