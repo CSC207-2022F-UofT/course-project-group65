@@ -33,11 +33,19 @@ public class StartTournUC implements StartTournIB{
 
 
 
+    /**
 
+     * Checks if the user is an Overseer.
+     * @return true if and only if the user is an Overseer.
+     */
     public boolean checkUserRole() {
         return (Objects.equals(this.user.getBracketRole(bracketId), "Overseer"));
     }
 
+    /**
+     * Checks if the number of teams matches the maximum number of teams in the bracket.
+     * @return true if and only if the number of teams matches the maximum number of teams in the bracket.
+     */
     public boolean checkNumTeams() {
         List<Team> teams = this.bracket.getTeams();
         for (Team team : teams) {
@@ -48,6 +56,10 @@ public class StartTournUC implements StartTournIB{
         return true;
     }
 
+    /**
+     * Checks if all the teams are full.
+     * @return true if and only if all the teams are full.
+     */
     public boolean checkTeamFull() {
         int maxTeamSize = this.bracket.getTeamSize();
         List<Team> teams = this.bracket.getTeams();
@@ -60,6 +72,10 @@ public class StartTournUC implements StartTournIB{
         return true;
     }
 
+    /**
+     * Checks if every game in the bracket has an observer assigned.
+     * @return true if and only if every game in the bracket has an observer assigned.
+     */
     public  boolean checkGameObserver() {
         return helperCheckGameObserver(this.bracket.getFinalGame());
     }
@@ -82,9 +98,6 @@ public class StartTournUC implements StartTournIB{
 //        System.out.println(bracket.getTournamentCondition());
     }
 
-    // TODO: implement the check part after finishing front end.
-    /// TODO: after returning the error message to the user, we want to know whether the user still wants to
-    /// start the tournament anyway. but for now I don't know how to implement that so I'm just leaving it.
     @Override
     public StartTournOD startTourn() {
         ArrayList<String> errors = new ArrayList<>();
