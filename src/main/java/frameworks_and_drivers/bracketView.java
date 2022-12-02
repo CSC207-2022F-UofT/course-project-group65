@@ -1,9 +1,9 @@
 package frameworks_and_drivers;
 
-import screens.NextScreenData;
-import screens.end_tournament.EndTournController;
-import screens.join_team.JoinTeamController;
-import screens.start_tournament.StartTournController;
+import interface_adapters.NextScreenData;
+import interface_adapters.end_tournament.EndTournController;
+import interface_adapters.join_team.JoinTeamController;
+import interface_adapters.start_tournament.StartTournController;
 
 import javax.swing.*;
 import java.awt.*;

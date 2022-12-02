@@ -1,19 +1,19 @@
 package frameworks_and_drivers;
 
-import screens.NextScreenData;
-import screens.advance_team.AdvanceTeamController;
-import screens.assign_observer.AssignObserverController;
+import interface_adapters.NextScreenData;
+import interface_adapters.advance_team.AdvanceTeamController;
+import interface_adapters.assign_observer.AssignObserverController;
 import frameworks_and_drivers.bracket_operations.DoBracketOperation;
-import screens.change_points.ChangePointsController;
-import screens.create_account.CreateAccountController;
-import screens.declare_winner.DeclareWinnerController;
-import screens.end_tournament.EndTournController;
-import screens.join_team.JoinTeamController;
-import screens.log_in.LogInController;
-import screens.start_tournament.StartTournController;
-import screens.start_tournament.startErrors;
-import screens.team_creation.TeamCreationController;
-import screens.team_creation.UserInput;
+import interface_adapters.change_points.ChangePointsController;
+import interface_adapters.create_account.CreateAccountController;
+import interface_adapters.declare_winner.DeclareWinnerController;
+import interface_adapters.end_tournament.EndTournController;
+import interface_adapters.join_team.JoinTeamController;
+import interface_adapters.log_in.LogInController;
+import interface_adapters.start_tournament.StartTournController;
+import interface_adapters.start_tournament.startErrors;
+import interface_adapters.team_creation.TeamCreationController;
+import interface_adapters.team_creation.UserInput;
 import use_cases.assign_observer.AssignObserverOD;
 import use_cases.join_team.JoinTeamOD;
 import use_cases.start_tournament.StartTournOD;
@@ -396,7 +396,7 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         else if(e.getSource() == btnStart){
             StartTournOD startData = startTournController.startTourn();
             ArrayList<String> startErrors = startData.getErrors();
-            screens.start_tournament.startErrors errorView = new startErrors(this.startTournController);
+            interface_adapters.start_tournament.startErrors errorView = new startErrors(this.startTournController);
             for (String error : startErrors) {
                 if (Objects.equals(error, "USERROLE")) {
                     errorView.setWarning1("You do not have permission to start the tournament.");

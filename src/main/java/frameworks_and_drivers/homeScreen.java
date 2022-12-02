@@ -1,10 +1,10 @@
 package frameworks_and_drivers;
 
-import screens.NextScreenData;
-import screens.create_account.CreateAccountController;
-import screens.create_account.createAccountInfo;
-import screens.log_in.LogInController;
-import screens.log_in.logInInfo;
+import interface_adapters.NextScreenData;
+import interface_adapters.create_account.CreateAccountController;
+import interface_adapters.create_account.createAccountInfo;
+import interface_adapters.log_in.LogInController;
+import interface_adapters.log_in.logInInfo;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

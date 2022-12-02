@@ -1,14 +1,14 @@
 package frameworks_and_drivers.bracket_operations;
 
 import frameworks_and_drivers.ExtendedView;
-import screens.NextScreenData;
-import screens.advance_team.AdvanceTeamController;
-import screens.advance_team.AdvanceTeamFailed;
+import interface_adapters.NextScreenData;
+import interface_adapters.advance_team.AdvanceTeamController;
+import interface_adapters.advance_team.AdvanceTeamFailed;
 //import screens.bracketView;
-import screens.change_points.ChangePointsController;
-import screens.change_points.ChangePointsFailed;
-import screens.declare_winner.DeclareWinnerController;
-import screens.declare_winner.DeclareWinnerFailed;
+import interface_adapters.change_points.ChangePointsController;
+import interface_adapters.change_points.ChangePointsFailed;
+import interface_adapters.declare_winner.DeclareWinnerController;
+import interface_adapters.declare_winner.DeclareWinnerFailed;
 import use_cases.advance_team.*;
 import use_cases.change_points.ChangePointsOD;
 import use_cases.declare_winner.DeclareWinnerOD;

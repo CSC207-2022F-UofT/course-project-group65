@@ -1,14 +1,14 @@
 package frameworks_and_drivers;
 
-import screens.NextScreenData;
-import screens.create_account.CreateAccountController;
-import screens.create_bracket.CreateBracketController;
-import screens.create_bracket.enterBracketInfo;
-import screens.join_tournament.JoinTournamentController;
-import screens.join_tournament.JoinTournamentInfo;
-import screens.log_in.LogInController;
-import screens.view_tournament.ViewTournamentController;
-import screens.view_tournament.ViewTournamentInfo;
+import interface_adapters.NextScreenData;
+import interface_adapters.create_account.CreateAccountController;
+import interface_adapters.create_bracket.CreateBracketController;
+import interface_adapters.create_bracket.enterBracketInfo;
+import interface_adapters.join_tournament.JoinTournamentController;
+import interface_adapters.join_tournament.JoinTournamentInfo;
+import interface_adapters.log_in.LogInController;
+import interface_adapters.view_tournament.ViewTournamentController;
+import interface_adapters.view_tournament.ViewTournamentInfo;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
