@@ -21,6 +21,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
@@ -199,7 +200,34 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         lblBracketGameWinner.get(index).setText("Winner: " + winner);
     }
 
-    public void addTeam(){
+    public void replaceTeam(String newTeam, String oldTeam, LinkedHashMap<Integer, ArrayList<String>> gameToTeams){
+        for(int i=0; i<cmbJoinTeam.getItemCount(); i++){
+            if(cmbJoinTeam.getItemAt(i).contains(oldTeam)){
+                cmbJoinTeam.insertItemAt(newTeam, i);
+                cmbJoinTeam.removeItem(oldTeam);
+                break;
+            }
+        }
+
+        int numGames = lblBracketGameScores.size();
+        for(int id: gameToTeams.keySet()){
+            String score = lblBracketGameScores.get(numGames - id).getText();
+
+            int a = score.indexOf('[');
+            if (score.substring(0, a).contains(oldTeam)) {
+                String lastHalf = score.substring(a);
+                lblBracketGameScores.get(numGames - id).setText(newTeam + " " + lastHalf);
+            } else {
+                a = score.indexOf('-');
+                int b = score.lastIndexOf('[');
+                String firstHalf = score.substring(0, a + 2);
+                String lastBit = score.substring(b);
+                lblBracketGameScores.get(numGames - id).setText(firstHalf + newTeam + " " + lastBit);
+            }
+        }
+    }
+
+    public void addPlayer(String name, String team){
 
     }
 
@@ -237,6 +265,12 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
             UserInput inputScreen = new UserInput(controller, this, this.nextScreenData);
             inputScreen.setVisible(true);
             this.nextScreenData.bundleData();
+
+            //refactor
+            cmbJoinTeam.removeAllItems();
+            for(String team: nextScreenData.getTeamToPlayers().keySet()) {
+                cmbJoinTeam.addItem(team);
+            }
         }
         else if(e.getSource() == btnJoinTeam){
             String teamName = (String)cmbJoinTeam.getSelectedItem();

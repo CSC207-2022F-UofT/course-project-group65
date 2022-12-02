@@ -15,6 +15,7 @@ public class teamCreationUC implements teamCreationIB {
     private final int bracketID;
     private final AccountRepo accounts;
     private final BracketRepo brackets;
+    private String oldTeam;
 
     public teamCreationUC(teamCreationOB outputBoundary, teamCreationGateway gateway,
                           String creatorName, int bracketID, InformationRecord informationRecord) {
@@ -64,6 +65,7 @@ public class teamCreationUC implements teamCreationIB {
         String teamName = userInput.getTeamName();
         User creator = accounts.getUser(creatorName);
         Team newTeam = findBlankTeam();
+        oldTeam = newTeam.getTeamName();
         newTeam.setTeamName(teamName);
         newTeam.addTeamMember(creator);
         return "Your team has been successfully created.";
@@ -120,8 +122,9 @@ public class teamCreationUC implements teamCreationIB {
             return this.outputBoundary.prepareFailView("There was an error saving the bracket.");
         }
 
-        teamCreationOD outputData = new teamCreationOD(teamMembers, teams, success, creatorName,
-                bracketID, accounts, brackets);
+//        teamCreationOD outputData = new teamCreationOD(teamMembers, teams, success, creatorName,
+//                bracketID, accounts, brackets);
+        teamCreationOD outputData = new teamCreationOD(creatorName, userInput.getTeamName(), oldTeam);
         return outputBoundary.prepareSuccessView(outputData);
     }
 }

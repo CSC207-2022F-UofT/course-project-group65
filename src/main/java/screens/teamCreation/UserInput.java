@@ -71,20 +71,26 @@ public class UserInput extends JFrame implements ActionListener{
             }
             teamCreationOD outputData = teamCreationController.createNewTeam(tfTeamName.getText());
             EndTournOB endTournOB = new EndTournPresenter();
+//            EndTournIB endTournIB = new EndTournUC(endTournOB, outputData.getUsername(), nextScreenData.getInformationRecord(),
+//                    outputData.getBracketID());
             EndTournIB endTournIB = new EndTournUC(endTournOB, outputData.getUsername(), nextScreenData.getInformationRecord(),
-                    outputData.getBracketID());
+                    nextScreenData.getCurrentBracketID());
             EndTournController endTournController = new EndTournController(endTournIB);
 
             StartTournOB startTournOB = new StartTournPresenter();
+//            StartTournIB startTournIB = new StartTournUC(startTournOB, outputData.getUsername(),
+//                    nextScreenData.getInformationRecord(), outputData.getBracketID());
             StartTournIB startTournIB = new StartTournUC(startTournOB, outputData.getUsername(),
-                    nextScreenData.getInformationRecord(), outputData.getBracketID());
+                    nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID());
             StartTournController startTournController = new StartTournController(startTournIB);
 
 //            NextScreenData nextScreenData = new NextScreenData();
 //            nextScreenData.setBrackets(outputData.getBrackets());
 //            nextScreenData.setAccounts(outputData.getAccounts());
             nextScreenData.setCurrentUser(outputData.getUsername());
-            nextScreenData.setCurrentBracketID(outputData.getBracketID());
+//            nextScreenData.setCurrentBracketID(outputData.getBracketID());
+            nextScreenData.bundleData();
+            extendedView.replaceTeam(outputData.getNewTeam(), outputData.getOldTeam(), nextScreenData.getGameToTeams());
 
 //            bracketView view = new bracketView(nextScreenData,endTournController, startTournController, joinTeamController);
 
