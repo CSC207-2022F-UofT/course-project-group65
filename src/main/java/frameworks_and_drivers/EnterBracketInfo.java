@@ -78,6 +78,9 @@ public class EnterBracketInfo extends JFrame implements ActionListener {
 //            int numTeams = (int) this.numTeams.getSelectedItem();
             int winCondition = (int) this.winCondition.getSelectedItem();
             int teamSizes = Integer.parseInt(this.teamSizeField.getText().trim());
+            if (teamSizes <= 1) {
+                throw new Exception("Team size must be greater than 1");
+            }
 //            int teamSizes = (int) this.teamSizes.getSelectedItem();
 //            System.out.println(bracketName);
 //            System.out.println(bracketType);
