@@ -3,34 +3,32 @@ import interface_adapters.data_interface_adapters.advance_team_data.AdvanceTeamF
 import use_cases.advance_team.*;
 import use_cases.general_classes.InformationRecord;
 
+/**
+ * This class is the controller for the AdvanceTeam use case.
+ * It is responsible for the communication between the user and the use case.
+ * It is also responsible for the communication between the use case and the data interface adapters.
+ */
 public class AdvanceTeamController {
 
-    AdvanceTeamIB userInput; // This is actually a use case instance. But it is of type AdvanceTeamIB for CA purposes.
+    AdvanceTeamIB userInput;
 
-//    /**
-//     * Construct a controller instance for this use case with the given input boundary.
-//     *
-//     * @param userInput The AdvanceTeamIB to use
-//     */
-
-//    public AdvanceTeamController(AdvanceTeamIB userInput) {
-//        this.userInput = userInput;
-//    }
-
+    /**
+     * This constructor creates a new AdvanceTeamController object.
+     * @param informationRecord the information record that contains the information of the system
+     * @param bracketID the ID of the bracket that the user wants to advance the team from
+     * @param username the username of the user that wants to advance the team
+     */
     public AdvanceTeamController(InformationRecord informationRecord, int bracketID, String username) {
-        //this.userInput = userInput;
         AdvanceTeamOB outputBoundary = new AdvanceTeamPresenter();
         AdvanceTeamGateway gateway = new AdvanceTeamFileWriter("brackets.txt");
         this.userInput = new AdvanceTeamUC(outputBoundary, gateway, informationRecord, bracketID, username);
     }
-    // Prepare the output data for the view
+
+    /** This method is responsible for the communication between the user and the use case. */
     public AdvanceTeamOD create(int gameID){
 
-        // the input data is created.
         AdvanceTeamID inputData = new AdvanceTeamID(gameID);
 
-        // this simultaneously runs the use case (by passing in ID), and returns the output data
-        // This is not using anything rn because we are using the presenter instead.
         return this.userInput.advanceWinner(inputData);
     }
 

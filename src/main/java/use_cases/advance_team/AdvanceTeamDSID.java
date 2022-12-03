@@ -3,7 +3,7 @@ import entities.*;
 
 public class AdvanceTeamDSID {
 
-    private BracketRepo updatedBracketRepo;
+    private final BracketRepo updatedBracketRepo;
 
     public AdvanceTeamDSID(BracketRepo updatedBracketRepo) {
         this.updatedBracketRepo = updatedBracketRepo;
@@ -13,7 +13,4 @@ public class AdvanceTeamDSID {
         return this.updatedBracketRepo;
     }
 
-    public void setUpdatedBracketRepo(BracketRepo updatedBracketRepo) {
-        this.updatedBracketRepo = updatedBracketRepo;
-    }
 }

@@ -4,35 +4,34 @@ import interface_adapters.data_interface_adapters.declare_winner_data.DeclareWin
 import use_cases.declare_winner.*;
 import use_cases.general_classes.InformationRecord;
 
+/**
+ * This class is the controller for the declare winner use case.
+ * It is responsible for the interaction between the user and the declare winner use case.
+ * It is also responsible for the interaction between the declare winner use case and the data interface adapters.
+ */
 public class DeclareWinnerController {
 
-    DeclareWinnerIB userInput; // This is actually a use case instance. But it is of type DeclareWinnerIB for CA purposes.
+    DeclareWinnerIB userInput;
 
-//    /**
-//     * Construct a DeclareWinnerController instance with the given DeclareWinnerIB.
-//     *
-//     * @param userInput The DeclareWinnerIB to use
-//     */
-
-//    public DeclareWinnerController(DeclareWinnerIB userInput) {
-//        this.userInput = userInput;
-//    }
-
+    /**
+     * This constructor creates a new DeclareWinnerController object.
+     * @param informationRecord The information record that the declare winner use case will use.
+     * @param bracketID The ID of the bracket that the game in question is in.
+     * @param username The username of the user that is declaring the winner.
+     */
     public DeclareWinnerController(InformationRecord informationRecord, int bracketID, String username) {
-        // this.userInput = userInput;
         DeclareWinnerOB outputBoundary = new DeclareWinnerPresenter();
         DeclareWinnerGateway gateway = new DeclareWinnerFileWriter("brackets.txt");
         this.userInput = new DeclareWinnerUC(outputBoundary, gateway, informationRecord, bracketID, username);
     }
 
-    // Prepare the output data for the view
+    /**
+     * This method is called when the user wants to declare a winner.
+     * @param gameID The ID of the game that the user wants to declare a winner for.
+     * @return The output of the declare winner use case.
+     */
     public DeclareWinnerOD create(int gameID){
-
-        // the input data is created.
         DeclareWinnerID inputData = new DeclareWinnerID(gameID);
-
-        // this simultaneously runs the use case (by passing in ID), and returns the output data
-        // This is not using anything rn because we are using the presenter instead.
         return this.userInput.setWinner(inputData);
     }
 
