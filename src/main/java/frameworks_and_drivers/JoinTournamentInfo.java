@@ -1,10 +1,12 @@
-package interface_adapters.join_tournament;
+package frameworks_and_drivers;
 
 import frameworks_and_drivers.ExtendedView;
 import interface_adapters.NextScreenData;
 //import screens.bracketView;
 import interface_adapters.end_tournament.EndTournController;
 import interface_adapters.join_team.JoinTeamController;
+import interface_adapters.join_tournament.JoinTournamentController;
+import interface_adapters.join_tournament.JoinTournamentFailed;
 import interface_adapters.start_tournament.StartTournController;
 import use_cases.join_tournament.JoinTournamentOD;
 
