@@ -1,12 +1,11 @@
 package entities;
 
 import java.io.Serializable;
-import java.sql.Array;
 import java.util.HashMap;
 import java.util.ArrayList;
 
 public class AccountRepo implements Serializable {
-    private HashMap<String, User> users = new HashMap<String, User>();
+    private final HashMap<String, User> users = new HashMap<>();
 
     public void addUser(User user) {this.users.put(user.getUsername(), user); }
 
@@ -14,7 +13,7 @@ public class AccountRepo implements Serializable {
 
     public User getUser(String username) {return users.get(username); }
 
-    public ArrayList<String> getAllUsernames() { return new ArrayList<String>(users.keySet()); }
+    public ArrayList<String> getAllUsernames() { return new ArrayList<>(users.keySet()); }
     public AccountRepo getAccountRepo() { return this; }
 
     public ArrayList<String> getAllPasswords() {

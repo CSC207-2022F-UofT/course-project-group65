@@ -1,24 +1,22 @@
 package entities;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class DefaultUser implements User, Serializable {
     private String username;
     private String password;
-    private HashMap<Integer, String> bracketRole;
+    private final HashMap<Integer, String> bracketRole;
     private int currentTournament;
-    private ArrayList<Integer> currentTournaments;
+    private final ArrayList<Integer> currentTournaments;
 
     public DefaultUser() {
         username = "";
         password = "";
-        bracketRole = new HashMap<Integer, String>();
+        bracketRole = new HashMap<>();
         currentTournament = 0;
-        currentTournaments = new ArrayList<Integer>();
+        currentTournaments = new ArrayList<>();
     }
     public void setUsername(String username) {this.username = username;}
 

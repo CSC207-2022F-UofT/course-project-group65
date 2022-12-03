@@ -18,9 +18,9 @@ public class CreateAccountInfo extends JFrame implements ActionListener{
     private JButton btSubmit;
     private JPanel createAccount;
     private JButton backBtn;
-    private CreateAccountController createAccountController;
-    private LogInController logInController;
-    private NextScreenData nextScreenData;
+    private final CreateAccountController createAccountController;
+    private final LogInController logInController;
+    private final NextScreenData nextScreenData;
 
 
     public CreateAccountInfo(CreateAccountController createAccountController, LogInController logInController, NextScreenData nextScreenData) {
@@ -61,11 +61,6 @@ public class CreateAccountInfo extends JFrame implements ActionListener{
             this.dispose();
             homeScreen.setVisible(true);
 
-
-            // Go back to home screen
-//            homeScreen homeScreen = new homeScreen();
-//            this.dispose();
-//            homeScreen.setVisible(true);
         }
     }
 }

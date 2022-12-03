@@ -5,11 +5,8 @@ import use_cases.create_account.*;
 import use_cases.general_classes.InformationRecord;
 
 public class CreateAccountController {
-    private CreateAccountIB createAccountIB;
+    private final CreateAccountIB createAccountIB;
 
-//    public CreateAccountController(CreateAccountIB createAccountIB) {
-//        this.createAccountIB = createAccountIB;
-//    }
     public CreateAccountController(InformationRecord informationRecord) {
         //this.createAccountIB = createAccountIB;
         CreateAccountOB createAccountOB = new CreateAccountPresenter();

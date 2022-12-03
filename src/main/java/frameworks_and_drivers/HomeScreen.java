@@ -13,9 +13,9 @@ public class HomeScreen extends JFrame implements ActionListener{
     private JButton btLogIn;
     private JButton btCreateAccount;
     private JPanel homeScreen;
-    private CreateAccountController createAccountController;
-    private LogInController logInController;
-    private NextScreenData nextScreenData;
+    private final CreateAccountController createAccountController;
+    private final LogInController logInController;
+    private final NextScreenData nextScreenData;
 
     public HomeScreen(CreateAccountController createAccountController, LogInController logInController, NextScreenData nextScreenData) {
         setContentPane(homeScreen);
