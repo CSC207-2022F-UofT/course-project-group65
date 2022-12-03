@@ -12,7 +12,6 @@ import interface_adapters.join_team.JoinTeamController;
 import interface_adapters.log_in.LogInController;
 import interface_adapters.start_tournament.StartTournController;
 import interface_adapters.team_creation.TeamCreationController;
-import interface_adapters.team_creation.UserInput;
 import use_cases.assign_observer.AssignObserverOD;
 import use_cases.join_team.JoinTeamOD;
 import use_cases.start_tournament.StartTournOD;
@@ -266,8 +265,15 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
             }
         }
 
-        int numGames = lblBracketGameScores.size();
+        LinkedHashMap<Integer, ArrayList<String>> change = new LinkedHashMap<>();
         for(int id: gameToTeams.keySet()){
+            if(gameToTeams.get(id).contains(newTeam)){
+                change.put(id, gameToTeams.get(id));
+            }
+        }
+
+        int numGames = lblBracketGameScores.size();
+        for(int id: change.keySet()){
             String score = lblBracketGameScores.get(numGames - id).getText();
 
             int a = score.indexOf('[');
@@ -275,11 +281,14 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
                 String lastHalf = score.substring(a);
                 lblBracketGameScores.get(numGames - id).setText(newTeam + " " + lastHalf);
             } else {
-                a = score.indexOf('-');
-                int b = score.lastIndexOf('[');
+                a = score.lastIndexOf(']');
                 String firstHalf = score.substring(0, a + 2);
-                String lastBit = score.substring(b);
-                lblBracketGameScores.get(numGames - id).setText(firstHalf + newTeam + " " + lastBit);
+                lblBracketGameScores.get(numGames - id).setText(firstHalf + newTeam);
+            }
+
+            String winner = lblBracketGameWinner.get(numGames - id).getText();
+            if(!winner.equals("") && winner.contains(oldTeam)){
+                lblBracketGameWinner.get(numGames - id).setText("Winner: " + newTeam);
             }
         }
     }

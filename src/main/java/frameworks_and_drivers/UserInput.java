@@ -1,9 +1,10 @@
-package interface_adapters.team_creation;
+package frameworks_and_drivers;
 
 
 import frameworks_and_drivers.ExtendedView;
 import interface_adapters.NextScreenData;
 
+import interface_adapters.team_creation.TeamCreationController;
 import use_cases.team_creation.teamCreationOD;
 
 import javax.swing.*;
