@@ -2,7 +2,6 @@ package frameworks_and_drivers;
 
 import interface_adapters.NextScreenData;
 import interface_adapters.create_account.CreateAccountController;
-import interface_adapters.create_account.createAccountInfo;
 import interface_adapters.log_in.LogInController;
 import interface_adapters.log_in.logInInfo;
 

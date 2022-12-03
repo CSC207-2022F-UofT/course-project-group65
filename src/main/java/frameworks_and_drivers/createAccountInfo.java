@@ -1,7 +1,8 @@
-package interface_adapters.create_account;
+package frameworks_and_drivers;
 
 import interface_adapters.NextScreenData;
 import frameworks_and_drivers.homeScreen;
+import interface_adapters.create_account.CreateAccountController;
 import interface_adapters.log_in.LogInController;
 import use_cases.create_account.*;
 
