@@ -9,7 +9,14 @@ import use_cases.general_classes.InformationRecord;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class tests the functionality of EndTournUC (interactor).
+ */
 public class EndTournTest {
+    /**
+     * This tests EndTournUC, given a AccountRepo, a BracketRepo, username, and a gateway which pass all the checks
+     * together (all the conditions needed are met to end the tournament).
+     */
     @Test
     public void end(){
         EndTournPresenter endTournPresenter = new EndTournPresenter() {
@@ -55,6 +62,10 @@ public class EndTournTest {
         userInput.endTourn();
     }
 
+    /**
+     * This tests EndTournUC which should present error when at least one of the necessary conditions to end the
+     * tournament is not met (in this case, the round is not the final round).
+     */
     @Test
     public void endTournamentNotFinalRound(){
 

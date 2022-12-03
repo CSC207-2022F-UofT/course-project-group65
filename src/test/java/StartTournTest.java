@@ -11,7 +11,15 @@ import use_cases.start_tournament.StartTournUC;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class tests the functionality of StartTournUC (interactor).
+ */
 public class StartTournTest {
+    /**
+     * This tests StartTournUC, given a AccountRepo, a BracketRepo, username, and a gateway which does not
+     * pass all the checks together (all the conditions needed are not met to start the tournament). Then it
+     * tests its output data matches our expected values, especially in this case, the type of errors.
+     */
     @Test
     public void start(){
         String errorType2 = "NUMTEAMS";

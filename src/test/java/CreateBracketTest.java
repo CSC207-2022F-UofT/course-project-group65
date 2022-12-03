@@ -8,7 +8,14 @@ import use_cases.general_classes.InformationRecord;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class tests the functionality of CreateBracketUC (interactor).
+ */
 public class CreateBracketTest {
+    /**
+     * This tests CreateBracketUC, given a bracket type, bracket name, number of teams, max team size, and win condition
+     * (the points needed to advance to the next round). It tests that its output data matches our expected values.
+     */
     @Test
     public void create() {
         CreateBracketPresenter createBracketPresenter = new CreateBracketPresenter() {
@@ -47,6 +54,9 @@ public class CreateBracketTest {
         userInput.create(createBracketID);
     }
 
+    /**
+     * This tests CreateBracketUC which should present error when given an empty string ("") for its team name.
+     */
     @Test
     public void createBracketEmptyTeamName(){
         CreateBracketOB presenter = new CreateBracketPresenter(){
