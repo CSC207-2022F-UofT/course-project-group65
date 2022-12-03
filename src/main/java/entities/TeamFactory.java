@@ -1,4 +1,4 @@
-package use_cases.create_bracket;
+package entities;
 
 import entities.Team;
 

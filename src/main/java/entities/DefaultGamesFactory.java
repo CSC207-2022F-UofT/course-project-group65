@@ -1,8 +1,4 @@
-package use_cases.create_bracket;
-
-import entities.DefaultGame;
-import entities.Game;
-import entities.Team;
+package entities;
 
 import java.util.*;
 

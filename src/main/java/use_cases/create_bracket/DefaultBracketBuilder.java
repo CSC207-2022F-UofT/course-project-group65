@@ -1,9 +1,6 @@
 package use_cases.create_bracket;
 
-import entities.DefaultBracket;
-import entities.Game;
-import entities.Team;
-import entities.User;
+import entities.*;
 
 /**
  * This class is a builder for creating the default bracket in our program (single elimination).

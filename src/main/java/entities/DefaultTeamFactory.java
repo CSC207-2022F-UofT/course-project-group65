@@ -1,6 +1,4 @@
-package use_cases.create_bracket;
-
-import entities.DefaultTeam;
+package entities;
 
 /**
  * This class is a factory for creating a default team. A default team simply has a name,
