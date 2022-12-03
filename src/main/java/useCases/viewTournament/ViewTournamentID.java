@@ -9,9 +9,4 @@ public class ViewTournamentID {
     int getTournamentID() {
         return tournamentID;
     }
-
-    void setTournamentID(int tournamentID) {
-        this.tournamentID = tournamentID;
-    }
-
 }

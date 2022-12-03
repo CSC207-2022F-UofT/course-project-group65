@@ -39,19 +39,7 @@ public class ViewTournamentOD {
         tournamentNames = currentTournaments;
     }
 
-    public BracketRepo getBrackets() {
-        return brackets;
-    }
-
-    public AccountRepo getAccounts() {
-        return accounts;
-    }
-
-    public ArrayList<Integer> getTournamentNames(){
-        return (ArrayList<Integer>) tournamentNames;
-    }
-
-    public String getUsername() {
+        public String getUsername() {
         return username;
     }
 

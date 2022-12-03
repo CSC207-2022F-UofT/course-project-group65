@@ -13,15 +13,7 @@ public class AssignObserverID {
         return assignee;
     }
 
-    void setAssignee(String assignee) {
-        this.assignee = assignee;
-    }
-
     int getGameID() {
         return gameID;
-    }
-
-    void setGameID(int gameID) {
-        this.gameID = gameID;
     }
 }

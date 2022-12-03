@@ -36,15 +36,7 @@ public class JoinTournamentOD {
         tournamentName = bracketData.getTournamentName();
     }
 
-    public BracketRepo getBrackets() {
-        return brackets;
-    }
-
-    public AccountRepo getAccounts() {
-        return accounts;
-    }
-
-    public String getUsername() {
+   public String getUsername() {
         return username;
     }
 

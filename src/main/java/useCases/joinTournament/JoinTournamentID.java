@@ -10,8 +10,4 @@ public class JoinTournamentID {
     String getInvite() {
         return invite;
     }
-
-    void setInvite(String invite) {
-        this.invite = invite;
-    }
 }

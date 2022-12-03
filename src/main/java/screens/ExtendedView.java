@@ -266,8 +266,15 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
             }
         }
 
-        int numGames = lblBracketGameScores.size();
+        LinkedHashMap<Integer, ArrayList<String>> change = new LinkedHashMap<>();
         for(int id: gameToTeams.keySet()){
+            if(gameToTeams.get(id).contains(oldTeam)){
+                change.put(id, gameToTeams.get(id));
+            }
+        }
+
+        int numGames = lblBracketGameScores.size();
+        for(int id: change.keySet()){
             String score = lblBracketGameScores.get(numGames - id).getText();
 
             int a = score.indexOf('[');

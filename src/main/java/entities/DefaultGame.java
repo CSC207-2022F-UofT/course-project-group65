@@ -2,13 +2,13 @@ package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class DefaultGame implements Game, Serializable {
     private int gameID;
     private int gameRound;
     private int numTeams;
-    private HashMap<Team, Integer> teams;
+    private LinkedHashMap<Team, Integer> teams;
     private User observer;
     private Team winner;
     private boolean gameStatus;
@@ -19,7 +19,7 @@ public class DefaultGame implements Game, Serializable {
         gameID = 0;
         gameRound = 0;
         numTeams = 0;
-        teams = new HashMap<Team, Integer>();
+        teams = new LinkedHashMap<Team, Integer>();
         observer = null;
         winner = null;
         gameStatus = false;
