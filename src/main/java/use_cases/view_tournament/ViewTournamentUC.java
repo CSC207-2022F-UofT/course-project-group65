@@ -4,7 +4,7 @@ import entities.AccountRepo;
 import entities.BracketRepo;
 import entities.User;
 import use_cases.general_classes.InformationRecord;
-import use_cases.general_classes.bundleBracketData.BundleBracketData;
+import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 
 public class ViewTournamentUC implements ViewTournamentIB {
     final ViewTournamentOB outputBound;

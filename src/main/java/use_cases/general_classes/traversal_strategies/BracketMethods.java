@@ -1,4 +1,4 @@
-package use_cases.general_classes.traversalStrategies;
+package use_cases.general_classes.traversal_strategies;
 
 import entities.Bracket;
 

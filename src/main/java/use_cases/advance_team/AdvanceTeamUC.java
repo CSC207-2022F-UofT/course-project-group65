@@ -1,8 +1,8 @@
 package use_cases.advance_team;
 import entities.*;
 import use_cases.general_classes.InformationRecord;
-import use_cases.general_classes.bundleBracketData.BundleBracketData;
-import use_cases.general_classes.permRestrictionStrategies.PermissionChecker;
+import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
+import use_cases.general_classes.perm_restriction_strategies.PermissionChecker;
 //import useCases.generalClasses.traversalStrategies.BracketMethods;
 //import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
 

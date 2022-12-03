@@ -2,7 +2,7 @@ package use_cases.declare_winner;
 
 import entities.*;
 import use_cases.general_classes.InformationRecord;
-import use_cases.general_classes.permRestrictionStrategies.PermissionChecker;
+import use_cases.general_classes.perm_restriction_strategies.PermissionChecker;
 //import useCases.generalClasses.traversalStrategies.BracketMethods;
 //import useCases.generalClasses.traversalStrategies.DefaultBracketMethods;
 

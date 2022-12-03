@@ -1,4 +1,4 @@
-package use_cases.general_classes.bundleBracketData;
+package use_cases.general_classes.bundle_bracket_data;
 
 import entities.Bracket;
 import entities.Game;

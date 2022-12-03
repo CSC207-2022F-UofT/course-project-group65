@@ -350,14 +350,14 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
 //
         if(e.getSource() == btnOptions){
             nextScreenData.setCurrentUser(nextScreenData.getCurrentUser());
-            optionsScreen optionsScreen = new optionsScreen(nextScreenData);
+            OptionsScreen optionsScreen = new OptionsScreen(nextScreenData);
             this.dispose();
             optionsScreen.setVisible(true);
         }
         else if(e.getSource() == btnLogOut){
             CreateAccountController createAccountController = new CreateAccountController(nextScreenData.getInformationRecord());
             LogInController logInController = new LogInController(nextScreenData.getInformationRecord());
-            homeScreen homeScreen = new homeScreen(createAccountController, logInController, nextScreenData);
+            HomeScreen homeScreen = new HomeScreen(createAccountController, logInController, nextScreenData);
             this.dispose();
             homeScreen.setVisible(true);
         }
@@ -404,7 +404,7 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         else if(e.getSource() == btnStart){
             StartTournOD startData = startTournController.startTourn();
             ArrayList<String> startErrors = startData.getErrors();
-            frameworks_and_drivers.startErrors errorView = new startErrors(this.startTournController);
+            StartErrors errorView = new StartErrors(this.startTournController);
             for (String error : startErrors) {
                 if (Objects.equals(error, "USERROLE")) {
                     errorView.setWarning1("You do not have permission to start the tournament.");

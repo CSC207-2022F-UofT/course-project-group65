@@ -1,7 +1,6 @@
 package frameworks_and_drivers;
 
 import interface_adapters.NextScreenData;
-import frameworks_and_drivers.homeScreen;
 import interface_adapters.create_account.CreateAccountController;
 import interface_adapters.log_in.LogInController;
 import use_cases.create_account.*;
@@ -10,7 +9,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class createAccountInfo extends JFrame implements ActionListener{
+public class CreateAccountInfo extends JFrame implements ActionListener{
 
     private JLabel lbUsername;
     private JLabel lbPassword;
@@ -24,7 +23,7 @@ public class createAccountInfo extends JFrame implements ActionListener{
     private NextScreenData nextScreenData;
 
 
-    public createAccountInfo(CreateAccountController createAccountController, LogInController logInController, NextScreenData nextScreenData) {
+    public CreateAccountInfo(CreateAccountController createAccountController, LogInController logInController, NextScreenData nextScreenData) {
         setContentPane(createAccount);
         setTitle("Creating An Account");
         setSize(450, 300);
@@ -42,7 +41,7 @@ public class createAccountInfo extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backBtn) {
-            homeScreen homeScreen = new homeScreen(createAccountController, logInController, this.nextScreenData);
+            HomeScreen homeScreen = new HomeScreen(createAccountController, logInController, this.nextScreenData);
             homeScreen.setVisible(true);
             this.dispose();
         }
@@ -58,7 +57,7 @@ public class createAccountInfo extends JFrame implements ActionListener{
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
-            homeScreen homeScreen = new homeScreen(this.createAccountController, this.logInController, this.nextScreenData);
+            HomeScreen homeScreen = new HomeScreen(this.createAccountController, this.logInController, this.nextScreenData);
             this.dispose();
             homeScreen.setVisible(true);
 

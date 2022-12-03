@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class optionsScreen extends JFrame implements ActionListener {
+public class OptionsScreen extends JFrame implements ActionListener {
     private JLabel lbHeader;
     private JButton btCreateBracket;
     private JButton btJoinNew;
@@ -24,7 +24,7 @@ public class optionsScreen extends JFrame implements ActionListener {
 //    private LogInController logInController;
 //    private CreateBracketController createBracketController;
 
-    public optionsScreen(NextScreenData nextScreenData) {
+    public OptionsScreen(NextScreenData nextScreenData) {
         setContentPane(optionsScreen);
         setTitle("Options Screen");
         setSize(450, 300);
@@ -75,7 +75,7 @@ public class optionsScreen extends JFrame implements ActionListener {
             CreateBracketController createBracketCon = new CreateBracketController(nextScreenData.getCurrentUser(),
                     nextScreenData.getInformationRecord());
 //            enterBracketInfo enterBracketInfo = new enterBracketInfo(this.createBracketController);
-            enterBracketInfo enterBracketInfo = new enterBracketInfo(createBracketCon, nextScreenData);
+            EnterBracketInfo enterBracketInfo = new EnterBracketInfo(createBracketCon, nextScreenData);
             this.dispose();
             enterBracketInfo.setCurrentUser(nextScreenData.getCurrentUser());
             enterBracketInfo.setVisible(true);
@@ -124,7 +124,7 @@ public class optionsScreen extends JFrame implements ActionListener {
 //                    nextScreenData.getBrackets());
             LogInController logInController = new LogInController(nextScreenData.getInformationRecord());
 
-            homeScreen homeScreen = new homeScreen(createAccountController, logInController, nextScreenData);
+            HomeScreen homeScreen = new HomeScreen(createAccountController, logInController, nextScreenData);
 
 //            homeScreen homeScreen = new homeScreen(this.createAccountController, this.logInController);
             this.dispose();

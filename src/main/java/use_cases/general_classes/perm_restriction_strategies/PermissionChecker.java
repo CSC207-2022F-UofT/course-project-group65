@@ -1,4 +1,4 @@
-package use_cases.general_classes.permRestrictionStrategies;
+package use_cases.general_classes.perm_restriction_strategies;
 
 import entities.User;
 import java.util.ArrayList;

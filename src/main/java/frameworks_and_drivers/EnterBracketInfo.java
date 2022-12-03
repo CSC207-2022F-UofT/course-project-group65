@@ -1,6 +1,5 @@
 package frameworks_and_drivers;
 
-import frameworks_and_drivers.ExtendedView;
 import interface_adapters.NextScreenData;
 //import screens.bracketView;
 import interface_adapters.create_bracket.CreateBracketController;
@@ -14,7 +13,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class enterBracketInfo extends JFrame implements ActionListener {
+public class EnterBracketInfo extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JButton createButton;
     private JTextField bracketName;
@@ -29,7 +28,7 @@ public class enterBracketInfo extends JFrame implements ActionListener {
     private NextScreenData nextScreenData;
 
 
-    public enterBracketInfo(CreateBracketController createBracketController, NextScreenData nextScreenData) {
+    public EnterBracketInfo(CreateBracketController createBracketController, NextScreenData nextScreenData) {
         super("Create Bracket");
 
         this.createBracketController = createBracketController;

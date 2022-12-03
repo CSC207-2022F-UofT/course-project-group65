@@ -1,7 +1,7 @@
 package interface_adapters;
 
 import use_cases.general_classes.InformationRecord;
-import use_cases.general_classes.bundleBracketData.BundleBracketData;
+import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

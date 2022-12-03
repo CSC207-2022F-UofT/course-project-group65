@@ -1,7 +1,7 @@
 import entities.*;
 import interface_adapters.NextScreenData;
 import interface_adapters.create_account.CreateAccountController;
-import frameworks_and_drivers.homeScreen;
+import frameworks_and_drivers.HomeScreen;
 import interface_adapters.log_in.LogInController;
 import use_cases.general_classes.InformationRecord;
 
@@ -50,7 +50,7 @@ public class TournamentSimulator {
         //LogInIB logInIB = new LogInUC(logInOB, accountDatabase, bracketDatabase);
         //LogInController logInController = new LogInController(logInIB);
 
-        homeScreen homeScreen = new homeScreen(createAccountController, logInController, nextScreenData);
+        HomeScreen homeScreen = new HomeScreen(createAccountController, logInController, nextScreenData);
         homeScreen.setVisible(true);
 
     }

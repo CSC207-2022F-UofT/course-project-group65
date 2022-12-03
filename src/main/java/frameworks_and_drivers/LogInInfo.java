@@ -2,8 +2,6 @@ package frameworks_and_drivers;
 
 import interface_adapters.NextScreenData;
 import interface_adapters.create_account.CreateAccountController;
-import frameworks_and_drivers.homeScreen;
-import frameworks_and_drivers.optionsScreen;
 import interface_adapters.log_in.LogInController;
 import use_cases.log_in.LogInOD;
 
@@ -11,7 +9,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class logInInfo extends JFrame implements ActionListener{
+public class LogInInfo extends JFrame implements ActionListener{
     private JLabel lbUsername;
     private JLabel lbPassword;
     private JPanel logIn;
@@ -24,7 +22,7 @@ public class logInInfo extends JFrame implements ActionListener{
     private LogInController logInController;
     private NextScreenData nextScreenData;
 
-    public logInInfo(LogInController logInController, CreateAccountController createAccountController, NextScreenData nextScreenData) {
+    public LogInInfo(LogInController logInController, CreateAccountController createAccountController, NextScreenData nextScreenData) {
         setContentPane(logIn);
         setTitle("Log In");
         setSize(450, 300);
@@ -41,7 +39,7 @@ public class logInInfo extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
-            homeScreen homeScreen = new homeScreen(this.createAccountController, this.logInController, this.nextScreenData);
+            HomeScreen homeScreen = new HomeScreen(this.createAccountController, this.logInController, this.nextScreenData);
             this.dispose();
             homeScreen.setVisible(true);
         }
@@ -69,7 +67,7 @@ public class logInInfo extends JFrame implements ActionListener{
 
 //                optionsScreen optionsScreen = new optionsScreen(nextScreenData, this.createAccountController,
 //                        this.logInController, createBracketCon);
-                optionsScreen optionsScreen = new optionsScreen(nextScreenData);
+                OptionsScreen optionsScreen = new OptionsScreen(nextScreenData);
                 this.dispose();
                 optionsScreen.setVisible(true);
 

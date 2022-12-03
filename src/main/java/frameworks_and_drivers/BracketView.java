@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class bracketView extends JFrame implements ActionListener {
+public class BracketView extends JFrame implements ActionListener {
 //    The main panel for the bracket view screen
     private JPanel mainPanel;
     //    Panel Bar and General Info
@@ -92,7 +92,7 @@ private JTextField observerGame1;
 
     private JoinTeamController joinTeamController;
 
-    public bracketView(NextScreenData nextScreenData, EndTournController endTournController, StartTournController startTournController,
+    public BracketView(NextScreenData nextScreenData, EndTournController endTournController, StartTournController startTournController,
                        JoinTeamController joinTeamController ) {
         super("Bracket View");
 //        Assign all controllers for this view

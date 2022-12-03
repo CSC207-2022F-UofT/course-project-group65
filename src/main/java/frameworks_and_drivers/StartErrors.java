@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class startErrors extends JFrame implements ActionListener {
+public class StartErrors extends JFrame implements ActionListener {
     private JButton startBtn;
     private JButton cancelBtn;
     private JLabel warning1;
@@ -17,7 +17,7 @@ public class startErrors extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private StartTournController startTournController;
 
-    public startErrors(StartTournController startTournController) {
+    public StartErrors(StartTournController startTournController) {
         super("Start Tournament");
 
         this.startTournController = startTournController;

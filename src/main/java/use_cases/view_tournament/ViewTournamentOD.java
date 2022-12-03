@@ -2,7 +2,7 @@ package use_cases.view_tournament;
 
 import entities.AccountRepo;
 import entities.BracketRepo;
-import use_cases.general_classes.bundleBracketData.BundleBracketData;
+import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;

@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class homeScreen extends JFrame implements ActionListener{
+public class HomeScreen extends JFrame implements ActionListener{
     private JLabel header;
     private JButton btLogIn;
     private JButton btCreateAccount;
@@ -17,7 +17,7 @@ public class homeScreen extends JFrame implements ActionListener{
     private LogInController logInController;
     private NextScreenData nextScreenData;
 
-    public homeScreen(CreateAccountController createAccountController, LogInController logInController, NextScreenData nextScreenData) {
+    public HomeScreen(CreateAccountController createAccountController, LogInController logInController, NextScreenData nextScreenData) {
         setContentPane(homeScreen);
         setTitle("Home Screen");
         setSize(450, 300);
@@ -35,13 +35,13 @@ public class homeScreen extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btCreateAccount) {
-            createAccountInfo createAccountScreen = new createAccountInfo(this.createAccountController, this.logInController, this.nextScreenData);
+            CreateAccountInfo createAccountScreen = new CreateAccountInfo(this.createAccountController, this.logInController, this.nextScreenData);
             this.dispose();
             createAccountScreen.setVisible(true);
         }
 
         if (e.getSource() == btLogIn) {
-            logInInfo logInScreen = new logInInfo(this.logInController, this.createAccountController, this.nextScreenData);
+            LogInInfo logInScreen = new LogInInfo(this.logInController, this.createAccountController, this.nextScreenData);
             this.dispose();
             logInScreen.setVisible(true);
         }

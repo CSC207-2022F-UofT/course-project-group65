@@ -5,7 +5,7 @@ import java.util.List;
 
 import entities.*;
 import use_cases.general_classes.InformationRecord;
-import use_cases.general_classes.bundleBracketData.BundleBracketData;
+import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 
 /**
  * This is the interactor class for teamCreation.
