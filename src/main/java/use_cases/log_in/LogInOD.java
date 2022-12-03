@@ -2,7 +2,10 @@ package use_cases.log_in;
 
 import entities.AccountRepo;
 import entities.BracketRepo;
-
+/**
+ * This class represents the output data for the LogIn use case.
+ * This data is used in updating/creating the view after the user has successfully logged in.
+ */
 public class LogInOD {
     private String username;
     private AccountRepo accountRepo;

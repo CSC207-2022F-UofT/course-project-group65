@@ -7,6 +7,13 @@ import use_cases.general_classes.InformationRecord;
 
 import java.util.Objects;
 
+/**
+ * This is the Use Case (interactor) class for the LogIn use case. This class is responsible
+ * for logging a user in and updating the account repository.
+ * It connects and uses many of the classes used in this package.
+ * Implements LogInIB to allow the controller to call the login method.
+ */
+
 public class LogInUC implements LogInIB{
     final LogInOB userLogInOB;
     final AccountRepo data;

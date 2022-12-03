@@ -1,6 +1,8 @@
 package use_cases.create_account;
 
-
+/**
+ * This is a class representing the input data from the user used in creating a new account.
+ */
 public class CreateAccountID {
     private String username;
     private String password;
