@@ -52,6 +52,7 @@ public class ViewTournamentUC implements ViewTournamentIB {
 
         String role = currUser.getBracketRole(tournamentID);
         BundleBracketData bracketData = new BundleBracketData();
+        currUser.setCurrentTournament(tournamentID);
         bracketData.bundleBracket(bracketRepo.getBracket(tournamentID));
 
         ViewTournamentDSID dsid = new ViewTournamentDSID(this.bracketRepo);

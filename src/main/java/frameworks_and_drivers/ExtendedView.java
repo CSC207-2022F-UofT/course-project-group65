@@ -11,7 +11,6 @@ import interface_adapters.end_tournament.EndTournController;
 import interface_adapters.join_team.JoinTeamController;
 import interface_adapters.log_in.LogInController;
 import interface_adapters.start_tournament.StartTournController;
-import interface_adapters.start_tournament.startErrors;
 import interface_adapters.team_creation.TeamCreationController;
 import interface_adapters.team_creation.UserInput;
 import use_cases.assign_observer.AssignObserverOD;
@@ -396,7 +395,7 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         else if(e.getSource() == btnStart){
             StartTournOD startData = startTournController.startTourn();
             ArrayList<String> startErrors = startData.getErrors();
-            interface_adapters.start_tournament.startErrors errorView = new startErrors(this.startTournController);
+            frameworks_and_drivers.startErrors errorView = new startErrors(this.startTournController);
             for (String error : startErrors) {
                 if (Objects.equals(error, "USERROLE")) {
                     errorView.setWarning1("You do not have permission to start the tournament.");

@@ -1,4 +1,6 @@
-package interface_adapters.start_tournament;
+package frameworks_and_drivers;
+
+import interface_adapters.start_tournament.StartTournController;
 
 import javax.swing.*;
 import java.awt.*;
