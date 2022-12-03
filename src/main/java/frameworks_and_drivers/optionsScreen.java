@@ -6,7 +6,6 @@ import interface_adapters.create_bracket.CreateBracketController;
 import interface_adapters.join_tournament.JoinTournamentController;
 import interface_adapters.log_in.LogInController;
 import interface_adapters.view_tournament.ViewTournamentController;
-import interface_adapters.view_tournament.ViewTournamentInfo;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

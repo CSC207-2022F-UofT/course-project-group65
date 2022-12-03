@@ -1,4 +1,4 @@
-package interface_adapters.view_tournament;
+package frameworks_and_drivers;
 
 import frameworks_and_drivers.ExtendedView;
 import interface_adapters.NextScreenData;
@@ -6,6 +6,8 @@ import interface_adapters.NextScreenData;
 import interface_adapters.end_tournament.EndTournController;
 import interface_adapters.join_team.JoinTeamController;
 import interface_adapters.start_tournament.StartTournController;
+import interface_adapters.view_tournament.ViewTournamentController;
+import interface_adapters.view_tournament.ViewTournamentFailed;
 import use_cases.view_tournament.ViewTournamentOD;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
