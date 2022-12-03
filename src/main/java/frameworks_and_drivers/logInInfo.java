@@ -1,9 +1,10 @@
-package interface_adapters.log_in;
+package frameworks_and_drivers;
 
 import interface_adapters.NextScreenData;
 import interface_adapters.create_account.CreateAccountController;
 import frameworks_and_drivers.homeScreen;
 import frameworks_and_drivers.optionsScreen;
+import interface_adapters.log_in.LogInController;
 import use_cases.log_in.LogInOD;
 
 import javax.swing.*;
