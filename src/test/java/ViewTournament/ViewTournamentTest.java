@@ -1,14 +1,14 @@
-package viewTournament;
+package ViewTournament;
 
 import entities.*;
+import interface_adapters.view_tournament.ViewTournamentPresenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import screens.viewTournament.ViewTournamentFailed;
-import screens.viewTournament.ViewTournamentPresenter;
-import useCases.generalClasses.InformationRecord;
-import useCases.viewTournament.*;
+import use_cases.general_classes.InformationRecord;
+import use_cases.view_tournament.*;
+import interface_adapters.view_tournament.ViewTournamentFailed;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -121,8 +121,6 @@ public class ViewTournamentTest {
 
     @Test
     public void viewTournamentNotPreviouslyJoined(){
-
-
         ViewTournamentGateway testGateway = new ViewTournInMemoryBracket();
 
         ViewTournamentOB presenter = new ViewTournamentPresenter(){

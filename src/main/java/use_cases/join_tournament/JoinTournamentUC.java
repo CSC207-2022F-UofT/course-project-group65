@@ -10,7 +10,7 @@ public class JoinTournamentUC implements JoinTournamentIB{
     final JoinTournamentOB outputBound;
     private final BracketRepo bracketRepo;
     private final AccountRepo accountRepo;
-    private User currUser;
+    private final User CURR_USER;
     public JoinTournamentGateway gateway;
 
     /**
@@ -24,16 +24,9 @@ public class JoinTournamentUC implements JoinTournamentIB{
     public JoinTournamentUC(JoinTournamentOB outputBound, JoinTournamentGateway gateway,
                             InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;
-//        try{
-//            this.bracketRepo = (BracketRepo) bracketRepo;
-//            this.accountRepo = (AccountRepo) accountRepo;
-//            this.currUser = this.accountRepo.getUser(currUser);
-//        } catch (ClassCastException e){
-//            throw new ClassCastException("The given bracketRepo or accountRepo is not of type BracketRepo or AccountRepo");
-//        }
         this.bracketRepo = informationRecord.getBracketData();
         this.accountRepo = informationRecord.getAccountData();
-        this.currUser = this.accountRepo.getUser(currUser);
+        CURR_USER = this.accountRepo.getUser(currUser);
         this.gateway = gateway;
     }
 
@@ -52,22 +45,22 @@ public class JoinTournamentUC implements JoinTournamentIB{
             if (!bracketRepo.getBrackets().containsKey(tournamentID)){
                 return outputBound.prepareFailView("Tournament does not exist.");
             }
-            else if (currUser.getAllTournaments().contains(tournamentID)){
+            else if (CURR_USER.getAllTournaments().contains(tournamentID)){
                 return outputBound.prepareFailView("You have already joined this tournament.");
             }
             else if (!role.equals("PL") && !role.equals("OB")){
                 return outputBound.prepareFailView("Role does not exist within tournament.");
             }
-            currUser.setCurrentTournament(tournamentID);
-            currUser.addTournament(tournamentID);
+            CURR_USER.setCurrentTournament(tournamentID);
+            CURR_USER.addTournament(tournamentID);
             JoinTournamentOD output;
             BundleBracketData bracketData = new BundleBracketData();
             if (role.equals("PL")){
-                currUser.setBracketRole(tournamentID, "Player");
+                CURR_USER.setBracketRole(tournamentID, "Player");
             }
             else {
-                currUser.setBracketRole(tournamentID, "Observer");
-                bracketRepo.getBracket(tournamentID).addReferee(currUser);
+                CURR_USER.setBracketRole(tournamentID, "Observer");
+                bracketRepo.getBracket(tournamentID).addReferee(CURR_USER);
             }
 
             JoinTournamentDSID dsInput = new JoinTournamentDSID(bracketRepo, accountRepo);
@@ -77,7 +70,7 @@ public class JoinTournamentUC implements JoinTournamentIB{
                 return outputBound.prepareFailView("Error saving to database.");
             }
             bracketData.bundleBracket(bracketRepo.getBracket(tournamentID));
-            output = new JoinTournamentOD(currUser.getUsername(), bracketData, bracketRepo, accountRepo); //Temp fix
+            output = new JoinTournamentOD(CURR_USER.getUsername(), bracketData, bracketRepo, accountRepo); //Temp fix
             return outputBound.prepareSuccessView(output);
         }
         catch (NumberFormatException nex){

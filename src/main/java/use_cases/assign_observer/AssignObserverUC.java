@@ -10,24 +10,15 @@ import java.util.List;
 public class AssignObserverUC implements AssignObserverIB {
     private final AssignObserverOB outputBound;
     private final BracketRepo bracketRepo;
-    private final AccountRepo accountRepo;
     private Bracket bracket;
-    private User currUser;
+    private final User CURR_USER;
     public AssignObserverGateway gateway;
 
     public AssignObserverUC(AssignObserverOB outputBound, AssignObserverGateway gateway, InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;
         this.gateway = gateway;
         this.bracketRepo = informationRecord.getBracketData();
-        this.accountRepo = informationRecord.getAccountData();
-        this.currUser = accountRepo.getUser(currUser);
-//        try{
-//            this.bracketRepo = (BracketRepo) bracketRepo;
-//            this.accountRepo = (AccountRepo) accountRepo;
-//            this.currUser = this.accountRepo.getUser(currUser);
-//        } catch (ClassCastException e){
-//            throw new ClassCastException("AssignObserverUC: Invalid repo type");
-//        }
+        CURR_USER = informationRecord.getAccountData().getUser(currUser);
     }
 
     /**
@@ -38,8 +29,8 @@ public class AssignObserverUC implements AssignObserverIB {
      */
     @Override
     public AssignObserverOD assignObserver(AssignObserverID input){
-        bracket = bracketRepo.getBracket(currUser.getCurrentTournament());
-        if (!checkUserPermission(currUser)){
+        bracket = bracketRepo.getBracket(CURR_USER.getCurrentTournament());
+        if (!checkUserPermission(CURR_USER)){
             return outputBound.prepareFailView("You do not have permission to preform this action.");
         }
         User ref = findReferee(bracket, input.getAssignee());
@@ -74,7 +65,7 @@ public class AssignObserverUC implements AssignObserverIB {
         BundleBracketData bundleBracketData = new BundleBracketData();
         bundleBracketData.bundleBracket(bracket);
 
-        AssignObserverOD output = new AssignObserverOD(ref.getUsername(), game.getGameID(), game.getGameRound(), bundleBracketData.getGameToReferee());
+        AssignObserverOD output = new AssignObserverOD(ref.getUsername(), game.getGameID(), bundleBracketData.getGameToReferee());
         return outputBound.prepareSuccessView(output);
     }
 

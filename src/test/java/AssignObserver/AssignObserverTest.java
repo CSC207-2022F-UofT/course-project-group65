@@ -1,12 +1,13 @@
 package AssignObserver;
 
 import entities.*;
+import interface_adapters.assign_observer.AssignObserverFailed;
+import interface_adapters.assign_observer.AssignObserverPresenter;
 import org.junit.Before;
 import org.junit.Test;
-import screens.assignObserver.AssignObserverFailed;
-import screens.assignObserver.AssignObserverPresenter;
-import useCases.assignObserver.*;
-import useCases.generalClasses.InformationRecord;
+
+import use_cases.assign_observer.*;
+import use_cases.general_classes.InformationRecord;
 
 import java.util.LinkedHashMap;
 

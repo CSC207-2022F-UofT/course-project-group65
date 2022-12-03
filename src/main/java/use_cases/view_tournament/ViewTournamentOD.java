@@ -1,15 +1,10 @@
 package use_cases.view_tournament;
 
-import entities.AccountRepo;
-import entities.BracketRepo;
 import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 public class ViewTournamentOD {
-    BracketRepo brackets;
-    AccountRepo accounts;
     String username;
     LinkedHashMap<Integer, ArrayList<String>> gameToTeams;
     LinkedHashMap<Integer, ArrayList<Integer>> gameToScores;
@@ -20,12 +15,8 @@ public class ViewTournamentOD {
     LinkedHashMap<String, String> roleToInvite;
     int tournamentID;
     String tournamentName;
-    List<Integer> tournamentNames;
 
-    public ViewTournamentOD(String username, BundleBracketData bracketData,
-                            List<Integer> currentTournaments, BracketRepo brackets, AccountRepo accounts){
-        this.accounts = accounts;
-        this.brackets = brackets;
+    public ViewTournamentOD(String username, BundleBracketData bracketData){
         this.username = username;
         gameToTeams = bracketData.getGameToTeams();
         gameToScores = bracketData.getGameToScores();
@@ -36,19 +27,6 @@ public class ViewTournamentOD {
         roleToInvite = bracketData.getRoleToInvite();
         tournamentID = bracketData.getTournamentID();
         tournamentName = bracketData.getTournamentName();
-        tournamentNames = currentTournaments;
-    }
-
-    public BracketRepo getBrackets() {
-        return brackets;
-    }
-
-    public AccountRepo getAccounts() {
-        return accounts;
-    }
-
-    public ArrayList<Integer> getTournamentNames(){
-        return (ArrayList<Integer>) tournamentNames;
     }
 
     public String getUsername() {

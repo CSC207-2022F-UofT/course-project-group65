@@ -1,17 +1,13 @@
 package use_cases.join_tournament;
 
 public class JoinTournamentID {
-    private String invite;
+    private final String TOURNAMENT_ID;
 
     public JoinTournamentID(String invite) {
-        this.invite = invite;
+        TOURNAMENT_ID = invite;
     }
 
     String getInvite() {
-        return invite;
-    }
-
-    void setInvite(String invite) {
-        this.invite = invite;
+        return TOURNAMENT_ID;
     }
 }

@@ -1,6 +1,5 @@
 package use_cases.view_tournament;
 
-import entities.AccountRepo;
 import entities.BracketRepo;
 import entities.User;
 import use_cases.general_classes.InformationRecord;
@@ -9,8 +8,7 @@ import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 public class ViewTournamentUC implements ViewTournamentIB {
     final ViewTournamentOB outputBound;
     private final BracketRepo bracketRepo;
-    private final AccountRepo accountRepo;
-    private User currUser;
+    private final User CURR_USER;
     public ViewTournamentGateway gateway;
 
     /**
@@ -22,19 +20,8 @@ public class ViewTournamentUC implements ViewTournamentIB {
     public ViewTournamentUC(ViewTournamentOB outputBound, ViewTournamentGateway gateway, InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;
         this.gateway = gateway;
-//        try{
-//            this.bracketRepo = (BracketRepo) bracketRepo;
-//            this.accountRepo = (AccountRepo) accountRepo;
-//            this.currUser = this.accountRepo.getUser(currUser);
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException("bracketRepo must be of type BracketRepo");
-//        }
         this.bracketRepo = informationRecord.getBracketData();
-        this.accountRepo = informationRecord.getAccountData();
-        this.currUser = this.accountRepo.getUser(currUser);
-//        this.bracketRepo =bracketRepo;
-//        this.accountRepo = accountRepo;
-//        this.currUser = accountRepo.getUser(currUser);
+        CURR_USER = informationRecord.getAccountData().getUser(currUser);
     }
 
     /**
@@ -46,13 +33,12 @@ public class ViewTournamentUC implements ViewTournamentIB {
     public ViewTournamentOD viewBracket(ViewTournamentID input){
         int tournamentID = input.getTournamentID();
 
-        if (!currUser.getAllTournaments().contains(tournamentID)){
+        if (!CURR_USER.getAllTournaments().contains(tournamentID)){
             return outputBound.prepareFailView("You have not joined this tournament yet.");
         }
 
-        String role = currUser.getBracketRole(tournamentID);
         BundleBracketData bracketData = new BundleBracketData();
-        currUser.setCurrentTournament(tournamentID);
+        CURR_USER.setCurrentTournament(tournamentID);
         bracketData.bundleBracket(bracketRepo.getBracket(tournamentID));
 
         ViewTournamentDSID dsid = new ViewTournamentDSID(this.bracketRepo);
@@ -62,8 +48,7 @@ public class ViewTournamentUC implements ViewTournamentIB {
             return outputBound.prepareFailView("Error saving data");
         }
 
-        ViewTournamentOD output = new ViewTournamentOD(currUser.getUsername(), bracketData, currUser.getAllTournaments(),
-                bracketRepo, accountRepo); //Temp Fix
+        ViewTournamentOD output = new ViewTournamentOD(CURR_USER.getUsername(), bracketData);
 
         return outputBound.prepareSuccessView(output);
     }

@@ -1,12 +1,12 @@
 package JoinTournament;
 
 import entities.*;
+import interface_adapters.join_tournament.JoinTournamentFailed;
+import interface_adapters.join_tournament.JoinTournamentPresenter;
 import org.junit.Before;
 import org.junit.Test;
-import screens.joinTournament.JoinTournamentFailed;
-import screens.joinTournament.JoinTournamentPresenter;
-import useCases.generalClasses.InformationRecord;
-import useCases.joinTournament.*;
+import use_cases.general_classes.InformationRecord;
+import use_cases.join_tournament.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -16,11 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JoinTournamentTest {
     InformationRecord info;
-    User user;
 
     @Before
     public void setup(){
-        user = new DefaultUser();
+        User user = new DefaultUser();
         user.setUsername("tester");
 
         Team team1 = new DefaultTeam();
@@ -59,9 +58,32 @@ public class JoinTournamentTest {
     }
 
     @Test
+    public void joinTournamentInvalidFormat(){
+        JoinTournamentGateway testGateway = new JoinTournInMemoryBracket();
+
+        JoinTournamentOB presenter = new JoinTournamentPresenter(){
+            @Override
+            public JoinTournamentOD prepareSuccessView(JoinTournamentOD outputData) {
+                fail("Invalid invite format.");
+                return null;
+            }
+
+            @Override
+            public JoinTournamentOD prepareFailView(String error) {
+                throw new JoinTournamentFailed(error);
+            }
+        };
+
+        JoinTournamentIB interactor = new JoinTournamentUC(presenter, testGateway, info, "tester");
+        JoinTournamentID inputData = new JoinTournamentID("hgf143dfu35yas8");
+
+        Exception exception = assertThrows(JoinTournamentFailed.class, () ->
+                interactor.joinBracket(inputData));
+        assertEquals("Invalid invite format.", exception.getMessage());
+    }
+
+    @Test
     public void joinTournamentRoleDNE(){
-
-
         JoinTournamentGateway testGateway = new JoinTournInMemoryBracket();
 
         JoinTournamentOB presenter = new JoinTournamentPresenter(){
@@ -130,10 +152,9 @@ public class JoinTournamentTest {
                 throw new JoinTournamentFailed(error);
             }
         };
-
-        user.setCurrentTournament(1);
-        user.addTournament(1);
-        user.setBracketRole(1, "Overseer");
+        info.getUser("tester").setCurrentTournament(1);
+        info.getUser("tester").addTournament(1);
+        info.getUser("tester").setBracketRole(1, "Overseer");
 
         JoinTournamentIB interactor = new JoinTournamentUC(presenter, testGateway, info, "tester");
         JoinTournamentID inputData = new JoinTournamentID("OB1test");

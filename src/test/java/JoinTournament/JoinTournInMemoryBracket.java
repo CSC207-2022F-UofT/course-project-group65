@@ -1,13 +1,13 @@
 package JoinTournament;
 
 import entities.BracketRepo;
-import useCases.joinTournament.JoinTournamentDSID;
-import useCases.joinTournament.JoinTournamentGateway;
+import use_cases.join_tournament.JoinTournamentDSID;
+import use_cases.join_tournament.JoinTournamentGateway;
 
 import java.util.HashMap;
 
 public class JoinTournInMemoryBracket implements JoinTournamentGateway {
-    final private HashMap<BracketRepo, JoinTournamentDSID> bracketRepos = new HashMap();
+    final private HashMap<BracketRepo, JoinTournamentDSID> bracketRepos = new HashMap<>();
 
     @Override
     public void save(JoinTournamentDSID dsid) throws Exception {
