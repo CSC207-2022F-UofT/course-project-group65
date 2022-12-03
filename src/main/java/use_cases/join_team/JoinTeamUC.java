@@ -6,19 +6,33 @@ import use_cases.general_classes.InformationRecord;
 import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 
 /**
- * This is a use case for joining a team.
+ * This is the interactor class for joinTeam.
+ * This class is responsible for joining the team in the bracketbased on the user choice and
+ * saving the updated bracket back to the bracket repository.
  */
 public class JoinTeamUC implements JoinTeamIB {
+    /** The response model for JoinTeamUC **/
     private final JoinTeamOB outputBoundary;
+    /** The user's name*/
     private final String userName;
+    /** The ID of the bracket that the team should be joined in **/
     private final int bracketID;
+    /** The account repository */
     private final AccountRepo accounts;
+    /** The bracket repository */
     private final BracketRepo brackets;
-
+    /** The gateway for teamCreationUC to access database **/
     private final JoinTeamGateway gateway;
-
+    /** The current Team*/
     private Team curTeam;
 
+    /**
+     * Creates a new JoinTeamUC object.
+     * @param outputBoundary The output boundary used for updating the view
+     * @param gateway The gateway to access the database to store info
+     * @param userName The username of the user that is joining the team
+     * @param informationRecord The information record containing the account and bracket repositories
+     */
     public JoinTeamUC(JoinTeamOB outputBoundary, JoinTeamGateway gateway, String userName, int bracketID, InformationRecord informationRecord) {
         this.outputBoundary = outputBoundary;
         this.gateway = gateway;
