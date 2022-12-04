@@ -168,6 +168,7 @@ public class JoinTeamTest {
                 joinTeamUC.joinTeam(inputData));
         assertEquals("Fail to join the team (Only player can join the team)", exception.getMessage());
     }
+    /** This tests the user wants to join a team which is already full*/
     @Test
     public void joinFullTeam(){
         JoinTeamGateway gateway = new JoinTeamFileWriter("tests.txt");
