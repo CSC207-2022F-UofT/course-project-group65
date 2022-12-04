@@ -2,10 +2,13 @@ package entities.game_finder_strategy;
 
 import entities.Game;
 
+/**
+ * This class represents a tree game finder.
+ */
 public class TreeGameFinder<DefaultBracket> implements GameFinder<DefaultBracket> {
-    /*
-        * This class represents a tree game finder.
-     */
+    /** The getter method for the game
+     * @param gameID - ID of the game
+     * @param head - The head game */
     @Override
     public Game getGame(int gameID, Game head) {
         if (head == null) {

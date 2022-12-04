@@ -4,21 +4,22 @@ import entities.Game;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-
+/**
+ * This class represents a generalised round games.
+ */
 public class GeneralisedRoundGames<Bracket> implements RoundGames<Bracket> {
-
-
-    /*
-        * This class represents a generalised round games.
-     */
-
+    /** This method is used to get all the games in that roundNum
+     * @param  head- The head game
+     * @param roundNum - Game round number of the bracket*/
     public ArrayList<Game> getGamesInRound(Game head, int roundNum) {
         HashSet<Game> visited = new HashSet<>();
         ArrayList<Game> games = new ArrayList<>();
         getGamesInRound(head, roundNum, visited, games);
         return games;
     }
-
+    /** This method is used to get all the games in that roundNum when some games have been visited
+     * @param  head- The head game
+     * @param roundNum - Game round number of the bracket*/
     private void getGamesInRound(Game head, int roundNum, HashSet<Game> visited, ArrayList<Game> games) {
         if (head != null) {
             visited.add(head);

@@ -2,17 +2,22 @@ package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
-public class DefaultTeam implements Team, Serializable {
-    private String teamName;
-    private int teamSize;
-    private ArrayList<User> teamMembers;
 
+/** This class represents the default team*/
+public class DefaultTeam implements Team, Serializable {
+    /** A string for team name */
+    private String teamName;
+    /** An int for team size */
+    private int teamSize;
+    /** An arraylist for team's members */
+    private final ArrayList<User> teamMembers;
+    /** The constructor for default team */
     public DefaultTeam(){
         teamName = "";
         teamSize = 0;
-        teamMembers = new ArrayList<User>();
+        teamMembers = new ArrayList<>();
     }
+    /** The getter and setter methods for all the variables */
     public String getTeamName() {return teamName;}
 
     public void setTeamName(String teamName) {this.teamName = teamName;}

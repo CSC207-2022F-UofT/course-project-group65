@@ -3,9 +3,13 @@ package entities.round_games_strategy;
 import entities.Game;
 
 import java.util.ArrayList;
-
+/**
+ * This class represents a tree round games.
+ */
 public class TreeRoundGames<DefaultBracket> implements RoundGames<DefaultBracket> {
-
+    /** This method is used to get all the games in that roundNum
+     * @param  head- The head game
+     * @param roundNum - Game round number of the bracket*/
     public ArrayList<Game> getGamesInRound(Game head, int roundNum) {
         ArrayList<Game> games = new ArrayList<>();
         if (head == null) {

@@ -4,16 +4,22 @@ import entities.Game;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents a generalised game finder.
+ */
 public class GeneralisedGameFinder<Bracket> implements GameFinder<Bracket> {
-    /*
-        * This class represents a generalised game finder.
-     */
 
+    /** The getter method for the game
+     * @param gameID - ID of the game
+     * @param head - The head game */
     public Game getGame(int gameID, Game head) {
         ArrayList<Game> visited = new ArrayList<>();
         return getGame(gameID, head, visited);
     }
-
+    /** The different getter method for the game
+     * @param gameID - ID of the game
+     * @param head - The head game
+     * @param visited - ArrayList of games that have been visited*/
     public Game getGame(int gameID, Game head, ArrayList<Game> visited) {
         if (head == null) {
             return null;

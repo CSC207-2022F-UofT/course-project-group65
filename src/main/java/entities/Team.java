@@ -1,10 +1,11 @@
 package entities;
 
 import java.util.ArrayList;
+/**
+ * This interface represents a team in a Game.
+ */
 public interface Team {
-    /*
-     * This interface represents a team in a Game.
-     */
+    /** The getter and setter methods */
     String getTeamName();
 
     void setTeamName(String teamName);
@@ -15,5 +16,6 @@ public interface Team {
 
     ArrayList<User> getTeamMembers();
 
+    /** The abstract method for add a team member to team's member list */
     void addTeamMember(User teamMember);
 }
