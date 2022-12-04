@@ -109,11 +109,14 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
                 gbc.gridy = j - 1;
                 pnlBracket.add(new JLabel(""), gbc);
                 teams = gameToTeams.get(currGame);
-                switch (teams.size()) {
-                    case 0 -> scoreText = " [] - [] ";
-                    case 1 -> scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - [] ";
-                    case 2 -> scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - ["
+                switch (teams.size()){
+                    case 0: scoreText = " [] - [] ";
+                        break;
+                    case 1: scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - [] ";
+                        break;
+                    case 2: scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - ["
                             + gameToScore.get(currGame).get(1) + "] " + teams.get(1);
+                        break;
                 }
                 lblBracketGameScores.add(new JLabel(scoreText));
                 gbc.gridy = j;
