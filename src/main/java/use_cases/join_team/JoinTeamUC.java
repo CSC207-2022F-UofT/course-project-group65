@@ -115,7 +115,7 @@ public class JoinTeamUC implements JoinTeamIB {
             return outputBoundary.FailView("Fail to join the team (The team name does not exist)");
         }
         if(!teamSpace){
-            return outputBoundary.FailView("Fail to join the team (The team is already full");
+            return outputBoundary.FailView("Fail to join the team (The team is already full)");
         }
         if (inTeam){
             return outputBoundary.FailView("Fail to join the team (You are already in a team)");
