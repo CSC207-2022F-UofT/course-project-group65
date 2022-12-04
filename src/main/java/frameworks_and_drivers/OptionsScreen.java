@@ -56,7 +56,6 @@ public class OptionsScreen extends JFrame implements ActionListener {
             ViewTournamentInfo viewTournamentInfo = new ViewTournamentInfo(viewTournamentController, nextScreenData);
             ArrayList<Integer> tournaments = nextScreenData.getUsersTournaments(nextScreenData.getCurrentUser());
             viewTournamentInfo.setTournaments(tournaments);
-            System.out.println(tournaments);
             this.dispose();
             viewTournamentInfo.setVisible(true);
 

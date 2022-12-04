@@ -1,6 +1,7 @@
 package interface_adapters.declare_winner;
 
 import interface_adapters.data_interface_adapters.declare_winner_data.DeclareWinnerFileWriter;
+import interface_adapters.view_interfaces.main_view_interfaces.DeclareWinnerView;
 import use_cases.declare_winner.*;
 import use_cases.general_classes.InformationRecord;
 
@@ -12,17 +13,15 @@ import use_cases.general_classes.InformationRecord;
 public class DeclareWinnerController {
 
     DeclareWinnerIB userInput;
-
     /**
      * This constructor creates a new DeclareWinnerController object.
      * @param informationRecord The information record that the declare winner use case will use.
      * @param bracketID The ID of the bracket that the game in question is in.
      * @param username The username of the user that is declaring the winner.
      */
-    public DeclareWinnerController(InformationRecord informationRecord, int bracketID, String username) {
-        DeclareWinnerOB outputBoundary = new DeclareWinnerPresenter();
+    public DeclareWinnerController(DeclareWinnerPresenter presenter, InformationRecord informationRecord, int bracketID, String username) {
         DeclareWinnerGateway gateway = new DeclareWinnerFileWriter("brackets.txt");
-        this.userInput = new DeclareWinnerUC(outputBoundary, gateway, informationRecord, bracketID, username);
+        this.userInput = new DeclareWinnerUC(presenter, gateway, informationRecord, bracketID, username);
     }
 
     /**

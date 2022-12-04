@@ -3,6 +3,7 @@ package team_creation_use_case;
 
 import interface_adapters.data_interface_adapters.team_creation_data.TeamCreationFileWriter;
 import interface_adapters.team_creation.TeamCreationPresenter;
+import interface_adapters.view_interfaces.main_view_interfaces.TeamCreationView;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -39,7 +40,7 @@ public class TeamCreationInteractorTest {
 
         newUser.setBracketRole(1, "Player");
 
-        teamCreationOB outputBoundary = new TeamCreationPresenter();
+        teamCreationOB outputBoundary = new TeamCreationPresenter(new TestView());
         InformationRecord newInfoRec = new InformationRecord(newAR, newBR);
         teamCreationUC uc = new teamCreationUC(outputBoundary, gateway,"t1", 1, newInfoRec);
 
@@ -74,7 +75,7 @@ public class TeamCreationInteractorTest {
 
         newUser.setBracketRole(1, "Player");
 
-        teamCreationOB outputBoundary = new TeamCreationPresenter();
+        teamCreationOB outputBoundary = new TeamCreationPresenter(new TestView());
         InformationRecord newInfoRec = new InformationRecord(newAR, newBR);
         teamCreationUC uc = new teamCreationUC(outputBoundary, gateway,"t1", 1, newInfoRec);
 
@@ -106,7 +107,7 @@ public class TeamCreationInteractorTest {
 
         newUser.setBracketRole(1, "Player");
 
-        teamCreationOB outputBoundary = new TeamCreationPresenter();
+        teamCreationOB outputBoundary = new TeamCreationPresenter(new TestView());
         InformationRecord newInfoRec = new InformationRecord(newAR, newBR);
         teamCreationUC uc = new teamCreationUC(outputBoundary, gateway,"t1", 1, newInfoRec);
 

@@ -1,6 +1,8 @@
 package interface_adapters.change_points;
 
 import interface_adapters.data_interface_adapters.change_points_data.ChangePointsFileWriter;
+import interface_adapters.view_interfaces.bracket_operation_interface.ChangePointsBOView;
+import interface_adapters.view_interfaces.main_view_interfaces.ChangePointsExtendedView;
 import use_cases.change_points.*;
 import use_cases.general_classes.InformationRecord;
 
@@ -12,6 +14,7 @@ import use_cases.general_classes.InformationRecord;
 public class ChangePointsController {
 
     ChangePointsIB userInput;
+    ChangePointsPresenter presenter;
 
     /**
      * This constructor creates a new ChangePointsController object.
@@ -19,10 +22,14 @@ public class ChangePointsController {
      * @param bracketID The bracket ID that the ChangePoints use case will use.
      * @param username The username of the user.
      */
-    public ChangePointsController(InformationRecord informationRecord, int bracketID, String username) {
-        ChangePointsOB outputBoundary = new ChangePointsPresenter();
+    public ChangePointsController(ChangePointsPresenter presenter, InformationRecord informationRecord, int bracketID, String username) {
+        this.presenter = presenter;
         ChangePointsGateway gateway = new ChangePointsFileWriter("brackets.txt");
-        this.userInput = new ChangePointsUC(outputBoundary, gateway, informationRecord, bracketID, username);
+        this.userInput = new ChangePointsUC(this.presenter, gateway, informationRecord, bracketID, username);
+    }
+
+    public void setView(ChangePointsBOView view) {
+        this.presenter.setView(view);
     }
 
     /**

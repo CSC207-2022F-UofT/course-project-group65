@@ -135,7 +135,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
         }
 
         Team winner = this.game.getWinner();
-        DeclareWinnerOD outputData = new DeclareWinnerOD(winner.getTeamName());
+        DeclareWinnerOD outputData = new DeclareWinnerOD(this.game.getGameID(), winner.getTeamName());
         return this.outputBoundary.presentSuccess(outputData);
     }
 }

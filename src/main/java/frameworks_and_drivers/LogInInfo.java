@@ -3,7 +3,6 @@ package frameworks_and_drivers;
 import interface_adapters.NextScreenData;
 import interface_adapters.create_account.CreateAccountController;
 import interface_adapters.log_in.LogInController;
-import use_cases.log_in.LogInOD;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -48,11 +47,9 @@ public class LogInInfo extends JFrame implements ActionListener{
             String password = tfPassword.getText();
 
             try {
-                LogInOD outputData = logInController.login(username, password);
-                JOptionPane.showMessageDialog(this, "Welcome " + outputData.getUsername());
-
-                String currentUser = outputData.getUsername();
-                nextScreenData.setCurrentUser(currentUser);
+                logInController.setPresenterData(nextScreenData);
+                logInController.login(username, password);
+                JOptionPane.showMessageDialog(this, "Welcome " + nextScreenData.getCurrentUser());
                 OptionsScreen optionsScreen = new OptionsScreen(nextScreenData);
                 this.dispose();
                 optionsScreen.setVisible(true);

@@ -61,10 +61,6 @@ public class NextScreenData {
         return this.bundleBracketData.getRoleToInvite();
     }
 
-    public int getTournamentID() {
-        return this.bundleBracketData.getTournamentID();
-    }
-
     public String getTournamentName() {
         return this.bundleBracketData.getTournamentName();
     }
@@ -97,19 +93,4 @@ public class NextScreenData {
         return this.currentBracketID;
     }
 
-//    public void setAccounts(AccountRepo accounts) {
-//        this.accounts = accounts;
-//    }
-
-//    public AccountRepo getAccounts() {
-//        return this.accounts;
-//    }
-
-//    public void setBrackets(BracketRepo brackets) {
-//        this.brackets = brackets;
-//    }
-
-//    public BracketRepo getBrackets() {
-//        return this.brackets;
-//    }
 }

@@ -1,6 +1,7 @@
 package interface_adapters.team_creation;
 
 import interface_adapters.data_interface_adapters.team_creation_data.TeamCreationFileWriter;
+import interface_adapters.view_interfaces.main_view_interfaces.TeamCreationView;
 import use_cases.general_classes.InformationRecord;
 import use_cases.team_creation.*;
 
@@ -10,25 +11,32 @@ import use_cases.team_creation.*;
 
 public class TeamCreationController {
     final teamCreationIB userInput;
+    public TeamCreationPresenter presenter;
+    public String username;
     /**
      * Creates a new TeamCreationController object
      * @param username The name of the user who created the team
      * @param informationRecord The class that stores the repositories
      * @param bracketID The current bracket id
      */
-    public TeamCreationController(InformationRecord informationRecord, int bracketID, String username) {
-        teamCreationOB outputBoundary = new TeamCreationPresenter();
+    public TeamCreationController(TeamCreationPresenter presenter, InformationRecord informationRecord, int bracketID, String username) {
+        this.presenter = presenter;
         teamCreationGateway gateway = new TeamCreationFileWriter("brackets.txt");
-        this.userInput = new teamCreationUC(outputBoundary, gateway, username, bracketID, informationRecord);
+        this.userInput = new teamCreationUC(presenter, gateway, username, bracketID, informationRecord);
 
     }
+
+    public String getCurrUser(){
+        return username;
+    }
+
     /**
      * Creates the new team in the bracket
      * @param teamName The name of the team inputed by the user
      */
-    public teamCreationOD createNewTeam(String teamName) {
+    public void createNewTeam(String teamName) {
         teamCreationID inputData = new teamCreationID(teamName);
-
-        return userInput.createNewTeam(inputData);
+        teamCreationOD outputData = userInput.createNewTeam(inputData);
+        this.username = outputData.getUsername();
     }
 }

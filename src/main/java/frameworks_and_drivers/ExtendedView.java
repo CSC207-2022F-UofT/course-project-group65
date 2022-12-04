@@ -1,28 +1,33 @@
 package frameworks_and_drivers;
 
+import frameworks_and_drivers.bracket_operations.DoBracketOperation;
 import interface_adapters.NextScreenData;
 import interface_adapters.advance_team.AdvanceTeamController;
+import interface_adapters.advance_team.AdvanceTeamPresenter;
 import interface_adapters.assign_observer.AssignObserverController;
-import frameworks_and_drivers.bracket_operations.DoBracketOperation;
 import interface_adapters.change_points.ChangePointsController;
+import interface_adapters.change_points.ChangePointsPresenter;
 import interface_adapters.create_account.CreateAccountController;
 import interface_adapters.declare_winner.DeclareWinnerController;
+import interface_adapters.declare_winner.DeclareWinnerPresenter;
 import interface_adapters.end_tournament.EndTournController;
 import interface_adapters.join_team.JoinTeamController;
 import interface_adapters.log_in.LogInController;
+import interface_adapters.team_creation.TeamCreationPresenter;
+import interface_adapters.view_interfaces.main_view_interfaces.*;
 import interface_adapters.start_tournament.StartTournController;
 import interface_adapters.team_creation.TeamCreationController;
-import use_cases.assign_observer.AssignObserverOD;
-import use_cases.join_team.JoinTeamOD;
-import use_cases.start_tournament.StartTournOD;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Objects;
 
-public class ExtendedView extends JFrame implements ActionListener, IBracketView {
+public class ExtendedView extends JFrame implements ActionListener, AssignObserverView, JoinTeamViewInterface,
+        TeamCreationView, AdvanceTeamView, DeclareWinnerView, ChangePointsExtendedView {
 
     private JTabbedPane mainTabbedPane;
     private JPanel mainPanel;
@@ -79,7 +84,7 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         this.joinTeamController = joinTeamController;
         lblCurrUser.setText("Logged In: " + nextScreenData.getCurrentUser());
         lblTournamentName.setText("Bracket Name: " + nextScreenData.getTournamentName());
-        lblTournamentID.setText("ID: " + nextScreenData.getTournamentID());
+        lblTournamentID.setText("ID: " + nextScreenData.getCurrentBracketID());
         btnOptions.addActionListener(this);
         btnLogOut.addActionListener(this);
 
@@ -91,54 +96,6 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         String scoreText = "";
         String winnerText;
         ArrayList<String> teams;
-
-        //JComponent ui = new JPanel(new BorderLayout(5, 5));
-        //ui.add(new JScrollPane(mainPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS));
-//        pnlBracket.add(new JScrollPane(pnlBracket));
-
-
-        // Team members added to team view
-        String[] column = {"Team Name", "Team Members"};
-        this.teamMemberData = new String[teamToPlayers.size()][nextScreenData.getMaxTeamSize(nextScreenData.getCurrentBracketID())];
-        int index1 = 0;
-        for (String team : teamToPlayers.keySet()) {
-            teamMemberData[index1][0] = team;
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < teamToPlayers.get(team).size(); i++) {
-                if (i == teamToPlayers.get(team).size() - 1) {
-                    sb.append(teamToPlayers.get(team).get(i));
-                } else {
-                    sb.append(teamToPlayers.get(team).get(i)).append(", ");
-                }
-            }
-            teamMemberData[index1][1] = String.valueOf(sb);
-            index1++;
-        }
-
-        JTable teamMemberTable = new JTable(teamMemberData, column);
-        teamMembers.add(teamMemberTable);
-        teamMembers.getViewport().add(teamMemberTable);
-        teamMembers.setVisible(true);
-        teamMemberTable.setVisible(true);
-
-        // Observer Assignments
-        String[] obsColumn = {"Game", "Observer"};
-        this.observerData = new String[gameToReferee.size()][2];
-        int index2 = 0;
-        for (Integer game : gameToReferee.keySet()) {
-            observerData[index2][0] = String.valueOf(game);
-            if (gameToReferee.get(game) != null) {
-                observerData[index2][1] = gameToReferee.get(game);
-            } else {
-                observerData[index2][1] = "No Observer Assigned";
-            }
-            index2++;
-        }
-        JTable observerTable = new JTable(observerData, obsColumn);
-        observerAssignments.add(observerTable);
-        observerAssignments.getViewport().add(observerTable);
-        observerAssignments.setVisible(true);
-        observerTable.setVisible(true);
 
         pnlBracket.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -152,14 +109,11 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
                 gbc.gridy = j - 1;
                 pnlBracket.add(new JLabel(""), gbc);
                 teams = gameToTeams.get(currGame);
-                switch (teams.size()){
-                    case 0: scoreText = " [] - [] ";
-                        break;
-                    case 1: scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - [] ";
-                        break;
-                    case 2: scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - ["
+                switch (teams.size()) {
+                    case 0 -> scoreText = " [] - [] ";
+                    case 1 -> scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - [] ";
+                    case 2 -> scoreText = teams.get(0) + " [" + gameToScore.get(currGame).get(0) + "] - ["
                             + gameToScore.get(currGame).get(1) + "] " + teams.get(1);
-                        break;
                 }
                 lblBracketGameScores.add(new JLabel(scoreText));
                 gbc.gridy = j;
@@ -191,6 +145,30 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         }
         cmbJoinTeam.addActionListener(this);
 
+        // Team members added to team view
+        String[] column = {"Team Name", "Team Members"};
+        this.teamMemberData = new String[teamToPlayers.size()][nextScreenData.getMaxTeamSize(nextScreenData.getCurrentBracketID())];
+        int index1 = 0;
+        for (String team : teamToPlayers.keySet()) {
+            teamMemberData[index1][0] = team;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < teamToPlayers.get(team).size(); i++) {
+                if (i == teamToPlayers.get(team).size() - 1) {
+                    sb.append(teamToPlayers.get(team).get(i));
+                } else {
+                    sb.append(teamToPlayers.get(team).get(i)).append(", ");
+                }
+            }
+            teamMemberData[index1][1] = String.valueOf(sb);
+            index1++;
+        }
+
+        JTable teamMemberTable = new JTable(teamMemberData, column);
+        teamMembers.add(teamMemberTable);
+        teamMembers.getViewport().add(teamMemberTable);
+        teamMembers.setVisible(true);
+        teamMemberTable.setVisible(true);
+
         //Observer View
         for(int gameID: gameToReferee.keySet()){
             cmbSelectGame.addItem(gameID);
@@ -202,6 +180,26 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         cmbSelectGame.addActionListener(this);
         cmbAssignObserver.addActionListener(this);
         btnAssignObserver.addActionListener(this);
+
+
+        // Observer Assignments
+        String[] obsColumn = {"Game", "Observer"};
+        this.observerData = new String[gameToReferee.size()][2];
+        int index2 = 0;
+        for (Integer game : gameToReferee.keySet()) {
+            observerData[index2][0] = String.valueOf(game);
+            if (gameToReferee.get(game) != null) {
+                observerData[index2][1] = gameToReferee.get(game);
+            } else {
+                observerData[index2][1] = "No Observer Assigned";
+            }
+            index2++;
+        }
+        JTable observerTable = new JTable(observerData, obsColumn);
+        observerAssignments.add(observerTable);
+        observerAssignments.getViewport().add(observerTable);
+        observerAssignments.setVisible(true);
+        observerTable.setVisible(true);
 
         //Overseer View
         btnStart.addActionListener(this);
@@ -248,14 +246,6 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         lblBracketGameWinner.get(index).setText("Winner: " + winner);
     }
 
-//    public void addObserver(LinkedHashMap<Integer, String> gameToReferee){
-//        cmbAssignObserver.removeAllItems();
-//        ArrayList<String> referees = new ArrayList<>(gameToReferee.values());
-//        for(String ref: referees){
-//            cmbAssignObserver.addItem(ref);
-//        }
-//    }
-
     public void replaceTeam(String newTeam, String oldTeam, LinkedHashMap<Integer, ArrayList<String>> gameToTeams){
         for(int i=0; i<cmbJoinTeam.getItemCount(); i++){
             if(cmbJoinTeam.getItemAt(i).contains(oldTeam)){
@@ -293,7 +283,7 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         }
     }
 
-    public void updateTeamMembers(HashMap<String, ArrayList<String>> teamToPlayers){
+    public void updateTeamMembers(LinkedHashMap<String, ArrayList<String>> teamToPlayers){
         String[] column = {"Team Name", "Team Members"};
         this.teamMemberData = new String[teamToPlayers.size()][nextScreenData.getMaxTeamSize(nextScreenData.getCurrentBracketID())];
         int index1 = 0;
@@ -314,6 +304,7 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         JTable teamMemberTable = new JTable(teamMemberData, column);
         teamMembers.add(teamMemberTable);
         teamMembers.getViewport().add(teamMemberTable);
+        teamMembers.setVisible(true);
         teamMemberTable.setVisible(true);
     }
 
@@ -333,21 +324,13 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         JTable observerTable = new JTable(observerData, obsColumn);
         observerAssignments.add(observerTable);
         observerAssignments.getViewport().add(observerTable);
+        observerAssignments.setVisible(true);
         observerTable.setVisible(true);
     }
 
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
-        AdvanceTeamController advanceTeamController = new AdvanceTeamController(nextScreenData.getInformationRecord(),
-                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-        DeclareWinnerController declareWinnerController = new DeclareWinnerController(
-                nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID(),
-                nextScreenData.getCurrentUser());
-        ChangePointsController changePointsController = new ChangePointsController(nextScreenData.getInformationRecord(),
-                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
-//
         if(e.getSource() == btnOptions){
             nextScreenData.setCurrentUser(nextScreenData.getCurrentUser());
             OptionsScreen optionsScreen = new OptionsScreen(nextScreenData);
@@ -362,24 +345,22 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
             homeScreen.setVisible(true);
         }
         else if(e.getSource() == btnCreateTeam){
-            TeamCreationController controller = new TeamCreationController(nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+            TeamCreationPresenter teamCreationPresenter = new TeamCreationPresenter(this);
+            TeamCreationController controller = new TeamCreationController(teamCreationPresenter,
+                    nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
             UserInput inputScreen = new UserInput(controller, this, this.nextScreenData);
             inputScreen.setVisible(true);
             this.nextScreenData.bundleData();
-
-            //refactor
             cmbJoinTeam.removeAllItems();
             for(String team: nextScreenData.getTeamToPlayers().keySet()) {
                 cmbJoinTeam.addItem(team);
             }
         }
         else if(e.getSource() == btnJoinTeam){
-            String teamName = (String)cmbJoinTeam.getSelectedItem();
+            String teamName = (String) cmbJoinTeam.getSelectedItem();
             try {
-                JoinTeamOD outputData = joinTeamController.joinTeam(teamName);
-//                ArrayList<String> names = outputData.getMembersNames();
-//                nextScreenData.bundleData();
-                updateTeamMembers(outputData.getTeamToPlayers());
+                joinTeamController.setPresenterView(this);
+                joinTeamController.joinTeam(teamName);
             }
             catch (Exception exception) {
                 System.out.println( "Error: " + exception);
@@ -392,18 +373,15 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
                 String assignee = (String) cmbAssignObserver.getSelectedItem();
                 AssignObserverController controller = new AssignObserverController(nextScreenData.getInformationRecord(),
                         nextScreenData.getCurrentUser());
-                AssignObserverOD output = controller.assignObserver(assignee, gameID);
-//                this.nextScreenData.bundleData();
-                updateObserverAssignments(output.getGameToReferee());
-//                addObserver(output.getGameToReferee());
+                controller.setPresenterView(this);
+                controller.assignObserver(assignee, gameID);
             }
             catch(RuntimeException rex ) {
                 JOptionPane.showMessageDialog(this, rex.getMessage());
             }
         }
         else if(e.getSource() == btnStart){
-            StartTournOD startData = startTournController.startTourn();
-            ArrayList<String> startErrors = startData.getErrors();
+            ArrayList<String> startErrors = startTournController.startTourn();
             StartErrors errorView = new StartErrors(this.startTournController);
             for (String error : startErrors) {
                 if (Objects.equals(error, "USERROLE")) {
@@ -427,6 +405,17 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
         }
+        AdvanceTeamPresenter advanceTeamPresenter = new AdvanceTeamPresenter(this);
+        AdvanceTeamController advanceTeamController = new AdvanceTeamController(advanceTeamPresenter,
+                nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+        DeclareWinnerPresenter declareWinnerPresenter = new DeclareWinnerPresenter(this);
+        DeclareWinnerController declareWinnerController = new DeclareWinnerController(declareWinnerPresenter,
+                nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID(),
+                nextScreenData.getCurrentUser());
+        ChangePointsPresenter changePointsPresenter = new ChangePointsPresenter(this);
+        ChangePointsController changePointsController = new ChangePointsController(changePointsPresenter, nextScreenData.getInformationRecord(),
+                nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+
         for(int i=0; i<btnBracketGame.size(); i++){
             if (e.getSource() == btnBracketGame.get(i)){
                 DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
@@ -441,7 +430,4 @@ public class ExtendedView extends JFrame implements ActionListener, IBracketView
         repaint();
     }
 
-//    private void createUIComponents() {
-//        pnlBracket = new JPanel();
-//    }
 }

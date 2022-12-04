@@ -3,7 +3,6 @@ package frameworks_and_drivers;
 import interface_adapters.NextScreenData;
 import interface_adapters.create_account.CreateAccountController;
 import interface_adapters.log_in.LogInController;
-import use_cases.create_account.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -52,7 +51,7 @@ public class CreateAccountInfo extends JFrame implements ActionListener{
 
 
             try {
-                CreateAccountOD outputData = createAccountController.create(username, password);
+                createAccountController.create(username, password);
                 JOptionPane.showMessageDialog(this, "Successfully created account!");
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(this, exception.getMessage());

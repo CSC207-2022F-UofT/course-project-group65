@@ -1,17 +1,15 @@
 package frameworks_and_drivers;
 
 
-import frameworks_and_drivers.ExtendedView;
 import interface_adapters.NextScreenData;
 
 import interface_adapters.team_creation.TeamCreationController;
-import use_cases.team_creation.teamCreationOD;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class UserInput extends JFrame implements ActionListener{
+public class UserInput extends JFrame implements ActionListener {
     private JLabel TeamName;
     private JTextField tfTeamName;
     private JButton btnCreate;
@@ -40,12 +38,8 @@ public class UserInput extends JFrame implements ActionListener{
             if(tfTeamName.getText() == null) {
                 throw new Exception("Please enter a team name");
             }
-            teamCreationOD outputData = teamCreationController.createNewTeam(tfTeamName.getText());
-
-            nextScreenData.setCurrentUser(outputData.getUsername());
-            nextScreenData.bundleData();
-            extendedView.replaceTeam(outputData.getNewTeam(), outputData.getOldTeam(), outputData.getGameToTeams());
-            extendedView.updateTeamMembers(outputData.getTeamToPlayers());
+            teamCreationController.createNewTeam(tfTeamName.getText());
+            nextScreenData.setCurrentUser(teamCreationController.getCurrUser());
 
             this.dispose();
 

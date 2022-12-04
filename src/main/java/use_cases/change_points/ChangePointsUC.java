@@ -182,7 +182,7 @@ public class ChangePointsUC implements ChangePointsIB{
         ArrayList<String> teams = bundleBracketData.getGameToTeams().get(this.game.getGameID());
         ArrayList<Integer> points = bundleBracketData.getGameToScores().get(this.game.getGameID());
 
-        ChangePointsOD outputData = new ChangePointsOD(teams, points);
+        ChangePointsOD outputData = new ChangePointsOD(this.game.getGameID(), teams, points);
 
         return this.outputBoundary.presentSuccess(outputData);
     }

@@ -1,7 +1,10 @@
 package interface_adapters.advance_team;
 import interface_adapters.data_interface_adapters.advance_team_data.AdvanceTeamFileWriter;
+import interface_adapters.view_interfaces.main_view_interfaces.AdvanceTeamView;
 import use_cases.advance_team.*;
 import use_cases.general_classes.InformationRecord;
+
+import java.util.ArrayList;
 
 /**
  * This class is the controller for the AdvanceTeam use case.
@@ -18,18 +21,14 @@ public class AdvanceTeamController {
      * @param bracketID the ID of the bracket that the user wants to advance the team from
      * @param username the username of the user that wants to advance the team
      */
-    public AdvanceTeamController(InformationRecord informationRecord, int bracketID, String username) {
-        AdvanceTeamOB outputBoundary = new AdvanceTeamPresenter();
+    public AdvanceTeamController(AdvanceTeamPresenter presenter, InformationRecord informationRecord, int bracketID, String username) {
         AdvanceTeamGateway gateway = new AdvanceTeamFileWriter("brackets.txt");
-        this.userInput = new AdvanceTeamUC(outputBoundary, gateway, informationRecord, bracketID, username);
+        this.userInput = new AdvanceTeamUC(presenter, gateway, informationRecord, bracketID, username);
     }
 
     /** This method is responsible for the communication between the user and the use case. */
-    public AdvanceTeamOD create(int gameID){
-
+    public void create(int gameID){
         AdvanceTeamID inputData = new AdvanceTeamID(gameID);
-
-        return this.userInput.advanceWinner(inputData);
+        AdvanceTeamOD outputData = userInput.advanceWinner(inputData);
     }
-
 }
