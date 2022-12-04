@@ -1,6 +1,9 @@
+package start_tournament;
+
 import entities.*;
 import interface_adapters.data_interface_adapters.start_tournament_data.StartTournFilerWriter;
 import interface_adapters.start_tournament.StartTournPresenter;
+import org.junit.After;
 import org.junit.Test;
 import use_cases.general_classes.InformationRecord;
 import use_cases.start_tournament.StartTournGateway;
@@ -66,4 +69,11 @@ public class StartTournTest {
 
         userInput.startTourn();
     }
+
+    @After
+    public void tearDown(){
+        java.io.File file = new java.io.File("filename.txt");
+        boolean deletion = file.delete();
+    }
+
 }

@@ -1,7 +1,6 @@
 package interface_adapters.declare_winner;
 
 import interface_adapters.data_interface_adapters.declare_winner_data.DeclareWinnerFileWriter;
-import interface_adapters.view_interfaces.main_view_interfaces.DeclareWinnerView;
 import use_cases.declare_winner.*;
 import use_cases.general_classes.InformationRecord;
 

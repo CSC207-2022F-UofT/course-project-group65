@@ -8,25 +8,28 @@ import use_cases.general_classes.perm_restriction_strategies.PermissionChecker;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/** A use case class that handles the changing of points for a user. It will change the points of the team and
- * save and update the bracket repository afterwards. */
-public class ChangePointsUC implements ChangePointsIB{
+/**
+ * A use case class that handles the changing of points for a user. It will change the points of the team and
+ * save and update the bracket repository afterwards.
+ */
+public class ChangePointsUC implements ChangePointsIB {
+    private final BracketRepo bracketRepo;
     public Bracket bracket;
     public int newPoints;
     public Team team;
     public User user;
     public Game game;
     public ChangePointsOB outputBoundary;
-    private final BracketRepo bracketRepo;
     public ChangePointsGateway gateway;
 
     /**
      * Creates a new ChangePointsUC object.
-     * @param outputBoundary The output boundary used for updating the view
-     * @param gateway The gateway to access the database to store info
+     *
+     * @param outputBoundary    The output boundary used for updating the view
+     * @param gateway           The gateway to access the database to store info
      * @param informationRecord The information record containing the bracket repository
-     * @param bracketID The ID of the bracket to change points in
-     * @param username The username of the user changing points
+     * @param bracketID         The ID of the bracket to change points in
+     * @param username          The username of the user changing points
      */
     public ChangePointsUC(ChangePointsOB outputBoundary, ChangePointsGateway gateway,
                           InformationRecord informationRecord, int bracketID, String username) {
@@ -38,7 +41,9 @@ public class ChangePointsUC implements ChangePointsIB{
         this.user = accountRepo.getUser(username);
     }
 
-    /** Finds the team in the bracket that should have its points changed.
+    /**
+     * Finds the team in the bracket that should have its points changed.
+     *
      * @param inputData The input data containing the team name and the new points
      */
     private void findTeam(ChangePointsID inputData) {
@@ -50,8 +55,10 @@ public class ChangePointsUC implements ChangePointsIB{
         }
     }
 
-    /** Checks whether the user has permission to change points in the bracket. By using the permission checker class.
+    /**
+     * Checks whether the user has permission to change points in the bracket. By using the permission checker class.
      * Essentially a helper method for the changePoints method.
+     *
      * @param user The user changing points
      * @return True if the user has permission to change points in the bracket, false otherwise
      */
@@ -63,6 +70,7 @@ public class ChangePointsUC implements ChangePointsIB{
 
     /**
      * Checks whether the user is the correct observer assigned to this game.
+     *
      * @param user The user advancing a team
      * @return True if the user is the correct observer assigned to this game, false otherwise
      */
@@ -74,7 +82,9 @@ public class ChangePointsUC implements ChangePointsIB{
         return user.getUsername().equals(assignedObserver.getUsername());
     }
 
-    /** Checks whether the team exists in the game.
+    /**
+     * Checks whether the team exists in the game.
+     *
      * @param team The team to check
      * @return True if the team exists in the game, false otherwise
      */
@@ -82,7 +92,9 @@ public class ChangePointsUC implements ChangePointsIB{
         return this.game.getTeams().contains(team);
     }
 
-    /** Check whether the game exists in the bracket.
+    /**
+     * Check whether the game exists in the bracket.
+     *
      * @param game The game to check
      * @return True if the game exists in the bracket, false otherwise
      */
@@ -90,27 +102,31 @@ public class ChangePointsUC implements ChangePointsIB{
         return game != null;
     }
 
-    /** Checks if all the games in the round are full. We only allow the points to be changed if all the games in the
+    /**
+     * Checks if all the games in the round are full. We only allow the points to be changed if all the games in the
      * round are full.
+     *
      * @param game The game whose round is to be checked
      * @return True if all the games in the round are full, false otherwise
      */
-    private boolean checkAllGamesFull(Game game){
+    private boolean checkAllGamesFull(Game game) {
         int teamRound = game.getGameRound();
         ArrayList<Game> games = bracket.getGamesInRound(teamRound);
-        for (Game g: games){
-            if (g.getNumTeams() < 2){
+        for (Game g : games) {
+            if (g.getNumTeams() < 2) {
                 return false;
             }
         }
         return true;
     }
 
-    /** Checks if the points are valid (i.e. not negative and less than or equal to win condition).
+    /**
+     * Checks if the points are valid (i.e. not negative and less than or equal to win condition).
+     *
      * @param points The points to check
      * @return True if the points are valid, false otherwise
      */
-    private boolean validPoints(int points){
+    private boolean validPoints(int points) {
         int changedPoints = points + this.game.getTeamPoints(this.team);
         return changedPoints <= this.bracket.getWinCondition() && changedPoints >= 0;
     }
@@ -123,9 +139,13 @@ public class ChangePointsUC implements ChangePointsIB{
      */
     public ChangePointsOD changePoints(ChangePointsID inputData) {
         this.game = bracket.getGame(inputData.getGameIDCP());
-        findTeam(inputData);
 
         // Checks to see if the request is valid.
+        if (!checkGame(this.game)) {
+            return this.outputBoundary.presentError("The game you are trying to change points in is not " +
+                    "in the bracket.");
+        }
+        findTeam(inputData);
         if (!this.bracket.getTournamentCondition()) {
             return this.outputBoundary.presentError("The tournament is not in progress. " +
                     "Tournament had ended or has not yet started.");
@@ -138,7 +158,7 @@ public class ChangePointsUC implements ChangePointsIB{
         this.newPoints = inputData.getNewPointsCP();
         int changedPoints = this.newPoints + this.game.getTeamPoints(this.team);
 
-        if (game.getGameStatus()){
+        if (game.getGameStatus()) {
             return this.outputBoundary.presentError("This game has already been won.");
         }
 
@@ -150,11 +170,6 @@ public class ChangePointsUC implements ChangePointsIB{
             if (!checkObserverAssigned(this.user)) {
                 return this.outputBoundary.presentError("You are not assigned to this game.");
             }
-        }
-
-        if (!checkGame(this.game)) {
-            return this.outputBoundary.presentError("The game you are trying to change points in is not " +
-                    "in the bracket.");
         }
 
         if (!validPoints(this.newPoints)) {

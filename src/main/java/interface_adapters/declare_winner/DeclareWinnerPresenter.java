@@ -6,7 +6,7 @@ import use_cases.declare_winner.*;
  *  formatting the output of the use case for the user interface. */
 public class DeclareWinnerPresenter implements DeclareWinnerOB {
 
-    private DeclareWinnerView view;
+    private final DeclareWinnerView view;
 
     public DeclareWinnerPresenter(DeclareWinnerView view) {
         this.view = view;

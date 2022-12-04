@@ -7,25 +7,27 @@ import use_cases.general_classes.perm_restriction_strategies.PermissionChecker;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/** This class is responsible for declaring the winner of a game once the game has a suitable winner available. It then
+/**
+ * This class is responsible for declaring the winner of a game once the game has a suitable winner available. It then
  * updates the information in the bracket and saves it.
  */
 public class DeclareWinnerUC implements DeclareWinnerIB {
 
+    private final BracketRepo bracketRepo;
     public Bracket bracket;
     public User user;
     public Game game;
     public DeclareWinnerOB outputBoundary;
     public DeclareWinnerGateway gateway;
-    private final BracketRepo bracketRepo;
 
-    /** Constructor for DeclareWinnerUC
+    /**
+     * Constructor for DeclareWinnerUC
      *
-     * @param outputBoundary The output boundary for this use case
-     * @param gateway The gateway for this use case
+     * @param outputBoundary    The output boundary for this use case
+     * @param gateway           The gateway for this use case
      * @param informationRecord The information record for this use case
-     * @param bracketID The ID of the bracket that the game is in
-     * @param username The username of the user that is declaring the winner
+     * @param bracketID         The ID of the bracket that the game is in
+     * @param username          The username of the user that is declaring the winner
      */
     public DeclareWinnerUC(DeclareWinnerOB outputBoundary, DeclareWinnerGateway gateway,
                            InformationRecord informationRecord, int bracketID, String username) {
@@ -41,6 +43,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
     /**
      * Checks whether the user has permission to advance a team in the bracket. By using the permission checker class.
      * Essentially a helper method for the advanceWinner method.
+     *
      * @param user The user advancing a team
      * @return True if the user has permission to advance a team in the bracket, false otherwise
      */
@@ -52,6 +55,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
 
     /**
      * Checks whether the user is the correct observer assigned to this game.
+     *
      * @param user The user advancing a team
      * @return True if the user is the correct observer assigned to this game, false otherwise
      */
@@ -65,6 +69,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
 
     /**
      * Checks whether the game is non-empty. Essentially a helper method for the advanceWinner method.
+     *
      * @param game The game to check.
      * @return True if the game is non-empty, false otherwise
      */
@@ -72,7 +77,8 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
         return game != null;
     }
 
-    /** This method is responsible for declaring the winner of a game once the game has a suitable winner available. It then
+    /**
+     * This method is responsible for declaring the winner of a game once the game has a suitable winner available. It then
      * updates the information in the bracket and saves it.
      *
      * @param game The game that the winner is being declared for
@@ -116,7 +122,7 @@ public class DeclareWinnerUC implements DeclareWinnerIB {
             return this.outputBoundary.presentError("This game does not exist.");
         }
 
-        if (this.game.getGameStatus()){
+        if (this.game.getGameStatus()) {
             return this.outputBoundary.presentError("This game has already been won.");
         }
 

@@ -1,5 +1,6 @@
 package use_cases.advance_team;
-import entities.*;
+
+import entities.BracketRepo;
 
 public class AdvanceTeamDSID {
 

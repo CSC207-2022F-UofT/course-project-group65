@@ -13,10 +13,10 @@ import interface_adapters.declare_winner.DeclareWinnerPresenter;
 import interface_adapters.end_tournament.EndTournController;
 import interface_adapters.join_team.JoinTeamController;
 import interface_adapters.log_in.LogInController;
-import interface_adapters.team_creation.TeamCreationPresenter;
-import interface_adapters.view_interfaces.main_view_interfaces.*;
 import interface_adapters.start_tournament.StartTournController;
 import interface_adapters.team_creation.TeamCreationController;
+import interface_adapters.team_creation.TeamCreationPresenter;
+import interface_adapters.view_interfaces.main_view_interfaces.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +29,7 @@ import java.util.Objects;
 public class ExtendedView extends JFrame implements ActionListener, AssignObserverView, JoinTeamViewInterface,
         TeamCreationView, AdvanceTeamView, DeclareWinnerView, ChangePointsExtendedView {
 
+    public NextScreenData nextScreenData;
     private JTabbedPane mainTabbedPane;
     private JPanel mainPanel;
     private JScrollPane pnlBracketScrollPane;
@@ -36,9 +37,9 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
     private JPanel pnlTeams;
     private JPanel pnlObserver;
     private JPanel pnlOverseer;
-    private ArrayList<JLabel> lblBracketGameScores = new ArrayList<>();
-    private ArrayList<JLabel> lblBracketGameWinner = new ArrayList<>();
-    private ArrayList<JButton> btnBracketGame = new ArrayList<>();
+    private final ArrayList<JLabel> lblBracketGameScores = new ArrayList<>();
+    private final ArrayList<JLabel> lblBracketGameWinner = new ArrayList<>();
+    private final ArrayList<JButton> btnBracketGame = new ArrayList<>();
     private JLabel lblTeamList;
     private JComboBox<String> cmbJoinTeam;
     private JButton btnJoinTeam;
@@ -59,16 +60,15 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
     private JButton btnLogOut;
     private JScrollPane teamMembers;
     private JScrollPane observerAssignments;
-    public NextScreenData nextScreenData;
     private String[][] teamMemberData;
     private String[][] observerData;
-    private EndTournController endTournController;
-    private JoinTeamController joinTeamController;
-    private StartTournController startTournController;
+    private final EndTournController endTournController;
+    private final JoinTeamController joinTeamController;
+    private final StartTournController startTournController;
 
     public ExtendedView(NextScreenData nsdata, EndTournController endTournController, StartTournController startTournController,
                         JoinTeamController joinTeamController) {
-        super ("Tournament View");
+        super("Tournament View");
         this.nextScreenData = nsdata;
         nextScreenData.bundleData();
         LinkedHashMap<Integer, ArrayList<String>> gameToTeams = nextScreenData.getGameToTeams();
@@ -92,7 +92,7 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         int currGame = gameToTeams.size();
         int index = 0;
         int numTeams = teamToPlayers.size();
-        int rounds = ((Double)(Math.log(numTeams)/Math.log(2))).intValue();
+        int rounds = ((Double) (Math.log(numTeams) / Math.log(2))).intValue();
         String scoreText = "";
         String winnerText;
         ArrayList<String> teams;
@@ -100,12 +100,12 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         pnlBracket.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(5,5,5,5);
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-        for(int i=1; i<=rounds; i++){
+        for (int i = 1; i <= rounds; i++) {
             gbc.gridx = i;
-            for(int j= ((Double)(numTeams/Math.pow(2, rounds-i))).intValue();
-                j<= Math.pow(2, rounds + 1); j+= Math.pow(2, i + 1)){
+            for (int j = ((Double) (numTeams / Math.pow(2, rounds - i))).intValue();
+                 j <= Math.pow(2, rounds + 1); j += Math.pow(2, i + 1)) {
                 gbc.gridy = j - 1;
                 pnlBracket.add(new JLabel(""), gbc);
                 teams = gameToTeams.get(currGame);
@@ -118,10 +118,9 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
                 lblBracketGameScores.add(new JLabel(scoreText));
                 gbc.gridy = j;
                 pnlBracket.add(lblBracketGameScores.get(index), gbc);
-                if(gameToWinner.containsKey(currGame) && !(gameToWinner.get(currGame) == null)){
+                if (gameToWinner.containsKey(currGame) && !(gameToWinner.get(currGame) == null)) {
                     winnerText = "Winner: " + gameToWinner.get(currGame);
-                }
-                else {
+                } else {
                     winnerText = "";
                 }
                 lblBracketGameWinner.add(new JLabel(winnerText));
@@ -131,8 +130,8 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
                 btnBracketGame.get(index).addActionListener(this);
                 gbc.gridy = j + 2;
                 pnlBracket.add(btnBracketGame.get(index), gbc);
-                currGame --;
-                index ++;
+                currGame--;
+                index++;
             }
         }
 
@@ -140,7 +139,7 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         btnCreateTeam.addActionListener(this);
         btnJoinTeam.addActionListener(this);
         //setTeams(teamToPlayers);
-        for(String team: teamToPlayers.keySet()){
+        for (String team : teamToPlayers.keySet()) {
             cmbJoinTeam.addItem(team);
         }
         cmbJoinTeam.addActionListener(this);
@@ -170,10 +169,10 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         teamMemberTable.setVisible(true);
 
         //Observer View
-        for(int gameID: gameToReferee.keySet()){
+        for (int gameID : gameToReferee.keySet()) {
             cmbSelectGame.addItem(gameID);
         }
-        for(String ref: referees){
+        for (String ref : referees) {
             cmbAssignObserver.addItem(ref);
         }
         System.out.println("Referees: " + referees);
@@ -241,14 +240,14 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         lblBracketGameScores.get(index).setText(score);
     }
 
-    public void updateWinner(int gameID, String winner){
+    public void updateWinner(int gameID, String winner) {
         int index = lblBracketGameScores.size() - gameID;
         lblBracketGameWinner.get(index).setText("Winner: " + winner);
     }
 
-    public void replaceTeam(String newTeam, String oldTeam, LinkedHashMap<Integer, ArrayList<String>> gameToTeams){
-        for(int i=0; i<cmbJoinTeam.getItemCount(); i++){
-            if(cmbJoinTeam.getItemAt(i).contains(oldTeam)){
+    public void replaceTeam(String newTeam, String oldTeam, LinkedHashMap<Integer, ArrayList<String>> gameToTeams) {
+        for (int i = 0; i < cmbJoinTeam.getItemCount(); i++) {
+            if (cmbJoinTeam.getItemAt(i).contains(oldTeam)) {
                 cmbJoinTeam.insertItemAt(newTeam, i);
                 cmbJoinTeam.removeItem(oldTeam);
                 break;
@@ -256,14 +255,14 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         }
 
         LinkedHashMap<Integer, ArrayList<String>> change = new LinkedHashMap<>();
-        for(int id: gameToTeams.keySet()){
-            if(gameToTeams.get(id).contains(newTeam)){
+        for (int id : gameToTeams.keySet()) {
+            if (gameToTeams.get(id).contains(newTeam)) {
                 change.put(id, gameToTeams.get(id));
             }
         }
 
         int numGames = lblBracketGameScores.size();
-        for(int id: change.keySet()){
+        for (int id : change.keySet()) {
             String score = lblBracketGameScores.get(numGames - id).getText();
 
             int a = score.indexOf('[');
@@ -277,13 +276,13 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
             }
 
             String winner = lblBracketGameWinner.get(numGames - id).getText();
-            if(!winner.equals("") && winner.contains(oldTeam)){
+            if (!winner.equals("") && winner.contains(oldTeam)) {
                 lblBracketGameWinner.get(numGames - id).setText("Winner: " + newTeam);
             }
         }
     }
 
-    public void updateTeamMembers(LinkedHashMap<String, ArrayList<String>> teamToPlayers){
+    public void updateTeamMembers(LinkedHashMap<String, ArrayList<String>> teamToPlayers) {
         String[] column = {"Team Name", "Team Members"};
         this.teamMemberData = new String[teamToPlayers.size()][nextScreenData.getMaxTeamSize(nextScreenData.getCurrentBracketID())];
         int index1 = 0;
@@ -308,7 +307,7 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         teamMemberTable.setVisible(true);
     }
 
-    public void updateObserverAssignments(LinkedHashMap<Integer, String> gameToReferee){
+    public void updateObserverAssignments(LinkedHashMap<Integer, String> gameToReferee) {
         String[] obsColumn = {"Game", "Observer"};
         this.observerData = new String[gameToReferee.size()][2];
         int index2 = 0;
@@ -331,20 +330,18 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnOptions){
+        if (e.getSource() == btnOptions) {
             nextScreenData.setCurrentUser(nextScreenData.getCurrentUser());
             OptionsScreen optionsScreen = new OptionsScreen(nextScreenData);
             this.dispose();
             optionsScreen.setVisible(true);
-        }
-        else if(e.getSource() == btnLogOut){
+        } else if (e.getSource() == btnLogOut) {
             CreateAccountController createAccountController = new CreateAccountController(nextScreenData.getInformationRecord());
             LogInController logInController = new LogInController(nextScreenData.getInformationRecord());
             HomeScreen homeScreen = new HomeScreen(createAccountController, logInController, nextScreenData);
             this.dispose();
             homeScreen.setVisible(true);
-        }
-        else if(e.getSource() == btnCreateTeam){
+        } else if (e.getSource() == btnCreateTeam) {
             TeamCreationPresenter teamCreationPresenter = new TeamCreationPresenter(this);
             TeamCreationController controller = new TeamCreationController(teamCreationPresenter,
                     nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
@@ -352,22 +349,19 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
             inputScreen.setVisible(true);
             this.nextScreenData.bundleData();
             cmbJoinTeam.removeAllItems();
-            for(String team: nextScreenData.getTeamToPlayers().keySet()) {
+            for (String team : nextScreenData.getTeamToPlayers().keySet()) {
                 cmbJoinTeam.addItem(team);
             }
-        }
-        else if(e.getSource() == btnJoinTeam){
+        } else if (e.getSource() == btnJoinTeam) {
             String teamName = (String) cmbJoinTeam.getSelectedItem();
             try {
                 joinTeamController.setPresenterView(this);
                 joinTeamController.joinTeam(teamName);
-            }
-            catch (Exception exception) {
-                System.out.println( "Error: " + exception);
+            } catch (Exception exception) {
+                System.out.println("Error: " + exception);
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
-        }
-        else if(e.getSource() == btnAssignObserver){
+        } else if (e.getSource() == btnAssignObserver) {
             try {
                 int gameID = (Integer) cmbSelectGame.getSelectedItem();
                 String assignee = (String) cmbAssignObserver.getSelectedItem();
@@ -375,12 +369,10 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
                         nextScreenData.getCurrentUser());
                 controller.setPresenterView(this);
                 controller.assignObserver(assignee, gameID);
-            }
-            catch(RuntimeException rex ) {
+            } catch (RuntimeException rex) {
                 JOptionPane.showMessageDialog(this, rex.getMessage());
             }
-        }
-        else if(e.getSource() == btnStart){
+        } else if (e.getSource() == btnStart) {
             ArrayList<String> startErrors = startTournController.startTourn();
             StartErrors errorView = new StartErrors(this.startTournController);
             for (String error : startErrors) {
@@ -395,13 +387,11 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
                 }
             }
             errorView.setVisible(true);
-        }
-        else if(e.getSource() == btnEnd){
+        } else if (e.getSource() == btnEnd) {
             try {
                 endTournController.endTourn();
                 JOptionPane.showMessageDialog(this, "Tournament Ended");
-            }
-            catch (Exception exception) {
+            } catch (Exception exception) {
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
         }
@@ -416,12 +406,12 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         ChangePointsController changePointsController = new ChangePointsController(changePointsPresenter, nextScreenData.getInformationRecord(),
                 nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
 
-        for(int i=0; i<btnBracketGame.size(); i++){
-            if (e.getSource() == btnBracketGame.get(i)){
+        for (int i = 0; i < btnBracketGame.size(); i++) {
+            if (e.getSource() == btnBracketGame.get(i)) {
                 DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
                         declareWinnerController, changePointsController, this, nextScreenData);
-                doBracketOperations.setGameForOperation(btnBracketGame.size()-i);
-                doBracketOperations.setGameNumLabel("Game " + (btnBracketGame.size()-i));
+                doBracketOperations.setGameForOperation(btnBracketGame.size() - i);
+                doBracketOperations.setGameNumLabel("Game " + (btnBracketGame.size() - i));
                 doBracketOperations.setTeamsLabel(lblBracketGameScores.get(i).getText());
                 doBracketOperations.setVisible(true);
                 break;

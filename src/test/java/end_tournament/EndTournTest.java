@@ -1,7 +1,10 @@
+package end_tournament;
+
 import entities.*;
 import interface_adapters.data_interface_adapters.end_tournament_data.EndTournFileWriter;
 import interface_adapters.end_tournament.EndTournFailed;
 import interface_adapters.end_tournament.EndTournPresenter;
+import org.junit.After;
 import org.junit.Test;
 import use_cases.end_tournament.*;
 import use_cases.general_classes.InformationRecord;
@@ -110,6 +113,12 @@ public class EndTournTest {
 
         Exception exception = assertThrows(EndTournFailed.class, interactor::endTourn);
         assertEquals("This round is not the final round.", exception.getMessage());
+    }
+
+    @After
+    public void tearDown(){
+        java.io.File file = new java.io.File("filename.txt");
+        boolean deletion = file.delete();
     }
 
 }

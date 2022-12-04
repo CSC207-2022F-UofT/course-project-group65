@@ -1,7 +1,10 @@
+package create_bracket;
+
 import entities.*;
 import interface_adapters.create_bracket.CreateBracketFailed;
 import interface_adapters.create_bracket.CreateBracketPresenter;
 import interface_adapters.data_interface_adapters.create_bracket_data.CreateBracketFileWriter;
+import org.junit.After;
 import org.junit.Test;
 import use_cases.create_bracket.*;
 import use_cases.general_classes.InformationRecord;
@@ -93,5 +96,16 @@ public class CreateBracketTest {
         Exception exception = assertThrows(CreateBracketFailed.class, () ->
                 interactor.create(createBracketID));
         assertEquals("Please enter a name for your bracket.", exception.getMessage());
+    }
+
+    @After
+    public void tearDown() {
+        // Delete the files created by the tests
+        String accountsFile = "filename1.txt";
+        String bracketsFile = "filename2.txt";
+        java.io.File accounts = new java.io.File(accountsFile);
+        java.io.File brackets = new java.io.File(bracketsFile);
+        boolean deletion1 = accounts.delete();
+        boolean deletion2 = brackets.delete();
     }
 }

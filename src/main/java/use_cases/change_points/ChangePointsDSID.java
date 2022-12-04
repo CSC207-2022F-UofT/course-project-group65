@@ -11,6 +11,7 @@ public class ChangePointsDSID {
 
     /**
      * Constructor for the ChangePointsDSID class.
+     *
      * @param updatedBracketRepo the updated bracket repo
      */
     public ChangePointsDSID(BracketRepo updatedBracketRepo) {
@@ -19,6 +20,7 @@ public class ChangePointsDSID {
 
     /**
      * Getter for the updated bracket repo.
+     *
      * @return the updated bracket repo
      */
     public BracketRepo getUpdatedBracketRepoCP() {
