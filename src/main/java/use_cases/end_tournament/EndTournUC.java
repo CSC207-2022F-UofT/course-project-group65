@@ -12,29 +12,42 @@ import java.util.Objects;
  * It connects and uses many of the classes used in this package.
  * Implements the EndTournIB to allow the controller to call the endTourn method.
  */
-public class EndTournUC implements EndTournIB{
-    /** The output boundary */
+public class EndTournUC implements EndTournIB {
+    /**
+     * The output boundary
+     */
     private final EndTournOB outputBoundary;
 
-    /** The bracket repository to update the current bracket */
+    /**
+     * The bracket repository to update the current bracket
+     */
 
     private final BracketRepo brackets;
-    /** The bracket id to access the current bracket (tournament)*/
+    /**
+     * The bracket id to access the current bracket (tournament)
+     */
     private final int bracketId;
-    /** The current bracket */
+    /**
+     * The current bracket
+     */
     private final Bracket bracket;
-    /** The User who wants to start a tournament */
+    /**
+     * The User who wants to start a tournament
+     */
     private final User user;
-    /** The gateway to access the database to store info */
+    /**
+     * The gateway to access the database to store info
+     */
     private final EndTournGateway gateway;
 
     /**
      * Creates a new EndTournUC object.
-     * @param outputBoundary The output boundary
-     * @param currentUser The username of the current user ending the tournament
+     *
+     * @param outputBoundary    The output boundary
+     * @param currentUser       The username of the current user ending the tournament
      * @param informationRecord The information record containing the account and bracket repositories
-     * @param bracketId The bracket id
-     * @param gateway The gateway to access the database to store the info
+     * @param bracketId         The bracket id
+     * @param gateway           The gateway to access the database to store the info
      */
     public EndTournUC(EndTournOB outputBoundary, String currentUser, InformationRecord informationRecord,
                       int bracketId, EndTournGateway gateway) {
@@ -50,6 +63,7 @@ public class EndTournUC implements EndTournIB{
 
     /**
      * Checks if the user is an Overseer.
+     *
      * @return true if and only if the user is an Overseer.
      */
     public boolean checkUserRole() {
@@ -59,6 +73,7 @@ public class EndTournUC implements EndTournIB{
 
     /**
      * Checks if the final game has ended.
+     *
      * @return true if and only if the final game has ended.
      */
     public boolean checkGame() {
@@ -68,6 +83,7 @@ public class EndTournUC implements EndTournIB{
 
     /**
      * Checks if there is a final winner.
+     *
      * @return true if and only if there is a final winner.
      */
     public boolean checkFinalWinner() {
@@ -76,6 +92,7 @@ public class EndTournUC implements EndTournIB{
 
     /**
      * The main endTourn method.
+     *
      * @return the output data to be used in determining whether to present a success or error view.
      */
     @Override
@@ -98,7 +115,7 @@ public class EndTournUC implements EndTournIB{
 
         try {
             this.gateway.save(dataStoreID);
-        } catch (Exception e){
+        } catch (Exception e) {
             return this.outputBoundary.presentError("Error saving to database.");
         }
         EndTournOD outputData = new EndTournOD();

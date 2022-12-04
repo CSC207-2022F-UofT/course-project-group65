@@ -23,7 +23,8 @@ public class StartTournController {
         StartTournOD output = userInput.startTourn();
         return output.getErrors();
     }
-    public void start(){
+
+    public void start() {
         userInput.start();
     }
 }
