@@ -11,9 +11,9 @@ import java.util.LinkedHashMap;
 
 public class JoinTeamOD {
     /** The success massage for the user */
-    private String success;
+    private final String success;
     /** The list of membersNames in the team */
-    private ArrayList<String> membersNames;
+    private final ArrayList<String> membersNames;
     /** Used to update the corresponding team members list in the bracketView screen*/
     private final LinkedHashMap<String, ArrayList<String>> teamToPlayers;
 
@@ -29,7 +29,7 @@ public class JoinTeamOD {
         this.teamToPlayers = teamToPlayers;
     }
 
-    /** The getter and setter methods*/
+    /** The getter methods*/
     public LinkedHashMap<String, ArrayList<String>> getTeamToPlayers() {
         return teamToPlayers;
     }
@@ -38,11 +38,5 @@ public class JoinTeamOD {
         return this.success;
     }
     public ArrayList<String> getMembersNames() {return this.membersNames;}
-
-    public void setSuccess(String success){
-        this.success = success;
-    }
-
-    public void setMembersNames(ArrayList<String> membersNames) {this.membersNames = membersNames;}
 
 }
