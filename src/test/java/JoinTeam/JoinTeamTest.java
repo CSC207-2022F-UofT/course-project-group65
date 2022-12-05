@@ -14,10 +14,10 @@ import entities.*;
 import use_cases.general_classes.InformationRecord;
 import use_cases.join_team.*;
 
-
+/** This tests if a player can join an existed team with the input data teamName
+ */
 public class JoinTeamTest {
-    /** This tests if a player can join an existed team with the input data teamName
-     */
+
     @Test
     public void testJoinATeam() {
         JoinTeamGateway gateway = new JoinTeamFileWriter("tests.txt");
