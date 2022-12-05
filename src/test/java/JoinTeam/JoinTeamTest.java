@@ -1,20 +1,20 @@
 package JoinTeam;
 
+import entities.*;
 import interface_adapters.data_interface_adapters.join_team_data.JoinTeamFileWriter;
 import interface_adapters.join_team.JoinTeamFailed;
 import interface_adapters.join_team.JoinTeamPresenter;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import entities.*;
-
 import use_cases.general_classes.InformationRecord;
 import use_cases.join_team.*;
 
-/** This tests if a player can join an existed team with the input data teamName
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+/**
+ * This tests if a player can join an existed team with the input data teamName
  */
 public class JoinTeamTest {
 
@@ -54,9 +54,11 @@ public class JoinTeamTest {
         assertEquals("You have been successfully joined the team ", success);
     }
 
-    /** This tests the team exists check in the use case */
+    /**
+     * This tests the team exists check in the use case
+     */
     @Test
-    public void testTeamExistence(){
+    public void testTeamExistence() {
         JoinTeamGateway gateway = new JoinTeamFileWriter("tests.txt");
 
         AccountRepo newAR = new AccountRepo();
@@ -97,9 +99,12 @@ public class JoinTeamTest {
         assertTrue(existence1);
         assertFalse(existence2);
     }
-    /** This tests the player is already in a team, and he still wants to join a team */
+
+    /**
+     * This tests the player is already in a team, and he still wants to join a team
+     */
     @Test
-    public void testAlreadyInTeam(){
+    public void testAlreadyInTeam() {
         JoinTeamGateway gateway = new JoinTeamFileWriter("tests.txt");
 
         AccountRepo newAR = new AccountRepo();
@@ -131,9 +136,11 @@ public class JoinTeamTest {
         assertEquals("Fail to join the team (You are already in a team)", exception.getMessage());
     }
 
-    /** This tests the user who is not a player wants to join a team */
+    /**
+     * This tests the user who is not a player wants to join a team
+     */
     @Test
-    public void joinNotAPlayer(){
+    public void joinNotAPlayer() {
         JoinTeamGateway gateway = new JoinTeamFileWriter("tests.txt");
 
         AccountRepo newAR = new AccountRepo();
@@ -168,9 +175,12 @@ public class JoinTeamTest {
                 joinTeamUC.joinTeam(inputData));
         assertEquals("Fail to join the team (Only player can join the team)", exception.getMessage());
     }
-    /** This tests the user wants to join a team which is already full*/
+
+    /**
+     * This tests the user wants to join a team which is already full
+     */
     @Test
-    public void joinFullTeam(){
+    public void joinFullTeam() {
         JoinTeamGateway gateway = new JoinTeamFileWriter("tests.txt");
 
         AccountRepo newAR = new AccountRepo();
