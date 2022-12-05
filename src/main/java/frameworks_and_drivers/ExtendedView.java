@@ -86,6 +86,11 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         lblTournamentID.setText("ID: " + nextScreenData.getCurrentBracketID());
         btnOptions.addActionListener(this);
         btnLogOut.addActionListener(this);
+        mainTabbedPane.setVisible(true);
+        pnlOverseer.setVisible(true);
+        pnlObserver.setVisible(true);
+        pnlTeams.setVisible(true);
+        pnlBracketScrollPane.setVisible(true);
 
         //Set up the Bracket View
         pnlBracket.setLayout(new GridBagLayout());
@@ -383,6 +388,9 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
             }
         } else if (e.getSource() == btnAssignObserver) {
             try {
+                if(cmbSelectGame.getSelectedItem() == null){
+                    JOptionPane.showMessageDialog(this, "Select a game to assign an observer to.");
+                }
                 int gameID = (Integer) cmbSelectGame.getSelectedItem();
                 String assignee = (String) cmbAssignObserver.getSelectedItem();
                 AssignObserverController controller = new AssignObserverController(nextScreenData.getInformationRecord(),

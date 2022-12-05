@@ -1,10 +1,7 @@
 package interface_adapters.advance_team;
 import interface_adapters.data_interface_adapters.advance_team_data.AdvanceTeamFileWriter;
-import interface_adapters.view_interfaces.main_view_interfaces.AdvanceTeamView;
 import use_cases.advance_team.*;
 import use_cases.general_classes.InformationRecord;
-
-import java.util.ArrayList;
 
 /**
  * This class is the controller for the AdvanceTeam use case.
@@ -29,6 +26,6 @@ public class AdvanceTeamController {
     /** This method is responsible for the communication between the user and the use case. */
     public void create(int gameID){
         AdvanceTeamID inputData = new AdvanceTeamID(gameID);
-        AdvanceTeamOD outputData = userInput.advanceWinner(inputData);
+        userInput.advanceWinner(inputData);
     }
 }

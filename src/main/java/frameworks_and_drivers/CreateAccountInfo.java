@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CreateAccountInfo extends JFrame implements ActionListener{
-
     private JLabel lbUsername;
     private JLabel lbPassword;
     private JTextField tfUsername;
@@ -35,6 +34,8 @@ public class CreateAccountInfo extends JFrame implements ActionListener{
 
         btSubmit.addActionListener(this);
         backBtn.addActionListener(this);
+        lbUsername.setVisible(true);
+        lbPassword.setVisible(true);
     }
 
     @Override

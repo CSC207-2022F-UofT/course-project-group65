@@ -34,6 +34,9 @@ public class LogInInfo extends JFrame implements ActionListener{
 
         btSubmit.addActionListener(this);
         backButton.addActionListener(this);
+
+        lbUsername.setVisible(true);
+        lbPassword.setVisible(true);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
