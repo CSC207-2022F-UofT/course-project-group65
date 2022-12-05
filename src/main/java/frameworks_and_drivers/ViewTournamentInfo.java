@@ -6,6 +6,7 @@ import interface_adapters.join_team.JoinTeamController;
 import interface_adapters.start_tournament.StartTournController;
 import interface_adapters.view_tournament.ViewTournamentController;
 import interface_adapters.view_tournament.ViewTournamentFailed;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,7 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
     private JButton btSubmit;
     private JLabel lbTournamentID;
     private JComboBox<Integer> tournamentIDs;
+    private JButton goBackButton;
     private final ViewTournamentController CONTROLLER;
     private final NextScreenData NEXT_SCREEN_DATA;
 
@@ -27,6 +29,7 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
         setSize(450, 300);
         setVisible(true);
         btSubmit.addActionListener(this);
+        goBackButton.addActionListener(this);
         setContentPane(viewTournament);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -39,30 +42,38 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        try {
-            int tournID = tournamentIDs.getItemAt(tournamentIDs.getSelectedIndex());
-            CONTROLLER.setPresenterData(NEXT_SCREEN_DATA);
-            CONTROLLER.viewTournament(tournID);
-            EndTournController endTournController = new EndTournController(NEXT_SCREEN_DATA.getCurrentUser(),
-                    NEXT_SCREEN_DATA.getInformationRecord(), NEXT_SCREEN_DATA.getCurrentBracketID());
-            StartTournController startTournController = new StartTournController(NEXT_SCREEN_DATA.getCurrentUser(),
-                    NEXT_SCREEN_DATA.getInformationRecord(), NEXT_SCREEN_DATA.getCurrentBracketID());
-            JoinTeamController joinTeamController = new JoinTeamController(NEXT_SCREEN_DATA.getInformationRecord(),
-                    NEXT_SCREEN_DATA.getCurrentBracketID(), NEXT_SCREEN_DATA.getCurrentUser());
-            NEXT_SCREEN_DATA.bundleData();
-            ExtendedView view = new ExtendedView(NEXT_SCREEN_DATA, endTournController, startTournController,
-                    joinTeamController);
-            dispose();
-            view.setVisible(true);
+        if (ae.getSource() == btSubmit){
+            try {
+                int tournID = tournamentIDs.getItemAt(tournamentIDs.getSelectedIndex());
+                CONTROLLER.setPresenterData(NEXT_SCREEN_DATA);
+                CONTROLLER.viewTournament(tournID);
+                EndTournController endTournController = new EndTournController(NEXT_SCREEN_DATA.getCurrentUser(),
+                        NEXT_SCREEN_DATA.getInformationRecord(), NEXT_SCREEN_DATA.getCurrentBracketID());
+                StartTournController startTournController = new StartTournController(NEXT_SCREEN_DATA.getCurrentUser(),
+                        NEXT_SCREEN_DATA.getInformationRecord(), NEXT_SCREEN_DATA.getCurrentBracketID());
+                JoinTeamController joinTeamController = new JoinTeamController(NEXT_SCREEN_DATA.getInformationRecord(),
+                        NEXT_SCREEN_DATA.getCurrentBracketID(), NEXT_SCREEN_DATA.getCurrentUser());
+                NEXT_SCREEN_DATA.bundleData();
+                ExtendedView view = new ExtendedView(NEXT_SCREEN_DATA, endTournController, startTournController,
+                        joinTeamController);
+                dispose();
+                view.setVisible(true);
+            }
+            catch (NullPointerException e){
+                JOptionPane.showMessageDialog(this, "No tournament selected");
+            }
+            catch (NumberFormatException nex){
+                JOptionPane.showMessageDialog(this, "Tournament ID is an integer.");
+            }
+            catch (ViewTournamentFailed ex){
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+        } else if (ae.getSource() == goBackButton) {
+            NEXT_SCREEN_DATA.setCurrentUser(NEXT_SCREEN_DATA.getCurrentUser());
+            OptionsScreen optionsScreen = new OptionsScreen(NEXT_SCREEN_DATA);
+            this.dispose();
+            optionsScreen.setVisible(true);
         }
-        catch (NullPointerException e){
-            JOptionPane.showMessageDialog(this, "No tournament selected");
-        }
-        catch (NumberFormatException nex){
-            JOptionPane.showMessageDialog(this, "Tournament ID is an integer.");
-        }
-        catch (ViewTournamentFailed ex){
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
+
     }
 }
