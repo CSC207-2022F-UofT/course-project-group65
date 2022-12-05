@@ -1,4 +1,4 @@
-package JoinTeam;
+package join_team;
 
 import entities.*;
 import interface_adapters.data_interface_adapters.join_team_data.JoinTeamFileWriter;
@@ -8,10 +8,12 @@ import org.junit.Test;
 import use_cases.general_classes.InformationRecord;
 import use_cases.join_team.*;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This tests if a player can join an existed team with the input data teamName
@@ -44,14 +46,31 @@ public class JoinTeamTest {
         joiner.setBracketRole(1, "Player");
         newTeam.addTeamMember(creator);
 
-        JoinTeamOB outputBoundary = new JoinTeamPresenter();
+        JoinTeamOB outputBoundary = new JoinTeamPresenter(){
+            @Override
+            public JoinTeamOD SuccessView(JoinTeamOD outputData) {
+                ArrayList<String> expected = new ArrayList<>();
+                expected.add("t1");
+                expected.add("t2");
+                LinkedHashMap<String, ArrayList<String>> gr = new LinkedHashMap<>();
+                gr.put("team1", expected );
+
+                assertEquals(expected,outputData.getMembersNames());
+                assertEquals(gr, outputData.getTeamToPlayers());
+                return null;
+            }
+
+            @Override
+            public JoinTeamOD FailView(String errorMessage) {
+                fail("Use case failure is unexpected.");
+                return null;
+            }
+        };
         InformationRecord newInfoRec = new InformationRecord(newAR, newBR);
         JoinTeamUC joinTeamUC = new JoinTeamUC(outputBoundary, gateway, "t2", 1, newInfoRec);
         JoinTeamID inputData = new JoinTeamID("team1");
 
-        String success = joinTeamUC.join(inputData);
-
-        assertEquals("You have been successfully joined the team ", success);
+        joinTeamUC.joinTeam(inputData);
     }
 
     /**

@@ -9,7 +9,7 @@ import use_cases.join_team.JoinTeamOD;
  * A class for the Presenter of the join team use case.
  */
 public class JoinTeamPresenter implements JoinTeamOB {
-    JoinTeamViewInterface view;
+    public JoinTeamViewInterface view;
 
     public void setView(JoinTeamViewInterface view) {
         this.view = view;
@@ -23,7 +23,7 @@ public class JoinTeamPresenter implements JoinTeamOB {
      */
     @Override
     public JoinTeamOD SuccessView(JoinTeamOD outputData) {
-        view.updateTeamMembers(outputData.getTeamToPlayers());
+        this.view.updateTeamMembers(outputData.getTeamToPlayers());
         return outputData;
     }
 
