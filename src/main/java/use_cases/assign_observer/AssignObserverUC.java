@@ -35,14 +35,6 @@ public class AssignObserverUC implements AssignObserverIB {
         }
         User ref = findReferee(bracket, input.getAssignee());
         Game game = bracket.getGame(input.getGameID());
-//        Game game;
-//        if (bracket instanceof DefaultBracket){
-//            GameFinder<DefaultBracket> gameFinder = new TreeGameFinder<>();
-//            game = gameFinder.getGame(input.getGameID(), this.bracket.getFinalGame());
-//        } else {
-//            GameFinder<Bracket> gameFinder = new GeneralisedGameFinder<>();
-//            game = gameFinder.getGame(input.getGameID(), this.bracket.getFinalGame());
-//        }
 
         if (ref == null){
             return outputBound.prepareFailView("Assignee is not an Observer.");
