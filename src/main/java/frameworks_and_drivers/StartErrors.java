@@ -15,7 +15,7 @@ public class StartErrors extends JFrame implements ActionListener {
     private JLabel warning3;
     private JLabel warning4;
     private JPanel mainPanel;
-    private StartTournController startTournController;
+    private final StartTournController startTournController;
 
     public StartErrors(StartTournController startTournController) {
         super("Start Tournament");

@@ -15,7 +15,6 @@ import java.awt.event.ActionListener;
  * creation use case once the create button is clicked.
  */
 public class UserInput extends JFrame implements ActionListener {
-    private JLabel TeamName;
     /** This is the text field that takes in a team name from the user  */
     private JTextField tfTeamName;
     /** This is the button that the user clicks when they finish */
