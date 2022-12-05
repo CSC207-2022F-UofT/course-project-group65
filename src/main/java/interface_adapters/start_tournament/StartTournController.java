@@ -15,6 +15,8 @@ public class StartTournController {
 
 
     /**
+     * Creates a new StartTournController object.
+     *
      * @param username          The name of the User who attempts to start the tournament
      * @param informationRecord The class that includes both the BracketRepo and AccountRepo
      * @param bracketId         The bracket ID

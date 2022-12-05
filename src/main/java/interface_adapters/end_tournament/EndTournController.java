@@ -11,8 +11,10 @@ public class EndTournController {
     final EndTournIB userInput;
 
     /**
+     * Creates a new EndTournController object.
+     *
      * @param username          The name of the User who attempts to end the tournament.
-     * @param informationRecord The class that includes both the BracketRepo and AccountRepo
+     * @param informationRecord The class that stores both the BracketRepo and AccountRepo
      * @param bracketId         The bracket ID
      */
     public EndTournController(String username, InformationRecord informationRecord, int bracketId) {

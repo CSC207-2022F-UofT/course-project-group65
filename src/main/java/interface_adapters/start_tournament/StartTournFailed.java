@@ -1,7 +1,7 @@
 package interface_adapters.start_tournament;
 
 /**
- * A class for the output data of the start tournament use case.
+ * A class for the fail view of the start tournament use case.
  */
 public class StartTournFailed extends RuntimeException {
     /**
