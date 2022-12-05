@@ -5,7 +5,7 @@ import java.util.HashMap;
 /** This Bracket repository class is for storing all the brackets*/
 public class BracketRepo implements Serializable {
     /** The hashmap to store all the brackets*/
-    private HashMap<Integer, Bracket> brackets;
+    private final HashMap<Integer, Bracket> brackets;
     /** Creat a new hashmap called brackets */
     public BracketRepo() {
         brackets = new HashMap<Integer, Bracket>();

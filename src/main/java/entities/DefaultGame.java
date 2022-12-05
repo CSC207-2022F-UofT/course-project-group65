@@ -2,7 +2,6 @@ package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 /** This class represents the default game */
 public class DefaultGame implements Game, Serializable {
@@ -13,7 +12,7 @@ public class DefaultGame implements Game, Serializable {
     /** An int variable for number of teams */
     private int numTeams;
     /** The linkedhashmap for teams */
-    private LinkedHashMap<Team, Integer> teams;
+    private final LinkedHashMap<Team, Integer> teams;
     /** A user - Observer */
     private User observer;
     /** The winner team of a game*/

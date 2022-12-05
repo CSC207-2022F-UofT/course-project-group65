@@ -1,7 +1,5 @@
 package entities;
 
-import entities.Game;
-import entities.Team;
 
 import java.util.List;
 
