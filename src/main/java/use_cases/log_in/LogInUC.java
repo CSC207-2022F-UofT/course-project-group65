@@ -36,7 +36,7 @@ public class LogInUC implements LogInIB{
     public LogInOD logIn(LogInID requestModel) {
         if (usernameExists(requestModel, data) && passwordMatch(requestModel.getUsername(), requestModel.getPassword(), data)) {
             data.getUser(requestModel.getUsername());
-            return userLogInOB.prepareSuccessView(new LogInOD(requestModel.getUsername(), data, bracketData));
+            return userLogInOB.prepareSuccessView(new LogInOD(requestModel.getUsername()));
 
         } else {
             return userLogInOB.prepareFailView("username and/or password is incorrect");
