@@ -15,10 +15,4 @@ public class teamCreationID {
     public String getTeamName(){
         return this.teamName;
     }
-
-    public void setTeamName(String teamName){
-        this.teamName = teamName;
-    }
-
-
 }
