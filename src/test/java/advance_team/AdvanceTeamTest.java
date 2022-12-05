@@ -10,11 +10,11 @@ import use_cases.general_classes.InformationRecord;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/** This is the test class for advanceTeam use case*/
 public class AdvanceTeamTest {
-
+    /** The informationRecord variable used to record all the information */
     InformationRecord info;
-
+    /** This method is for setting up all the information needed for testing in the bracket */
     @Before
     public void setup(){
         User overseer = new DefaultUser();
@@ -99,7 +99,8 @@ public class AdvanceTeamTest {
         info = new InformationRecord(accounts, brackets);
         //System.out.println(info);
     }
-
+    /** This method tests when the game is in the final round, whether the output will be correct
+     * for the user wants to advance a team */
     @Test
     public void testGameInFinalRound(){
         AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamDummyFileWriter();
@@ -122,6 +123,8 @@ public class AdvanceTeamTest {
 
     }
 
+    /** This method tests when the user has no permission to advance a team, whether the output will be correct
+     * for the user wants to advance a team */
     @Test
     public void testUserHasNoPermission(){
         AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamDummyFileWriter();
@@ -144,6 +147,8 @@ public class AdvanceTeamTest {
         assertEquals("You do not have permission to advance this team.", exception.getMessage());
     }
 
+    /** This method tests when the game is not finished, whether the output will be correct
+     * for the user wants to advance a team */
     @Test
     public void testGameNotFinished(){
         AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamDummyFileWriter();
@@ -166,6 +171,8 @@ public class AdvanceTeamTest {
         assertEquals("This game has not been completed.", exception.getMessage());
     }
 
+    /** This method tests when the wrong observer wants to advance a team, whether the output will be correct
+     */
     @Test
     public void testWrongObserver(){
         AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamDummyFileWriter();
@@ -188,6 +195,8 @@ public class AdvanceTeamTest {
         assertEquals("You are not assigned to this game.", exception.getMessage());
     }
 
+    /** This method tests when the game does not exist, whether the output will be correct
+     * for the user wants to advance a team */
     @Test
     public void testGameDNE(){
         AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamDummyFileWriter();
@@ -210,6 +219,8 @@ public class AdvanceTeamTest {
         assertEquals("This game does not exist.", exception.getMessage());
     }
 
+    /** This method tests when the game is not completed, whether the output will be correct
+     * for the user wants to advance a team */
     @Test
     public void testGameNotCompleted(){
         AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamDummyFileWriter();
@@ -231,7 +242,7 @@ public class AdvanceTeamTest {
         Exception exception = assertThrows(AdvanceTeamFailed.class, () -> interactor.advanceWinner(input));
         assertEquals("This game has not been completed.", exception.getMessage());
     }
-
+    /** This method tests if all the checker passed, whether we can advance a team successfully */
     @Test
     public void testSuccessfulAdvanceGame(){
         AdvanceTeamGateway advanceTeamGateway = new AdvanceTeamDummyFileWriter();
