@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class BundleBracketData {
-    private LinkedHashMap<Integer, ArrayList<String>> gameToTeams;
-    private LinkedHashMap<Integer, ArrayList<Integer>> gameToScores;
-    private LinkedHashMap<Integer, String> gameToWinner;
-    private LinkedHashMap<String, ArrayList<String>> teamToPlayers;
-    private ArrayList<String> referees;
-    private LinkedHashMap<Integer, String> gameToReferee;
-    private LinkedHashMap<String, String> roleToInvite;
+    private final LinkedHashMap<Integer, ArrayList<String>> gameToTeams;
+    private final LinkedHashMap<Integer, ArrayList<Integer>> gameToScores;
+    private final LinkedHashMap<Integer, String> gameToWinner;
+    private final LinkedHashMap<String, ArrayList<String>> teamToPlayers;
+    private final ArrayList<String> referees;
+    private final LinkedHashMap<Integer, String> gameToReferee;
+    private final LinkedHashMap<String, String> roleToInvite;
     int tournamentID;
     String tournamentName;
 
