@@ -69,7 +69,6 @@ public class AdvanceTeamTest {
         gameRight.setGameID(3);
         gameRight.setGameRound(1);
         gameRight.setGameStatus(false);
-        //gameRight.setWinner(team3);
         gameRight.setTeam(team3, 0);
         gameRight.setTeam(team4, 0);
         headGame.setPrevGame2(gameRight);
