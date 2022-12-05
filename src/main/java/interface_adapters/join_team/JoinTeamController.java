@@ -6,11 +6,14 @@ import interface_adapters.view_interfaces.main_view_interfaces.JoinTeamViewInter
 import use_cases.general_classes.InformationRecord;
 import use_cases.join_team.*;
 
+import java.util.ArrayList;
+
 /**
  * A class for the Controller of the join team use case.
  */
 public class JoinTeamController {
     final JoinTeamIB input;
+    public ArrayList<String> membersNames;
     JoinTeamPresenter presenter;
     /**
      * Creates a new JoinTeamController object
@@ -35,6 +38,7 @@ public class JoinTeamController {
      */
     public void joinTeam(String teamName){
         JoinTeamID inputData = new JoinTeamID(teamName);
-        input.joinTeam(inputData);
+        JoinTeamOD outputData = input.joinTeam(inputData);
+        this.membersNames = outputData.getMembersNames();
     }
 }

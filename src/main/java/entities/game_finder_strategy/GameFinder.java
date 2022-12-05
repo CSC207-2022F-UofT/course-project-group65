@@ -2,7 +2,6 @@ package entities.game_finder_strategy;
 
 import entities.Game;
 
-import java.util.ArrayList;
 
 /**
  * This interface represents a game finder.

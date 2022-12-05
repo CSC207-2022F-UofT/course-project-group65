@@ -1,6 +1,5 @@
 package entities;
 
-import entities.Team;
 
 /** An interface for a team factory.
  * It is part of the factory design pattern, and in our program is implemented
