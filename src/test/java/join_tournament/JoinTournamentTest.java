@@ -13,10 +13,11 @@ import java.util.LinkedHashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/** This is the test class for joinTournament use case*/
 public class JoinTournamentTest {
+    /** An instance of InformationRecord used to record all the information */
     InformationRecord info;
-
+    /** This method is for setting up all the information needed for testing in the bracket */
     @Before
     public void setup(){
         User user = new DefaultUser();
@@ -57,6 +58,7 @@ public class JoinTournamentTest {
         info = new InformationRecord(accounts, brackets);
     }
 
+    /** This tests that an exception is thrown if the user enters an invalid invite */
     @Test
     public void joinTournamentInvalidFormat(){
         JoinTournamentGateway testGateway = new JoinTournInMemoryBracket();
@@ -81,7 +83,8 @@ public class JoinTournamentTest {
                 interactor.joinBracket(inputData));
         assertEquals("Invalid invite format.", exception.getMessage());
     }
-
+    /** This tests that an exception is thrown if the user trys to join as a role that does not exist within
+     * the tournament */
     @Test
     public void joinTournamentRoleDNE(){
         JoinTournamentGateway testGateway = new JoinTournInMemoryBracket();
@@ -107,6 +110,7 @@ public class JoinTournamentTest {
         assertEquals("Role does not exist within tournament.", exception.getMessage());
     }
 
+    /** This tests that an exception is thrown if the user trys to join a tournament that does not exist*/
     @Test
     public void joinTournamentDNE(){
 
@@ -134,6 +138,8 @@ public class JoinTournamentTest {
         assertEquals("Tournament does not exist.", exception.getMessage());
     }
 
+    /** This tests that an exception is thrown if the user trys to join a tournament that he/she
+     * has already joined previously*/
     @Test
     public void joinTournamentPreviouslyJoined(){
 
@@ -164,6 +170,7 @@ public class JoinTournamentTest {
         assertEquals("You have already joined this tournament.", exception.getMessage());
     }
 
+    /** This tests that a user can successfully join as a player given that he/she enter a valid invite*/
     @Test
     public void joinTournamentPlayer(){
         JoinTournamentGateway testGateway = new JoinTournInMemoryBracket();
@@ -221,7 +228,7 @@ public class JoinTournamentTest {
 
         interactor.joinBracket(inputData);
     }
-
+    /** This tests that a user can successfully join as an observer given that he/she enters a valid invite*/
     @Test
     public void joinTournamentObserver(){
         JoinTournamentGateway testGateway = new JoinTournInMemoryBracket();
