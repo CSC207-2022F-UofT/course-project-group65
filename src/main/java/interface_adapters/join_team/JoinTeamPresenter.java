@@ -11,11 +11,13 @@ import use_cases.join_team.JoinTeamOD;
 public class JoinTeamPresenter implements JoinTeamOB {
     JoinTeamViewInterface view;
 
-    public void setView(JoinTeamViewInterface view){
+    public void setView(JoinTeamViewInterface view) {
         this.view = view;
     }
+
     /**
      * Prepares the success view if the team was successfully joined
+     *
      * @param outputData - output data from the usecase
      * @return output data
      */
@@ -26,9 +28,9 @@ public class JoinTeamPresenter implements JoinTeamOB {
     }
 
 
-
     /**
      * Prepares the fail view if the team was not successfully joined
+     *
      * @param errorMessage - error message that indicates why the team cannot be joined
      * @return output data
      */

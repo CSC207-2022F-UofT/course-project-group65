@@ -6,7 +6,6 @@ import entities.DefaultUser;
 import interface_adapters.log_in.LogInFailed;
 import interface_adapters.log_in.LogInPresenter;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +18,9 @@ import use_cases.log_in.LogInUC;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * This class tests the functionality of the LogIn usecase
+ */
 public class LogInTest {
 
     InformationRecord info;
@@ -39,7 +41,8 @@ public class LogInTest {
         BracketRepo bracketRepo = new BracketRepo();
         info = new InformationRecord(accountRepo, bracketRepo);
     }
-
+    /** This tests that LogInUC throws the correct exception if the username inputed by the user does not exist and
+     * the user cannot log in*/
     @Test
     public void testUsernameDNE(){
         LogInOB presenter = new LogInPresenter(){
@@ -60,7 +63,8 @@ public class LogInTest {
         Exception exception = assertThrows(LogInFailed.class, () -> useCase.logIn(inputData));
         assertEquals("username and/or password is incorrect", exception.getMessage());
     }
-
+    /** This tests that LogInUC throws the correct exception if the password inputed by the user does not macth the
+     * password that map to the username so the user cannot log in*/
     @Test
     public void testPasswordIncorrect(){
         LogInOB presenter = new LogInPresenter(){
@@ -80,7 +84,7 @@ public class LogInTest {
         Exception exception = assertThrows(LogInFailed.class, () -> useCase.logIn(inputData));
         assertEquals("username and/or password is incorrect", exception.getMessage());
     }
-
+    /** This tests that LogInUC runs and user successfully logs in if the password and username both match */
     @Test
     public void testLogInSuccess(){
         LogInOB presenter = new LogInPresenter(){
