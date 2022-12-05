@@ -7,7 +7,7 @@ import use_cases.view_tournament.*;
 
 public class ViewTournamentController {
     final private ViewTournamentIB viewTourIB;
-    private ViewTournamentPresenter viewTourPresenter;
+    private final ViewTournamentPresenter viewTourPresenter;
 
     public ViewTournamentController(InformationRecord informationRecord, String currUser) {
         this.viewTourPresenter = new ViewTournamentPresenter();

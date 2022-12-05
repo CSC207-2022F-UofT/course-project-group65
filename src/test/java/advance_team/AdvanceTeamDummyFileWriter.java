@@ -3,7 +3,6 @@ package advance_team;
 import entities.BracketRepo;
 import use_cases.advance_team.AdvanceTeamDSID;
 import use_cases.advance_team.AdvanceTeamGateway;
-import use_cases.view_tournament.ViewTournamentDSID;
 
 import java.io.IOException;
 import java.util.HashMap;

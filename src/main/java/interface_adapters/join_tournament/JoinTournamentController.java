@@ -7,7 +7,7 @@ import use_cases.join_tournament.*;
 
 public class JoinTournamentController {
     final private JoinTournamentIB joinTourIB;
-    private JoinTournamentPresenter presenter;
+    private final JoinTournamentPresenter presenter;
 
     public JoinTournamentController(InformationRecord informationRecord, String currUser){
         presenter = new JoinTournamentPresenter();

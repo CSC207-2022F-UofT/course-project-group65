@@ -9,16 +9,12 @@ import java.util.LinkedHashMap;
 public class NextScreenData {
     private String currentUser;
     private int currentBracketID;
-//    private AccountRepo accounts;
-//    private BracketRepo brackets;
     private BundleBracketData bundleBracketData;
     private final InformationRecord informationRecord;
 
     public NextScreenData(InformationRecord informationRecord) {
         this.currentUser = "";
         this.currentBracketID = 0;
-//        this.accounts = informationRecord.getAccountData();
-//        this.brackets = informationRecord.getBracketData();
         this.bundleBracketData = new BundleBracketData();
         this.informationRecord = informationRecord;
 
@@ -72,13 +68,9 @@ public class NextScreenData {
     public String getCurrentUser() {
         return this.currentUser;
     }
-    public String getUserPassword(String username){
-        return this.informationRecord.getUserPassword(username);
-    }
-
 
     public ArrayList<Integer> getUsersTournaments(String username) {
-        return this.informationRecord.getUserTournaments(this.currentUser);
+        return this.informationRecord.getUserTournaments(username);
     }
 
     public int getMaxTeamSize(int bracketID) {

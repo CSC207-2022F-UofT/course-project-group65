@@ -8,7 +8,7 @@ public class BracketRepo implements Serializable {
     private final HashMap<Integer, Bracket> brackets;
     /** Creat a new hashmap called brackets */
     public BracketRepo() {
-        brackets = new HashMap<Integer, Bracket>();
+        brackets = new HashMap<>();
     }
     /** The method for adding the bracket to the hashmap
      * @param bracket - The bracket */
@@ -20,10 +20,7 @@ public class BracketRepo implements Serializable {
     public Bracket getBracket(int bracketID) {
         return brackets.get(bracketID);
     }
-    /** The getter method for bracketRepo */
-    public BracketRepo getBracketRepo() {
-        return this;
-    }
+
     /** The getter method for all brackets*/
     public HashMap<Integer, Bracket> getBrackets() {
         return brackets;

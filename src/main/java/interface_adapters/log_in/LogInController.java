@@ -6,7 +6,7 @@ import use_cases.general_classes.InformationRecord;
 
 public class LogInController {
     private final LogInIB logInIB;
-    private LogInPresenter logInPresenter;
+    private final LogInPresenter logInPresenter;
 
     public LogInController(InformationRecord informationRecord) {
         this.logInPresenter = new LogInPresenter();

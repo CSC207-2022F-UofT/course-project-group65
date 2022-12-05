@@ -2,7 +2,6 @@ package interface_adapters.change_points;
 
 import interface_adapters.data_interface_adapters.change_points_data.ChangePointsFileWriter;
 import interface_adapters.view_interfaces.bracket_operation_interface.ChangePointsBOView;
-import interface_adapters.view_interfaces.main_view_interfaces.ChangePointsExtendedView;
 import use_cases.change_points.*;
 import use_cases.general_classes.InformationRecord;
 

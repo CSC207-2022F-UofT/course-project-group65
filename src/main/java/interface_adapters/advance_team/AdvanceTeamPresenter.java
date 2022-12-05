@@ -6,7 +6,7 @@ import use_cases.advance_team.AdvanceTeamOB;
 /** The presenter class of teh advance team use case. */
 public class AdvanceTeamPresenter implements AdvanceTeamOB {
 
-    private AdvanceTeamView view;
+    private final AdvanceTeamView view;
 
     public AdvanceTeamPresenter(AdvanceTeamView view) {
         this.view = view;

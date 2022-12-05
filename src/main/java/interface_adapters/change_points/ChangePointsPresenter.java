@@ -8,7 +8,7 @@ import use_cases.change_points.*;
  */
 public class ChangePointsPresenter implements ChangePointsOB {
 
-    private ChangePointsExtendedView extendedView;
+    private final ChangePointsExtendedView extendedView;
     private ChangePointsBOView view;
 
     public ChangePointsPresenter(ChangePointsExtendedView extendedView) {

@@ -1,18 +1,12 @@
 package frameworks_and_drivers.bracket_operations;
 
-import frameworks_and_drivers.ExtendedView;
-import interface_adapters.NextScreenData;
 import interface_adapters.advance_team.AdvanceTeamController;
 import interface_adapters.advance_team.AdvanceTeamFailed;
-//import screens.bracketView;
 import interface_adapters.change_points.ChangePointsController;
 import interface_adapters.change_points.ChangePointsFailed;
 import interface_adapters.declare_winner.DeclareWinnerController;
 import interface_adapters.declare_winner.DeclareWinnerFailed;
 import interface_adapters.view_interfaces.bracket_operation_interface.ChangePointsBOView;
-import interface_adapters.view_interfaces.main_view_interfaces.ChangePointsExtendedView;
-import use_cases.change_points.ChangePointsOD;
-import use_cases.declare_winner.DeclareWinnerOD;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,23 +28,18 @@ public class DoBracketOperation extends JFrame implements ActionListener, Change
     private JPanel bracketOpWindow;
     private JTextField teamPointsBox;
 
-    private AdvanceTeamController advanceTeamController;
-    private DeclareWinnerController declareWinnerController;
-    private ChangePointsController changePointsController;
+    private final AdvanceTeamController advanceTeamController;
+    private final DeclareWinnerController declareWinnerController;
+    private final ChangePointsController changePointsController;
     public int gameID;
-    private ExtendedView extendedView;
-
-    private NextScreenData nextScreenData;
 
     public DoBracketOperation(AdvanceTeamController advanceTeamController,
                               DeclareWinnerController declareWinnerController,
-                              ChangePointsController changePointsController, ExtendedView viewChange, NextScreenData nextScreenData) {
+                              ChangePointsController changePointsController) {
         super("Bracket Operations");
         this.advanceTeamController = advanceTeamController;
         this.declareWinnerController = declareWinnerController;
         this.changePointsController = changePointsController;
-        this.extendedView = viewChange;
-        this.nextScreenData = nextScreenData;
 
         gameNumLabel.setText("Game Number: 0");
         teamsLabel.setText("Teams: ");
@@ -63,6 +52,9 @@ public class DoBracketOperation extends JFrame implements ActionListener, Change
         changePointsButton.addActionListener(this);
         declareButton.addActionListener(this);
         changePtsTF.addActionListener(this);
+
+        title.setVisible(true);
+        changePtsInstruction.setVisible(true);
 
 
         this.setContentPane(bracketOpWindow);
