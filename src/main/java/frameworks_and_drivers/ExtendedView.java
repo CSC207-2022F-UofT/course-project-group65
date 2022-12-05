@@ -229,11 +229,6 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         lblTeamList.setVisible(true);
         lblOBInv.setVisible(true);
         lblPLInv.setVisible(true);
-        mainTabbedPane.setVisible(true);
-        pnlOverseer.setVisible(true);
-        pnlObserver.setVisible(true);
-        pnlTeams.setVisible(true);
-        pnlBracketScrollPane.setVisible(true);
 
         //Frame settings
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

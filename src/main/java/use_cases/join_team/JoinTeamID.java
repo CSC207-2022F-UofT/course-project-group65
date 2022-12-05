@@ -7,7 +7,7 @@ public class JoinTeamID {
     /**
      * The name of the team to join
      */
-    private String teamName;
+    private final String teamName;
 
     /**
      * Constructor for the JoinTeamID class
@@ -25,10 +25,4 @@ public class JoinTeamID {
         return this.teamName;
     }
 
-    /**
-     * The setter for the TeamName
-     */
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
 }

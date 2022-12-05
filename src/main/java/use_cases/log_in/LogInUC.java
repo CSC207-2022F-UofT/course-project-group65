@@ -2,7 +2,6 @@ package use_cases.log_in;
 
 import entities.AccountRepo;
 import entities.BracketRepo;
-import entities.User;
 import use_cases.general_classes.InformationRecord;
 
 import java.util.Objects;
@@ -36,7 +35,7 @@ public class LogInUC implements LogInIB{
     @Override
     public LogInOD logIn(LogInID requestModel) {
         if (usernameExists(requestModel, data) && passwordMatch(requestModel.getUsername(), requestModel.getPassword(), data)) {
-            User currentUser = data.getUser(requestModel.getUsername());
+            data.getUser(requestModel.getUsername());
             return userLogInOB.prepareSuccessView(new LogInOD(requestModel.getUsername(), data, bracketData));
 
         } else {

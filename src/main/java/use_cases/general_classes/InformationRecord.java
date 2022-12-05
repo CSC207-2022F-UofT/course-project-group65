@@ -46,10 +46,6 @@ public class InformationRecord {
         return (ArrayList<Integer>) getUser(username).getAllTournaments();
     }
 
-    public String getUserPassword(String username) {
-        return getUser(username).getPassword();
-    }
-
     //Bracket Repo Methods
 
     public void addBracket(Bracket bracket) {

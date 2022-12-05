@@ -3,8 +3,8 @@ package use_cases.log_in;
  * This is a class representing the input data from the user when logging in.
  */
 public class LogInID {
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
 
     public LogInID(String username, String password) {
         this.username = username;
