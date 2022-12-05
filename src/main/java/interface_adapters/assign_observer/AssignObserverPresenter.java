@@ -4,8 +4,6 @@ import interface_adapters.view_interfaces.main_view_interfaces.AssignObserverVie
 import use_cases.assign_observer.AssignObserverOB;
 import use_cases.assign_observer.AssignObserverOD;
 
-import java.util.LinkedHashMap;
-
 public class AssignObserverPresenter implements AssignObserverOB {
 
     public AssignObserverView view;
