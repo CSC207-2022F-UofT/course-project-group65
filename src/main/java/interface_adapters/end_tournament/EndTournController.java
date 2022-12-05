@@ -16,9 +16,8 @@ public class EndTournController {
         userInput = new EndTournUC(endTournOB, username, informationRecord, bracketId, gateway);
     }
 
-    //
-    public EndTournOD endTourn() {
-        return userInput.endTourn();
+    public void endTourn() {
+        userInput.endTourn();
     }
 
 }

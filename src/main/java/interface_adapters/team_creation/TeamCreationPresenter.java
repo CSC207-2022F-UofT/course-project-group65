@@ -4,8 +4,6 @@ import interface_adapters.view_interfaces.main_view_interfaces.TeamCreationView;
 import use_cases.team_creation.teamCreationOB;
 import use_cases.team_creation.teamCreationOD;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * The presenter class for teamCreation.

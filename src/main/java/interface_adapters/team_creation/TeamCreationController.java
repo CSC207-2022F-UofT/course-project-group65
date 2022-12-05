@@ -1,7 +1,6 @@
 package interface_adapters.team_creation;
 
 import interface_adapters.data_interface_adapters.team_creation_data.TeamCreationFileWriter;
-import interface_adapters.view_interfaces.main_view_interfaces.TeamCreationView;
 import use_cases.general_classes.InformationRecord;
 import use_cases.team_creation.*;
 

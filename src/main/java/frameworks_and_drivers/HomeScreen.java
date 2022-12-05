@@ -30,6 +30,7 @@ public class HomeScreen extends JFrame implements ActionListener{
 
         btLogIn.addActionListener(this);
         btCreateAccount.addActionListener(this);
+        header.setVisible(true);
     }
 
     @Override

@@ -33,7 +33,7 @@ public class OptionsScreen extends JFrame implements ActionListener {
         btJoinNew.addActionListener(this);
         btJoinExisting.addActionListener(this);
         btLogOut.addActionListener(this);
-
+        lbHeader.setVisible(true);
     }
 
     @Override
@@ -50,7 +50,6 @@ public class OptionsScreen extends JFrame implements ActionListener {
 
         } else if (e.getSource() == btJoinExisting) {
             // Join an Existing Bracket
-            System.out.println("Join Existing Bracket");
 
             ViewTournamentController viewTournamentController = new ViewTournamentController(nextScreenData.getInformationRecord(), nextScreenData.getCurrentUser());
             ViewTournamentInfo viewTournamentInfo = new ViewTournamentInfo(viewTournamentController, nextScreenData);
@@ -61,7 +60,6 @@ public class OptionsScreen extends JFrame implements ActionListener {
 
         } else if (e.getSource() == btJoinNew) {
             // Join a new bracket
-            System.out.println("Join New Bracket");
 
             JoinTournamentController joinTournamentController = new JoinTournamentController(
                     nextScreenData.getInformationRecord(), nextScreenData.getCurrentUser());

@@ -33,9 +33,9 @@ public abstract class Bracket implements Serializable {
         tournamentName = "";
         tournamentID = 0;
         finalGame = null;
-        teams = new ArrayList<Team>();
+        teams = new ArrayList<>();
         teamSize = 0;
-        referees = new ArrayList<User>();
+        referees = new ArrayList<>();
         winCondition = 0;
         tournamentCondition = false;
         playerInvite = "";
@@ -152,19 +152,6 @@ public abstract class Bracket implements Serializable {
         }
     }
 
-//    private Game getGame(int gameID, Game head) {
-//        if (head == null) {
-//            return null;
-//        } else if (head.getGameID() == gameID) {
-//            return head;
-//        } else {
-//            Game game = getGame(gameID, head.getPrevGame1());
-//            if (game != null) {
-//                return game;
-//            }
-//            return getGame(gameID, head.getPrevGame2());
-//        }
-//    }
     /** This method is for getting the total rounds */
     public int getNumRounds() {
         return finalGame.getGameRound();

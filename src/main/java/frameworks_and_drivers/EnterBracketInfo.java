@@ -16,14 +16,12 @@ public class EnterBracketInfo extends JFrame implements ActionListener {
     private JButton createButton;
     private JTextField bracketName;
     private JComboBox<String> bracketType;
-//    private JComboBox<Integer> numTeams;
     private JComboBox<Integer> winCondition;
-//    private JComboBox<Integer> teamSizes;
     private JLabel currentUser;
     private JTextField teamNumField;
     private JTextField teamSizeField;
-    private CreateBracketController createBracketController;
-    private NextScreenData nextScreenData;
+    private final CreateBracketController createBracketController;
+    private final NextScreenData nextScreenData;
 
 
     public EnterBracketInfo(CreateBracketController createBracketController, NextScreenData nextScreenData) {
@@ -61,7 +59,6 @@ public class EnterBracketInfo extends JFrame implements ActionListener {
             if (Math.log(numTeams) / Math.log(2) % 1 != 0 || numTeams < 2) {
                 throw new Exception("Number of teams must be a power of 2 and greater than one");
             }
-//            int numTeams = (int) this.numTeams.getSelectedItem();
             int winCondition = (int) this.winCondition.getSelectedItem();
             int teamSizes = Integer.parseInt(this.teamSizeField.getText().trim());
             if (teamSizes <= 1) {
