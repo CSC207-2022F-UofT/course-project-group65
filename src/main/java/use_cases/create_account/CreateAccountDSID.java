@@ -14,7 +14,4 @@ public class CreateAccountDSID {
         return accounts;
     }
 
-    public void setAccounts(AccountRepo accounts) {
-        this.accounts = accounts;
-    }
 }

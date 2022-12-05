@@ -14,12 +14,10 @@ import java.util.HashMap;
 public class CreateAccountUC implements CreateAccountIB {
     final CreateAccountOB userCreateAccountOB;
     final AccountRepo data;
-    final BracketRepo bracketData;
     private final CreateAccountGateway gateway;
 
     public CreateAccountUC(CreateAccountOB userCreateAccountOB, InformationRecord informationRecord, CreateAccountGateway gateway) {
         this.userCreateAccountOB = userCreateAccountOB;
-        this.bracketData = informationRecord.getBracketData();
         this.data = informationRecord.getAccountData();
         this.gateway = gateway;
     }

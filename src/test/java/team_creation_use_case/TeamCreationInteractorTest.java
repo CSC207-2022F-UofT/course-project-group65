@@ -3,7 +3,6 @@ package team_creation_use_case;
 
 import interface_adapters.data_interface_adapters.team_creation_data.TeamCreationFileWriter;
 import interface_adapters.team_creation.TeamCreationPresenter;
-import interface_adapters.view_interfaces.main_view_interfaces.TeamCreationView;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,7 +13,9 @@ import entities.*;
 import use_cases.general_classes.InformationRecord;
 import use_cases.team_creation.*;
 
-
+/**
+ * This class tests the functionality of teamCreationUC
+ */
 
 public class TeamCreationInteractorTest {
     /** This tests if a new team can be created by creating a TeamCreationInteractor and input data

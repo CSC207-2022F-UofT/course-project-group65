@@ -32,14 +32,6 @@ public class InformationRecord {
         return this.bracketData.getBracket(bracketID).getTeamSize();
     }
 
-    public void setAccountData(AccountRepo accountData) {
-        this.accountData = accountData;
-    }
-
-    public void setBracketData(BracketRepo bracketData) {
-        this.bracketData = bracketData;
-    }
-
     //Account Repo Methods
 
     public void addUser(User user) {
@@ -56,18 +48,6 @@ public class InformationRecord {
 
     public String getUserPassword(String username) {
         return getUser(username).getPassword();
-    }
-
-    public ArrayList<String> getAllUsernames() {
-        return accountData.getAllUsernames();
-    }
-
-    public ArrayList<String> getAllPasswords() {
-        return accountData.getAllPasswords();
-    }
-
-    public HashMap<String, User> getAllUsers() {
-        return accountData.getAllUsers();
     }
 
     //Bracket Repo Methods

@@ -86,11 +86,7 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         lblTournamentID.setText("ID: " + nextScreenData.getCurrentBracketID());
         btnOptions.addActionListener(this);
         btnLogOut.addActionListener(this);
-        mainTabbedPane.setVisible(true);
-        pnlOverseer.setVisible(true);
-        pnlObserver.setVisible(true);
-        pnlTeams.setVisible(true);
-        pnlBracketScrollPane.setVisible(true);
+
 
         //Set up the Bracket View
         pnlBracket.setLayout(new GridBagLayout());
@@ -233,6 +229,11 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         lblTeamList.setVisible(true);
         lblOBInv.setVisible(true);
         lblPLInv.setVisible(true);
+        mainTabbedPane.setVisible(true);
+        pnlOverseer.setVisible(true);
+        pnlObserver.setVisible(true);
+        pnlTeams.setVisible(true);
+        pnlBracketScrollPane.setVisible(true);
 
         //Frame settings
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -441,7 +442,7 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         for (int i = 0; i < btnBracketGame.size(); i++) {
             if (e.getSource() == btnBracketGame.get(i)) {
                 DoBracketOperation doBracketOperations = new DoBracketOperation(advanceTeamController,
-                        declareWinnerController, changePointsController, this, nextScreenData);
+                        declareWinnerController, changePointsController);
                 doBracketOperations.setGameForOperation(btnBracketGame.size() - i);
                 doBracketOperations.setGameNumLabel("Game " + (btnBracketGame.size() - i));
                 doBracketOperations.setTeamsLabel(lblBracketGameScores.get(i).getText());

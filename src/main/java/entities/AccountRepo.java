@@ -16,8 +16,6 @@ public class AccountRepo implements Serializable {
     public User getUser(String username) {return users.get(username); }
     /** This method is for getting all the current users' usernames*/
     public ArrayList<String> getAllUsernames() { return new ArrayList<>(users.keySet()); }
-    /** This method is for getting the current accountRepo*/
-    public AccountRepo getAccountRepo() { return this; }
     /** This method is for getting all the current users' passwords*/
     public ArrayList<String> getAllPasswords() {
         ArrayList<String> passwords = new ArrayList<>();
