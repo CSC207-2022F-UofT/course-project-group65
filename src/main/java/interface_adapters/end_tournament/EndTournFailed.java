@@ -1,7 +1,7 @@
 package interface_adapters.end_tournament;
 
 /**
- * A class for the fail view of the end tournament use case.
+ * A class for exception to the end tournament use case.
  */
 public class EndTournFailed extends RuntimeException {
     /**
