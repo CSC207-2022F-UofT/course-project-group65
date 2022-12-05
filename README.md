@@ -144,3 +144,8 @@ There is a "Return to Options" button on the bottom left of the screen, which wi
 From there you may log out, or do any of the other things you can do on the options screen.
 
 We hope you have fun using the program!
+
+## For the Graders
+An in depth documentation of our added features from milestone 4 onwards, as well as testing documentation, and 
+general important notes about the project can be found in this google doc: 
+https://docs.google.com/document/d/1IBEEGuS23mA76yaIIs_hBJxWeGKgF1ybA6GnMZ7WZn8/edit?usp=sharing 
