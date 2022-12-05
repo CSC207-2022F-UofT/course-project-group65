@@ -403,18 +403,22 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         } else if (e.getSource() == btnStart) {
             ArrayList<String> startErrors = startTournController.startTourn();
             StartErrors errorView = new StartErrors(this.startTournController);
+            boolean condition = false;
             for (String error : startErrors) {
                 if (Objects.equals(error, "USERROLE")) {
-                    errorView.setWarning1("You do not have permission to start the tournament.");
+                    condition = true;
                 } else if (Objects.equals(error, "NUMTEAMS")) {
-                    errorView.setWarning2("There are not enough teams in the tournament.");
+                    errorView.setWarning1("There are not enough teams in the tournament.");
                 } else if (Objects.equals(error, "NOOBSERVER")) {
-                    errorView.setWarning3("There is at least one game that does not have an observer assigned.");
+                    errorView.setWarning2("There is at least one game that does not have an observer assigned.");
                 } else if (Objects.equals(error, "TEAMNOTFULL")) {
-                    errorView.setWarning4("There is at least one team that is not full.");
+                    errorView.setWarning3("There is at least one team that is not full.");
                 }
             }
-            errorView.setVisible(true);
+            if (condition) {
+                JOptionPane.showMessageDialog(this, "You do not have permission to start the tournament.");
+            } else {
+            errorView.setVisible(true);}
         } else if (e.getSource() == btnEnd) {
             try {
                 endTournController.endTourn();

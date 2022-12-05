@@ -13,7 +13,7 @@ public class StartErrors extends JFrame implements ActionListener {
     private JLabel warning1;
     private JLabel warning2;
     private JLabel warning3;
-    private JLabel warning4;
+
     private JPanel mainPanel;
     private final StartTournController startTournController;
 
@@ -43,9 +43,6 @@ public class StartErrors extends JFrame implements ActionListener {
         warning3.setText(warning);
     }
 
-    public void setWarning4(String warning) {
-        warning4.setText(warning);
-    }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startBtn) {
