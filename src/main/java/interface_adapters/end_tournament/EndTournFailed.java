@@ -5,7 +5,7 @@ package interface_adapters.end_tournament;
  */
 public class EndTournFailed extends RuntimeException {
     /**
-     * Prepares the fail view if the use case has been failed
+     * Prepares exception if the use case has been failed
      *
      * @param error The string error message
      */
