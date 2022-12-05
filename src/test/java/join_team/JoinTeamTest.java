@@ -16,10 +16,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * This tests if a player can join an existed team with the input data teamName
+ * This is the test class for joinTeam use case
  */
 public class JoinTeamTest {
-
+    /**
+     * This tests if a player can join an existed team with the input data teamName
+     * then running the use case to check that the output data passed to the Presenter is correct
+     */
     @Test
     public void testJoinATeam() {
         JoinTeamGateway gateway = new JoinTeamFileWriter("tests.txt");
@@ -46,16 +49,16 @@ public class JoinTeamTest {
         joiner.setBracketRole(1, "Player");
         newTeam.addTeamMember(creator);
 
-        JoinTeamOB outputBoundary = new JoinTeamPresenter(){
+        JoinTeamOB outputBoundary = new JoinTeamPresenter() {
             @Override
             public JoinTeamOD SuccessView(JoinTeamOD outputData) {
                 ArrayList<String> expected = new ArrayList<>();
                 expected.add("t1");
                 expected.add("t2");
                 LinkedHashMap<String, ArrayList<String>> gr = new LinkedHashMap<>();
-                gr.put("team1", expected );
+                gr.put("team1", expected);
 
-                assertEquals(expected,outputData.getMembersNames());
+                assertEquals(expected, outputData.getMembersNames());
                 assertEquals(gr, outputData.getTeamToPlayers());
                 return null;
             }
