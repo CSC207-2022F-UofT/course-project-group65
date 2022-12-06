@@ -6,7 +6,7 @@ import use_cases.join_tournament.JoinTournamentGateway;
 
 import java.util.HashMap;
 
-public class JoinTournInMemoryBracket implements JoinTournamentGateway {
+public class JoinTournamentDummyFileWriter implements JoinTournamentGateway {
     final private HashMap<BracketRepo, JoinTournamentDSID> bracketRepos = new HashMap<>();
 
     @Override

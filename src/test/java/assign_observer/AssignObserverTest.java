@@ -67,7 +67,7 @@ public class AssignObserverTest {
     public void AssignObserverNoPermission(){
 
 
-        AssignObserverGateway testGateway = new AssignObserverInMemoryBracket();
+        AssignObserverGateway testGateway = new AssignObserverDummyFileWriter();
 
         AssignObserverOB presenter = new AssignObserverPresenter(){
             @Override
@@ -93,7 +93,7 @@ public class AssignObserverTest {
 
     @Test
     public void AssignObserverNotObserver(){
-        AssignObserverGateway testGateway = new AssignObserverInMemoryBracket();
+        AssignObserverGateway testGateway = new AssignObserverDummyFileWriter();
 
         AssignObserverOB presenter = new AssignObserverPresenter(){
             @Override
@@ -121,7 +121,7 @@ public class AssignObserverTest {
 
     @Test
     public void AssignObserverGameDNE(){
-        AssignObserverGateway testGateway = new AssignObserverInMemoryBracket();
+        AssignObserverGateway testGateway = new AssignObserverDummyFileWriter();
 
         AssignObserverOB presenter = new AssignObserverPresenter(){
             @Override
@@ -152,7 +152,7 @@ public class AssignObserverTest {
     public void AssignObserverPass(){
 
 
-        AssignObserverGateway testGateway = new AssignObserverInMemoryBracket();
+        AssignObserverGateway testGateway = new AssignObserverDummyFileWriter();
 
         AssignObserverOB presenter = new AssignObserverPresenter(){
             @Override
@@ -185,7 +185,7 @@ public class AssignObserverTest {
 
     @Test
     public void AssignObserverGameHasObserver(){
-        AssignObserverGateway testGateway = new AssignObserverInMemoryBracket();
+        AssignObserverGateway testGateway = new AssignObserverDummyFileWriter();
 
         AssignObserverOB presenter = new AssignObserverPresenter(){
             @Override

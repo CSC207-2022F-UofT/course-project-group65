@@ -28,7 +28,7 @@ public class DefaultGame implements Game, Serializable {
         gameID = 0;
         gameRound = 0;
         numTeams = 0;
-        teams = new LinkedHashMap<Team, Integer>();
+        teams = new LinkedHashMap<>();
         observer = null;
         winner = null;
         gameStatus = false;
@@ -67,7 +67,7 @@ public class DefaultGame implements Game, Serializable {
 
 //    May need to change getTeams()
     public ArrayList<Team> getTeams() {
-        return new ArrayList<Team>(teams.keySet());
+        return new ArrayList<>(teams.keySet());
     }
 
     public int getTeamPoints(Team team) {

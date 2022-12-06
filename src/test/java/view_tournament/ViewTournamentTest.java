@@ -59,7 +59,7 @@ public class ViewTournamentTest {
 
     @Test
     public void viewTournamentPreviouslyJoined(){
-        ViewTournamentGateway testGateway = new ViewTournInMemoryBracket();
+        ViewTournamentGateway testGateway = new ViewTournamentDummyFileWriter();
 
         ViewTournamentOB presenter = new ViewTournamentPresenter(){
             @Override
@@ -121,7 +121,7 @@ public class ViewTournamentTest {
 
     @Test
     public void viewTournamentNotPreviouslyJoined(){
-        ViewTournamentGateway testGateway = new ViewTournInMemoryBracket();
+        ViewTournamentGateway testGateway = new ViewTournamentDummyFileWriter();
 
         ViewTournamentOB presenter = new ViewTournamentPresenter(){
             @Override

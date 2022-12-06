@@ -7,7 +7,7 @@ import use_cases.view_tournament.ViewTournamentGateway;
 
 import java.util.HashMap;
 
-public class ViewTournInMemoryBracket implements ViewTournamentGateway {
+public class ViewTournamentDummyFileWriter implements ViewTournamentGateway {
     final private HashMap<BracketRepo, ViewTournamentDSID> bracketRepos = new HashMap<>();
 
     @Override

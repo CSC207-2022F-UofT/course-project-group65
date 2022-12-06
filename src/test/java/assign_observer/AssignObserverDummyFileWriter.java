@@ -6,7 +6,7 @@ import use_cases.assign_observer.AssignObserverGateway;
 
 import java.util.HashMap;
 
-public class AssignObserverInMemoryBracket implements AssignObserverGateway {
+public class AssignObserverDummyFileWriter implements AssignObserverGateway {
     final private HashMap<BracketRepo, AssignObserverDSID> bracketRepos = new HashMap<>();
 
     @Override

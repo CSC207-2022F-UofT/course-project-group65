@@ -61,7 +61,7 @@ public class JoinTournamentTest {
     /** This tests that an exception is thrown if the user enters an invalid invite */
     @Test
     public void joinTournamentInvalidFormat(){
-        JoinTournamentGateway testGateway = new JoinTournInMemoryBracket();
+        JoinTournamentGateway testGateway = new JoinTournamentDummyFileWriter();
 
         JoinTournamentOB presenter = new JoinTournamentPresenter(){
             @Override
@@ -87,7 +87,7 @@ public class JoinTournamentTest {
      * the tournament */
     @Test
     public void joinTournamentRoleDNE(){
-        JoinTournamentGateway testGateway = new JoinTournInMemoryBracket();
+        JoinTournamentGateway testGateway = new JoinTournamentDummyFileWriter();
 
         JoinTournamentOB presenter = new JoinTournamentPresenter(){
             @Override
@@ -115,7 +115,7 @@ public class JoinTournamentTest {
     public void joinTournamentDNE(){
 
 
-        JoinTournamentGateway testGateway = new JoinTournInMemoryBracket();
+        JoinTournamentGateway testGateway = new JoinTournamentDummyFileWriter();
 
         JoinTournamentOB presenter = new JoinTournamentPresenter(){
             @Override
@@ -144,7 +144,7 @@ public class JoinTournamentTest {
     public void joinTournamentPreviouslyJoined(){
 
 
-        JoinTournamentGateway testGateway = new JoinTournInMemoryBracket();
+        JoinTournamentGateway testGateway = new JoinTournamentDummyFileWriter();
 
         JoinTournamentOB presenter = new JoinTournamentPresenter(){
             @Override
@@ -173,7 +173,7 @@ public class JoinTournamentTest {
     /** This tests that a user can successfully join as a player given that he/she enter a valid invite*/
     @Test
     public void joinTournamentPlayer(){
-        JoinTournamentGateway testGateway = new JoinTournInMemoryBracket();
+        JoinTournamentGateway testGateway = new JoinTournamentDummyFileWriter();
 
         JoinTournamentOB presenter = new JoinTournamentPresenter(){
             @Override
@@ -231,7 +231,7 @@ public class JoinTournamentTest {
     /** This tests that a user can successfully join as an observer given that he/she enters a valid invite*/
     @Test
     public void joinTournamentObserver(){
-        JoinTournamentGateway testGateway = new JoinTournInMemoryBracket();
+        JoinTournamentGateway testGateway = new JoinTournamentDummyFileWriter();
 
         JoinTournamentOB presenter = new JoinTournamentPresenter(){
             @Override
