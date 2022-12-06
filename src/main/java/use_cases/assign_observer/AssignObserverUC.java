@@ -14,6 +14,10 @@ public class AssignObserverUC implements AssignObserverIB {
     private final User currUser;
     private final AssignObserverGateway gateway;
 
+    /**
+     * A use case class that handles the assignment of observers for a user. It will assign an observer to a game and
+     * save and update the bracket repository afterwards.
+     */
     public AssignObserverUC(AssignObserverOB outputBound, AssignObserverGateway gateway, InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;
         this.gateway = gateway;
@@ -24,8 +28,8 @@ public class AssignObserverUC implements AssignObserverIB {
     /**
      * Assigns a user as an observer to a particular game in a bracket.
      *
-     * @param input the input data to use
-     * @return the output data
+     * @param input the input data containing the assignee and game chosen
+     * @return the output data to change the view
      */
     @Override
     public AssignObserverOD assignObserver(AssignObserverID input){

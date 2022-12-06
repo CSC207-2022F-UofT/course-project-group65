@@ -6,6 +6,11 @@ import entities.User;
 import use_cases.general_classes.InformationRecord;
 import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 
+/**
+ * A use case class that handles joining a tournament for the first time for a user. It will make the
+ * changes required to allow the user to interact with the desired tournament and save and update the
+ * bracket and account repositories afterwards.
+ */
 public class JoinTournamentUC implements JoinTournamentIB{
     private final JoinTournamentOB outputBound;
     private final BracketRepo bracketRepo;
@@ -14,18 +19,18 @@ public class JoinTournamentUC implements JoinTournamentIB{
     private final JoinTournamentGateway gateway;
 
     /**
-     * Construct a JoinTournamentUC interactor instance with the given BracketRepo and AccountRepo.
+     * Creates a new JoinTournamentUC object.
      *
-     * @param outputBound The output boundary to use
-//     * @param bracketRepo The BracketRepo to use
-//     * @param accountRepo The AccountRepo to use
-     * @param currUser    The username of the user who is joining the tournament
+     * @param outputBound       The output boundary to use
+     * @param gateway           The gateway to access the database to store info
+     * @param informationRecord The information record containing the bracket and account repositories
+     * @param currUser          The username of the user who is joining the tournament
      */
     public JoinTournamentUC(JoinTournamentOB outputBound, JoinTournamentGateway gateway,
                             InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;
-        this.bracketRepo = informationRecord.getBracketData();
-        this.accountRepo = informationRecord.getAccountData();
+        bracketRepo = informationRecord.getBracketData();
+        accountRepo = informationRecord.getAccountData();
         this.currUser = this.accountRepo.getUser(currUser);
         this.gateway = gateway;
     }
@@ -33,8 +38,8 @@ public class JoinTournamentUC implements JoinTournamentIB{
     /**
      * Allows the user to access a tournament for the first time
      *
-     * @param input the inputData to use
-     * @return the output data
+     * @param input the inputData containing the invite
+     * @return the output data to change the view
      */
     public JoinTournamentOD joinBracket(JoinTournamentID input){
         String invite = input.getInvite();

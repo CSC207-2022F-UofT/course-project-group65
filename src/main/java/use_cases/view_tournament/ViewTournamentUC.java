@@ -5,6 +5,10 @@ import entities.User;
 import use_cases.general_classes.InformationRecord;
 import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 
+/**
+ * A use case class that handles viewing an already joined tournament for a user.
+ * It will change the users current tournament to the one they wish to join.
+ */
 public class ViewTournamentUC implements ViewTournamentIB {
     final ViewTournamentOB outputBound;
     private final BracketRepo bracketRepo;
@@ -12,10 +16,12 @@ public class ViewTournamentUC implements ViewTournamentIB {
     private final ViewTournamentGateway gateway;
 
     /**
-     * Construct a ViewTournamentUC interactor instance with the given BracketRepo and AccountRepo.
+     * Creates a new ViewTournamentUC object.
      *
-     * @param outputBound The output boundary to use
-     * @param currUser    The username of the user who is joining the tournament
+     * @param outputBound       The output boundary to use
+     * @param gateway           The gateway to access the database to store info
+     * @param informationRecord The information record containing the bracket repository
+     * @param currUser          The username of the user who is joining the tournament
      */
     public ViewTournamentUC(ViewTournamentOB outputBound, ViewTournamentGateway gateway, InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;
@@ -25,10 +31,10 @@ public class ViewTournamentUC implements ViewTournamentIB {
     }
 
     /**
-     * Allows the user to access a tournament that they have already joined
+     * Allows the user to access a tournament that they have already joined.
      *
-     * @param input the inputData to use
-     * @return the output data
+     * @param input the inputData containing the tournamentID
+     * @return the output data to change the view
      */
     public ViewTournamentOD viewBracket(ViewTournamentID input){
         int tournamentID = input.getTournamentID();

@@ -4,6 +4,7 @@ import use_cases.join_tournament.JoinTournamentDSID;
 import use_cases.join_tournament.JoinTournamentGateway;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 public class JoinTournamentFileWriter implements JoinTournamentGateway {
@@ -16,7 +17,7 @@ public class JoinTournamentFileWriter implements JoinTournamentGateway {
     }
 
     @Override
-    public void save(JoinTournamentDSID input) throws Exception {
+    public void save(JoinTournamentDSID input) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(this.bracketFileName);
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(input.getBracketRepo());

@@ -4,6 +4,7 @@ import use_cases.assign_observer.AssignObserverDSID;
 import use_cases.assign_observer.AssignObserverGateway;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 public class AssignObserverFileWriter implements AssignObserverGateway {
@@ -13,7 +14,7 @@ public class AssignObserverFileWriter implements AssignObserverGateway {
         this.bracketFilename = bracketFilename;
     }
 
-    public void save(AssignObserverDSID input) throws Exception {
+    public void save(AssignObserverDSID input) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(this.bracketFilename);
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(input.getBracketRepo());

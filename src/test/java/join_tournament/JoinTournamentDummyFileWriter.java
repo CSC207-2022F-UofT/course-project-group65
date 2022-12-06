@@ -4,13 +4,14 @@ import entities.BracketRepo;
 import use_cases.join_tournament.JoinTournamentDSID;
 import use_cases.join_tournament.JoinTournamentGateway;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class JoinTournamentDummyFileWriter implements JoinTournamentGateway {
     final private HashMap<BracketRepo, JoinTournamentDSID> bracketRepos = new HashMap<>();
 
     @Override
-    public void save(JoinTournamentDSID dsid) throws Exception {
+    public void save(JoinTournamentDSID dsid) throws IOException {
         System.out.println("Save " + dsid.getBracketRepo());
         bracketRepos.put(dsid.getBracketRepo(), dsid);
     }
