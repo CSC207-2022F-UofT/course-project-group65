@@ -1,10 +1,8 @@
 package declare_winner;
 
 import entities.BracketRepo;
-import use_cases.advance_team.AdvanceTeamDSID;
 import use_cases.declare_winner.DeclareWinnerDSID;
 import use_cases.declare_winner.DeclareWinnerGateway;
-import use_cases.declare_winner.DeclareWinnerUC;
 
 import java.io.IOException;
 import java.util.HashMap;

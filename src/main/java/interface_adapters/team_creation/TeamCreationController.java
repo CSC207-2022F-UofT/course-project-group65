@@ -10,8 +10,8 @@ import use_cases.team_creation.*;
 
 public class TeamCreationController {
     final teamCreationIB userInput;
-    public TeamCreationPresenter presenter;
-    public String username;
+    final TeamCreationPresenter presenter;
+    private String username;
     /**
      * Creates a new TeamCreationController object
      * @param username The name of the user who created the team
@@ -22,7 +22,7 @@ public class TeamCreationController {
         this.presenter = presenter;
         teamCreationGateway gateway = new TeamCreationFileWriter("brackets.txt");
         this.userInput = new teamCreationUC(presenter, gateway, username, bracketID, informationRecord);
-
+        this.username = username;
     }
 
     public String getCurrUser(){

@@ -25,7 +25,7 @@ public class UserInput extends JFrame implements ActionListener {
     /** This contains all the data that was passed on from previous screens */
     private final NextScreenData nextScreenData;
     /** This is the view model that gets updated after teamCreation gets run */
-    public ExtendedView extendedView;
+    final ExtendedView extendedView;
 
     /**
      * This creates an instance of UserInput screen and makes the screen visible to the user

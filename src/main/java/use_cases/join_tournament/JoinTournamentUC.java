@@ -7,11 +7,11 @@ import use_cases.general_classes.InformationRecord;
 import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 
 public class JoinTournamentUC implements JoinTournamentIB{
-    final JoinTournamentOB outputBound;
+    private final JoinTournamentOB outputBound;
     private final BracketRepo bracketRepo;
     private final AccountRepo accountRepo;
     private final User currUser;
-    public JoinTournamentGateway gateway;
+    private final JoinTournamentGateway gateway;
 
     /**
      * Construct a JoinTournamentUC interactor instance with the given BracketRepo and AccountRepo.

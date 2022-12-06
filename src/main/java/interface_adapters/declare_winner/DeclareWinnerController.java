@@ -11,7 +11,7 @@ import use_cases.general_classes.InformationRecord;
  */
 public class DeclareWinnerController {
 
-    DeclareWinnerIB userInput;
+    private final DeclareWinnerIB userInput;
     /**
      * This constructor creates a new DeclareWinnerController object.
      * @param informationRecord The information record that the declare winner use case will use.

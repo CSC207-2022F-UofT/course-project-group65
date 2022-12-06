@@ -12,7 +12,7 @@ public class AssignObserverUC implements AssignObserverIB {
     private final BracketRepo bracketRepo;
     private Bracket bracket;
     private final User currUser;
-    public AssignObserverGateway gateway;
+    private final AssignObserverGateway gateway;
 
     public AssignObserverUC(AssignObserverOB outputBound, AssignObserverGateway gateway, InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;

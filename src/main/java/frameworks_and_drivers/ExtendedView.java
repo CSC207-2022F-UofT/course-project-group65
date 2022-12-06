@@ -29,7 +29,7 @@ import java.util.Objects;
 public class ExtendedView extends JFrame implements ActionListener, AssignObserverView, JoinTeamViewInterface,
         TeamCreationView, AdvanceTeamView, DeclareWinnerView, ChangePointsExtendedView {
 
-    public NextScreenData nextScreenData;
+    private final NextScreenData nextScreenData;
     private JTabbedPane mainTabbedPane;
     private JPanel mainPanel;
     private JScrollPane pnlBracketScrollPane;

@@ -12,8 +12,8 @@ import use_cases.general_classes.InformationRecord;
  */
 public class ChangePointsController {
 
-    ChangePointsIB userInput;
-    ChangePointsPresenter presenter;
+    private final ChangePointsIB userInput;
+    private final ChangePointsPresenter presenter;
 
     /**
      * This constructor creates a new ChangePointsController object.

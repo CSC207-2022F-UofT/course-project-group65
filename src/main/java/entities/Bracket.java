@@ -14,11 +14,11 @@ public abstract class Bracket implements Serializable {
     /** A variable game for the final game */
     Game finalGame;
     /** An arraylist for all the teams */
-    ArrayList<Team> teams;
+    final ArrayList<Team> teams;
     /** An int variable teamSize for the bracket's maximum team size */
     int teamSize;
     /** An arraylist for all the referees - overseers and observers */
-    ArrayList<User> referees;
+    final ArrayList<User> referees;
     /** An int variable for win condition - the number of points that one team needs to win */
     int winCondition;
     /** A boolean variable represents the tournament condition is started(True) or ended(False) */

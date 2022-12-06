@@ -10,7 +10,7 @@ import use_cases.team_creation.teamCreationOD;
  */
 public class TeamCreationPresenter implements teamCreationOB {
 
-    public TeamCreationView view;
+    private final TeamCreationView view;
 
     public TeamCreationPresenter(TeamCreationView view) {
         this.view = view;

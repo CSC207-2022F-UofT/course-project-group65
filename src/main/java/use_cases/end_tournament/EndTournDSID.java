@@ -9,7 +9,7 @@ public class EndTournDSID {
     /**
      * The bracket repo used in accessing the data
      */
-    BracketRepo bracketRepo;
+    private final BracketRepo bracketRepo;
 
     /**
      * Constructor for the EndTournDSID class.

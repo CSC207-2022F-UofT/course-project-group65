@@ -3,9 +3,9 @@ package use_cases.assign_observer;
 import java.util.LinkedHashMap;
 
 public class AssignObserverOD {
-    String assignee;
-    int gameID;
-    LinkedHashMap<Integer, String> gameToReferee;
+    private final String assignee;
+    private final int gameID;
+    private final LinkedHashMap<Integer, String> gameToReferee;
 
     public AssignObserverOD(String assignee, int gameID, LinkedHashMap<Integer, String> gameToReferee) {
         this.assignee = assignee;

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /** This is the test class for joinTournament use case*/
 public class JoinTournamentTest {
     /** An instance of InformationRecord used to record all the information */

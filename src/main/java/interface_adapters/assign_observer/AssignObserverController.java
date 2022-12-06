@@ -7,13 +7,12 @@ import use_cases.general_classes.InformationRecord;
 
 public class AssignObserverController {
     private final AssignObserverIB assignObsIB;
-    public AssignObserverPresenter presenter;
+    private final AssignObserverPresenter presenter;
 
     public AssignObserverController(InformationRecord informationRecord, String currUser) {
         presenter = new AssignObserverPresenter();
-        AssignObserverOB outputBound = presenter;
         AssignObserverGateway gateway = new AssignObserverFileWriter("brackets.txt");
-        this.assignObsIB = new AssignObserverUC(outputBound, gateway, informationRecord, currUser);
+        this.assignObsIB = new AssignObserverUC(presenter, gateway, informationRecord, currUser);
     }
 
     public void setPresenterView(ExtendedView view){

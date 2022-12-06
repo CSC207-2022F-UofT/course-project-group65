@@ -8,8 +8,8 @@ import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 public class ViewTournamentUC implements ViewTournamentIB {
     final ViewTournamentOB outputBound;
     private final BracketRepo bracketRepo;
-    private final User CURR_USER;
-    public ViewTournamentGateway gateway;
+    private final User currUser;
+    private final ViewTournamentGateway gateway;
 
     /**
      * Construct a ViewTournamentUC interactor instance with the given BracketRepo and AccountRepo.
@@ -21,7 +21,7 @@ public class ViewTournamentUC implements ViewTournamentIB {
         this.outputBound = outputBound;
         this.gateway = gateway;
         this.bracketRepo = informationRecord.getBracketData();
-        CURR_USER = informationRecord.getAccountData().getUser(currUser);
+        this.currUser = informationRecord.getAccountData().getUser(currUser);
     }
 
     /**
@@ -33,12 +33,12 @@ public class ViewTournamentUC implements ViewTournamentIB {
     public ViewTournamentOD viewBracket(ViewTournamentID input){
         int tournamentID = input.getTournamentID();
 
-        if (!CURR_USER.getAllTournaments().contains(tournamentID)){
+        if (!currUser.getAllTournaments().contains(tournamentID)){
             return outputBound.prepareFailView("You have not joined this tournament yet.");
         }
 
         BundleBracketData bracketData = new BundleBracketData();
-        CURR_USER.setCurrentTournament(tournamentID);
+        currUser.setCurrentTournament(tournamentID);
         bracketData.bundleBracket(bracketRepo.getBracket(tournamentID));
 
         ViewTournamentDSID dsid = new ViewTournamentDSID(this.bracketRepo);
@@ -48,7 +48,7 @@ public class ViewTournamentUC implements ViewTournamentIB {
             return outputBound.prepareFailView("Error saving data");
         }
 
-        ViewTournamentOD output = new ViewTournamentOD(CURR_USER.getUsername(), bracketData);
+        ViewTournamentOD output = new ViewTournamentOD(currUser.getUsername(), bracketData);
 
         return outputBound.prepareSuccessView(output);
     }

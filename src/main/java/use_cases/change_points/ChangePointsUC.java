@@ -14,13 +14,13 @@ import java.util.Arrays;
  */
 public class ChangePointsUC implements ChangePointsIB {
     private final BracketRepo bracketRepo;
-    public Bracket bracket;
+    private final Bracket bracket;
     public int newPoints;
-    public Team team;
-    public User user;
-    public Game game;
-    public ChangePointsOB outputBoundary;
-    public ChangePointsGateway gateway;
+    private Team team;
+    private final User user;
+    private Game game;
+    private final ChangePointsOB outputBoundary;
+    private final ChangePointsGateway gateway;
 
     /**
      * Creates a new ChangePointsUC object.

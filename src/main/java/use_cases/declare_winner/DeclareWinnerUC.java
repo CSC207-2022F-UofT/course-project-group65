@@ -14,11 +14,11 @@ import java.util.Arrays;
 public class DeclareWinnerUC implements DeclareWinnerIB {
 
     private final BracketRepo bracketRepo;
-    public Bracket bracket;
-    public User user;
-    public Game game;
-    public DeclareWinnerOB outputBoundary;
-    public DeclareWinnerGateway gateway;
+    private final Bracket bracket;
+    private final User user;
+    private Game game;
+    private final DeclareWinnerOB outputBoundary;
+    private DeclareWinnerGateway gateway;
 
     /**
      * Constructor for DeclareWinnerUC

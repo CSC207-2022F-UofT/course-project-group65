@@ -4,7 +4,7 @@ import entities.AccountRepo;
 
 public class CreateAccountDSID {
 
-    AccountRepo accounts;
+    private final AccountRepo accounts;
 
     public CreateAccountDSID(AccountRepo accounts) {
         this.accounts = accounts;

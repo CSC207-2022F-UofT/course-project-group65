@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class JoinTeamController {
     final JoinTeamIB input;
     public ArrayList<String> membersNames;
-    JoinTeamPresenter presenter;
+    final JoinTeamPresenter presenter;
 
     /**
      * Creates a new JoinTeamController object
