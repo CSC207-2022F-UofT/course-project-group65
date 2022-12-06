@@ -17,11 +17,11 @@ import java.util.LinkedHashMap;
 public class AdvanceTeamUC implements AdvanceTeamIB {
 
     private final BracketRepo bracketRepo;
-    public Bracket bracket;
-    public User user;
-    public Game game;
-    public AdvanceTeamOB outputBoundary;
-    public AdvanceTeamGateway gateway;
+    private final Bracket bracket;
+    private final User user;
+    private Game game;
+    private final AdvanceTeamOB outputBoundary;
+    private final AdvanceTeamGateway gateway;
 
     /**
      * Creates a new AdvanceTeamUC object.
@@ -41,7 +41,6 @@ public class AdvanceTeamUC implements AdvanceTeamIB {
         this.bracketRepo = informationRecord.getBracketData();
         this.user = accountRepo.getUser(username);
         this.bracket = this.bracketRepo.getBracket(bracketID);
-        this.user = accountRepo.getUser(username);
     }
 
     /**

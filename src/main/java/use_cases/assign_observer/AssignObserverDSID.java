@@ -4,13 +4,13 @@ import entities.BracketRepo;
 
 public class AssignObserverDSID {
 
-    private final BracketRepo BRACKET_REPO;
+    private final BracketRepo bracketRepo;
 
     public AssignObserverDSID(BracketRepo bracketRepo){
-        BRACKET_REPO = bracketRepo;
+        this.bracketRepo = bracketRepo;
     }
 
     public BracketRepo getBracketRepo(){
-        return BRACKET_REPO;
+        return bracketRepo;
     }
 }

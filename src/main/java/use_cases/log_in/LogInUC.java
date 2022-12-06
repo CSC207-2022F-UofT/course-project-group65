@@ -1,7 +1,6 @@
 package use_cases.log_in;
 
 import entities.AccountRepo;
-import entities.BracketRepo;
 import use_cases.general_classes.InformationRecord;
 
 import java.util.Objects;
@@ -14,13 +13,11 @@ import java.util.Objects;
  */
 
 public class LogInUC implements LogInIB{
-    final LogInOB userLogInOB;
-    final AccountRepo data;
-    final BracketRepo bracketData;
+    private final LogInOB userLogInOB;
+    private final AccountRepo data;
     public LogInUC(LogInOB userLogInOB, InformationRecord informationRecord) {
         this.userLogInOB = userLogInOB;
         this.data = informationRecord.getAccountData();
-        this.bracketData = informationRecord.getBracketData();
     }
 
     public boolean usernameExists(LogInID requestModel, AccountRepo data) {
@@ -30,7 +27,6 @@ public class LogInUC implements LogInIB{
     public boolean passwordMatch(String username, String password, AccountRepo data) {
         return (Objects.equals(data.getUser(username).getPassword(), password));
     }
-
 
     @Override
     public LogInOD logIn(LogInID requestModel) {

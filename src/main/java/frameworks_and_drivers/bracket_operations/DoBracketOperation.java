@@ -31,7 +31,7 @@ public class DoBracketOperation extends JFrame implements ActionListener, Change
     private final AdvanceTeamController advanceTeamController;
     private final DeclareWinnerController declareWinnerController;
     private final ChangePointsController changePointsController;
-    public int gameID;
+    private int gameID;
 
     public DoBracketOperation(AdvanceTeamController advanceTeamController,
                               DeclareWinnerController declareWinnerController,

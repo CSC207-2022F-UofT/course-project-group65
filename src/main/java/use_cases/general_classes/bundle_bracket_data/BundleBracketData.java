@@ -4,7 +4,6 @@ import entities.Bracket;
 import entities.Game;
 import entities.Team;
 import entities.User;
-//import useCases.generalClasses.traversalStrategies.BracketMethods;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -17,8 +16,8 @@ public class BundleBracketData {
     private final ArrayList<String> referees;
     private final LinkedHashMap<Integer, String> gameToReferee;
     private final LinkedHashMap<String, String> roleToInvite;
-    int tournamentID;
-    String tournamentName;
+    private int tournamentID;
+    private String tournamentName;
 
     public BundleBracketData(){
         this.gameToTeams = new LinkedHashMap<>();

@@ -1,12 +1,12 @@
 package use_cases.view_tournament;
 
 public class ViewTournamentID {
-    private final int TOURNAMENT_ID;
+    private final int tournamentID;
 
     public ViewTournamentID(int tournamentID){
-        TOURNAMENT_ID = tournamentID;
+        this.tournamentID = tournamentID;
     }
     int getTournamentID() {
-        return TOURNAMENT_ID;
+        return tournamentID;
     }
 }

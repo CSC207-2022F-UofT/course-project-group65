@@ -4,15 +4,15 @@ package use_cases.create_account;
  * This is a class representing the input data from the user used in creating a new account.
  */
 public class CreateAccountID {
-    private final String USERNAME;
-    private final String PASSWORD;
+    private final String username;
+    private final String password;
 
     public CreateAccountID(String username, String password) {
-        this.USERNAME = username;
-        this.PASSWORD = password;
+        this.username = username;
+        this.password = password;
     }
 
-    public String getUsername() { return USERNAME; }
+    public String getUsername() { return username; }
 
-    public String getPassword() { return PASSWORD; }
+    public String getPassword() { return password; }
 }

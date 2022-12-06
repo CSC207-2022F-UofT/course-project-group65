@@ -5,11 +5,11 @@ package use_cases.log_in;
  * This data is used in updating/creating the view after the user has successfully logged in.
  */
 public class LogInOD {
-    private final String USERNAME;
+    private final String username;
 
     public LogInOD(String username) {
-        this.USERNAME = username;
+        this.username = username;
     }
 
-    public String getUsername() { return USERNAME; }
+    public String getUsername() { return username; }
 }

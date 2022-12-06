@@ -18,12 +18,12 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
     private JLabel lbTournamentID;
     private JComboBox<Integer> tournamentIDs;
     private JButton goBackButton;
-    private final ViewTournamentController CONTROLLER;
-    private final NextScreenData NEXT_SCREEN_DATA;
+    private final ViewTournamentController controller;
+    private final NextScreenData nextScreenData;
 
     public ViewTournamentInfo(ViewTournamentController controller, NextScreenData nextScreenData) {
-        CONTROLLER = controller;
-        NEXT_SCREEN_DATA = nextScreenData;
+        this.controller = controller;
+        this.nextScreenData = nextScreenData;
         lbTournamentID.setVisible(true);
         setTitle("View Tournament");
         setSize(450, 300);
@@ -45,16 +45,16 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
         if (ae.getSource() == btSubmit){
             try {
                 int tournID = tournamentIDs.getItemAt(tournamentIDs.getSelectedIndex());
-                CONTROLLER.setPresenterData(NEXT_SCREEN_DATA);
-                CONTROLLER.viewTournament(tournID);
-                EndTournController endTournController = new EndTournController(NEXT_SCREEN_DATA.getCurrentUser(),
-                        NEXT_SCREEN_DATA.getInformationRecord(), NEXT_SCREEN_DATA.getCurrentBracketID());
-                StartTournController startTournController = new StartTournController(NEXT_SCREEN_DATA.getCurrentUser(),
-                        NEXT_SCREEN_DATA.getInformationRecord(), NEXT_SCREEN_DATA.getCurrentBracketID());
-                JoinTeamController joinTeamController = new JoinTeamController(NEXT_SCREEN_DATA.getInformationRecord(),
-                        NEXT_SCREEN_DATA.getCurrentBracketID(), NEXT_SCREEN_DATA.getCurrentUser());
-                NEXT_SCREEN_DATA.bundleData();
-                ExtendedView view = new ExtendedView(NEXT_SCREEN_DATA, endTournController, startTournController,
+                controller.setPresenterData(nextScreenData);
+                controller.viewTournament(tournID);
+                EndTournController endTournController = new EndTournController(nextScreenData.getCurrentUser(),
+                        nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID());
+                StartTournController startTournController = new StartTournController(nextScreenData.getCurrentUser(),
+                        nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID());
+                JoinTeamController joinTeamController = new JoinTeamController(nextScreenData.getInformationRecord(),
+                        nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+                nextScreenData.bundleData();
+                ExtendedView view = new ExtendedView(nextScreenData, endTournController, startTournController,
                         joinTeamController);
                 dispose();
                 view.setVisible(true);
@@ -69,8 +69,8 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
                 JOptionPane.showMessageDialog(this, ex.getMessage());
             }
         } else if (ae.getSource() == goBackButton) {
-            NEXT_SCREEN_DATA.setCurrentUser(NEXT_SCREEN_DATA.getCurrentUser());
-            OptionsScreen optionsScreen = new OptionsScreen(NEXT_SCREEN_DATA);
+            nextScreenData.setCurrentUser(nextScreenData.getCurrentUser());
+            OptionsScreen optionsScreen = new OptionsScreen(nextScreenData);
             this.dispose();
             optionsScreen.setVisible(true);
         }

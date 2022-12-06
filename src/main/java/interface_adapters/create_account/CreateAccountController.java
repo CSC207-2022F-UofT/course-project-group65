@@ -16,7 +16,6 @@ public class CreateAccountController {
      * @param informationRecord The class that stores both the BracketRepo and AccountRepo
      */
     public CreateAccountController(InformationRecord informationRecord) {
-        //this.createAccountIB = createAccountIB;
         CreateAccountOB createAccountOB = new CreateAccountPresenter();
         CreateAccountGateway gateway = new CreateAccountFileWriter("accounts.txt");
         this.createAccountIB = new CreateAccountUC(createAccountOB, informationRecord, gateway);
@@ -24,7 +23,7 @@ public class CreateAccountController {
     }
 
     /**
-     * Creates an account given an username and a password.
+     * Creates an account given a username and a password.
      *
      * @param username the string username
      * @param password the string password

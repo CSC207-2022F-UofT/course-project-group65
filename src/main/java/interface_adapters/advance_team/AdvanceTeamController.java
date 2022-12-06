@@ -10,7 +10,7 @@ import use_cases.general_classes.InformationRecord;
  */
 public class AdvanceTeamController {
 
-    AdvanceTeamIB userInput;
+    private final AdvanceTeamIB userInput;
 
     /**
      * This constructor creates a new AdvanceTeamController object.
@@ -20,7 +20,7 @@ public class AdvanceTeamController {
      */
     public AdvanceTeamController(AdvanceTeamPresenter presenter, InformationRecord informationRecord, int bracketID, String username) {
         AdvanceTeamGateway gateway = new AdvanceTeamFileWriter("brackets.txt");
-        this.userInput = new AdvanceTeamUC(presenter, gateway, informationRecord, bracketID, username);
+        userInput = new AdvanceTeamUC(presenter, gateway, informationRecord, bracketID, username);
     }
 
     /** This method is responsible for the communication between the user and the use case. */

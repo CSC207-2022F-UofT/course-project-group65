@@ -1,19 +1,19 @@
 package use_cases.assign_observer;
 
 public class AssignObserverID {
-    private final String ASSIGNEE;
-    private final int GAME_ID;
+    private final String assignee;
+    private final int gameID;
 
     public AssignObserverID(String assignee, int gameID){
-        ASSIGNEE = assignee;
-        GAME_ID = gameID;
+        this.assignee = assignee;
+        this.gameID = gameID;
     }
 
     String getAssignee() {
-        return ASSIGNEE;
+        return assignee;
     }
 
     int getGameID() {
-        return GAME_ID;
+        return gameID;
     }
 }

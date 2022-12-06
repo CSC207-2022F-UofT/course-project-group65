@@ -5,16 +5,16 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class ViewTournamentOD {
-    String username;
-    LinkedHashMap<Integer, ArrayList<String>> gameToTeams;
-    LinkedHashMap<Integer, ArrayList<Integer>> gameToScores;
-    LinkedHashMap<Integer, String> gameToWinner;
-    LinkedHashMap<String, ArrayList<String>> teamToPlayers;
-    ArrayList<String> referees;
-    LinkedHashMap<Integer, String> gameToReferee;
-    LinkedHashMap<String, String> roleToInvite;
-    int tournamentID;
-    String tournamentName;
+    private final String username;
+    private final LinkedHashMap<Integer, ArrayList<String>> gameToTeams;
+    private final LinkedHashMap<Integer, ArrayList<Integer>> gameToScores;
+    private final LinkedHashMap<Integer, String> gameToWinner;
+    private final LinkedHashMap<String, ArrayList<String>> teamToPlayers;
+    private final ArrayList<String> referees;
+    private final LinkedHashMap<Integer, String> gameToReferee;
+    private final LinkedHashMap<String, String> roleToInvite;
+    private final int tournamentID;
+    private final String tournamentName;
 
     public ViewTournamentOD(String username, BundleBracketData bracketData){
         this.username = username;

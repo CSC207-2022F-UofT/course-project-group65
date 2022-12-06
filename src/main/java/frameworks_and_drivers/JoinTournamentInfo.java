@@ -17,12 +17,12 @@ public class JoinTournamentInfo extends JFrame implements ActionListener {
     private JTextField tfInvite;
     private JLabel lbInvite;
     private JButton backButton;
-    private final JoinTournamentController CONTROLLER;
-    private final NextScreenData NEXT_SCREEN_DATA;
+    private final JoinTournamentController controller;
+    private final NextScreenData nextScreenData;
 
     public JoinTournamentInfo(JoinTournamentController controller, NextScreenData nextScreenData) {
-        CONTROLLER = controller;
-        NEXT_SCREEN_DATA = nextScreenData;
+        this.controller = controller;
+        this.nextScreenData = nextScreenData;
         lbInvite.setVisible(true);
         setTitle("Join Tournament");
         setSize(450, 300);
@@ -38,17 +38,17 @@ public class JoinTournamentInfo extends JFrame implements ActionListener {
         if (ae.getSource() == btSubmit){
             String invite = tfInvite.getText();
             try{
-                CONTROLLER.setPresenterData(NEXT_SCREEN_DATA);
-                CONTROLLER.joinTournament(invite);
-                EndTournController endTournController = new EndTournController(NEXT_SCREEN_DATA.getCurrentUser(),
-                        NEXT_SCREEN_DATA.getInformationRecord(), NEXT_SCREEN_DATA.getCurrentBracketID());
-                StartTournController startTournController = new StartTournController(NEXT_SCREEN_DATA.getCurrentUser(),
-                        NEXT_SCREEN_DATA.getInformationRecord(), NEXT_SCREEN_DATA.getCurrentBracketID());
-                JoinTeamController joinTeamController = new JoinTeamController(NEXT_SCREEN_DATA.getInformationRecord(),
-                        NEXT_SCREEN_DATA.getCurrentBracketID(), NEXT_SCREEN_DATA.getCurrentUser());
-                NEXT_SCREEN_DATA.bundleData();
+                controller.setPresenterData(nextScreenData);
+                controller.joinTournament(invite);
+                EndTournController endTournController = new EndTournController(nextScreenData.getCurrentUser(),
+                        nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID());
+                StartTournController startTournController = new StartTournController(nextScreenData.getCurrentUser(),
+                        nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID());
+                JoinTeamController joinTeamController = new JoinTeamController(nextScreenData.getInformationRecord(),
+                        nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
+                nextScreenData.bundleData();
 
-                ExtendedView view = new ExtendedView(NEXT_SCREEN_DATA, endTournController, startTournController, joinTeamController);
+                ExtendedView view = new ExtendedView(nextScreenData, endTournController, startTournController, joinTeamController);
 
                 dispose();
                 view.setVisible(true);
@@ -56,8 +56,8 @@ public class JoinTournamentInfo extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, ex.getMessage());
             }
         } else if (ae.getSource() == backButton){
-            NEXT_SCREEN_DATA.setCurrentUser(NEXT_SCREEN_DATA.getCurrentUser());
-            OptionsScreen optionsScreen = new OptionsScreen(NEXT_SCREEN_DATA);
+            nextScreenData.setCurrentUser(nextScreenData.getCurrentUser());
+            OptionsScreen optionsScreen = new OptionsScreen(nextScreenData);
             this.dispose();
             optionsScreen.setVisible(true);
         }

@@ -11,14 +11,14 @@ public class AssignObserverUC implements AssignObserverIB {
     private final AssignObserverOB outputBound;
     private final BracketRepo bracketRepo;
     private Bracket bracket;
-    private final User CURR_USER;
+    private final User currUser;
     public AssignObserverGateway gateway;
 
     public AssignObserverUC(AssignObserverOB outputBound, AssignObserverGateway gateway, InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;
         this.gateway = gateway;
         this.bracketRepo = informationRecord.getBracketData();
-        CURR_USER = informationRecord.getAccountData().getUser(currUser);
+        this.currUser = informationRecord.getAccountData().getUser(currUser);
     }
 
     /**
@@ -29,8 +29,8 @@ public class AssignObserverUC implements AssignObserverIB {
      */
     @Override
     public AssignObserverOD assignObserver(AssignObserverID input){
-        bracket = bracketRepo.getBracket(CURR_USER.getCurrentTournament());
-        if (!checkUserPermission(CURR_USER)){
+        bracket = bracketRepo.getBracket(currUser.getCurrentTournament());
+        if (!checkUserPermission(currUser)){
             return outputBound.prepareFailView("You do not have permission to preform this action.");
         }
         User ref = findReferee(bracket, input.getAssignee());
