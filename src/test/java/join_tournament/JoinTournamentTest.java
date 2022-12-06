@@ -287,4 +287,60 @@ public class JoinTournamentTest {
 
         interactor.joinBracket(inputData);
     }
+
+    /** This tests that an exception is thrown if the user does not enter an invite (null input)*/
+    @Test
+    public void joinTournamentNull(){
+
+
+        JoinTournamentGateway testGateway = new JoinTournamentDummyFileWriter();
+
+        JoinTournamentOB presenter = new JoinTournamentPresenter(){
+            @Override
+            public JoinTournamentOD prepareSuccessView(JoinTournamentOD outputData) {
+                fail("Use case success is unexpected");
+                return null;
+            }
+
+            @Override
+            public JoinTournamentOD prepareFailView(String error) {
+                throw new JoinTournamentFailed(error);
+            }
+        };
+
+        JoinTournamentIB interactor = new JoinTournamentUC(presenter, testGateway, info, "tester");
+        JoinTournamentID inputData = new JoinTournamentID(null);
+
+        Exception exception = assertThrows(JoinTournamentFailed.class, () ->
+                interactor.joinBracket(inputData));
+        assertEquals("Please enter an invite.", exception.getMessage());
+    }
+
+    /** This tests that an exception is thrown if the user does not enter an invite (empty string input)*/
+    @Test
+    public void joinTournamentEmptyString(){
+
+
+        JoinTournamentGateway testGateway = new JoinTournamentDummyFileWriter();
+
+        JoinTournamentOB presenter = new JoinTournamentPresenter(){
+            @Override
+            public JoinTournamentOD prepareSuccessView(JoinTournamentOD outputData) {
+                fail("Use case success is unexpected");
+                return null;
+            }
+
+            @Override
+            public JoinTournamentOD prepareFailView(String error) {
+                throw new JoinTournamentFailed(error);
+            }
+        };
+
+        JoinTournamentIB interactor = new JoinTournamentUC(presenter, testGateway, info, "tester");
+        JoinTournamentID inputData = new JoinTournamentID("");
+
+        Exception exception = assertThrows(JoinTournamentFailed.class, () ->
+                interactor.joinBracket(inputData));
+        assertEquals("Please enter an invite.", exception.getMessage());
+    }
 }

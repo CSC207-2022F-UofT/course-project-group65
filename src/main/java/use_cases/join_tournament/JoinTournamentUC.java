@@ -37,9 +37,13 @@ public class JoinTournamentUC implements JoinTournamentIB{
      * @return the output data
      */
     public JoinTournamentOD joinBracket(JoinTournamentID input){
+        String invite = input.getInvite();
+        if(invite == null || invite.equals("")){
+            return outputBound.prepareFailView("Please enter an invite.");
+        }
+        String role = invite.substring(0, 2);
+        String idAndName = input.getInvite().substring(2);
         try {
-            String role = input.getInvite().substring(0, 2);
-            String idAndName = input.getInvite().substring(2);
             int tournamentID = Integer.parseInt(idAndName.split("(?<=\\d)(?=\\D)")[0]);
 
             if (!bracketRepo.getBrackets().containsKey(tournamentID)){
@@ -73,7 +77,7 @@ public class JoinTournamentUC implements JoinTournamentIB{
             output = new JoinTournamentOD(currUser.getUsername(), bracketData);
             return outputBound.prepareSuccessView(output);
         }
-        catch (Exception ex){
+        catch (NumberFormatException nex){
             return outputBound.prepareFailView("Invalid invite format.");
         }
     }
