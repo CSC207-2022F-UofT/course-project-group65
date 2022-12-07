@@ -13,10 +13,22 @@ import java.util.LinkedHashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This is the test class for viewTournament use case
+ */
 public class ViewTournamentTest {
+    /**
+     * An instance of InformationRecord used to record all the information
+     */
     InformationRecord info;
+    /**
+     * An instance of user
+     */
     User user;
 
+    /**
+     * This method is for setting up all the information needed for testing in the bracket
+     */
     @BeforeEach
     public void setup() {
         user = new DefaultUser();
@@ -57,6 +69,10 @@ public class ViewTournamentTest {
         info = new InformationRecord(accounts, brackets);
     }
 
+    /**
+     * This method tests when viewing the tournament which previously joined ,
+     * whether the output will be correct
+     */
     @Test
     public void viewTournamentPreviouslyJoined() {
         ViewTournamentGateway testGateway = new ViewTournamentDummyFileWriter();
@@ -119,6 +135,10 @@ public class ViewTournamentTest {
         interactor.viewBracket(inputData);
     }
 
+    /**
+     * This method tests when viewing the tournament which did not previously join,
+     * whether the output will be correct
+     */
     @Test
     public void viewTournamentNotPreviouslyJoined() {
         ViewTournamentGateway testGateway = new ViewTournamentDummyFileWriter();
