@@ -12,10 +12,11 @@ import use_cases.general_classes.InformationRecord;
 import java.util.LinkedHashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/** This is the test class for assignObserver use case*/
 public class AssignObserverTest {
+    /** The informationRecord variable used to record all the information */
     InformationRecord info;
-
+    /** This method is for setting up all the information needed for testing in the bracket */
     @Before
     public void setup(){
         User user = new DefaultUser();
@@ -62,7 +63,8 @@ public class AssignObserverTest {
         brackets.addBracket(bracket);
         info = new InformationRecord(accounts, brackets);
     }
-
+    /** This method tests when the user has no permission to assign an observer, whether the output will be correct
+     * for the user wants to assign an observer */
     @Test
     public void AssignObserverNoPermission(){
 
@@ -90,7 +92,9 @@ public class AssignObserverTest {
                 interactor.assignObserver(inputData));
         assertEquals("You do not have permission to preform this action.", exception.getMessage());
     }
-
+    /** This method tests when the user wants to assign the other user who is not observer to observer,
+     * whether the output will be correct
+     */
     @Test
     public void AssignObserverNotObserver(){
         AssignObserverGateway testGateway = new AssignObserverDummyFileWriter();
@@ -118,7 +122,9 @@ public class AssignObserverTest {
                 interactor.assignObserver(inputData));
         assertEquals("Assignee is not an Observer.", exception.getMessage());
     }
-
+    /** This method tests when the user assign an observer to a game, but the game does not exist,
+     *  whether the output will be correct
+     */
     @Test
     public void AssignObserverGameDNE(){
         AssignObserverGateway testGateway = new AssignObserverDummyFileWriter();
@@ -147,7 +153,8 @@ public class AssignObserverTest {
                 interactor.assignObserver(inputData));
         assertEquals("Game ID is invalid.", exception.getMessage());
     }
-
+    /** This method tests when the user assign an observer successfully, whether the output will be correct
+     */
     @Test
     public void AssignObserverPass(){
 
@@ -182,7 +189,9 @@ public class AssignObserverTest {
 
         interactor.assignObserver(inputData);
     }
-
+    /** This method tests when the user assign an observer to the game, but the game has already an observer
+     *  whether the output will be correct
+     */
     @Test
     public void AssignObserverGameHasObserver(){
         AssignObserverGateway testGateway = new AssignObserverDummyFileWriter();
