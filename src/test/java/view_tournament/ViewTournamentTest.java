@@ -1,24 +1,24 @@
 package view_tournament;
 
 import entities.*;
+import interface_adapters.view_tournament.ViewTournamentFailed;
 import interface_adapters.view_tournament.ViewTournamentPresenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
 import use_cases.general_classes.InformationRecord;
 import use_cases.view_tournament.*;
-import interface_adapters.view_tournament.ViewTournamentFailed;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ViewTournamentTest {
     InformationRecord info;
     User user;
 
     @BeforeEach
-    public void setup(){
+    public void setup() {
         user = new DefaultUser();
         user.setUsername("tester");
 
@@ -58,10 +58,10 @@ public class ViewTournamentTest {
     }
 
     @Test
-    public void viewTournamentPreviouslyJoined(){
+    public void viewTournamentPreviouslyJoined() {
         ViewTournamentGateway testGateway = new ViewTournamentDummyFileWriter();
 
-        ViewTournamentOB presenter = new ViewTournamentPresenter(){
+        ViewTournamentOB presenter = new ViewTournamentPresenter() {
             @Override
             public ViewTournamentOD prepareSuccessView(ViewTournamentOD outputData) {
                 ArrayList<String> teams = new ArrayList<>();
@@ -120,10 +120,10 @@ public class ViewTournamentTest {
     }
 
     @Test
-    public void viewTournamentNotPreviouslyJoined(){
+    public void viewTournamentNotPreviouslyJoined() {
         ViewTournamentGateway testGateway = new ViewTournamentDummyFileWriter();
 
-        ViewTournamentOB presenter = new ViewTournamentPresenter(){
+        ViewTournamentOB presenter = new ViewTournamentPresenter() {
             @Override
             public ViewTournamentOD prepareSuccessView(ViewTournamentOD outputData) {
                 fail("Use case success is unexpected");

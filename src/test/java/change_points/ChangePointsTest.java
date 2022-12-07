@@ -11,14 +11,21 @@ import use_cases.general_classes.InformationRecord;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
-/** This is the test class for changePoints use case*/
+
+/**
+ * This is the test class for changePoints use case
+ */
 public class ChangePointsTest {
-    /** The informationRecord variable used to record all the information */
+    /**
+     * The informationRecord variable used to record all the information
+     */
     InformationRecord info;
 
-    /** This method is for setting up all the information needed for testing in the bracket */
+    /**
+     * This method is for setting up all the information needed for testing in the bracket
+     */
     @Before
-    public void setup(){
+    public void setup() {
 
         User overseer = new DefaultUser();
         overseer.setUsername("overseer");
@@ -95,7 +102,6 @@ public class ChangePointsTest {
         gameLeft.setPrevGame1(gameLeftLeft);
 
 
-
         Bracket bracket = new DefaultBracket();
         bracket.setTournamentID(1);
         bracket.setTournamentName("test");
@@ -121,20 +127,23 @@ public class ChangePointsTest {
         brackets.addBracket(bracket);
         info = new InformationRecord(accounts, brackets);
     }
-    /** This method tests when the team does not exist, whether the output will be correct
-     * for the user wants to change points*/
+
+    /**
+     * This method tests when the team does not exist, whether the output will be correct
+     * for the user wants to change points
+     */
     @Test
-    public void testTeamDNE(){
+    public void testTeamDNE() {
         ChangePointsGateway gateway = new ChangePointsDummyFileWriter();
-        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()){
+        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()) {
             @Override
-            public ChangePointsOD presentSuccess(ChangePointsOD outputData){
+            public ChangePointsOD presentSuccess(ChangePointsOD outputData) {
                 fail("Unexpected success");
                 return null;
             }
 
             @Override
-            public ChangePointsOD presentError(String errorMessage){
+            public ChangePointsOD presentError(String errorMessage) {
                 throw new ChangePointsFailed(errorMessage);
             }
         };
@@ -144,20 +153,23 @@ public class ChangePointsTest {
         Exception exception = assertThrows(ChangePointsFailed.class, () -> interactor.changePoints(input));
         assertEquals("The team you are trying to change points for is not in the game.", exception.getMessage());
     }
-    /** This method tests when the team already won the game, whether the output will be correct
-     * for the user wants to change points*/
+
+    /**
+     * This method tests when the team already won the game, whether the output will be correct
+     * for the user wants to change points
+     */
     @Test
-    public void testTeamAlreadyWon(){
+    public void testTeamAlreadyWon() {
         ChangePointsGateway gateway = new ChangePointsDummyFileWriter();
-        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()){
+        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()) {
             @Override
-            public ChangePointsOD presentSuccess(ChangePointsOD outputData){
+            public ChangePointsOD presentSuccess(ChangePointsOD outputData) {
                 fail("Unexpected success");
                 return null;
             }
 
             @Override
-            public ChangePointsOD presentError(String errorMessage){
+            public ChangePointsOD presentError(String errorMessage) {
                 throw new ChangePointsFailed(errorMessage);
             }
         };
@@ -168,20 +180,22 @@ public class ChangePointsTest {
         assertEquals("This game has already been won.", exception.getMessage());
     }
 
-    /** This method tests when the user has no permission, whether the output will be correct
-     * for the user wants to change points*/
+    /**
+     * This method tests when the user has no permission, whether the output will be correct
+     * for the user wants to change points
+     */
     @Test
-    public void testUserHasNoPermission(){
+    public void testUserHasNoPermission() {
         ChangePointsGateway gateway = new ChangePointsDummyFileWriter();
-        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()){
+        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()) {
             @Override
-            public ChangePointsOD presentSuccess(ChangePointsOD outputData){
+            public ChangePointsOD presentSuccess(ChangePointsOD outputData) {
                 fail("Unexpected success");
                 return null;
             }
 
             @Override
-            public ChangePointsOD presentError(String errorMessage){
+            public ChangePointsOD presentError(String errorMessage) {
                 throw new ChangePointsFailed(errorMessage);
             }
         };
@@ -191,20 +205,23 @@ public class ChangePointsTest {
         Exception exception = assertThrows(ChangePointsFailed.class, () -> interactor.changePoints(input));
         assertEquals("You do not have permission to change points.", exception.getMessage());
     }
-    /** This method tests when the user is not observer for this game, whether the output will be correct
-     * for the user wants to change points*/
+
+    /**
+     * This method tests when the user is not observer for this game, whether the output will be correct
+     * for the user wants to change points
+     */
     @Test
-    public void testWrongObserver(){
+    public void testWrongObserver() {
         ChangePointsGateway gateway = new ChangePointsDummyFileWriter();
-        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()){
+        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()) {
             @Override
-            public ChangePointsOD presentSuccess(ChangePointsOD outputData){
+            public ChangePointsOD presentSuccess(ChangePointsOD outputData) {
                 fail("Unexpected success");
                 return null;
             }
 
             @Override
-            public ChangePointsOD presentError(String errorMessage){
+            public ChangePointsOD presentError(String errorMessage) {
                 throw new ChangePointsFailed(errorMessage);
             }
         };
@@ -214,20 +231,23 @@ public class ChangePointsTest {
         Exception exception = assertThrows(ChangePointsFailed.class, () -> interactor.changePoints(input));
         assertEquals("You are not assigned to this game.", exception.getMessage());
     }
-    /** This method tests when the game does not exist, whether the output will be correct
-     * for the user wants to change points*/
+
+    /**
+     * This method tests when the game does not exist, whether the output will be correct
+     * for the user wants to change points
+     */
     @Test
-    public void testGameDNE(){
+    public void testGameDNE() {
         ChangePointsGateway gateway = new ChangePointsDummyFileWriter();
-        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()){
+        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()) {
             @Override
-            public ChangePointsOD presentSuccess(ChangePointsOD outputData){
+            public ChangePointsOD presentSuccess(ChangePointsOD outputData) {
                 fail("Unexpected success");
                 return null;
             }
 
             @Override
-            public ChangePointsOD presentError(String errorMessage){
+            public ChangePointsOD presentError(String errorMessage) {
                 throw new ChangePointsFailed(errorMessage);
             }
         };
@@ -237,20 +257,23 @@ public class ChangePointsTest {
         Exception exception = assertThrows(ChangePointsFailed.class, () -> interactor.changePoints(input));
         assertEquals("The game you are trying to change points in is not in the bracket.", exception.getMessage());
     }
-    /** This method tests when the change points is invalid, whether the output will be correct
-     * for the user wants to change points*/
+
+    /**
+     * This method tests when the change points is invalid, whether the output will be correct
+     * for the user wants to change points
+     */
     @Test
-    public void testInvalidPoints(){
+    public void testInvalidPoints() {
         ChangePointsGateway gateway = new ChangePointsDummyFileWriter();
-        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()){
+        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()) {
             @Override
-            public ChangePointsOD presentSuccess(ChangePointsOD outputData){
+            public ChangePointsOD presentSuccess(ChangePointsOD outputData) {
                 fail("Unexpected success");
                 return null;
             }
 
             @Override
-            public ChangePointsOD presentError(String errorMessage){
+            public ChangePointsOD presentError(String errorMessage) {
                 throw new ChangePointsFailed(errorMessage);
             }
         };
@@ -260,20 +283,23 @@ public class ChangePointsTest {
         Exception exception = assertThrows(ChangePointsFailed.class, () -> interactor.changePoints(input));
         assertEquals("The points you are trying to change to are not valid.", exception.getMessage());
     }
-    /** This method tests when not all games are full, whether the output will be correct
-     * for the user wants to change points*/
+
+    /**
+     * This method tests when not all games are full, whether the output will be correct
+     * for the user wants to change points
+     */
     @Test
-    public void testNotAllGamesFull(){
+    public void testNotAllGamesFull() {
         ChangePointsGateway gateway = new ChangePointsDummyFileWriter();
-        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()){
+        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()) {
             @Override
-            public ChangePointsOD presentSuccess(ChangePointsOD outputData){
+            public ChangePointsOD presentSuccess(ChangePointsOD outputData) {
                 fail("Unexpected success");
                 return null;
             }
 
             @Override
-            public ChangePointsOD presentError(String errorMessage){
+            public ChangePointsOD presentError(String errorMessage) {
                 throw new ChangePointsFailed(errorMessage);
             }
         };
@@ -283,19 +309,21 @@ public class ChangePointsTest {
         Exception exception = assertThrows(ChangePointsFailed.class, () -> interactor.changePoints(input));
         assertEquals("Not all games in the round are full. You cannot add points yet", exception.getMessage());
     }
-    /** This method tests when the change points successfully, whether the output will be correct
+
+    /**
+     * This method tests when the change points successfully, whether the output will be correct
      */
     @Test
-    public void testSuccess(){
+    public void testSuccess() {
         ChangePointsGateway gateway = new ChangePointsDummyFileWriter();
-        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()){
+        ChangePointsOB presenter = new ChangePointsPresenter(new ChangePointsTestView()) {
             @Override
-            public ChangePointsOD presentSuccess(ChangePointsOD outputData){
+            public ChangePointsOD presentSuccess(ChangePointsOD outputData) {
                 return outputData;
             }
 
             @Override
-            public ChangePointsOD presentError(String errorMessage){
+            public ChangePointsOD presentError(String errorMessage) {
                 fail("Unexpected error");
                 return null;
             }

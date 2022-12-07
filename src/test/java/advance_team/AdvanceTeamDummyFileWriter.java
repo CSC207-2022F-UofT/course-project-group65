@@ -6,9 +6,14 @@ import use_cases.advance_team.AdvanceTeamGateway;
 
 import java.io.IOException;
 import java.util.HashMap;
-/** This class represents the advanceTeam file writer for the test use*/
+
+/**
+ * This class represents the advanceTeam file writer for the test use
+ */
 public class AdvanceTeamDummyFileWriter implements AdvanceTeamGateway {
-    /** This hashmap variable is for storing bracketRepos*/
+    /**
+     * This hashmap variable is for storing bracketRepos
+     */
     final private HashMap<BracketRepo, AdvanceTeamDSID> bracketRepos = new HashMap<>();
 
     /**

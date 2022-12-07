@@ -10,13 +10,20 @@ import use_cases.general_classes.InformationRecord;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/** This is the test class for DeclareWinner use case*/
+/**
+ * This is the test class for DeclareWinner use case
+ */
 public class DeclareWinnerTest {
-    /** The informationRecord variable used to record all the information */
+    /**
+     * The informationRecord variable used to record all the information
+     */
     InformationRecord info;
-    /** This method is for setting up all the information needed for testing in the bracket */
+
+    /**
+     * This method is for setting up all the information needed for testing in the bracket
+     */
     @Before
-    public void setup(){
+    public void setup() {
         User overseer = new DefaultUser();
         overseer.setUsername("overseer");
         overseer.setPassword("password");
@@ -89,7 +96,6 @@ public class DeclareWinnerTest {
         gameLeft.setPrevGame1(gameLeftLeft);
 
 
-
         Bracket bracket = new DefaultBracket();
         bracket.setTournamentID(1);
         bracket.setTournamentName("test");
@@ -113,12 +119,15 @@ public class DeclareWinnerTest {
         brackets.addBracket(bracket);
         info = new InformationRecord(accounts, brackets);
     }
-    /** This method tests that an exception is thrown if the user is a player and does not have permission
-     * to declare a winner */
+
+    /**
+     * This method tests that an exception is thrown if the user is a player and does not have permission
+     * to declare a winner
+     */
     @Test
-    public void UserHasNoPermission(){
+    public void UserHasNoPermission() {
         DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerDummyFileWriter();
-        DeclareWinnerOB presenter = new DeclareWinnerPresenter(new DeclareWinnerTestView()){
+        DeclareWinnerOB presenter = new DeclareWinnerPresenter(new DeclareWinnerTestView()) {
             @Override
             public DeclareWinnerOD presentSuccess(DeclareWinnerOD outputData) {
                 fail("Unexpected success");
@@ -136,11 +145,14 @@ public class DeclareWinnerTest {
         Exception exception = assertThrows(DeclareWinnerFailed.class, () -> interactor.setWinner(input));
         assertEquals("You do not have permission to declare a winner for this game.", exception.getMessage());
     }
-    /** This method tests that an exception is thrown if the game already has a winner*/
+
+    /**
+     * This method tests that an exception is thrown if the game already has a winner
+     */
     @Test
-    public void GameAlreadyHasWinner(){
+    public void GameAlreadyHasWinner() {
         DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerDummyFileWriter();
-        DeclareWinnerOB presenter = new DeclareWinnerPresenter(new DeclareWinnerTestView()){
+        DeclareWinnerOB presenter = new DeclareWinnerPresenter(new DeclareWinnerTestView()) {
             @Override
             public DeclareWinnerOD presentSuccess(DeclareWinnerOD outputData) {
                 fail("Unexpected success");
@@ -158,11 +170,14 @@ public class DeclareWinnerTest {
         Exception exception = assertThrows(DeclareWinnerFailed.class, () -> interactor.setWinner(input));
         assertEquals("This game has already been won.", exception.getMessage());
     }
-    /** This method tests that an exception is thrown if the game is not finishes and a winner cannot be declared.*/
+
+    /**
+     * This method tests that an exception is thrown if the game is not finishes and a winner cannot be declared.
+     */
     @Test
-    public void GameNotFinished(){
+    public void GameNotFinished() {
         DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerDummyFileWriter();
-        DeclareWinnerOB presenter = new DeclareWinnerPresenter(new DeclareWinnerTestView()){
+        DeclareWinnerOB presenter = new DeclareWinnerPresenter(new DeclareWinnerTestView()) {
             @Override
             public DeclareWinnerOD presentSuccess(DeclareWinnerOD outputData) {
                 fail("Unexpected success");
@@ -180,12 +195,15 @@ public class DeclareWinnerTest {
         Exception exception = assertThrows(DeclareWinnerFailed.class, () -> interactor.setWinner(input));
         assertEquals("No team has won this game yet.", exception.getMessage());
     }
-    /** This method tests that an exception is thrown if the observer was not assigned to the game he/she
-     * wish to declare a winner for.*/
+
+    /**
+     * This method tests that an exception is thrown if the observer was not assigned to the game he/she
+     * wish to declare a winner for.
+     */
     @Test
-    public void testWrongObserver(){
+    public void testWrongObserver() {
         DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerDummyFileWriter();
-        DeclareWinnerOB presenter = new DeclareWinnerPresenter(new DeclareWinnerTestView()){
+        DeclareWinnerOB presenter = new DeclareWinnerPresenter(new DeclareWinnerTestView()) {
             @Override
             public DeclareWinnerOD presentSuccess(DeclareWinnerOD outputData) {
                 fail("Unexpected success");
@@ -203,12 +221,15 @@ public class DeclareWinnerTest {
         Exception exception = assertThrows(DeclareWinnerFailed.class, () -> interactor.setWinner(input));
         assertEquals("You are not assigned to this game.", exception.getMessage());
     }
-    /** This method tests that an exception is thrown if the observer wants to declare winner for
-     * a game that does not exist.*/
+
+    /**
+     * This method tests that an exception is thrown if the observer wants to declare winner for
+     * a game that does not exist.
+     */
     @Test
-    public void testGameDNE(){
+    public void testGameDNE() {
         DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerDummyFileWriter();
-        DeclareWinnerOB presenter = new DeclareWinnerPresenter(new DeclareWinnerTestView()){
+        DeclareWinnerOB presenter = new DeclareWinnerPresenter(new DeclareWinnerTestView()) {
             @Override
             public DeclareWinnerOD presentSuccess(DeclareWinnerOD outputData) {
                 fail("Unexpected success");
@@ -226,11 +247,14 @@ public class DeclareWinnerTest {
         Exception exception = assertThrows(DeclareWinnerFailed.class, () -> interactor.setWinner(input));
         assertEquals("This game does not exist.", exception.getMessage());
     }
-    /** This method tests that a winner can be successfully declared given that all user input are valid.*/
+
+    /**
+     * This method tests that a winner can be successfully declared given that all user input are valid.
+     */
     @Test
-    public void testSuccess(){
+    public void testSuccess() {
         DeclareWinnerGateway declareWinnerGateway = new DeclareWinnerDummyFileWriter();
-        DeclareWinnerOB presenter = new DeclareWinnerPresenter(new DeclareWinnerTestView()){
+        DeclareWinnerOB presenter = new DeclareWinnerPresenter(new DeclareWinnerTestView()) {
             @Override
             public DeclareWinnerOD presentSuccess(DeclareWinnerOD outputData) {
                 return outputData;

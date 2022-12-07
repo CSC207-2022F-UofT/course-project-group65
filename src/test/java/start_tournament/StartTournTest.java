@@ -11,8 +11,8 @@ import use_cases.start_tournament.StartTournIB;
 import use_cases.start_tournament.StartTournOD;
 import use_cases.start_tournament.StartTournUC;
 
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * This class tests the functionality of StartTournUC (interactor).
@@ -24,7 +24,7 @@ public class StartTournTest {
      * tests its output data matches our expected values, especially in this case, the type of errors.
      */
     @Test
-    public void start(){
+    public void start() {
         String errorType2 = "NUMTEAMS";
         String errorType3 = "NOOBSERVER";
         String errorType4 = "TEAMNOTFULL";
@@ -37,6 +37,7 @@ public class StartTournTest {
                 assertTrue(outputData.getErrors().contains(errorType4));
                 return null;
             }
+
             @Override
             public StartTournOD presentError(String errorMessage) {
                 fail("Use case failure is unexpected.");
@@ -71,7 +72,7 @@ public class StartTournTest {
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         java.io.File file = new java.io.File("filename.txt");
         boolean deletion = file.delete();
     }

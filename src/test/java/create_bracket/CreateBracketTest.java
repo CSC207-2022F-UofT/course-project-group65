@@ -1,6 +1,9 @@
 package create_bracket;
 
-import entities.*;
+import entities.AccountRepo;
+import entities.BracketRepo;
+import entities.DefaultUser;
+import entities.User;
 import interface_adapters.create_bracket.CreateBracketFailed;
 import interface_adapters.create_bracket.CreateBracketPresenter;
 import interface_adapters.data_interface_adapters.create_bracket_data.CreateBracketFileWriter;
@@ -31,6 +34,7 @@ public class CreateBracketTest {
                 assertEquals(viewData.getTeams().get(0), "BlankTeam 1");
                 return null;
             }
+
             @Override
             public CreateBracketOD presentError(String error) {
                 fail("Use case failure is unexpected.");
@@ -61,8 +65,8 @@ public class CreateBracketTest {
      * This tests CreateBracketUC which should present error when given an empty string ("") for its team name.
      */
     @Test
-    public void createBracketEmptyTeamName(){
-        CreateBracketOB presenter = new CreateBracketPresenter(){
+    public void createBracketEmptyTeamName() {
+        CreateBracketOB presenter = new CreateBracketPresenter() {
             @Override
             public CreateBracketOD presentSuccess(CreateBracketOD outputData) {
                 fail("Use case success is unexpected");
@@ -90,7 +94,6 @@ public class CreateBracketTest {
         CreateBracketIB interactor = new CreateBracketUC(presenter, gateway, currentUser, informationRecord);
         CreateBracketID createBracketID = new CreateBracketID("Default", "",
                 9, 7, 1);
-
 
 
         Exception exception = assertThrows(CreateBracketFailed.class, () ->

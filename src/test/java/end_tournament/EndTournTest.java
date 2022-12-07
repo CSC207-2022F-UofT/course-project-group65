@@ -9,7 +9,6 @@ import org.junit.Test;
 import use_cases.end_tournament.*;
 import use_cases.general_classes.InformationRecord;
 
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -21,13 +20,14 @@ public class EndTournTest {
      * together (all the conditions needed are met to end the tournament).
      */
     @Test
-    public void end(){
+    public void end() {
         EndTournPresenter endTournPresenter = new EndTournPresenter() {
             @Override
             public EndTournOD presentSuccess(EndTournOD outputData) {
                 System.out.println("Success expected");
                 return null;
             }
+
             @Override
             public EndTournOD presentError(String errorMessage) {
                 fail("Use case failure is unexpected.");
@@ -70,12 +70,12 @@ public class EndTournTest {
      * tournament is not met (in this case, the round is not the final round).
      */
     @Test
-    public void endTournamentNotFinalRound(){
+    public void endTournamentNotFinalRound() {
 
 
         EndTournGateway testGateway = new EndTournFileWriter("filename");
 
-        EndTournOB presenter = new EndTournPresenter(){
+        EndTournOB presenter = new EndTournPresenter() {
             @Override
             public EndTournOD presentSuccess(EndTournOD outputData) {
                 fail("Use case success is unexpected");
@@ -110,13 +110,12 @@ public class EndTournTest {
         EndTournIB interactor = new EndTournUC(presenter, userName, informationRecord, bracketId, testGateway);
 
 
-
         Exception exception = assertThrows(EndTournFailed.class, interactor::endTourn);
         assertEquals("This round is not the final round.", exception.getMessage());
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         java.io.File file = new java.io.File("filename.txt");
         boolean deletion = file.delete();
     }

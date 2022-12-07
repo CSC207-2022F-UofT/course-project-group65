@@ -41,11 +41,14 @@ public class LogInTest {
         BracketRepo bracketRepo = new BracketRepo();
         info = new InformationRecord(accountRepo, bracketRepo);
     }
-    /** This tests that LogInUC throws the correct exception if the username inputed by the user does not exist and
-     * the user cannot log in*/
+
+    /**
+     * This tests that LogInUC throws the correct exception if the username inputed by the user does not exist and
+     * the user cannot log in
+     */
     @Test
-    public void testUsernameDNE(){
-        LogInOB presenter = new LogInPresenter(){
+    public void testUsernameDNE() {
+        LogInOB presenter = new LogInPresenter() {
             @Override
             public LogInOD prepareSuccessView(LogInOD view) {
                 Assertions.fail("Username does not exist, should not be able to log in");
@@ -63,11 +66,14 @@ public class LogInTest {
         Exception exception = assertThrows(LogInFailed.class, () -> useCase.logIn(inputData));
         assertEquals("username and/or password is incorrect", exception.getMessage());
     }
-    /** This tests that LogInUC throws the correct exception if the password inputed by the user does not macth the
-     * password that map to the username so the user cannot log in*/
+
+    /**
+     * This tests that LogInUC throws the correct exception if the password inputed by the user does not macth the
+     * password that map to the username so the user cannot log in
+     */
     @Test
-    public void testPasswordIncorrect(){
-        LogInOB presenter = new LogInPresenter(){
+    public void testPasswordIncorrect() {
+        LogInOB presenter = new LogInPresenter() {
             @Override
             public LogInOD prepareSuccessView(LogInOD view) {
                 Assertions.fail("Password is incorrect, should not be able to log in");
@@ -84,10 +90,13 @@ public class LogInTest {
         Exception exception = assertThrows(LogInFailed.class, () -> useCase.logIn(inputData));
         assertEquals("username and/or password is incorrect", exception.getMessage());
     }
-    /** This tests that LogInUC runs and user successfully logs in if the password and username both match */
+
+    /**
+     * This tests that LogInUC runs and user successfully logs in if the password and username both match
+     */
     @Test
-    public void testLogInSuccess(){
-        LogInOB presenter = new LogInPresenter(){
+    public void testLogInSuccess() {
+        LogInOB presenter = new LogInPresenter() {
             @Override
             public LogInOD prepareSuccessView(LogInOD view) {
                 return view;
@@ -106,7 +115,7 @@ public class LogInTest {
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         java.io.File file = new java.io.File("filename.txt");
         boolean deletion = file.delete();
     }

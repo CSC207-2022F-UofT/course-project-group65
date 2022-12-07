@@ -6,10 +6,16 @@ import use_cases.change_points.ChangePointsGateway;
 
 import java.io.IOException;
 import java.util.HashMap;
-/** This class represents the changePoints file writer for the test use*/
+
+/**
+ * This class represents the changePoints file writer for the test use
+ */
 public class ChangePointsDummyFileWriter implements ChangePointsGateway {
-    /** This hashmap variable is for storing bracketRepos*/
+    /**
+     * This hashmap variable is for storing bracketRepos
+     */
     final private HashMap<BracketRepo, ChangePointsDSID> bracketRepos = new HashMap<>();
+
     /**
      * Write the given data to the file.
      *
