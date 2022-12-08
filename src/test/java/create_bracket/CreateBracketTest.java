@@ -110,5 +110,6 @@ public class CreateBracketTest {
         java.io.File brackets = new java.io.File(bracketsFile);
         boolean deletion1 = accounts.delete();
         boolean deletion2 = brackets.delete();
+        System.out.println("Deletion of files: " + deletion1 + " " + deletion2);
     }
 }

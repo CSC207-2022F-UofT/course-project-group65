@@ -4,10 +4,12 @@ import entities.*;
 import interface_adapters.data_interface_adapters.join_team_data.JoinTeamFileWriter;
 import interface_adapters.join_team.JoinTeamFailed;
 import interface_adapters.join_team.JoinTeamPresenter;
+import org.junit.After;
 import org.junit.Test;
 import use_cases.general_classes.InformationRecord;
 import use_cases.join_team.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -237,5 +239,13 @@ public class JoinTeamTest {
                 joinTeamUC.joinTeam(inputData));
         assertEquals("Fail to join the team (The team is already full)", exception.getMessage());
     }
+
+    @After
+    public void tearDown() {
+        File file = new File("tests.txt");
+        boolean deletion = file.delete();
+        System.out.println("File deleted: " + deletion);
+    }
+
 }
 

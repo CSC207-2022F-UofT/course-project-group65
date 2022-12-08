@@ -5,9 +5,12 @@ import entities.*;
 import interface_adapters.data_interface_adapters.team_creation_data.TeamCreationFileWriter;
 import interface_adapters.team_creation.TeamCreationFailed;
 import interface_adapters.team_creation.TeamCreationPresenter;
+import org.junit.After;
 import org.junit.Test;
 import use_cases.general_classes.InformationRecord;
 import use_cases.team_creation.*;
+
+import java.io.File;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -264,4 +267,10 @@ public class TeamCreationInteractorTest {
 
     }
 
+    @After
+    public void tearDown() {
+        File file = new File("tests.txt");
+        boolean deletion = file.delete();
+        System.out.println("File deleted: " + deletion);
+    }
 }

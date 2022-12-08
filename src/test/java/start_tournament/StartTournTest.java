@@ -75,6 +75,7 @@ public class StartTournTest {
     public void tearDown() {
         java.io.File file = new java.io.File("filename.txt");
         boolean deletion = file.delete();
+        System.out.println("File deleted: " + deletion);
     }
 
 }
