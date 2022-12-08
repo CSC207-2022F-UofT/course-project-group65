@@ -61,7 +61,7 @@ so:
 This piazza post details how we do it: https://piazza.com/class/l5v1b8gfz6b60m/post/473
 
 ## Opening The Project
-After running the project, the first things that should come up is the hope screen, where you can either login or 
+After running the project, the first things that should come up is the home screen, where you can either log in or 
 create an account.
 
 ![img_1.png](images/readme_images/img_1.png)
