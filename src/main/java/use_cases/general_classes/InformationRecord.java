@@ -8,6 +8,10 @@ import entities.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class is a part of the singleton design pattern to store the current state of the program - that is, the user
+ * accounts and the brackets that have been created.
+ */
 public class InformationRecord {
     private AccountRepo accountData;
     private BracketRepo bracketData;

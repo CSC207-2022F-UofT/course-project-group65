@@ -13,6 +13,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class is the screen file for the bracket operations use cases - so ChangePoints, AdvanceTeam, and DeclareWinner.
+ */
 public class DoBracketOperation extends JFrame implements ActionListener, ChangePointsBOView {
     private JLabel title;
     private JLabel gameNumLabel;
@@ -65,6 +68,7 @@ public class DoBracketOperation extends JFrame implements ActionListener, Change
     }
 
 
+    // Setters for the labels on the screen.
     public void setGameForOperation(int gameID) {
         this.gameID = gameID;
     }
@@ -80,6 +84,11 @@ public class DoBracketOperation extends JFrame implements ActionListener, Change
         this.teamsLabel.setText("[" + team1 + "] " + team1Score + " - " + team2Score + " [" + team2 + "]");
     }
 
+    /**
+     * This method is responsible for taking the user input upon the user clicking a button - activating the change
+     * points use case or the advance team use case or the declare winner use case.
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         try {

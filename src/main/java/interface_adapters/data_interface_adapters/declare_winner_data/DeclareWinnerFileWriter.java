@@ -6,6 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+/**
+ * This class is responsible for writing the bracket information to a file, after declaring a winner.
+ */
 public class DeclareWinnerFileWriter implements DeclareWinnerGateway {
 
     private final String filename;

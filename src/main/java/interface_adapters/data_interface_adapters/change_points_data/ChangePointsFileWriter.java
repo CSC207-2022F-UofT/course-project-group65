@@ -6,6 +6,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+/**
+ * This class is responsible for writing the change points data to a file.
+ */
 public class ChangePointsFileWriter implements ChangePointsGateway {
 
     private final String filename;
@@ -20,6 +23,11 @@ public class ChangePointsFileWriter implements ChangePointsGateway {
         this.filename = filename;
     }
 
+    /**
+     * Write the given change points data to the file.
+     *
+     * @param data The change points data to write
+     */
     public void save(ChangePointsDSID data) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(this.filename);
         ObjectOutputStream out = new ObjectOutputStream(fileOut);

@@ -11,6 +11,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+/**
+ * This class generates the screen that allows the user to enter the bracket information to create a bracket.
+ */
 public class EnterBracketInfo extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JButton createButton;
@@ -47,6 +51,11 @@ public class EnterBracketInfo extends JFrame implements ActionListener {
         currentUser.setText("Logged in: " + username);
     }
 
+    /**
+     * This method is called when the user clicks the create button. It will create a bracket with the information
+     * entered by the user.
+     * @param e the action event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         try {

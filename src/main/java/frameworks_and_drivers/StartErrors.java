@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class is used to display errors that occur when starting a tournament.
+ */
 public class StartErrors extends JFrame implements ActionListener {
     private JButton startBtn;
     private JButton cancelBtn;
@@ -43,7 +46,10 @@ public class StartErrors extends JFrame implements ActionListener {
         warning3.setText(warning);
     }
 
-
+    /**
+     * This method is used to handle the actions of the buttons.
+     * @param e The action event.
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == startBtn) {
             startTournController.start();

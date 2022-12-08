@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class generates the UI for the log in screen.
+ */
 public class LogInInfo extends JFrame implements ActionListener{
     private JLabel lbUsername;
     private JLabel lbPassword;
@@ -38,6 +41,12 @@ public class LogInInfo extends JFrame implements ActionListener{
         lbUsername.setVisible(true);
         lbPassword.setVisible(true);
     }
+
+    /**
+     * This method is called when the user clicks on the submit button or the back button and activates the log in
+     * controller upon the right button being clicked.
+     * @param e the action event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {

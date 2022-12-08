@@ -7,6 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+/**
+ * Saves program information to a file after starting a tournament.
+ */
 public class StartTournFilerWriter implements StartTournGateway {
     private final String filename;
 
@@ -18,6 +21,11 @@ public class StartTournFilerWriter implements StartTournGateway {
 
     public StartTournFilerWriter(String filename) {this.filename = filename;}
 
+    /**
+     * Save the given data to the file.
+     *
+     * @param data The data to save
+     */
     @Override
     public void save(StartTournDSID data) throws IOException {
         {

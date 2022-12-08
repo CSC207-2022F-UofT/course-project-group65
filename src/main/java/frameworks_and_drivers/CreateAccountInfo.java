@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This is essentially the class that creates the screen for the user to create an account.
+ */
 public class CreateAccountInfo extends JFrame implements ActionListener{
     private JLabel lbUsername;
     private JLabel lbPassword;
@@ -38,6 +41,11 @@ public class CreateAccountInfo extends JFrame implements ActionListener{
         lbPassword.setVisible(true);
     }
 
+    /**
+     * This method is called when the user clicks on the submit button. It will create an account for the user, by
+     * calling the create method in the CreateAccountController class.
+     * @param e the action event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backBtn) {

@@ -5,6 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+/**
+ * This class is responsible for writing the advance team data to a file.
+ */
 public class AdvanceTeamFileWriter implements AdvanceTeamGateway {
 
     private final String filename;
@@ -19,6 +22,11 @@ public class AdvanceTeamFileWriter implements AdvanceTeamGateway {
         this.filename = filename;
     }
 
+    /**
+     * Write the given advance team data to the file.
+     *
+     * @param data The advance team data to write
+     */
     public void save(AdvanceTeamDSID data) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(this.filename);
         ObjectOutputStream out = new ObjectOutputStream(fileOut);

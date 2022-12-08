@@ -12,6 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * This class is the screen that the user sees when they first go past the log in screen in the application.
+ * It allows the user to choose between logging in, creating an account, or joining a tournament.
+ */
 public class OptionsScreen extends JFrame implements ActionListener {
     private JLabel lbHeader;
     private JButton btCreateBracket;
@@ -36,6 +40,10 @@ public class OptionsScreen extends JFrame implements ActionListener {
         lbHeader.setVisible(true);
     }
 
+    /**
+     * This method is called when the user clicks on one of the buttons on the screen.
+     * @param e The event that is triggered when the user clicks on a button.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btCreateBracket) {

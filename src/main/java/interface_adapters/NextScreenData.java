@@ -6,6 +6,11 @@ import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * This class serves as a general UI controller in a sense. It is used to store the data that is needed to be passed to
+ * the next screen and occasionally used to pass data from the presenter to the UI controller. Part of a singleton
+ * design pattern.
+ */
 public class NextScreenData {
     private String currentUser;
     private int currentBracketID;
@@ -20,6 +25,7 @@ public class NextScreenData {
 
     }
 
+    // Setters and getters for a number of different pieces of information for the UI to function.
     public InformationRecord getInformationRecord() {
         return informationRecord;
     }

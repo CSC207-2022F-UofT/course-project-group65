@@ -9,8 +9,6 @@ public class AccountRepo implements Serializable {
     private final HashMap<String, User> users = new HashMap<>();
     /** This method is for adding users to the hashmap*/
     public void addUser(User user) {this.users.put(user.getUsername(), user); }
-    /** This method is for getting all the current users*/
-    public HashMap<String, User> getAllUsers() { return users; }
     /** This method is for getting one specific user by
      * @param username - the username of the user*/
     public User getUser(String username) {return users.get(username); }

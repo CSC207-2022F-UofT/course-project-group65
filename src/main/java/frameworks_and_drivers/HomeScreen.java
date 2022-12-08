@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The home screen of the application.
+ */
 public class HomeScreen extends JFrame implements ActionListener{
     private JLabel header;
     private JButton btLogIn;
@@ -33,6 +36,11 @@ public class HomeScreen extends JFrame implements ActionListener{
         header.setVisible(true);
     }
 
+    /**
+     * Handles the button clicks on the home screen. Activates the appropriate controller for logging in or creating an
+     * account.
+     * @param e the action event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btCreateAccount) {

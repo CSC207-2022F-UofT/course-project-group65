@@ -8,6 +8,9 @@ import entities.User;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * A general purpose class that bundles all the data needed to display a bracket in the view.
+ */
 public class BundleBracketData {
     private final LinkedHashMap<Integer, ArrayList<String>> gameToTeams;
     private final LinkedHashMap<Integer, ArrayList<Integer>> gameToScores;
@@ -29,6 +32,10 @@ public class BundleBracketData {
         this.roleToInvite = new LinkedHashMap<>();
     }
 
+    /**
+     * Re-bundles the data from the given bracket into this BundleBracketData object.
+     * @param bracket the bracket to bundle data from
+     */
     public void bundleBracket(Bracket bracket){
         setGameToTeams(bracket);
         setGameToScores(bracket);
@@ -41,6 +48,10 @@ public class BundleBracketData {
         tournamentName = bracket.getTournamentName();
     }
 
+    /**
+     * Creates a mapping from gameID to the two teams playing in that game.
+     * @param bracket the bracket to bundle data from
+     */
     private void setGameToTeams(Bracket bracket){
         ArrayList<String> teams = new ArrayList<>();
         for(Game game: getGames(bracket)){
@@ -52,6 +63,10 @@ public class BundleBracketData {
         }
     }
 
+    /**
+     * Creates a mapping from gameID to the two scores of that game.
+     * @param bracket the bracket to bundle data from
+     */
     private void setGameToScores(Bracket bracket){
         ArrayList<Integer> score = new ArrayList<>();
         for(Game game: getGames(bracket)){
@@ -63,6 +78,10 @@ public class BundleBracketData {
         }
     }
 
+    /**
+     * Creates a mapping from gameID to the winner of that game.
+     * @param bracket the bracket to bundle data from
+     */
     private void setGameToWinner(Bracket bracket){
         for(Game game: getGames(bracket)){
             if (game.getWinner() != null) {
@@ -73,6 +92,10 @@ public class BundleBracketData {
         }
     }
 
+    /**
+     * Creates a mapping from teamName to the players on that team.
+     * @param bracket the bracket to bundle data from
+     */
     private void setTeamToPlayers(Bracket bracket){
         ArrayList<String> members = new ArrayList<>();
         for(Team team: bracket.getTeams()){
@@ -84,12 +107,20 @@ public class BundleBracketData {
         }
     }
 
+    /**
+     * Creates a list of all the referees in the bracket.
+     * @param bracket the bracket to bundle data from
+     */
     private void setReferees(Bracket bracket){
         for(User ref: bracket.getReferees()){
             referees.add(ref.getUsername());
         }
     }
 
+    /**
+     * Creates a mapping from gameID to the referee of that game.
+     * @param bracket the bracket to bundle data from
+     */
     private void setGameToReferee(Bracket bracket){
         for(Game game: getGames(bracket)){
             if (game.getObserver() != null) {
@@ -100,11 +131,16 @@ public class BundleBracketData {
         }
     }
 
+    /**
+     * Creates a mapping from role to the invite of that role.
+     * @param bracket the bracket to bundle data from
+     */
     private void setRoleToInvite(Bracket bracket){
         roleToInvite.put("Player", bracket.getPlayerInvite());
         roleToInvite.put("Observer", bracket.getObserverInvite());
     }
 
+    // Getters for the data
     private ArrayList<Game> getGames(Bracket bracket){
         return bracket.getAllGames();
     }

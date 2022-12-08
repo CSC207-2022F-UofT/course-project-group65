@@ -26,6 +26,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
+/**
+ * This class is the main view of the application. It is responsible for displaying the current state of the bracket
+ * and handling user input relating to users using the bracket.
+ */
 public class ExtendedView extends JFrame implements ActionListener, AssignObserverView, JoinTeamViewInterface,
         TeamCreationView, AdvanceTeamView, DeclareWinnerView, ChangePointsExtendedView {
 
@@ -238,6 +242,13 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         setVisible(true);
     }
 
+
+    /**
+     * This method updates the game score for a given game on the bracket view
+     * @param gameID the gameID of the game to update
+     * @param teams the teams playing in the game
+     * @param points the score of the game
+     */
     public void updateGameScore(int gameID, ArrayList<String> teams, ArrayList<Integer> points) {
         //Index of score label in lblBracketGameScores
         int index = lblBracketGameScores.size() - gameID;
@@ -258,11 +269,23 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         lblBracketGameScores.get(index).setText(score);
     }
 
+    /**
+     * This method updates the winner of a given game on the bracket view
+     * @param gameID the gameID of the game to update
+     * @param winner the winner of the game
+     */
     public void updateWinner(int gameID, String winner) {
         int index = lblBracketGameScores.size() - gameID;
         lblBracketGameWinner.get(index).setText("Winner: " + winner);
     }
 
+
+    /**
+     * This method replaces a team name with the name of a new team.
+     * @param newTeam the name of the team that was just created
+     * @param oldTeam the name of the team that was just deleted
+     * @param gameToTeams the map of gameID to teams playing in that game
+     */
     public void replaceTeam(String newTeam, String oldTeam, LinkedHashMap<Integer, ArrayList<String>> gameToTeams) {
         //Replace old team name with new one in join team combobox
         for (int i = 0; i < cmbJoinTeam.getItemCount(); i++) {
@@ -304,6 +327,10 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         }
     }
 
+    /**
+     * This method updaates the team members on the team view panel whenever a new player joins a team
+     * @param teamToPlayers the map of team name to players on that team
+     */
     public void updateTeamMembers(LinkedHashMap<String, ArrayList<String>> teamToPlayers) {
         String[] column = {"Team Name", "Team Members"};
         this.teamMemberData = new String[teamToPlayers.size()][nextScreenData.getMaxTeamSize(nextScreenData.getCurrentBracketID())];
@@ -329,6 +356,10 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         teamMemberTable.setVisible(true);
     }
 
+    /**
+     * This method updates the team list on the join team screen
+     * @param gameToReferee the map of gameID to referee for that game
+     */
     public void updateObserverAssignments(LinkedHashMap<Integer, String> gameToReferee) {
         String[] obsColumn = {"Game", "Observer"};
         this.observerData = new String[gameToReferee.size()][2];
@@ -349,7 +380,10 @@ public class ExtendedView extends JFrame implements ActionListener, AssignObserv
         observerTable.setVisible(true);
     }
 
-
+    /**
+     * This method activates a number of different use cases depending on the button pressed on the screen.
+     * @param e the event to be processed
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btnOptions) {

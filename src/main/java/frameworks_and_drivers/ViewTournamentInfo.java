@@ -12,6 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * This class is the view for the tournament info screen.
+ */
 public class ViewTournamentInfo extends JFrame implements ActionListener{
     private JPanel viewTournament;
     private JButton btSubmit;
@@ -34,12 +37,20 @@ public class ViewTournamentInfo extends JFrame implements ActionListener{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * This method sets the tournaments that the current user is a part of already, in the dropdown menu.
+     * @param tournaments the tournaments that the current user is a part of already.
+     */
     public void setTournaments(ArrayList<Integer> tournaments){
         for (Integer tournament : tournaments){
             tournamentIDs.addItem(tournament);
         }
     }
 
+    /**
+     * This method is called when the user clicks on the submit button.
+     * @param ae the event that is triggered when the user clicks on the submit button.
+     */
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == btSubmit){

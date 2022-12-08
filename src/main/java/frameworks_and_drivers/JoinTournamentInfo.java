@@ -11,6 +11,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class generates the GUI for the Join Tournament screen.
+ */
 public class JoinTournamentInfo extends JFrame implements ActionListener {
     private JPanel joinTournament;
     private JButton btSubmit;
@@ -33,6 +36,11 @@ public class JoinTournamentInfo extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * This method handles the action of the submit button (or go back button) being pressed and activates the
+     * JoinTournamentUC.
+     * @param ae the action event
+     */
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == btSubmit){

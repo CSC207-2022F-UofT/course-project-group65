@@ -14,6 +14,7 @@ public class TournamentSimulator {
         Object accountDatabase = new AccountRepo();
         Object bracketDatabase = new BracketRepo();
 
+        // Reads data about the repositories from the files for the program to use.
         try {
             FileInputStream fileInputStream
                     = new FileInputStream("accounts.txt");
@@ -33,6 +34,7 @@ public class TournamentSimulator {
             System.out.println("Persistence comes into effect after first run");
         }
 
+        // Initialises controllers and classes that keep the state of the program.
         InformationRecord informationRecord = new InformationRecord(accountDatabase, bracketDatabase);
         NextScreenData nextScreenData = new NextScreenData(informationRecord);
 
