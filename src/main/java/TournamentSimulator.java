@@ -1,7 +1,8 @@
-import entities.*;
+import entities.AccountRepo;
+import entities.BracketRepo;
+import frameworks_and_drivers.HomeScreen;
 import interface_adapters.NextScreenData;
 import interface_adapters.create_account.CreateAccountController;
-import frameworks_and_drivers.HomeScreen;
 import interface_adapters.log_in.LogInController;
 import use_cases.general_classes.InformationRecord;
 
@@ -10,12 +11,11 @@ import java.io.ObjectInputStream;
 
 public class TournamentSimulator {
     public static void main(String[] args) {
-//        Object accountDatabase = null;
-//        Object bracketDatabase = null;
         Object accountDatabase = new AccountRepo();
         Object bracketDatabase = new BracketRepo();
 
-        try{
+        // Reads data about the repositories from the files for the program to use.
+        try {
             FileInputStream fileInputStream
                     = new FileInputStream("accounts.txt");
             ObjectInputStream objectInputStream
@@ -34,21 +34,12 @@ public class TournamentSimulator {
             System.out.println("Persistence comes into effect after first run");
         }
 
+        // Initialises controllers and classes that keep the state of the program.
         InformationRecord informationRecord = new InformationRecord(accountDatabase, bracketDatabase);
         NextScreenData nextScreenData = new NextScreenData(informationRecord);
 
-        // CreateAccountOB createAccountOB = new CreateAccountPresenter();
-//        CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB, mainUserFactory,
-//                mainAccountRepo, mainBracketRepo);
-        // CreateAccountGateway gateway = new CreateAccountFileWriter("accounts.txt");
-//        CreateAccountIB createAccountIB = new CreateAccountUC(createAccountOB,
-//                accountDatabase, bracketDatabase);
         CreateAccountController createAccountController = new CreateAccountController(informationRecord);
-
         LogInController logInController = new LogInController(informationRecord);
-        //LogInOB logInOB = new LogInPresenter();
-        //LogInIB logInIB = new LogInUC(logInOB, accountDatabase, bracketDatabase);
-        //LogInController logInController = new LogInController(logInIB);
 
         HomeScreen homeScreen = new HomeScreen(createAccountController, logInController, nextScreenData);
         homeScreen.setVisible(true);

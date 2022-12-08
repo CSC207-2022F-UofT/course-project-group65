@@ -6,11 +6,14 @@ import entities.BracketRepo;
  * This is a class for accessing the input data from the Database.
  */
 public class EndTournDSID {
-    /** The bracket repo used in accessing the data */
-    BracketRepo bracketRepo;
+    /**
+     * The bracket repo used in accessing the data
+     */
+    private final BracketRepo bracketRepo;
 
     /**
      * Constructor for the EndTournDSID class.
+     *
      * @param bracketRepo the bracket repository used to access the data
      */
     public EndTournDSID(BracketRepo bracketRepo) {
@@ -20,5 +23,7 @@ public class EndTournDSID {
     /**
      * @return the bracket repo used for accessing the data
      */
-    public BracketRepo getBracketRepo() {return this.bracketRepo;}
+    public BracketRepo getBracketRepo() {
+        return this.bracketRepo;
+    }
 }

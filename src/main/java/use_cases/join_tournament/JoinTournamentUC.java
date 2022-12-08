@@ -6,33 +6,31 @@ import entities.User;
 import use_cases.general_classes.InformationRecord;
 import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 
+/**
+ * A use case class that handles joining a tournament for the first time for a user. It will make the
+ * changes required to allow the user to interact with the desired tournament and save and update the
+ * bracket and account repositories afterwards.
+ */
 public class JoinTournamentUC implements JoinTournamentIB{
-    final JoinTournamentOB outputBound;
+    private final JoinTournamentOB outputBound;
     private final BracketRepo bracketRepo;
     private final AccountRepo accountRepo;
-    private User currUser;
-    public JoinTournamentGateway gateway;
+    private final User currUser;
+    private final JoinTournamentGateway gateway;
 
     /**
-     * Construct a JoinTournamentUC interactor instance with the given BracketRepo and AccountRepo.
+     * Creates a new JoinTournamentUC object.
      *
-     * @param outputBound The output boundary to use
-//     * @param bracketRepo The BracketRepo to use
-//     * @param accountRepo The AccountRepo to use
-     * @param currUser    The username of the user who is joining the tournament
+     * @param outputBound       The output boundary to use
+     * @param gateway           The gateway to access the database to store info
+     * @param informationRecord The information record containing the bracket and account repositories
+     * @param currUser          The username of the user who is joining the tournament
      */
     public JoinTournamentUC(JoinTournamentOB outputBound, JoinTournamentGateway gateway,
                             InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;
-//        try{
-//            this.bracketRepo = (BracketRepo) bracketRepo;
-//            this.accountRepo = (AccountRepo) accountRepo;
-//            this.currUser = this.accountRepo.getUser(currUser);
-//        } catch (ClassCastException e){
-//            throw new ClassCastException("The given bracketRepo or accountRepo is not of type BracketRepo or AccountRepo");
-//        }
-        this.bracketRepo = informationRecord.getBracketData();
-        this.accountRepo = informationRecord.getAccountData();
+        bracketRepo = informationRecord.getBracketData();
+        accountRepo = informationRecord.getAccountData();
         this.currUser = this.accountRepo.getUser(currUser);
         this.gateway = gateway;
     }
@@ -40,11 +38,15 @@ public class JoinTournamentUC implements JoinTournamentIB{
     /**
      * Allows the user to access a tournament for the first time
      *
-     * @param input the inputData to use
-     * @return the output data
+     * @param input the inputData containing the invite
+     * @return the output data to change the view
      */
     public JoinTournamentOD joinBracket(JoinTournamentID input){
-        String role = input.getInvite().substring(0, 2);
+        String invite = input.getInvite();
+        if(invite == null || invite.equals("")){
+            return outputBound.prepareFailView("Please enter an invite.");
+        }
+        String role = invite.substring(0, 2);
         String idAndName = input.getInvite().substring(2);
         try {
             int tournamentID = Integer.parseInt(idAndName.split("(?<=\\d)(?=\\D)")[0]);
@@ -77,7 +79,7 @@ public class JoinTournamentUC implements JoinTournamentIB{
                 return outputBound.prepareFailView("Error saving to database.");
             }
             bracketData.bundleBracket(bracketRepo.getBracket(tournamentID));
-            output = new JoinTournamentOD(currUser.getUsername(), bracketData, bracketRepo, accountRepo); //Temp fix
+            output = new JoinTournamentOD(currUser.getUsername(), bracketData);
             return outputBound.prepareSuccessView(output);
         }
         catch (NumberFormatException nex){

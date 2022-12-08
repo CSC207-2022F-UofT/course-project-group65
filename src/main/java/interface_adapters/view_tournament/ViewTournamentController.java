@@ -1,22 +1,26 @@
 package interface_adapters.view_tournament;
 
+import interface_adapters.NextScreenData;
 import interface_adapters.data_interface_adapters.view_tournament_data.ViewTournamentFileWriter;
 import use_cases.general_classes.InformationRecord;
 import use_cases.view_tournament.*;
 
 public class ViewTournamentController {
     final private ViewTournamentIB viewTourIB;
+    private final ViewTournamentPresenter viewTourPresenter;
 
-//    public ViewTournamentController(ViewTournamentIB viewTourIB) {
-//        this.viewTourIB = viewTourIB;
-//    }
     public ViewTournamentController(InformationRecord informationRecord, String currUser) {
-        ViewTournamentOB viewTourOB = new ViewTournamentPresenter();
+        this.viewTourPresenter = new ViewTournamentPresenter();
         ViewTournamentGateway gateway = new ViewTournamentFileWriter("brackets.txt");
-        this.viewTourIB = new ViewTournamentUC(viewTourOB, gateway, informationRecord, currUser);
+        this.viewTourIB = new ViewTournamentUC(this.viewTourPresenter, gateway, informationRecord, currUser);
     }
-    public ViewTournamentOD viewTournament(int tournamentID){
+
+    public void setPresenterData(NextScreenData nextScreenData) {
+        viewTourPresenter.setNextScreenData(nextScreenData);
+    }
+
+    public void viewTournament(int tournamentID){
         ViewTournamentID inputData = new ViewTournamentID(tournamentID);
-        return viewTourIB.viewBracket(inputData);
+        viewTourIB.viewBracket(inputData);
     }
 }

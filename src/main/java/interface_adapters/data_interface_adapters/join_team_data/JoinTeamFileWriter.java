@@ -7,6 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+/**
+ * Writes the updated bracket information to a file.
+ */
 public class JoinTeamFileWriter implements JoinTeamGateway {
     private final String filename;
     /**
@@ -17,6 +20,12 @@ public class JoinTeamFileWriter implements JoinTeamGateway {
     public JoinTeamFileWriter(String filename) {
         this.filename = filename;
     }
+    /**
+     * Write the given data to the file.
+     *
+     * @param data The data to write
+     * @throws IOException If an error occurs while writing to the file
+     */
     @Override
     public void save(JoinTeamDSID data) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(this.filename);

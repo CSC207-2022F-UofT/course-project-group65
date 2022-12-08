@@ -1,25 +1,29 @@
 package entities;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
+/** This class represents the default user*/
 public class DefaultUser implements User, Serializable {
+    /** A string for user name */
     private String username;
+    /** A string for password */
     private String password;
-    private HashMap<Integer, String> bracketRole;
+    /** A hashmap to store bracket roles */
+    private final HashMap<Integer, String> bracketRole;
+    /** An int for current tournament ID */
     private int currentTournament;
-    private ArrayList<Integer> currentTournaments;
-
+    /** An arraylist for all the current tournaments */
+    private final ArrayList<Integer> currentTournaments;
+    /** The constructor for default user */
     public DefaultUser() {
         username = "";
         password = "";
-        bracketRole = new HashMap<Integer, String>();
+        bracketRole = new HashMap<>();
         currentTournament = 0;
-        currentTournaments = new ArrayList<Integer>();
+        currentTournaments = new ArrayList<>();
     }
+    /** The setter and getter methods */
     public void setUsername(String username) {this.username = username;}
 
     public String getUsername() { return username; }
@@ -40,8 +44,12 @@ public class DefaultUser implements User, Serializable {
 
     public int getCurrentTournament() { return currentTournament; }
 
+    public ArrayList<Integer> getAllTournaments() { return currentTournaments; }
+
+    /** This method adds the tournament to the all current tournaments
+     * @param  tournamentID - The tournament ID */
     public void addTournament(int tournamentID) { currentTournaments.add(tournamentID); }
 
-    public ArrayList<Integer> getAllTournaments() { return currentTournaments; }
+
     }
 

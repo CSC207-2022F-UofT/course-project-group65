@@ -7,6 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+/**
+ * This class is responsible for writing the updated program information to a file after running the use case.
+ */
 public class CreateAccountFileWriter implements CreateAccountGateway {
 
     private final String filename;
@@ -21,6 +24,11 @@ public class CreateAccountFileWriter implements CreateAccountGateway {
         this.filename = filename;
     }
 
+    /**
+     * Write the given input to the file.
+     *
+     * @param data The CreateAccountDSID to write to the file
+     */
     public void save(CreateAccountDSID data) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(this.filename);
         ObjectOutputStream out = new ObjectOutputStream(fileOut);

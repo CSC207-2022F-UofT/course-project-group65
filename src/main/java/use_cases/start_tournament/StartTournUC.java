@@ -13,30 +13,43 @@ import java.util.Objects;
  * It connects and uses many of the classes used in this package.
  * Implements the StartTournIB to allow the controller to call the startTourn method.
  */
-public class StartTournUC implements StartTournIB{
-    /** The output boundary */
+public class StartTournUC implements StartTournIB {
+    /**
+     * The output boundary
+     */
     private final StartTournOB outputBoundary;
-    /** The bracket repository to update the current bracket */
+    /**
+     * The bracket repository to update the current bracket
+     */
     private final BracketRepo brackets;
-    /** The bracket id to access the current bracket (tournament)*/
+    /**
+     * The bracket id to access the current bracket (tournament)
+     */
     private final int bracketId;
-    /** The current bracket */
+    /**
+     * The current bracket
+     */
     private final Bracket bracket;
-    /** The User who wants to start a tournament */
+    /**
+     * The User who wants to start a tournament
+     */
     private final User user;
-    /** The gateway to access the database to store info */
+    /**
+     * The gateway to access the database to store info
+     */
     private final StartTournGateway gateway;
 
     /**
      * Creates a new StartTournUC object.
-     * @param outputBoundary The output boundary
-     * @param currentUser The username of the current user starting a new tournament
+     *
+     * @param outputBoundary    The output boundary
+     * @param currentUser       The username of the current user starting a new tournament
      * @param informationRecord The information record containing the account and bracket repositories
-     * @param bracketId The bracket id
-     * @param gateway The gateway to access the database to store the info
+     * @param bracketId         The bracket id
+     * @param gateway           The gateway to access the database to store the info
      */
     public StartTournUC(StartTournOB outputBoundary, String currentUser, InformationRecord informationRecord,
-                      int bracketId, StartTournGateway gateway) {
+                        int bracketId, StartTournGateway gateway) {
         this.outputBoundary = outputBoundary;
         AccountRepo accounts = informationRecord.getAccountData();
         this.brackets = informationRecord.getBracketData();
@@ -48,9 +61,9 @@ public class StartTournUC implements StartTournIB{
     }
 
 
-
     /**
      * Checks if the user is an Overseer.
+     *
      * @return true if and only if the user is an Overseer.
      */
     public boolean checkUserRole() {
@@ -59,6 +72,7 @@ public class StartTournUC implements StartTournIB{
 
     /**
      * Checks if the number of teams matches the maximum number of teams in the bracket.
+     *
      * @return true if and only if the number of teams matches the maximum number of teams in the bracket.
      */
     public boolean checkNumTeams() {
@@ -73,6 +87,7 @@ public class StartTournUC implements StartTournIB{
 
     /**
      * Checks if all the teams are full.
+     *
      * @return true if and only if all the teams are full.
      */
     public boolean checkTeamFull() {
@@ -89,9 +104,10 @@ public class StartTournUC implements StartTournIB{
 
     /**
      * Checks if every game in the bracket has an observer assigned.
+     *
      * @return true if and only if every game in the bracket has an observer assigned.
      */
-    public  boolean checkGameObserver() {
+    public boolean checkGameObserver() {
         return helperCheckGameObserver(this.bracket.getFinalGame());
     }
 
@@ -119,6 +135,7 @@ public class StartTournUC implements StartTournIB{
 
     /**
      * The main startTourn method.
+     *
      * @return the output data that contains potential error types.
      */
     @Override
@@ -154,7 +171,7 @@ public class StartTournUC implements StartTournIB{
 
         try {
             this.gateway.save(dataStoreID);
-        } catch (Exception e){
+        } catch (Exception e) {
             return this.outputBoundary.presentError("Error saving to database.");
         }
         StartTournOD outputData = new StartTournOD(errors);

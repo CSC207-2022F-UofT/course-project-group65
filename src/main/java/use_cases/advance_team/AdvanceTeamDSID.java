@@ -1,9 +1,10 @@
 package use_cases.advance_team;
-import entities.*;
+
+import entities.BracketRepo;
 
 public class AdvanceTeamDSID {
 
-    private BracketRepo updatedBracketRepo;
+    private final BracketRepo updatedBracketRepo;
 
     public AdvanceTeamDSID(BracketRepo updatedBracketRepo) {
         this.updatedBracketRepo = updatedBracketRepo;
@@ -13,7 +14,4 @@ public class AdvanceTeamDSID {
         return this.updatedBracketRepo;
     }
 
-    public void setUpdatedBracketRepo(BracketRepo updatedBracketRepo) {
-        this.updatedBracketRepo = updatedBracketRepo;
-    }
 }

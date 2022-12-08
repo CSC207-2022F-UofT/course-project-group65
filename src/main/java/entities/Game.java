@@ -1,11 +1,11 @@
 package entities;
 
 import java.util.ArrayList;
-
+/**
+ * This interface represents a game in a Bracket. It follows a similar structure to a Tree.
+ */
 public interface Game{
-    /*
-     * This interface represents a game in a Bracket. It follows a similar structure to a Tree.
-     */
+    /** The setter and getter methods */
     void setGameID(int gameID);
 
     int getGameID();

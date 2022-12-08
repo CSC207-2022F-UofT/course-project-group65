@@ -1,31 +1,31 @@
 package frameworks_and_drivers;
 
 import interface_adapters.NextScreenData;
-//import screens.bracketView;
 import interface_adapters.create_bracket.CreateBracketController;
 import interface_adapters.end_tournament.EndTournController;
 import interface_adapters.join_team.JoinTeamController;
 import interface_adapters.start_tournament.StartTournController;
-import use_cases.create_bracket.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+/**
+ * This class generates the screen that allows the user to enter the bracket information to create a bracket.
+ */
 public class EnterBracketInfo extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JButton createButton;
     private JTextField bracketName;
     private JComboBox<String> bracketType;
-//    private JComboBox<Integer> numTeams;
     private JComboBox<Integer> winCondition;
-//    private JComboBox<Integer> teamSizes;
     private JLabel currentUser;
     private JTextField teamNumField;
     private JTextField teamSizeField;
-    private CreateBracketController createBracketController;
-    private NextScreenData nextScreenData;
+    private final CreateBracketController createBracketController;
+    private final NextScreenData nextScreenData;
 
 
     public EnterBracketInfo(CreateBracketController createBracketController, NextScreenData nextScreenData) {
@@ -35,20 +35,9 @@ public class EnterBracketInfo extends JFrame implements ActionListener {
         this.nextScreenData = nextScreenData;
 
         bracketType.addItem("Default");
-
-//        numTeams.addItem(2);
-//        numTeams.addItem(4);
-//        numTeams.addItem(8);
-//        numTeams.addItem(16);
-
         for (int i = 1; i < 20; i++) {
             winCondition.addItem(i);
         }
-
-//        for (int i = 1; i < 6; i++) {
-//            teamSizes.addItem(i);
-//        }
-
         createButton.addActionListener(this);
 
 
@@ -62,9 +51,13 @@ public class EnterBracketInfo extends JFrame implements ActionListener {
         currentUser.setText("Logged in: " + username);
     }
 
+    /**
+     * This method is called when the user clicks the create button. It will create a bracket with the information
+     * entered by the user.
+     * @param e the action event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-//        System.out.println("Click " + e.getActionCommand());
         try {
             if (this.winCondition.getSelectedItem() == null) {
                 throw new Exception("Please select a win condition");
@@ -75,57 +68,20 @@ public class EnterBracketInfo extends JFrame implements ActionListener {
             if (Math.log(numTeams) / Math.log(2) % 1 != 0 || numTeams < 2) {
                 throw new Exception("Number of teams must be a power of 2 and greater than one");
             }
-//            int numTeams = (int) this.numTeams.getSelectedItem();
             int winCondition = (int) this.winCondition.getSelectedItem();
             int teamSizes = Integer.parseInt(this.teamSizeField.getText().trim());
             if (teamSizes <= 1) {
                 throw new Exception("Team size must be greater than 1");
             }
-//            int teamSizes = (int) this.teamSizes.getSelectedItem();
-//            System.out.println(bracketName);
-//            System.out.println(bracketType);
-//            System.out.println(numTeams);
-//            System.out.println(winCondition);
-//            System.out.println(teamSizes);
 
-            CreateBracketOD outputData = createBracketController.create(bracketType, bracketName, numTeams, teamSizes,
-                    winCondition);
-            //System.out.println(outputData);
-//            System.out.println(outputData.getBracketID());
-
-//            Will need to add controller initialization here when we have the controllers as
-//            parameters to the view constructor
-
-//            Overseer Controls controllers
-//            EndTournOB endTournOB = new EndTournPresenter();
-//            EndTournIB endTournIB = new EndTournUC(endTournOB, outputData.getUsername(), nextScreenData.getInformationRecord(), outputData.getBracketID());
-            EndTournController endTournController = new EndTournController(outputData.getUsername(), nextScreenData.getInformationRecord(), outputData.getBracketID());
-
-//            StartTournOB startTournOB = new StartTournPresenter();
-//            StartTournIB startTournIB = new StartTournUC(startTournOB, outputData.getUsername(), nextScreenData.getInformationRecord(), outputData.getBracketID());
-            StartTournController startTournController = new StartTournController(outputData.getUsername(), nextScreenData.getInformationRecord(), outputData.getBracketID());
-
-            //NextScreenData nextScreenData = new NextScreenData();
-            //nextScreenData.setBrackets(outputData.getBrackets());
-            //nextScreenData.setAccounts(outputData.getAccounts());
-            nextScreenData.setCurrentUser(outputData.getUsername());
-            nextScreenData.setCurrentBracketID(outputData.getBracketID());
-
+            createBracketController.setPresenterData(nextScreenData);
+            createBracketController.create(bracketType, bracketName, numTeams, teamSizes, winCondition);
+            EndTournController endTournController = new EndTournController(nextScreenData.getCurrentUser(), nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID());
+            StartTournController startTournController = new StartTournController(nextScreenData.getCurrentUser(), nextScreenData.getInformationRecord(), nextScreenData.getCurrentBracketID());
             JoinTeamController joinTeamController = new JoinTeamController(nextScreenData.getInformationRecord(),
-                    outputData.getBracketID(), outputData.getUsername());
+                    nextScreenData.getCurrentBracketID(), nextScreenData.getCurrentUser());
 
             ExtendedView view = new ExtendedView(nextScreenData, endTournController, startTournController, joinTeamController);
-//            view.setGames(nextScreenData.getGameToTeams(), nextScreenData.getGameToScores(),
-//                    nextScreenData.getGameToWinner(), nextScreenData.getTeamToPlayers());
-//            view.setTeams(nextScreenData.getTeamToPlayers());
-//            view.setReferees(nextScreenData.getGameToReferee(), nextScreenData.getReferees());
-
-//            bracketView view = new bracketView(nextScreenData, endTournController, startTournController, joinTeamController);
-//            view.setBracketName(outputData.getBracketName());
-//            view.setCurrentUser(outputData.getUsername());
-//            view.setCurrentTournament(outputData.getBracketID());
-//            view.setPlayerInvite(outputData.getPlayerInvite());
-//            view.setObserverInvite(outputData.getObserverInvite());
             this.dispose();
             view.setVisible(true);
 

@@ -3,12 +3,14 @@ package frameworks_and_drivers;
 import interface_adapters.NextScreenData;
 import interface_adapters.create_account.CreateAccountController;
 import interface_adapters.log_in.LogInController;
-import use_cases.log_in.LogInOD;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class generates the UI for the log in screen.
+ */
 public class LogInInfo extends JFrame implements ActionListener{
     private JLabel lbUsername;
     private JLabel lbPassword;
@@ -18,9 +20,9 @@ public class LogInInfo extends JFrame implements ActionListener{
     private JButton btSubmit;
     private JButton backButton;
 
-    private CreateAccountController createAccountController;
-    private LogInController logInController;
-    private NextScreenData nextScreenData;
+    private final CreateAccountController createAccountController;
+    private final LogInController logInController;
+    private final NextScreenData nextScreenData;
 
     public LogInInfo(LogInController logInController, CreateAccountController createAccountController, NextScreenData nextScreenData) {
         setContentPane(logIn);
@@ -35,7 +37,16 @@ public class LogInInfo extends JFrame implements ActionListener{
 
         btSubmit.addActionListener(this);
         backButton.addActionListener(this);
+
+        lbUsername.setVisible(true);
+        lbPassword.setVisible(true);
     }
+
+    /**
+     * This method is called when the user clicks on the submit button or the back button and activates the log in
+     * controller upon the right button being clicked.
+     * @param e the action event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backButton) {
@@ -48,25 +59,9 @@ public class LogInInfo extends JFrame implements ActionListener{
             String password = tfPassword.getText();
 
             try {
-                LogInOD outputData = logInController.login(username, password);
-                JOptionPane.showMessageDialog(this, "Welcome " + outputData.getUsername());
-
-                String currentUser = outputData.getUsername();
-//                AccountRepo currentAccounts = outputData.getAccountRepo();
-//                BracketRepo currentBrackets = outputData.getBracketRepo();
-
-//                NextScreenData nextScreenData = new NextScreenData();
-                nextScreenData.setCurrentUser(currentUser);
-//                nextScreenData.setAccounts(currentAccounts);
-//                nextScreenData.setBrackets(currentBrackets);
-
-//                CreateBracketOB createBracketOB = new CreateBracketPresenter();
-//                CreateBracketIB interactor = new CreateBracketUC(createBracketOB, currentUser,
-//                        currentAccounts, currentBrackets);
-//                CreateBracketController createBracketCon = new CreateBracketController(interactor);
-
-//                optionsScreen optionsScreen = new optionsScreen(nextScreenData, this.createAccountController,
-//                        this.logInController, createBracketCon);
+                logInController.setPresenterData(nextScreenData);
+                logInController.login(username, password);
+                JOptionPane.showMessageDialog(this, "Welcome " + nextScreenData.getCurrentUser());
                 OptionsScreen optionsScreen = new OptionsScreen(nextScreenData);
                 this.dispose();
                 optionsScreen.setVisible(true);
@@ -74,10 +69,6 @@ public class LogInInfo extends JFrame implements ActionListener{
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(this, exception.getMessage());
             }
-            // Go to options screen
-//            optionsScreen optionsScreen = new optionsScreen();
-//            this.dispose();
-//            optionsScreen.setVisible(true);
         }
     }
 }

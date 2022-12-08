@@ -10,31 +10,26 @@ import java.util.List;
 public class AssignObserverUC implements AssignObserverIB {
     private final AssignObserverOB outputBound;
     private final BracketRepo bracketRepo;
-    private final AccountRepo accountRepo;
     private Bracket bracket;
-    private User currUser;
-    public AssignObserverGateway gateway;
+    private final User currUser;
+    private final AssignObserverGateway gateway;
 
+    /**
+     * A use case class that handles the assignment of observers for a user. It will assign an observer to a game and
+     * save and update the bracket repository afterwards.
+     */
     public AssignObserverUC(AssignObserverOB outputBound, AssignObserverGateway gateway, InformationRecord informationRecord, String currUser){
         this.outputBound = outputBound;
         this.gateway = gateway;
         this.bracketRepo = informationRecord.getBracketData();
-        this.accountRepo = informationRecord.getAccountData();
-        this.currUser = accountRepo.getUser(currUser);
-//        try{
-//            this.bracketRepo = (BracketRepo) bracketRepo;
-//            this.accountRepo = (AccountRepo) accountRepo;
-//            this.currUser = this.accountRepo.getUser(currUser);
-//        } catch (ClassCastException e){
-//            throw new ClassCastException("AssignObserverUC: Invalid repo type");
-//        }
+        this.currUser = informationRecord.getAccountData().getUser(currUser);
     }
 
     /**
      * Assigns a user as an observer to a particular game in a bracket.
      *
-     * @param input the input data to use
-     * @return the output data
+     * @param input the input data containing the assignee and game chosen
+     * @return the output data to change the view
      */
     @Override
     public AssignObserverOD assignObserver(AssignObserverID input){
@@ -44,14 +39,6 @@ public class AssignObserverUC implements AssignObserverIB {
         }
         User ref = findReferee(bracket, input.getAssignee());
         Game game = bracket.getGame(input.getGameID());
-//        Game game;
-//        if (bracket instanceof DefaultBracket){
-//            GameFinder<DefaultBracket> gameFinder = new TreeGameFinder<>();
-//            game = gameFinder.getGame(input.getGameID(), this.bracket.getFinalGame());
-//        } else {
-//            GameFinder<Bracket> gameFinder = new GeneralisedGameFinder<>();
-//            game = gameFinder.getGame(input.getGameID(), this.bracket.getFinalGame());
-//        }
 
         if (ref == null){
             return outputBound.prepareFailView("Assignee is not an Observer.");
@@ -74,7 +61,7 @@ public class AssignObserverUC implements AssignObserverIB {
         BundleBracketData bundleBracketData = new BundleBracketData();
         bundleBracketData.bundleBracket(bracket);
 
-        AssignObserverOD output = new AssignObserverOD(ref.getUsername(), game.getGameID(), game.getGameRound(), bundleBracketData.getGameToReferee());
+        AssignObserverOD output = new AssignObserverOD(ref.getUsername(), game.getGameID(), bundleBracketData.getGameToReferee());
         return outputBound.prepareSuccessView(output);
     }
 

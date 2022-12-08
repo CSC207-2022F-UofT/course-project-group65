@@ -8,14 +8,17 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The home screen of the application.
+ */
 public class HomeScreen extends JFrame implements ActionListener{
     private JLabel header;
     private JButton btLogIn;
     private JButton btCreateAccount;
     private JPanel homeScreen;
-    private CreateAccountController createAccountController;
-    private LogInController logInController;
-    private NextScreenData nextScreenData;
+    private final CreateAccountController createAccountController;
+    private final LogInController logInController;
+    private final NextScreenData nextScreenData;
 
     public HomeScreen(CreateAccountController createAccountController, LogInController logInController, NextScreenData nextScreenData) {
         setContentPane(homeScreen);
@@ -30,8 +33,14 @@ public class HomeScreen extends JFrame implements ActionListener{
 
         btLogIn.addActionListener(this);
         btCreateAccount.addActionListener(this);
+        header.setVisible(true);
     }
 
+    /**
+     * Handles the button clicks on the home screen. Activates the appropriate controller for logging in or creating an
+     * account.
+     * @param e the action event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btCreateAccount) {

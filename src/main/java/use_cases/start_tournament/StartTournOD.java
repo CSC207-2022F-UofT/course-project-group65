@@ -1,7 +1,6 @@
 package use_cases.start_tournament;
 
 
-
 import java.util.ArrayList;
 
 /**
@@ -9,6 +8,7 @@ import java.util.ArrayList;
  */
 public class StartTournOD {
     private final ArrayList<String> errors;
+
     public StartTournOD(ArrayList<String> errors) {
         this.errors = errors;
     }

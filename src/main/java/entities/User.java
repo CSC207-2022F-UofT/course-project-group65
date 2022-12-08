@@ -1,12 +1,11 @@
 package entities;
 
 import java.util.List;
-
+/**
+ * This interface represents a User in a Bracket.
+ */
 public interface User {
-    /*
-     * This interface represents a User in a Bracket.
-     */
-
+    /** The getter and setter methods*/
     String getUsername();
 
     void setUsername(String username);
@@ -23,8 +22,9 @@ public interface User {
 
     int getCurrentTournament();
 
-    void addTournament(int tournamentID);
-
     List<Integer> getAllTournaments();
+
+    /** This abstract method add a tournament to a user's tournament list*/
+    void addTournament(int tournamentID);
 
 }

@@ -3,14 +3,15 @@ package frameworks_and_drivers;
 import interface_adapters.NextScreenData;
 import interface_adapters.create_account.CreateAccountController;
 import interface_adapters.log_in.LogInController;
-import use_cases.create_account.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This is essentially the class that creates the screen for the user to create an account.
+ */
 public class CreateAccountInfo extends JFrame implements ActionListener{
-
     private JLabel lbUsername;
     private JLabel lbPassword;
     private JTextField tfUsername;
@@ -18,9 +19,9 @@ public class CreateAccountInfo extends JFrame implements ActionListener{
     private JButton btSubmit;
     private JPanel createAccount;
     private JButton backBtn;
-    private CreateAccountController createAccountController;
-    private LogInController logInController;
-    private NextScreenData nextScreenData;
+    private final CreateAccountController createAccountController;
+    private final LogInController logInController;
+    private final NextScreenData nextScreenData;
 
 
     public CreateAccountInfo(CreateAccountController createAccountController, LogInController logInController, NextScreenData nextScreenData) {
@@ -36,8 +37,15 @@ public class CreateAccountInfo extends JFrame implements ActionListener{
 
         btSubmit.addActionListener(this);
         backBtn.addActionListener(this);
+        lbUsername.setVisible(true);
+        lbPassword.setVisible(true);
     }
 
+    /**
+     * This method is called when the user clicks on the submit button. It will create an account for the user, by
+     * calling the create method in the CreateAccountController class.
+     * @param e the action event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backBtn) {
@@ -52,7 +60,7 @@ public class CreateAccountInfo extends JFrame implements ActionListener{
 
 
             try {
-                CreateAccountOD outputData = createAccountController.create(username, password);
+                createAccountController.create(username, password);
                 JOptionPane.showMessageDialog(this, "Successfully created account!");
             } catch (Exception exception) {
                 JOptionPane.showMessageDialog(this, exception.getMessage());
@@ -61,11 +69,6 @@ public class CreateAccountInfo extends JFrame implements ActionListener{
             this.dispose();
             homeScreen.setVisible(true);
 
-
-            // Go back to home screen
-//            homeScreen homeScreen = new homeScreen();
-//            this.dispose();
-//            homeScreen.setVisible(true);
         }
     }
 }

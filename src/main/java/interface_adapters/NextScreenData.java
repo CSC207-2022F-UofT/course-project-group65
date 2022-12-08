@@ -6,24 +6,26 @@ import use_cases.general_classes.bundle_bracket_data.BundleBracketData;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+/**
+ * This class serves as a general UI controller in a sense. It is used to store the data that is needed to be passed to
+ * the next screen and occasionally used to pass data from the presenter to the UI controller. Part of a singleton
+ * design pattern.
+ */
 public class NextScreenData {
     private String currentUser;
     private int currentBracketID;
-//    private AccountRepo accounts;
-//    private BracketRepo brackets;
     private BundleBracketData bundleBracketData;
     private final InformationRecord informationRecord;
 
     public NextScreenData(InformationRecord informationRecord) {
         this.currentUser = "";
         this.currentBracketID = 0;
-//        this.accounts = informationRecord.getAccountData();
-//        this.brackets = informationRecord.getBracketData();
         this.bundleBracketData = new BundleBracketData();
         this.informationRecord = informationRecord;
 
     }
 
+    // Setters and getters for a number of different pieces of information for the UI to function.
     public InformationRecord getInformationRecord() {
         return informationRecord;
     }
@@ -61,10 +63,6 @@ public class NextScreenData {
         return this.bundleBracketData.getRoleToInvite();
     }
 
-    public int getTournamentID() {
-        return this.bundleBracketData.getTournamentID();
-    }
-
     public String getTournamentName() {
         return this.bundleBracketData.getTournamentName();
     }
@@ -76,13 +74,9 @@ public class NextScreenData {
     public String getCurrentUser() {
         return this.currentUser;
     }
-    public String getUserPassword(String username){
-        return this.informationRecord.getUserPassword(username);
-    }
-
 
     public ArrayList<Integer> getUsersTournaments(String username) {
-        return this.informationRecord.getUserTournaments(this.currentUser);
+        return this.informationRecord.getUserTournaments(username);
     }
 
     public int getMaxTeamSize(int bracketID) {
@@ -97,19 +91,4 @@ public class NextScreenData {
         return this.currentBracketID;
     }
 
-//    public void setAccounts(AccountRepo accounts) {
-//        this.accounts = accounts;
-//    }
-
-//    public AccountRepo getAccounts() {
-//        return this.accounts;
-//    }
-
-//    public void setBrackets(BracketRepo brackets) {
-//        this.brackets = brackets;
-//    }
-
-//    public BracketRepo getBrackets() {
-//        return this.brackets;
-//    }
 }

@@ -8,6 +8,10 @@ import entities.User;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class is a part of the singleton design pattern to store the current state of the program - that is, the user
+ * accounts and the brackets that have been created.
+ */
 public class InformationRecord {
     private AccountRepo accountData;
     private BracketRepo bracketData;
@@ -32,14 +36,6 @@ public class InformationRecord {
         return this.bracketData.getBracket(bracketID).getTeamSize();
     }
 
-    public void setAccountData(AccountRepo accountData) {
-        this.accountData = accountData;
-    }
-
-    public void setBracketData(BracketRepo bracketData) {
-        this.bracketData = bracketData;
-    }
-
     //Account Repo Methods
 
     public void addUser(User user) {
@@ -52,22 +48,6 @@ public class InformationRecord {
 
     public ArrayList<Integer> getUserTournaments(String username) {
         return (ArrayList<Integer>) getUser(username).getAllTournaments();
-    }
-
-    public String getUserPassword(String username) {
-        return getUser(username).getPassword();
-    }
-
-    public ArrayList<String> getAllUsernames() {
-        return accountData.getAllUsernames();
-    }
-
-    public ArrayList<String> getAllPasswords() {
-        return accountData.getAllPasswords();
-    }
-
-    public HashMap<String, User> getAllUsers() {
-        return accountData.getAllUsers();
     }
 
     //Bracket Repo Methods

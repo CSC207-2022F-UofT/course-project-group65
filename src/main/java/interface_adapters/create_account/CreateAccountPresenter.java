@@ -1,11 +1,9 @@
 package interface_adapters.create_account;
 
-
 import use_cases.create_account.CreateAccountOB;
 import use_cases.create_account.CreateAccountOD;
 
 public class CreateAccountPresenter implements CreateAccountOB {
-
     @Override
     public CreateAccountOD prepareSuccessView(CreateAccountOD user) {
         return user;

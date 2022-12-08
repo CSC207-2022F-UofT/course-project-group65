@@ -4,8 +4,12 @@ import use_cases.join_tournament.JoinTournamentDSID;
 import use_cases.join_tournament.JoinTournamentGateway;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+/**
+ * This class is responsible for writing the new account and bracket information to a file after joining a tournament.
+ */
 public class JoinTournamentFileWriter implements JoinTournamentGateway {
     private final String accountFilename;
     private final String bracketFileName;
@@ -15,8 +19,12 @@ public class JoinTournamentFileWriter implements JoinTournamentGateway {
         this.bracketFileName = bracketFileName;
     }
 
+    /**
+     * Writes the new account and bracket information to a file.
+     * @param input The data source of the join tournament use case.
+     */
     @Override
-    public void save(JoinTournamentDSID input) throws Exception {
+    public void save(JoinTournamentDSID input) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(this.bracketFileName);
         ObjectOutputStream out = new ObjectOutputStream(fileOut);
         out.writeObject(input.getBracketRepo());

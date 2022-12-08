@@ -1,17 +1,26 @@
 package use_cases.join_tournament;
 
+/**
+ * The input data that is taken from the client to join tournament.
+ */
 public class JoinTournamentID {
-    private String invite;
+    private final String tournamentID;
 
+    /**
+     * The constructor for the AssignObserverID class.
+     *
+     * @param invite    An invite for the tournament
+     */
     public JoinTournamentID(String invite) {
-        this.invite = invite;
+        tournamentID = invite;
     }
 
+    /**
+     * Gets the invite for the tournament the user wants to join.
+     *
+     * @return The invite.
+     */
     String getInvite() {
-        return invite;
-    }
-
-    void setInvite(String invite) {
-        this.invite = invite;
+        return tournamentID;
     }
 }

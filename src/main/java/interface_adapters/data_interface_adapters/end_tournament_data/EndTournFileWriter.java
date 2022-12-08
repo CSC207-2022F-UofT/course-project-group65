@@ -7,6 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
+/**
+ * This class is responsible for writing the bracket information to a file after ending a tournament.
+ */
 public class EndTournFileWriter implements EndTournGateway {
     private final String filename;
 
@@ -20,7 +23,11 @@ public class EndTournFileWriter implements EndTournGateway {
         this.filename = filename;
     }
 
-
+    /**
+     * Write the given bracket information to the file.
+     *
+     * @param data The bracket information to write
+     */
     @Override
     public void save(EndTournDSID data) throws IOException {
         FileOutputStream fileOut = new FileOutputStream(this.filename);

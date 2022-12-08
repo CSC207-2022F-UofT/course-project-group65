@@ -2,25 +2,33 @@ package entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-
+/** This class represents the default game */
 public class DefaultGame implements Game, Serializable {
+    /** An int variable for game ID */
     private int gameID;
+    /** An int variable for game round */
     private int gameRound;
+    /** An int variable for number of teams */
     private int numTeams;
-    private LinkedHashMap<Team, Integer> teams;
+    /** The linkedhashmap for teams */
+    private final LinkedHashMap<Team, Integer> teams;
+    /** A user - Observer */
     private User observer;
+    /** The winner team of a game*/
     private Team winner;
+    /** A boolean for game status which is ended or not*/
     private boolean gameStatus;
+    /** A game variable for previous game1*/
     private Game prevGame1;
+    /** A game variable for previous game2*/
     private Game prevGame2;
-
+    /** The constructor for the default game*/
     public DefaultGame() {
         gameID = 0;
         gameRound = 0;
         numTeams = 0;
-        teams = new LinkedHashMap<Team, Integer>();
+        teams = new LinkedHashMap<>();
         observer = null;
         winner = null;
         gameStatus = false;
@@ -28,6 +36,7 @@ public class DefaultGame implements Game, Serializable {
         prevGame2 = null;
     }
 
+    /** The setter and getter methods for all the variables*/
     public void setGameID(int gameID) {
         this.gameID = gameID;
     }
@@ -58,7 +67,7 @@ public class DefaultGame implements Game, Serializable {
 
 //    May need to change getTeams()
     public ArrayList<Team> getTeams() {
-        return new ArrayList<Team>(teams.keySet());
+        return new ArrayList<>(teams.keySet());
     }
 
     public int getTeamPoints(Team team) {
