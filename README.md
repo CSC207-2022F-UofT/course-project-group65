@@ -51,6 +51,9 @@ running the tournament (By Aditya)
 
 ## How To Use
 ### Running the Project
+If you want to use the executable jar file, please download it from the release on the side bar. 
+
+If instead you would like to run it with with IntelliJ, do the following:
 Run the program through the TournamentSimulator.java file. As well, please 
 make sure to change the build settings from Gradle to IntelliJ IDEA to use the program. Go to file -> settings -> build, 
 execution, development -> build tools -> gradle. Change the build and run to IntelliJ IDEA, like
